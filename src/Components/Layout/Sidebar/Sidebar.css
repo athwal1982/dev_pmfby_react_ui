@@ -1,0 +1,214 @@
+.logout-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.logout-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  border-radius: 30px;
+  transition: all 0.3s ease-in-out;
+}
+
+.logout-item:hover {
+  background-color: #e3f7b6;
+  color: #065c06;
+}
+
+.logout-item:hover .logout-icon {
+  color: #065c06;
+}
+
+.logout-icon {
+  min-width: 40px;
+  font-size: 1.6rem;
+  color: white;
+  transition: font-size 0.3s ease;
+}
+
+.collapsed .logout-icon {
+  font-size: 1.8rem; /* Bigger icon in collapsed state */
+}
+
+.expanded {
+  padding-left: 15px;
+}
+
+.logout-text {
+  font-size: 0.79rem;
+  margin-left: 10px;
+}
+
+.tooltip-container {
+  position: relative;
+}
+/* 
+  .text-arrow{
+    display:flex;
+    align-items: center;
+
+  }
+   */
+/* .tooltip-container:hover::after {
+    content: "Log Out";
+    position: absolute;
+    left: 50px;
+    background-color: #333;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  } */
+
+/* Sidebar Container */
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px; /* Adjust as needed */
+}
+
+.text-arrow {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  position: relative; /* Ensures consistent positioning */
+}
+
+.menu-text {
+  flex-grow: 1; /* Pushes the expand icon to the right */
+}
+
+.expand-icon {
+  margin-left: 30px; /* Ensures the same left margin */
+  min-width: 24px; /* Prevents shifting due to icon size */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Main Menu Item */
+/* .menu-item {
+    display: flex;
+    align-items: center;
+    padding:  0px 10px 7px 15px;
+    margin-bottom: 9px;
+    border-radius: 30px;
+    background-color: transparent;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+  } */
+
+.menu-item:hover {
+  background-color: #e3f7b6;
+  color: #065c06;
+}
+
+.menu-item:hover .menu-icon,
+.menu-item:hover .menu-text,
+.menu-item:hover .expand-icon {
+  color: #065c06;
+}
+
+.menu-item.active {
+  background-color: #e3f7b6;
+  color: #065c06;
+}
+
+/* Menu Icon */
+.menu-icon {
+  min-width: 40px;
+  font-size: 1.6rem;
+  transition: font-size 0.3s ease;
+  color: white;
+}
+
+.menu-item.active .menu-icon {
+  color: #065c06;
+}
+
+/* Menu Text */
+/* .menu-text {
+    font-size: 0.79rem;
+    color: white;
+    margin-left: 10px;
+  }
+   */
+.menu-item.active .menu-text {
+  color: #065c06;
+}
+
+/* Expand/Collapse Icon */
+/* .expand-icon {
+    margin-left: auto;
+    color: white;
+  }
+   */
+.menu-item.active .expand-icon {
+  color: #065c06;
+}
+
+/* Submenu Container */
+.submenu-container {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Submenu Item */
+.submenu-item {
+  padding: 6px 18px;
+  margin-bottom: 6px;
+  border-radius: 30px;
+  background-color: transparent;
+  font-size: 0.75rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.submenu-item:hover {
+  background-color: #e3f7b6;
+  color: #065c06;
+}
+
+.submenu-item.active-sub {
+  background-color: #b0e57c;
+  color: #065c06;
+}
+
+/* Tooltip for collapsed state */
+.tooltip-container {
+  position: relative;
+}
+
+.tooltip {
+  position: relative;
+}
+/*   
+  .tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 50px;
+    background-color: #333;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    display: none;
+  }
+   */
+.tooltip:hover::after {
+  display: block;
+}

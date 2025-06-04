@@ -1,0 +1,71 @@
+[
+  {
+    "insuranceCompanyCode": 1001,
+    "imagePath": "/public/ICLogo/Aic.png"
+  },
+  {
+    "insuranceCompanyCode": 1004,
+    "imagePath": "/public/ICLogo/BajajAllianza.jpeg"
+  },
+
+  {
+    "insuranceCompanyCode": 1002,
+    "imagePath": "/public/ICLogo/CholaMS.png"
+  },
+  {
+    "insuranceCompanyCode": 1005,
+    "imagePath": "/public/ICLogo/FutureGen.jpeg"
+  },
+  {
+    "insuranceCompanyCode": 1006,
+    "imagePath": "/public/ICLogo/HdfcErgo.jpeg"
+  },
+  {
+    "insuranceCompanyCode": 1009,
+    "imagePath": "/public/ICLogo/IciciLomb.png"
+  },
+  {
+    "insuranceCompanyCode": 1007,
+    "imagePath": "/public/ICLogo/IfcoTokio.jpeg"
+  },
+  {
+    "insuranceCompanyCode": 1016,
+    "imagePath": "/public/ICLogo/NationalInsur.jpeg"
+  },
+  {
+    "insuranceCompanyCode": 1014,
+    "imagePath": "/public/ICLogo/NewIndiaAssur.jpeg"
+  },
+  {
+    "insuranceCompanyCode": 1015,
+    "imagePath": "/public/ICLogo/OrientalInsur.png"
+  },
+  {
+    "insuranceCompanyCode": 1003,
+    "imagePath": "/public/ICLogo/RelGeneral.png"
+  },
+  {
+    "insuranceCompanyCode": 1018,
+    "imagePath": "/public/ICLogo/RoyalSund.png"
+  },
+  {
+    "insuranceCompanyCode": 1012,
+    "imagePath": "/public/ICLogo/SbiGen.png"
+  },
+  {
+    "insuranceCompanyCode": 1010,
+    "imagePath": "/public/ICLogo/TataAig.jpeg"
+  },
+  {
+    "insuranceCompanyCode": 1013,
+    "imagePath": "/public/ICLogo/Unitedindia.jpeg"
+  },
+  {
+    "insuranceCompanyCode": 1008,
+    "imagePath": "/public/ICLogo/UnivSompo.png"
+  },
+  {
+    "insuranceCompanyCode": 1020,
+    "imagePath": "/public/ICLogo/kshema.jpeg"
+  }
+]

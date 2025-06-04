@@ -1,0 +1,14 @@
+.landing-container {
+  overflow: auto;
+  height: 100vh;
+}
+.list_items_footer {
+  text-decoration: underline;
+}
+
+.list_items_footer:hover {
+  text-decoration: underline;
+  text-decoration-color: red;
+}
+
+

@@ -1,0 +1,116 @@
+.EditAgent-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.EditAgent-popup-container {
+  background: #fff;
+  border-radius: 10px;
+  width: 75%;
+  max-width: 700px;
+  padding: 20px;
+  border: 2px solid #075307;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-height: 90vh;
+  overflow: hidden;
+
+  h4 {
+    font-size: 1rem;
+    text-align: center;
+    color: #075307;
+    font-weight: bold;
+  }
+
+  .EditAgent-container {
+    margin-top: 30px;
+
+    .EditAgent-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      margin: 10px;
+
+      .EditAgent-form-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0.5rem;
+
+        .EditAgent-form-group {
+          display: flex;
+          flex-direction: column;
+          width: calc(33.33% - 0.5rem);
+          min-width: 150px;
+
+          .EditAgent-form-label {
+            font-size: 0.75rem;
+            margin-bottom: 0.2rem;
+            color: #333;
+          }
+
+          input,
+          select {
+            font-size: 0.75rem;
+            padding: 0.3rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+
+            &:focus {
+              border-color: #075307;
+              box-shadow: 0 0 3px rgba(0, 123, 255, 0.3);
+            }
+
+            &[readOnly] {
+              background-color: #f9f9f9;
+              color: #888;
+              cursor: not-allowed;
+            }
+          }
+        }
+      }
+
+      .EditAgent-form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5rem;
+        margin-top: 1.2rem;
+
+        .EditAgent-cancel-button,
+        .EditAgent-submit-btn {
+          padding: 0.4rem 0.9rem;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 0.75rem;
+          transition: background 0.3s;
+
+          &.EditAgent-cancel-button {
+            background: #ccc;
+            color: #333;
+
+            &:hover {
+              background: #b3b3b3;
+            }
+          }
+
+          &.EditAgent-submit-btn {
+            background: #075307;
+            color: #fff;
+
+            &:hover {
+              background: #064306;
+            }
+          }
+        }
+      }
+    }
+  }
+}

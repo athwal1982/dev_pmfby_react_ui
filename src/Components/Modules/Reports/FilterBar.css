@@ -1,0 +1,59 @@
+.filter-container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  background: white;
+  padding: 10px 10px 10px 10px;
+  align-items: center;
+}
+
+.label-reports {
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.button-container-report {
+  display: flex;
+  justify-content: space-between;
+}
+
+.one-button-container-report {
+  display: flex;
+  margin: 20px 0 0 0;
+}
+
+.button-container-report2 {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0 0 0;
+}
+
+.submit-btn-report {
+  background-color: #075307;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.reset-btn-report {
+  background-color: #D57616;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.export-btn-report {
+  background-color: #E3F7B6;
+  color: black;
+  border: none;
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+}

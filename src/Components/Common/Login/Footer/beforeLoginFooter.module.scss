@@ -1,0 +1,58 @@
+.landingPageFooter {
+  .footerNav {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 21.6px;
+    text-align: left;
+    @media (max-width: 767px) {
+      margin-top: 1rem;
+    }
+    a {
+      color: #131212;
+      padding: 0 8px;
+    }
+  }
+
+  .footerNavBox {
+    @media (max-width: 414px) {
+      padding: 0;
+    }
+  }
+
+  .footerBottomSection {
+    // background: var(--fg-login-bg);
+    background: #075907 url(https://pmfby.amnex.co.in/krph/public/img/krph-footer-bg.svg);
+    background-size: cover;
+    padding: 16px;
+
+    @media (max-width: 767px) {
+      padding: 8px;
+      background: #075907;
+    }
+
+    p {
+      color: #fff;
+      font-size: 12px;
+      text-align: center;
+
+      @media (max-width: 767px) {
+        padding-top: 0;
+      }
+    }
+
+    a {
+      font-size: 12px;
+      text-align: center;
+      color: #fff;
+      padding-top: 16px;
+      padding-bottom: 16px;
+      color: white;
+      text-decoration: underline;
+    }
+
+    .copyrightText {
+      font-size: 11px;
+    }
+  }
+}

@@ -1,0 +1,28 @@
+.asteriskCss {
+  color: red;
+}
+.login_ErrorTxt {
+  font-size: 12px;
+  color: #e54b4b;
+  font-weight: 600;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.blinking {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgb(52, 199, 89);
+  margin-right: 10px;
+  display: inline-block;
+  animation: blink 1s infinite;
+}

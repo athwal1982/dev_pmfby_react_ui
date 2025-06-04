@@ -1,0 +1,698 @@
+.Box {
+  background: var(--fg-login-bg);
+  height: auto;
+  width: 100%;
+  display: grid;
+  grid-template-rows: auto max-content;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+@media (max-width: 1024px) {
+  .Box {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.Box .CenterBox {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+@media (min-width: 992px) and (max-width: 1200px) {
+  .Box .CenterBox {
+    height: calc(100vh - 260px);
+  }
+}
+.Box .CenterBox .MainBox {
+  display: flex;
+  padding: 1rem;
+  background: var(--white);
+}
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .Box .CenterBox .MainBox {
+    padding: 0;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .Box .CenterBox .MainBox {
+    flex-direction: column;
+    padding: 0;
+  }
+}
+@media (max-width: 767px) {
+  .Box .CenterBox .MainBox {
+    padding: 1rem !important;
+  }
+}
+.Box .CenterBox .MainBox .BannerBox {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  min-width: 46%;
+  margin: 0 auto;
+}
+@media (max-width: 767px) {
+  .Box .CenterBox .MainBox .BannerBox {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.Box .CenterBox .MainBox .BannerBox .LeftSideClientText h4 {
+  font-size: 14px;
+  -webkit-user-drag: none !important;
+  color: #045406;
+  text-align: center;
+}
+.Box .CenterBox .MainBox .BannerBox .LeftSideClientText p {
+  font-size: 13px;
+  font-weight: 500;
+  color: #045406;
+  text-align: center;
+}
+.Box .CenterBox .MainBox .BannerBox img {
+  height: 320px;
+  margin: auto;
+}
+@media (max-width: 767px) {
+  .Box .CenterBox .MainBox .BannerBox img {
+    min-width: 140px;
+    height: auto;
+  }
+}
+.Box .CenterBox .MainBox .Separator {
+  border-right: 1px solid var(--gray-200);
+}
+.Box .CenterBox .MainBox .ContentBox {
+  display: grid;
+  grid-template-rows: max-content auto;
+  width: 100%;
+}
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .Box .CenterBox .MainBox .ContentBox {
+    padding: 0;
+  }
+}
+@media (max-width: 1024px) {
+  .Box .CenterBox .MainBox .ContentBox {
+    padding: 0;
+  }
+}
+@media (max-width: 991px) {
+  .Box .CenterBox .MainBox .ContentBox {
+    padding: 2rem;
+  }
+}
+@media (max-width: 767px) {
+  .Box .CenterBox .MainBox .ContentBox {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+}
+.Box .CenterBox .MainBox .ContentBox .ClientLogo {
+  padding: 6px 14px 12px 14px;
+  border-bottom: 1px solid var(--gray-200);
+  display: grid;
+  gap: 20px;
+  grid-template-columns: auto;
+  align-items: center;
+}
+.Box .CenterBox .MainBox .ContentBox .ClientLogo .ClientText h4 {
+  font-size: 14px;
+  -webkit-user-drag: none !important;
+  color: #045406;
+  text-align: center;
+}
+.Box .CenterBox .MainBox .ContentBox .ClientLogo .ClientText p {
+  font-size: 13px;
+  font-weight: 500;
+  color: #045406;
+  text-align: center;
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox {
+  padding: 1.5rem 2rem;
+  display: grid;
+  align-self: center;
+  grid-template-rows: repeat(2, max-content) auto;
+  border: 1px solid #d9d9d9;
+}
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .Box .CenterBox .MainBox .ContentBox .SubBox {
+    padding: 0.5rem 1rem;
+    border: none;
+  }
+}
+@media (max-width: 1024px) {
+  .Box .CenterBox .MainBox .ContentBox .SubBox {
+    padding: 10px 1rem;
+  }
+}
+@media (max-width: 991px) {
+  .Box .CenterBox .MainBox .ContentBox .SubBox {
+    padding: 2rem;
+  }
+}
+@media (max-width: 767px) {
+  .Box .CenterBox .MainBox .ContentBox .SubBox {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    align-self: auto;
+  }
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox h3 {
+  font-size: 22px !important;
+  padding-bottom: 2px;
+  color: var(--gray-600);
+  -webkit-user-drag: none !important;
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox p {
+  font-size: 14px;
+  color: var(--gray-600);
+  opacity: 0.6;
+  -webkit-user-drag: none !important;
+  color: #045406;
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox .LoginTab {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  overflow: auto;
+  width: 100%;
+  padding: 5px 0px 7px;
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox .LoginTab .LoginTabButton {
+  background-color: #f5f5f5;
+  color: var(--Main-light-text-color);
+  background: linear-gradient(to bottom, #fff, #eec694);
+  border: 1px solid #eec694;
+  border-radius: 2px;
+  box-shadow:
+    0 1px 3px rgb 0 0 0/8%,
+    inset 0 -1px 4px rgb 151 159 175/20%;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 12px;
+  height: 40px;
+  font-size: 15px;
+  position: relative;
+  text-align: center;
+  text-decoration: none !important;
+  vertical-align: middle;
+  color: #000 !important;
+  width: 200px;
+  margin: 2px 2px 2px 2px;
+  font-weight: 600;
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox .LoginTab .ActiveLoginTabButton {
+  background-color: #f5f5f5;
+  color: var(--Main-light-text-color);
+  background: linear-gradient(to bottom, #f8a641, #fb6c13);
+  border: 1px solid #f8a641;
+  border-radius: 2px;
+  box-shadow:
+    0 1px 3px rgb 0 0 0/8%,
+    inset 0 -1px 4px rgb 151 159 175/20%;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 12px;
+  height: 40px;
+  font-size: 15px;
+  position: relative;
+  text-align: center;
+  text-decoration: none !important;
+  vertical-align: middle;
+  color: #fff !important;
+  width: 200px;
+  margin: 2px 2px 2px 2px;
+  font-weight: 600;
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox .InputBox {
+  display: grid;
+  row-gap: 20px;
+  height: -moz-max-content;
+  height: max-content;
+  margin-top: 20px;
+}
+@media (max-width: 767px) {
+  .Box .CenterBox .MainBox .ContentBox .SubBox .InputBox {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox .InputBox .InputGroup {
+  display: grid;
+  position: relative;
+  grid-template-columns: max-content auto max-content max-content;
+  border: 1px solid #045406;
+  align-items: center;
+}
+@media (max-width: 767px) {
+  .Box .CenterBox .MainBox .ContentBox .SubBox .InputBox .InputGroup {
+    display: flex;
+  }
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox .InputBox .InputGroup label {
+  top: -8px;
+  font-size: 14px !important;
+  background-color: var(--white);
+  position: absolute;
+  top: -11px;
+  left: 20px;
+  padding: 0px 6px;
+  color: #045406;
+  font-weight: 600;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox .InputBox .InputGroup p {
+  margin-top: 3px;
+  font-weight: 500;
+  color: #000;
+  font-size: 18px;
+  background-image: linear-gradient(
+    135deg,
+    rgba(4, 84, 6, 0.6) 25%,
+    rgba(214, 219, 223, 0) 25%,
+    rgba(214, 219, 223, 0) 50%,
+    rgba(4, 84, 6, 0.6) 50%,
+    rgba(4, 84, 6, 0.6) 75%,
+    rgba(214, 219, 223, 0) 75%,
+    rgba(214, 219, 223, 0) 100%
+  );
+  background-size: 4px 4px;
+  padding: 1px 6px 0px 6px;
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox .InputBox .InputGroup input {
+  height: 44px;
+  font-size: 14px;
+  line-height: 20px;
+  border: 0px;
+  margin-top: 4px;
+  width: 100%;
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox .InputBox .InputGroup input::-moz-placeholder {
+  color: var(--gray-500);
+  -moz-user-select: none !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox .InputBox .InputGroup input::placeholder {
+  color: var(--gray-500);
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox .InputBox .InputGroup input:-webkit-autofill {
+  box-shadow: 0 0 0 30px var(--white) inset !important;
+  -webkit-box-shadow: 0 0 0 30px var(--white) inset !important;
+  opacity: 1;
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox .InputBox .InputGroup input:disabled {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+  box-shadow: 0 0 0 30px var(--white) inset !important;
+  -webkit-box-shadow: 0 0 0 30px var(--white) inset !important;
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox .InputBox .InputGroup .BoxIcon {
+  color: #045406;
+  font-size: 20px;
+  margin: 16px 0px 14px 0;
+  width: 40px;
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox .InputBox .InputGroup .RefreshBoxIcon {
+  color: #045406;
+  opacity: 0.8;
+  font-size: 20px;
+  margin: 14px 14px 12px 16px;
+  cursor: pointer;
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox .InputBox .InputGroup .PassBoxIcon,
+.Box .CenterBox .MainBox .ContentBox .SubBox .InputBox .InputGroup .PassBoxIconClosed {
+  color: #045406;
+  opacity: 0.8;
+  font-size: 25px;
+  margin: 14px 14px 12px 14px;
+  cursor: pointer;
+}
+@media (max-width: 767px) {
+  .Box .CenterBox .MainBox .ContentBox .SubBox .InputBox .InputGroup .PassBoxIcon,
+  .Box .CenterBox .MainBox .ContentBox .SubBox .InputBox .InputGroup .PassBoxIconClosed {
+    margin: 14px 4px 12px 4px;
+  }
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox .InputBox button {
+  width: 100%;
+  color: var(--black);
+  background: #7ed321;
+  padding: 0 42px;
+  font-size: 16px;
+  height: 44px;
+  line-height: 44px;
+  border: 0px;
+}
+.Box .CenterBox .MainBox .ContentBox .SubBox .InputBox button:hover {
+  cursor: pointer;
+  color: var(--white);
+  opacity: 0.8;
+}
+.Box .CenterBox .FooterBox {
+  display: grid;
+  align-items: center;
+  background-color: var(--gray-120);
+  border-top: 1px solid var(--gray-200);
+  border-radius: 2px 0px 0px 2px;
+}
+.Box .CenterBox .FooterBox h4 {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 6px 0px;
+  color: #045406;
+  text-align: center;
+  font-family: var(--fg-headingsFont);
+  -webkit-user-drag: none !important;
+}
+.Box .container {
+  display: flex;
+}
+@media (max-width: 414px) {
+  .Box .container {
+    flex-direction: column;
+  }
+}
+.Box .container .halfCaptcha {
+  flex: 1;
+}
+@media (max-width: 767px) {
+  .Box .container .halfCaptcha {
+    width: 40%;
+    flex-basis: 40%;
+  }
+}
+@media (max-width: 414px) {
+  .Box .container .halfCaptcha {
+    flex-direction: column;
+    width: 100%;
+    flex-basis: 100%;
+  }
+}
+.Box .container .captchaCss {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 5px;
+  height: 40px;
+  margin: 2px;
+  border: 2px solid #d9d9d9;
+}
+.Box .container .captchaCss .RefreshCaptchaBoxIcon {
+  opacity: 0.8;
+  font-size: 25px;
+  color: #7ed321 !important;
+  cursor: pointer;
+}
+.Box .container .captchaCss .captchaCode {
+  max-width: 70%;
+}
+.Box .container .halfInput {
+  flex: 1;
+}
+@media (max-width: 767px) {
+  .Box .container .halfInput {
+    width: 100%;
+    flex: auto;
+  }
+}
+.Box .container .halfInput .captchaInput {
+  display: flex;
+  position: relative;
+  border: 1px solid #045406;
+  align-items: center;
+  margin: 2px;
+}
+.Box .container .halfInput .captchaInput input {
+  height: 38px;
+  font-size: 15px;
+  line-height: 20px;
+  padding: 0 15px;
+  border: 0px;
+  width: 100%;
+}
+@media (max-width: 767px) {
+  .Box .container .halfInput .captchaInput input {
+    font-size: 14px;
+    padding: 0 8px;
+  }
+}
+.Box .container .halfInput .captchaInput input::-moz-placeholder {
+  color: var(--gray-500);
+  -moz-user-select: none !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+}
+.Box .container .halfInput .captchaInput input::placeholder {
+  color: var(--gray-500);
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+}
+.Box .container .halfInput .captchaInput input:-webkit-autofill {
+  box-shadow: 0 0 0 30px var(--white) inset !important;
+  -webkit-box-shadow: 0 0 0 30px var(--white) inset !important;
+  opacity: 1;
+}
+.Box .container .halfInput .captchaInput input:disabled {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+  box-shadow: 0 0 0 30px var(--white) inset !important;
+  -webkit-box-shadow: 0 0 0 30px var(--white) inset !important;
+}
+.Box .forgotpassCss {
+  color: #045406;
+  text-align: right;
+  text-decoration: underline !important;
+  cursor: pointer;
+  font-size: 13px;
+}
+.Box .divHeight {
+  height: 1.9vh;
+}
+.ButtonWithLoader {
+  position: relative;
+  background: #0a8c07;
+  font-size: 16px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  transition: all 0.25s ease;
+  width: 210px;
+  height: 44px !important;
+  overflow: hidden;
+  margin: auto;
+  padding: 0px !important;
+}
+.ButtonWithLoader .ButtonText {
+  position: absolute;
+  width: 130px;
+  display: block;
+  position: relative;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  left: 0px;
+}
+.ButtonWithLoader .ButtonLoader::after {
+  position: absolute;
+  content: "";
+  width: 30px;
+  height: 30px;
+  border-radius: 50px !important;
+  border: 4px solid rgba(0, 0, 0, 0);
+  border-left: 4px solid #eee;
+  animation: load infinite 0.8s ease 0.05s;
+  opacity: 0.6;
+}
+@keyframes load {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.ButtonWithLoader .ButtonLoader {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  z-index: 100;
+  border-radius: 50px !important;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.25s ease;
+}
+.ButtonWithLoader.loading {
+  width: 50px;
+  border-radius: 50px !important;
+}
+.ButtonWithLoader.loading {
+  transform: rotate(0deg);
+  padding-bottom: 4px;
+  padding-left: 3px;
+}
+.ButtonWithLoader.loading .ButtonText {
+  transform: translate(-140px);
+}
+.ButtonWithLoader.loading .ButtonLoader {
+  opacity: 1;
+}
+.Wrapper {
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+  background: var(--fg-login-bg);
+}
+.toggleContainer {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: -moz-fit-content;
+  width: fit-content;
+  border: 3px solid #7ed321;
+  border-radius: 20px;
+  background: #7ed321;
+  font-weight: bold;
+  color: #7ed321;
+  cursor: pointer;
+  z-index: 0;
+}
+.toggleContainer::before {
+  content: "";
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  left: 0%;
+  border-radius: 20px;
+  background: #fff;
+  transition: all 0.3s;
+}
+.toggleCheckbox:checked + .toggleContainer::before {
+  left: 50%;
+}
+.toggleContainer div {
+  padding: 6px;
+  text-align: center;
+  z-index: 1;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+.toggleCheckbox {
+  display: none;
+}
+.toggleCheckbox:checked + .toggleContainer div:first-child {
+  color: #fff;
+  transition: color 0.3s;
+}
+.toggleCheckbox:checked + .toggleContainer div:last-child {
+  color: #7ed321;
+  transition: color 0.3s;
+}
+.toggleCheckbox + .toggleContainer div:first-child {
+  color: #7ed321;
+  transition: color 0.3s;
+}
+.toggleCheckbox + .toggleContainer div:last-child {
+  color: #fff;
+  transition: color 0.3s;
+}
+.toggleCheckbox + .toggleContainer div:first-child {
+  padding: 6px 6px;
+}
+.farmerLoginButton {
+  color: var(--white);
+  background: #7ed321;
+  padding: 0 25px;
+  font-size: 14px;
+  font-weight: 500;
+  height: 35px;
+  line-height: 35px;
+  border: 0px;
+  border-radius: 32px;
+}
+.farmerLoginButton:hover {
+  cursor: pointer;
+  color: var(--white);
+  opacity: 0.8;
+}
+.ActivefarmerLoginButton {
+  color: #7ed321;
+  background: #fff;
+  padding: 0 25px;
+  font-size: 14px;
+  font-weight: 500;
+  height: 35px;
+  line-height: 35px;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 32px;
+  border-color: #7ed321;
+}
+.ButtonFarmerCancel {
+  position: relative;
+  background: #f38508 !important;
+  font-size: 16px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  transition: all 0.25s ease;
+  width: 210px;
+  height: 44px !important;
+  overflow: hidden;
+  margin: auto;
+  padding: 0px !important;
+}
+.ButtonFarmerblankCancel {
+  position: relative;
+  background: #fff !important;
+  font-size: 16px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  transition: all 0.25s ease;
+  width: 20px !important;
+  height: 44px !important;
+  overflow: hidden;
+  margin: auto;
+  padding: 0px !important;
+}
+@media (min-width: 991px) and (max-width: 1560px) {
+  .farmerswitch label div {
+    font-size: 10px !important;
+  }
+}

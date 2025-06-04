@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Crop Insurance is an integrated IT solution and a web-based ecosystem to speed up service delivery, unify fragmented databases, achieve a single view of data, and eliminate manual processes. Crop Insurance provides insurance services to farmers faster than before."
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.svg" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <title>Pradhan Mantri Fasal Bima Yojana</title>
+  </head>
+
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script src="https://translation-plugin.bhashini.co.in/v2/website_translation_utility.js" data-pos-x="99" data-pos-y="9"></script>
+    <div id="root"></div>
+    <script>
+   // Function to hide a toast messages conditionally
+function showToast(message) {
+  const toast = document.createElement("div");
+  toast.className = "bhashini-toast";
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    // A toast.classList.add("visible");
+    toast.classList.add("bhashini-skip-translation");
+  }, 100);
+  setTimeout(() => {
+    // A toast.classList.remove("visible");
+    setTimeout(() => {
+      document.body.removeChild(toast);
+    }, 300);
+  }, 3000);
+}
+    </script>
+    <style>
+      .bhashini-dropdown-btn {
+    display: flex;
+    background-color: #075307;
+    color: #fff !important;
+    padding: 1rem 1.12rem;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    width: 13.75rem;
+    max-width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Noto Sans";
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+}
+    </style>
+  </body>
+</html>

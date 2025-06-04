@@ -1,0 +1,42 @@
+.resendOtp {
+  margin-top: 20px !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.resendOtpBtn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 15px !important;
+  padding: 10px 20px !important;
+  border-radius: 5px !important;
+  background-color: green !important;
+  color: white !important;
+  cursor: pointer !important;
+}
+
+.timerIcon {
+  width: 1% !important;
+  margin-right: 8px !important;
+}
+
+.timerText {
+  font-size: 15px !important;
+}
+
+@media (max-width: 600px) {
+  .resendOtpBtn {
+    font-size: 14px !important;
+    padding: 8px 16px !important;
+  }
+
+  .timerIcon {
+    width: 16px !important;
+    margin-right: 5px !important;
+  }
+
+  .timerText {
+    font-size: 14px !important;
+  }
+}

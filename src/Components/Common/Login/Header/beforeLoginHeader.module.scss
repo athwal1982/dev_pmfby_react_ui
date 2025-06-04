@@ -1,0 +1,182 @@
+.UpperHeader {
+  background: var(--fg-login-bg);
+  padding: 8px 0;
+  .goiLogo {
+    max-width: 30.78%;
+    @media (max-width: 767px) {
+      max-width: 100%;
+    }
+  }
+  .mainHeader {
+    margin: 0 auto;
+    background: #fff;
+    padding: 4px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    @media (max-width: 767px) {
+      padding: 4px;
+      flex-direction: column;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -38px;
+      background: url(https://pmfby.amnex.co.in/krph/public/img/leftFlower.svg) no-repeat;
+      background-size: contain;
+      width: 37px;
+      height: 72px;
+      @media (max-width: 767px) {
+        content: none;
+      }
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: -38px;
+      background: url(https://pmfby.amnex.co.in/krph/public/img/rightFlower.svg) no-repeat;
+      background-size: contain;
+      width: 37px;
+      height: 72px;
+      @media (max-width: 767px) {
+        content: none;
+      }
+    }
+
+    .krpLogo img {
+      border-right: 1px solid #2b3942;
+      margin-right: 25px;
+      padding-right: 25px;
+      margin-left: 10px;
+      height: 60px;
+
+      @media (max-width: 991px) {
+        padding-right: 10px;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .signInInner {
+    display: inline-block;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #233e5e;
+
+    .longText {
+      @media (max-width: 991px) {
+        display: none;
+      }
+    }
+
+    .shortText {
+      display: none;
+
+      @media (max-width: 991px) {
+        display: block;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .subTitle {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 0.3;
+    white-space: nowrap;
+    font-style: normal;
+    padding-top: 3px;
+    @media (max-width: 991px) {
+      white-space: normal;
+      line-height: 1;
+      font-size: 0.75rem;
+    }
+
+    i {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 0.3;
+      white-space: nowrap;
+      font-style: normal;
+      padding-top: 3px;
+      color: #333;
+      @media (max-width: 991px) {
+        white-space: normal;
+        line-height: 1;
+      }
+    }
+  }
+
+  .krphTitle {
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 21.6px;
+    letter-spacing: 10px;
+    text-align: left;
+    @media (max-width: 991px) {
+      font-size: 28px;
+    }
+    @media (max-width: 767px) {
+      font-size: 22px;
+    }
+    .shorForm {
+      color: #233e5e;
+    }
+  }
+  .smKrphTitle {
+    @media (max-width: 767px) {
+      margin-top: 1rem;
+      margin-left: 0.5rem;
+    }
+  }
+  .krphInfo {
+    @media (max-width: 767px) {
+      width: 100%;
+    }
+  }
+
+  .dialNumber {
+    font-family: Poppins;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 42px;
+    text-align: left;
+    color: #f76b1c;
+    letter-spacing: 0.01rem;
+    @media (max-width: 991px) {
+      font-size: 16px;
+      line-height: 1;
+    }
+  }
+
+  .krphSubTitle {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 0.3;
+    white-space: nowrap;
+    font-style: normal;
+    padding-top: 3px;
+    color: #333;
+    letter-spacing: 0.075em;
+    text-align: left;
+    text-transform: uppercase;
+    margin-left: 2px;
+    @media (max-width: 991px) {
+      white-space: pre-wrap;
+      font-size: 0.75rem;
+      line-height: 1;
+    }
+    @media (max-width: 767px) {
+      font-size: 12px;
+      line-height: 15px;
+    }
+  }
+}

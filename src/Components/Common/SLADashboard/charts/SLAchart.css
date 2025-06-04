@@ -1,0 +1,87 @@
+.All-graphs-container-sla {
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    gap: 20px;
+}
+
+
+.graph-container-sla {
+    background: #fff;
+    padding: 15px;
+    border-radius: 18px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0px 0px 8px rgba(185, 185, 185, .2509803922);
+    overflow: hidden
+}
+
+.graph-header-sla {
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between
+}
+
+.name-sla {
+    margin: 0;
+    color: #2a2a2a;
+    font-size: 16px;
+    font-weight: 600
+}
+
+.dot-icon-sla {
+    font-size: 20px;
+    color: #5a607f
+}
+
+.form-select-sla {
+    height: 36px;
+    border: 1px solid #d7dbec;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #5a607f
+}
+
+.export-btn-sla {
+    border: 1px solid #d7dbec;
+    background: rgba(0, 0, 0, 0);
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5a607f
+}
+
+.export-btn-sla img {
+    height: 22px;
+    width: auto
+}
+
+.left-container-sla {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px
+}
+
+.dot-green-sla {
+    height: 10px;
+    width: 10px;
+    background: #21d59b;
+    border-radius: 50%
+}
+
+.value-item-sla {
+    display: flex;
+    align-items: center;
+    gap: 5px
+}
+
+.value-container-sla {
+    display: flex;
+    gap: 20px;
+    font-size: 12px;
+    color: #5a607f;
+    margin: 10px 0px
+}

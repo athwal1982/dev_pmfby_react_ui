@@ -1,0 +1,180 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 50px;
+  row-gap: 20px;
+  .toprightcontainer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    top: 10px;
+    right: 10px;
+  }
+
+  .backbutton {
+    background-color: #006400;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+  }
+
+  .back-button .arrow {
+    font-weight: bold;
+  }
+
+  .back-button:hover {
+    background-color: #004d00;
+  }
+
+  .back-button:active {
+    background-color: #003300;
+  }
+}
+
+.NoDataFoundText {
+  color: red;
+  font-size: 22px;
+  padding: 100px;
+}
+
+/* Farmer Information styling */
+.farmerInfo,
+.ticketInfo {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.infoFields {
+  display: flex;
+  gap: 20px;
+}
+
+.infoField {
+  flex: 1;
+}
+
+.infoField label {
+  display: block;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.infoField input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+}
+
+/* Ticket Information styling */
+.ticketUser {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.userIcon {
+  font-size: 24px;
+}
+
+.ticketTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.ticketTable th,
+.ticketTable td {
+  padding: 12px;
+  text-align: left;
+  border: 0px solid #ddd;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+}
+
+.ticketTable th {
+  background-color: #075307;
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.resolved {
+  background-color: #e0f7e9;
+  color: #2e7d32;
+}
+
+.unresolved {
+  background-color: #fdecea;
+  color: #d32f2f;
+}
+
+.ticketRow {
+  cursor: pointer;
+}
+
+.ticketRow:hover {
+  background-color: #f9f9f9;
+}
+
+.expandableContent {
+  transition: all 0.4s ease;
+}
+
+.ticketDetails {
+  max-height: 0;
+  opacity: 0;
+  transition:
+    max-height 0.4s ease,
+    opacity 0.4s ease;
+  background-color: #f8f8f8;
+  padding: 0 16px;
+}
+
+.ticketDetails.open {
+  max-height: 4000px;
+  opacity: 1;
+  padding: 16px;
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  font-size: 14px;
+}
+
+.detailsGrid div {
+  margin-bottom: 8px;
+  flex-direction: column;
+}
+
+.ticketDetails h3 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.detailsCol {
+  display: flex;
+  flex-direction: column;
+}

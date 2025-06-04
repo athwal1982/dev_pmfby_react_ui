@@ -1,0 +1,204 @@
+.form-wrapper {
+  margin: 2px;
+}
+
+.form-container_CT {
+  max-width: 800px;
+  border: 1px solid #054a06;
+  margin: 30px auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0.1, 0.1, 0.1, 0.2);
+
+  form {
+    .form-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 8px;
+
+      .form-group {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        .CreateTraining-form-label {
+          margin-bottom: 8px;
+          font-size: 12px;
+          font-weight: 600;
+          color: #333;
+        }
+
+        input,
+        select {
+          padding: 8px;
+          font-size: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          outline: none;
+
+          &:focus {
+            border-color: #4caf50;
+          }
+        }
+      }
+
+      &.time-group {
+        display: flex;
+        gap: 20px;
+
+        input {
+          width: 170px;
+        }
+      }
+    }
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: left;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .submit-btn {
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: left;
+    gap: 8px;
+    transition: background-color 0.3s, opacity 0.3s;
+  }
+
+  .save-btn {
+    background-color: #006400;
+    color: white;
+  }
+
+  .cancel-btn {
+    background-color: grey;
+    color: white;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: left;
+    gap: 8px;
+    transition: background-color 0.3s, opacity 0.3s;
+  }
+
+  .clear-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: left;
+    gap: 8px;
+    transition: background-color 0.3s, opacity 0.3s;
+  }
+
+  .scheduled-training-box {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .scheduled-training-box h5 {
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+
+  .training-timetable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .training-timetable th,
+  .training-timetable td {
+    padding: 8px;
+    text-align: left;
+    font-size: 12px;
+    color: #555;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .training-timetable th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .training-timetable tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+  }
+
+  .training-timetable tr.highlight-upcoming-training {
+    background-color: #ffcc00;
+    color: white;
+  }
+
+  .submit-btn:hover {
+    opacity: 0.8;
+  }
+}
+
+.highlight-upcoming-training {
+  background-color: #ffcc00 !important;
+  color: white;
+}
+
+.tooltip {
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 14px;
+  z-index: 10;
+  white-space: nowrap;
+  top: 50px;
+  left: 0;
+  transform: translateX(-50%);
+}
+
+.highlighted-date {
+  background-color: #ff0;
+  border: 2px solid #f00;
+  position: relative;
+}
+
+.asteriskCss {
+  color: red;
+}
+
+.login_ErrorTxt {
+  font-size: 12px;
+  color: #e54b4b;
+  font-weight: 600;
+}
+
+.PageStart {
+  display: grid;
+  grid-template-rows: max-content auto;
+  overflow: auto;
+}

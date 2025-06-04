@@ -1,0 +1,805 @@
+.Box {
+  background: var(--fg-login-bg);
+  height: auto;
+  width: 100%;
+  display: grid;
+  grid-template-rows: auto max-content;
+  gap: 12px;
+  // align-items: center;
+  margin-bottom: 1rem;
+
+  @media (max-width: 1024px) {
+    display: flex;
+    flex-direction: column;
+    // height: calc(100vh - 146px);
+  }
+
+  .CenterBox {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+
+    @media (min-width: 992px) and (max-width: 1200px) {
+      height: calc(100vh - 260px);
+    }
+
+    .MainBox {
+      display: flex;
+      // grid-template-columns: auto max-content 450px;
+      padding: 1rem;
+      background: var(--white);
+
+      @media (min-width: 1025px) and (max-width: 1200px) {
+        padding: 0;
+      }
+
+      @media (min-width: 768px) and (max-width: 1024px) {
+        flex-direction: column;
+        padding: 0;
+      }
+
+      @media (max-width: 767px) {
+        padding: 1rem !important;
+      }
+
+      .BannerBox {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        min-width: 46%;
+        margin: 0 auto;
+
+        @media (max-width: 767px) {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .LeftSideClientText {
+          h4 {
+            font-size: 14px;
+            // user-select: none !important;
+            -webkit-user-drag: none !important;
+            color: #045406;
+            text-align: center;
+          }
+
+          p {
+            font-size: 13px;
+            font-weight: 500;
+            color: #045406;
+            text-align: center;
+          }
+        }
+
+        img {
+          height: 320px;
+          margin: auto;
+
+          @media (max-width: 767px) {
+            min-width: 140px;
+            height: auto;
+          }
+        }
+      }
+
+      .Separator {
+        border-right: 1px solid var(--gray-200);
+      }
+
+      .ContentBox {
+        display: grid;
+        grid-template-rows: max-content auto;
+        width: 100%;
+
+        @media (min-width: 1025px) and (max-width: 1200px) {
+          padding: 0;
+        }
+
+        @media (max-width: 1024px) {
+          padding: 0;
+        }
+
+        @media (max-width: 991px) {
+          padding: 2rem;
+        }
+
+        @media (max-width: 767px) {
+          display: flex;
+          flex-direction: column;
+          padding: 0;
+        }
+
+        @media (max-width: 768px) {
+          .BizClass.Button {
+            font-size: 14px; /* Adjust font size for smaller screens */
+            padding: 8px 12px; /* Reduce padding for compact view */
+          }
+
+          .BizClass.Button img {
+            width: 16px; /* Scale down the image size */
+            margin-right: 6px; /* Adjust spacing for better alignment */
+          }
+
+          .BizClass.Button span {
+            font-size: 13px; /* Adjust text size */
+          }
+
+          div[style*="justify-content: center"] {
+            margin-top: 10px; /* Reduce the margin for smaller screens */
+            flex-direction: column; /* Stack content vertically if needed */
+          }
+        }
+
+        @media (max-width: 480px) {
+          .BizClass.Button {
+            font-size: 12px; /* Further reduce font size for very small screens */
+            padding: 6px 10px; /* Compact padding */
+          }
+
+          .BizClass.Button img {
+            width: 14px; /* Further reduce image size */
+            margin-right: 4px; /* Adjust spacing */
+          }
+
+          .BizClass.Button span {
+            font-size: 12px; /* Reduce text size */
+          }
+
+          div[style*="justify-content: center"] {
+            margin-top: 5px; /* Reduce margin further */
+          }
+        }
+        @media (min-width: 1024px) and (max-width: 1200px) {
+          .BizClass.Button {
+            font-size: 14px;
+            padding: 0px;
+          }
+
+          .BizClass.Button img {
+            width: 16px; /* Scale down the image size */
+            margin-right: 6px; /* Adjust spacing for better alignment */
+          }
+
+          .BizClass.Button span {
+            font-size: 13px; /* Adjust text size */
+          }
+
+          div[style*="justify-content: center"] {
+            margin-top: 10px;
+            flex-direction: column;
+          }
+        }
+
+        .ClientLogo {
+          padding: 6px 14px 12px 14px;
+          border-bottom: 1px solid var(--gray-200);
+          display: grid;
+          gap: 20px;
+          grid-template-columns: auto;
+          align-items: center;
+
+          .ClientText {
+            h4 {
+              font-size: 14px;
+              // user-select: none !important;
+              -webkit-user-drag: none !important;
+              color: #045406;
+              text-align: center;
+            }
+
+            p {
+              font-size: 13px;
+              font-weight: 500;
+              color: #045406;
+              text-align: center;
+            }
+          }
+        }
+
+        .SubBox {
+          padding: 2.5rem 2rem;
+          display: grid;
+          align-self: center;
+          grid-template-rows: repeat(2, max-content) auto;
+          border: 1px solid #d9d9d9;
+
+          @media (min-width: 1024px) and (max-width: 1199px) {
+            padding: 12px 14px 10px 11px;
+            border: none;
+            width: 300px;
+          }
+          @media (max-width: 991px) {
+            padding: 2.5rem;
+          }
+
+          @media (max-width: 767px) {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            align-self: auto;
+          }
+
+          h3 {
+            font-size: 22px !important;
+            padding-bottom: 2px;
+            color: var(--gray-600);
+            // user-select: none !important;
+            -webkit-user-drag: none !important;
+            // color: #045406;
+          }
+
+          p {
+            font-size: 14px;
+            color: var(--gray-600);
+            opacity: 0.6;
+            // user-select: none !important;
+            -webkit-user-drag: none !important;
+            color: #045406;
+          }
+
+          .LoginTab {
+            display: grid;
+            grid-template-columns: repeat(2, max-content);
+            overflow: auto;
+            width: 100%;
+            padding: 5px 0px 7px;
+
+            .LoginTabButton {
+              background-color: whitesmoke;
+              color: var(--Main-light-text-color);
+              background: -webkit-gradient(linear, top left, bottom left, color-stop(0, #fff), color-stop(1, #eec694));
+              background: -webkit-linear-gradient(top, #fff, #eec694);
+              background: linear-gradient(to bottom, #fff, #eec694);
+              border: 1px solid #eec694;
+              border-radius: 2px;
+              box-shadow:
+                0 1px 3px rgb (0 0 0 / 8%),
+                inset 0 -1px 4px rgb (151 159 175 / 20%);
+              box-sizing: border-box;
+              cursor: pointer;
+              display: inline-block;
+              padding: 0 12px;
+              height: 40px;
+              font-size: 15px;
+              position: relative;
+              text-align: center;
+              text-decoration: none !important;
+              vertical-align: middle;
+              color: #000 !important;
+              width: 200px;
+              margin: 2px 2px 2px 2px;
+              font-weight: 600;
+            }
+
+            .ActiveLoginTabButton {
+              background-color: whitesmoke;
+              color: var(--Main-light-text-color);
+              background: -webkit-gradient(linear, top left, bottom left, color-stop(0, #f8a641), color-stop(1, #fb6c13));
+              background: -webkit-linear-gradient(top, #f8a641, #fb6c13);
+              background: linear-gradient(to bottom, #f8a641, #fb6c13);
+              border: 1px solid #f8a641;
+              border-radius: 2px;
+              box-shadow:
+                0 1px 3px rgb (0 0 0 / 8%),
+                inset 0 -1px 4px rgb (151 159 175 / 20%);
+              box-sizing: border-box;
+              cursor: pointer;
+              display: inline-block;
+              padding: 0 12px;
+              height: 40px;
+              font-size: 15px;
+              position: relative;
+              text-align: center;
+              text-decoration: none !important;
+              vertical-align: middle;
+              color: #fff !important;
+              width: 200px;
+              margin: 2px 2px 2px 2px;
+              font-weight: 600;
+            }
+          }
+
+          .InputBox {
+            display: grid;
+            row-gap: 20px;
+            height: max-content;
+            margin-top: 20px;
+
+            @media (max-width: 767px) {
+              display: flex;
+              flex-direction: column;
+            }
+
+            .InputGroup {
+              display: grid;
+              position: relative;
+              grid-template-columns: max-content auto max-content max-content;
+              border: 1px solid #045406;
+              align-items: center;
+
+              @media (max-width: 767px) {
+                display: flex;
+              }
+
+              label {
+                top: -8px;
+                font-size: 14px !important;
+                background-color: var(--white);
+                position: absolute;
+                top: -11px;
+                left: 20px;
+                padding: 0px 6px;
+                color: #045406;
+                font-weight: 600;
+                user-select: none !important;
+                -webkit-user-drag: none !important;
+              }
+
+              p {
+                margin-top: 3px;
+                font-weight: 500;
+                color: #000;
+                font-size: 18px;
+                background-image: linear-gradient(
+                  135deg,
+                  rgba(4, 84, 6, 0.6) 25%,
+                  rgba(214, 219, 223, 0) 25%,
+                  rgba(214, 219, 223, 0) 50%,
+                  rgba(4, 84, 6, 0.6) 50%,
+                  rgba(4, 84, 6, 0.6) 75%,
+                  rgba(214, 219, 223, 0) 75%,
+                  rgba(214, 219, 223, 0) 100%
+                );
+                background-size: 4px 4px;
+                padding: 1px 6px 0px 6px;
+              }
+
+              input {
+                height: 44px;
+                font-size: 14px;
+                line-height: 20px;
+                border: 0px;
+                margin-top: 4px;
+                width: 100%;
+
+                &::placeholder {
+                  color: var(--gray-500);
+                  user-select: none !important;
+                  -webkit-user-drag: none !important;
+                }
+
+                &:-webkit-autofill {
+                  box-shadow: 0 0 0 30px var(--white) inset !important;
+                  -webkit-box-shadow: 0 0 0 30px var(--white) inset !important;
+                  opacity: 1;
+                }
+
+                &:disabled {
+                  user-select: none !important;
+                  -webkit-user-drag: none !important;
+                  box-shadow: 0 0 0 30px var(--white) inset !important;
+                  -webkit-box-shadow: 0 0 0 30px var(--white) inset !important;
+                }
+              }
+
+              .BoxIcon {
+                color: #045406;
+                font-size: 20px;
+                margin: 16px 0px 14px 0;
+                width: 40px;
+              }
+
+              .RefreshBoxIcon {
+                color: #045406;
+                opacity: 0.8;
+                font-size: 20px;
+                margin: 14px 14px 12px 16px;
+                cursor: pointer;
+              }
+
+              .PassBoxIcon,
+              .PassBoxIconClosed {
+                color: #045406;
+                opacity: 0.8;
+                font-size: 25px;
+                margin: 14px 14px 12px 14px;
+                cursor: pointer;
+
+                @media (max-width: 767px) {
+                  margin: 14px 4px 12px 4px;
+                }
+              }
+            }
+
+            button {
+              width: 100%;
+              color: var(--black);
+              background: #7ed321;
+              padding: 0 42px;
+              font-size: 16px;
+              height: 44px;
+              line-height: 44px;
+              border: 0px;
+              // margin-top: 20px;
+
+              &:hover {
+                cursor: pointer;
+                color: var(--white);
+                opacity: 0.8;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .FooterBox {
+      display: grid;
+      align-items: center;
+      background-color: var(--gray-120);
+      border-top: 1px solid var(--gray-200);
+      border-radius: 2px 0px 0px 2px;
+
+      h4 {
+        font-weight: 600;
+        font-size: 14px;
+        padding: 6px 0px;
+        color: #045406;
+        text-align: center;
+        font-family: var(--fg-headingsFont);
+        // user-select: none !important;
+        -webkit-user-drag: none !important;
+      }
+    }
+  }
+
+  .container {
+    display: flex;
+
+    // grid-template-columns: repeat(2, 1fr);
+    @media (max-width: 414px) {
+      flex-direction: column;
+    }
+
+    .halfCaptcha {
+      flex: 1;
+
+      @media (max-width: 767px) {
+        width: 40%;
+        flex-basis: 40%;
+      }
+
+      @media (max-width: 414px) {
+        flex-direction: column;
+        width: 100%;
+        flex-basis: 100%;
+      }
+    }
+
+    .captchaCss {
+      display: flex;
+      justify-content: space-between;
+      // grid-template-columns: repeat(2, 1fr);
+      align-items: center;
+      // background-image: linear-gradient(to right, #f77321, #f8a641);
+      padding: 0px 5px;
+      height: 40px;
+      margin: 2px;
+      border: 2px solid #d9d9d9;
+
+      .RefreshCaptchaBoxIcon {
+        opacity: 0.8;
+        font-size: 25px;
+        color: #7ed321 !important;
+        cursor: pointer;
+      }
+
+      .captchaCode {
+        max-width: 70%;
+      }
+    }
+
+    .halfInput {
+      flex: 1;
+
+      @media (max-width: 767px) {
+        width: 100%;
+        flex: auto;
+      }
+
+      .captchaInput {
+        display: flex;
+        position: relative;
+        // grid-template-columns: max-content auto max-content max-content;
+        border: 1px solid #045406;
+        align-items: center;
+        margin: 2px;
+
+        input {
+          height: 38px;
+          font-size: 15px;
+          line-height: 20px;
+          padding: 0 15px;
+          border: 0px;
+          width: 100%;
+
+          @media (max-width: 767px) {
+            font-size: 14px;
+            padding: 0 8px;
+          }
+
+          &::placeholder {
+            color: var(--gray-500);
+            user-select: none !important;
+            -webkit-user-drag: none !important;
+          }
+
+          &:-webkit-autofill {
+            box-shadow: 0 0 0 30px var(--white) inset !important;
+            -webkit-box-shadow: 0 0 0 30px var(--white) inset !important;
+            opacity: 1;
+          }
+
+          &:disabled {
+            user-select: none !important;
+            -webkit-user-drag: none !important;
+            box-shadow: 0 0 0 30px var(--white) inset !important;
+            -webkit-box-shadow: 0 0 0 30px var(--white) inset !important;
+          }
+        }
+      }
+    }
+  }
+
+  .forgotpassCss {
+    color: #045406;
+    text-align: right;
+    text-decoration: underline !important;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  .divHeight {
+    height: 1.9vh;
+  }
+}
+
+.ButtonWithLoader {
+  position: relative;
+  background: #0a8c07;
+  font-size: 16px;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  transition: all 0.25s ease;
+  width: 210px;
+  height: 44px !important;
+  overflow: hidden;
+  margin: auto;
+  padding: 0px !important;
+
+  .ButtonText {
+    position: absolute;
+    width: 130px;
+    display: block;
+    position: relative;
+    pointer-events: none;
+    transition: all 0.25s ease;
+    left: 0px;
+  }
+
+  .ButtonLoader::after {
+    position: absolute;
+    content: "";
+    width: 30px;
+    height: 30px;
+    border-radius: 50px !important;
+    border: 4px solid transparent;
+    border-left: 4px solid #eee;
+    animation: load infinite 0.8s ease 0.05s;
+    opacity: 0.6;
+  }
+
+  @keyframes load {
+    0% {
+      transform: rotate(0);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .ButtonLoader {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    z-index: 100;
+    border-radius: 50px !important;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.25s ease;
+  }
+
+  &.loading {
+    width: 50px;
+    border-radius: 50px !important;
+  }
+
+  &.loading {
+    transform: rotate(0deg);
+    padding-bottom: 4px;
+    padding-left: 3px;
+  }
+
+  &.loading {
+    .ButtonText {
+      transform: translate(-140px);
+    }
+
+    .ButtonLoader {
+      opacity: 1;
+    }
+  }
+}
+
+.Wrapper {
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+  background: var(--fg-login-bg);
+}
+
+.toggleContainer {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: fit-content;
+  border: 3px solid #7ed321;
+  border-radius: 20px;
+  background: #7ed321;
+  font-weight: bold;
+  color: #7ed321;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.toggleContainer::before {
+  content: "";
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  left: 0%;
+  border-radius: 20px;
+  background: white;
+  transition: all 0.3s;
+}
+
+.toggleCheckbox:checked + .toggleContainer::before {
+  left: 50%;
+}
+
+.toggleContainer div {
+  padding: 6px;
+  text-align: center;
+  z-index: 1;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.toggleCheckbox {
+  display: none;
+}
+
+.toggleCheckbox:checked + .toggleContainer div:first-child {
+  color: white;
+  transition: color 0.3s;
+}
+
+.toggleCheckbox:checked + .toggleContainer div:last-child {
+  color: #7ed321;
+  transition: color 0.3s;
+}
+
+.toggleCheckbox + .toggleContainer div:first-child {
+  color: #7ed321;
+  transition: color 0.3s;
+}
+
+.toggleCheckbox + .toggleContainer div:last-child {
+  color: white;
+  transition: color 0.3s;
+}
+.toggleCheckbox + .toggleContainer div:first-child {
+  padding: 6px 6px;
+}
+
+.farmerLoginButton {
+  color: var(--white);
+  background: #7ed321;
+  padding: 0 25px;
+  font-size: 14px;
+  font-weight: 500;
+  height: 35px;
+  line-height: 35px;
+  border: 0px;
+  border-radius: 32px;
+  // margin-top: 20px;
+
+  &:hover {
+    cursor: pointer;
+    color: var(--white);
+    opacity: 0.8;
+  }
+}
+
+.ActivefarmerLoginButton {
+  color: #7ed321;
+  background: white;
+  padding: 0 25px;
+  font-size: 14px;
+  font-weight: 500;
+  height: 35px;
+  line-height: 35px;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 32px;
+  border-color: #7ed321;
+  // margin-top: 20px;
+}
+.ButtonFarmerCancel {
+  position: relative;
+  background: #f38508 !important;
+  font-size: 16px;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  transition: all 0.25s ease;
+  width: 210px;
+  height: 44px !important;
+  overflow: hidden;
+  margin: auto;
+  padding: 0px !important;
+}
+.ButtonFarmerblankCancel {
+  position: relative;
+  background: #ffffff !important;
+  font-size: 16px;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  transition: all 0.25s ease;
+  width: 20px !important;
+  height: 44px !important;
+  overflow: hidden;
+  margin: auto;
+  padding: 0px !important;
+}
+.farmerswitch {
+  label {
+    div {
+      @media (min-width: 991px) and (max-width: 1560px) {
+        font-size: 10px !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,128 @@
+.Box {
+  display: flex;
+  flex-direction: column;
+  margin: 40px 50px;
+  padding: 40px 50px 0 50px;
+  border-radius: 20px;
+  background-color: #fff;
+
+  .FormHeading {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    h4 {
+      font-size: 18px;
+      font-weight: 900;
+      font-family: var(--fg-headingsFont);
+      color: #425364;
+    }
+  }
+
+  .OtpInputGroup {
+    display: flex;
+    gap: 40px;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  .OtpInput {
+    background: #e1e9d8;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    text-align: center;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+
+    &:focus {
+      border-color: #80bdff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+  }
+
+  .Button {
+    background-color: green;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: darkgreen;
+    }
+
+    .icon {
+      margin-left: 5px;
+    }
+  }
+
+  .ResendText {
+    font-size: 12px;
+    color: #425364;
+    text-align: left;
+    margin-top: 10px;
+
+    .ResendLink {
+      color: #007bff;
+      cursor: pointer;
+      text-decoration: underline;
+      &:hover {
+        color: #0056b3;
+      }
+    }
+  }
+
+  .FormHeading {
+    margin-bottom: 20px;
+    h4 {
+      font-size: 18px;
+      font-weight: 900;
+      font-family: var(--fg-headingsFont);
+      color: #425364;
+    }
+  }
+
+  .Row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 40px;
+    margin-top: 30px;
+  }
+
+  .Input {
+    min-height: 40px;
+    flex: 1;
+  }
+
+  .Info {
+    font-size: 12px;
+    color: var(--fg-login-button-bg1);
+  }
+}
+
+.Container {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.Footer {
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.FooterText {
+  font-size: 10px;
+  text-align: center;
+}

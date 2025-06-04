@@ -1,0 +1,25 @@
+.csc_main_BI {
+  background: linear-gradient(to bottom, #21862d, #c3eb68);
+  /* min-height: -moz-fit-content;
+  min-height: fit-content; */
+    display: grid;
+    grid-template-rows: 100%;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: auto;
+}
+
+.navbar-container-landing-BI {
+  display: flex;
+  justify-content: space-between;
+  background-color: #FFF7F1;
+  padding: 0px 0px 0px 20px;
+  gap: 16px;
+  align-items: center;
+}
+
+.logo-container-landing-BI {
+  font-family: "Quicksand", sans-serif;
+  margin: 0 10px 0;
+}

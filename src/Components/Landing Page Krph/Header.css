@@ -1,0 +1,453 @@
+@media (min-width: 600px) {
+  .css-d37unq-MuiToolbar-root {
+    min-height: 23px !important;
+  }
+}
+
+
+.playStore-btn {
+  width: 22%;
+}
+
+
+@media (max-width: 768px) {
+  .css-332944 {
+    padding: 10px;
+  }
+}
+
+
+.custom-button-login {
+  margin-right: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 40px 10px 40px;
+  text-transform: none;
+}
+
+.custom-button-login img {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+}
+
+.list_items_footer {
+  text-decoration: underline;
+}
+
+.list_items_footer:hover {
+  text-decoration: underline;
+  text-decoration-color: red;
+}
+
+/* .topBar {
+  position: static !important;
+  padding: 5px 80px 5px 80px !important;
+  background-color: black !important;
+  height: 40px !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+} */
+
+.navbar-container-landing {
+  display: flex;
+  justify-content: space-between;
+  background-color: #FFF7F1;
+  padding: 0px 0px 0px 20px;
+  gap: 16px;
+  align-items: center;
+}
+
+.logo-container-landing {
+  font-family: "Quicksand", sans-serif;
+  margin: 0 10px 0;
+}
+
+.menu-container-landing {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+}
+
+.custom-button-login-landing {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  padding: 10px 20px !important;
+  border-radius: 4px !important;
+  transition: all 0.3s ease-in-out !important;
+  background-color: white;
+  color: #686E74;
+  font-size: 12.5px !important;
+  justify-content: center !important;
+}
+
+.custom-button-login-landing.active {
+  /* background-color: #F2FEDA ; */
+  color: black;
+}
+
+/* 
+.custom-button-login-landing:hover {
+  background-color: #F2FEDA;
+  color: black;
+} */
+
+.custom-button-login-landing:hover .icon-container-landing img {
+  filter: invert(17%) sepia(91%) saturate(3902%) hue-rotate(125deg) brightness(87%) contrast(97%);
+}
+
+/* Icon styles */
+.icon-container-landing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter 0.3s ease-in-out;
+}
+
+.icon-container-landing img {
+  filter: grayscale(100%) brightness(50%);
+}
+
+.custom-button-login-landing.active .icon-container-landing img {
+  filter: none;
+}
+
+/* Dropdown menu styles */
+.menu-dropdown-landing {
+  position: relative;
+}
+
+.menu-item-landing:hover {
+  background-color: #F2FEDA !important;
+  color: black !important;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+
+  /* Tablets */
+  .navbar-container-landing {
+    padding: 10px 20px;
+  }
+
+  .custom-button-login-landing {
+    min-width: 110px;
+    font-size: 13px;
+    padding: 7px 10px;
+  }
+
+  .menu-container-landing {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* Mobile - Hide Menu, Show Hamburger Icon */
+  .menu-container-landing {
+    display: none;
+  }
+
+  .hamburger-icon-landing {
+    display: block !important;
+    cursor: pointer;
+    color: black;
+    font-size: 24px;
+    /* Adjust size */
+  }
+}
+
+@media (min-width: 769px) {
+
+  /* Hide Hamburger Icon on Larger Screens */
+  .hamburger-icon-landing {
+    display: none !important;
+  }
+}
+
+/* Styles for the Drawer (Hamburger Menu) */
+/* Drawer Sidebar Container */
+/* Drawer Sidebar Container */
+.drawer-container-landing {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: white;
+  height: 100%;
+}
+
+/* Close Icon */
+.close-icon-landing {
+  align-self: flex-end;
+  margin-bottom: 10px;
+}
+
+/* Sidebar Buttons */
+.drawer-button-landing {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  /* Space between icon and text */
+  background-color: white;
+  color: #686E74;
+  padding: 12px 16px;
+  border-radius: 4px;
+  text-align: left;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  justify-content: flex-start;
+  /* Align items to the left */
+}
+
+/* Ensure text and icon align properly */
+.drawer-button-landing span {
+  flex-grow: 1;
+  /* Ensures the text aligns properly */
+  font-size: 14px;
+}
+
+/* Active Button */
+.drawer-button-landing.active {
+  background-color: #F2FEDA;
+  color: black;
+}
+
+/* Sidebar Icon Styling */
+.icon-container-landing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  /* Fixed width for uniform alignment */
+  height: 30px;
+}
+
+/* Icons should be same size */
+.icon-container-landing img {
+  width: 20px;
+  height: 20px;
+  filter: grayscale(100%) brightness(50%);
+}
+
+/* Remove filter when active */
+.drawer-button-landing.active .icon-container-landing img {
+  filter: none;
+}
+
+/* Hover Effects */
+.drawer-button-landing:hover {
+  background-color: #F2FEDA;
+  color: black;
+}
+
+.drawer-button-landing:hover .icon-container-landing img {
+  filter: invert(17%) sepia(91%) saturate(3902%) hue-rotate(125deg) brightness(87%) contrast(97%);
+}
+
+@media (max-width: 768px) {
+  .drawer-container-landing {
+    width: 220px;
+    padding: 15px;
+  }
+
+  .drawer-button-landing {
+    padding: 10px 14px;
+  }
+}
+
+.footer_box {
+  padding: 10px 80px 10px 80px !important;
+
+}
+
+.footer_box2 {
+  padding: 10px 0 10px 0px !important;
+}
+
+.aboutSec_box {
+  padding: 30px 100px 30px 100px !important;
+}
+
+.box_ImportantInfo {
+  padding: 20px 0px 20px 0px !important;
+
+}
+
+.paper_importantInfo {
+  padding: 20px 50px 0px 0px !important;
+}
+
+.gridContainer_Header {
+  padding: 10px 60px 10px 40px !important;
+}
+
+
+
+@media (max-width: 768px) {
+  .footer_box {
+    padding: 20px 30px 10px 30px !important;
+
+  }
+
+  .footer_box2 {
+    padding: 10px 20px 10px 20px !important;
+
+  }
+
+  .aboutSec_box {
+    padding: 30px 30px 30px 30px !important;
+  }
+
+  .box_ImportantInfo {
+    padding: 20px 10px 23px 16px !important;
+  }
+
+  .paper_importantInfo {
+    padding: 0px !important;
+  }
+
+}
+
+
+@media (max-width: 384px) {
+
+  .box_ImportantInfo {
+    padding: 20px 10px 23px 16px !important;
+  }
+
+  .paper_importantInfo {
+    padding: 0px !important;
+  }
+
+}
+
+@media(max-width:557px) {
+  .gridContainer_ImportantInfo {
+    flex-direction: column !important;
+    margin: 15px 0 0 0;
+  }
+
+  .gridContainer_Header {
+    padding: 10px !important;
+  }
+
+
+
+}
+
+.img_mininstry_header {
+  mix-blend-mode: difference;
+  height: 36px;
+  width: auto;
+
+}
+@media (max-width:409px) {
+  .img_mininstry_header {
+    height: 8vw !important;
+  }
+}
+
+.box_heroSection {
+
+  
+  /* Default height */
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+}
+
+@media(min-width:1920px) {
+  /* .box_heroSection {
+     height: 950px; 
+  } */
+}
+
+@media (min-width: 1330px)and (max-width: 1500px) {
+  .box_heroSection {
+    height: 521px;
+  }
+}
+
+
+
+@media (min-width: 1210px)and (max-width: 1330px) {
+  .box_heroSection {
+    height: 550px;
+  }
+}
+
+
+
+@media (max-width: 1210px)and (min-width: 1024px) {
+  .box_heroSection {
+    height: 580px;
+  }
+}
+
+
+
+@media (max-width: 1024px)and (min-width: 769px) {
+  .box_heroSection {
+    height: 455px;
+  }
+}
+
+
+@media (min-width: 481px) and (max-width: 560px) {
+  .box_heroSection {
+    height: 310px;
+  }
+}
+
+@media (min-width: 561px) and (max-width: 680px) {
+  .box_heroSection {
+    height: 366px;
+  }
+}
+
+@media (min-width: 681px) and (max-width: 768px) {
+  .box_heroSection {
+    height: 375px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .box_heroSection {
+    height: 195px;
+  }
+}
+
+
+.video_HeroSection {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* @media(max-width:1324px) {
+  .video_HeroSection {
+    width: 100%;
+    height: 100%;
+  }
+
+  .box_heroSection {
+    height: 100%;
+    width: 97%;
+
+  }
+
+} */

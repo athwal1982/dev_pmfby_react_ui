@@ -1,0 +1,65 @@
+/* Header Styling */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #ffffff;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  top: 12px;
+  left: 70px;
+  width: 410px;
+  height: 56px;
+  /* UI Properties */
+  background: transparent 0% 0% no-repeat padding-box;
+  opacity: 1;
+}
+
+.header-text h1 {
+  font-size: 18px;
+  margin: 0;
+  color: #000000; /* Black text color */
+}
+
+.header-text p {
+  font-size: 14px;
+  margin: 0;
+  color: #666666; /* Slightly grey color for the subheading */
+}
+
+.header-right {
+  text-align: right;
+}
+
+.welcome-text {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #000000;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.header-btn {
+  padding: 5px 10px;
+  background-color: #006400; /* Dark green background */
+  color: #ffffff; /* White text */
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.header-btn:hover {
+  background-color: #004d00; /* Slightly darker green on hover */
+}

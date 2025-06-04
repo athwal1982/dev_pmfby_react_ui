@@ -1,0 +1,26 @@
+.tabHeaderWrapper {
+    background-color: #fff;
+    border-radius: 0px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 0 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  
+    .MuiTabs-root {
+      .MuiTab-root {
+        font-family: 'Quicksand', sans-serif;
+        font-weight: bold;
+        font-size: 14px;
+        min-width: 120px;
+  
+        &.Mui-selected {
+          color: #075307;
+        }
+      }
+  
+      .MuiTabs-indicator {
+        background-color: #075307;
+      }
+    }
+  }
+  
