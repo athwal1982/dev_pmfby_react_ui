@@ -1,15 +1,15 @@
 .Box {
   display: grid;
-  // grid-template-rows: 100%;
+  // A grid-template-rows: 100%;
   padding: 12px;
-  // overflow: auto;
+  // A overflow: auto;
   gap: 12px;
-  position: fixed;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-  left: 76px;
-  z-index: 101;
+  // A position: fixed;
+  // A top: 0px;
+  // A bottom: 0px;
+  // A right: 0px;
+  // A left: 76px;
+  // A z-index: 101;
   background: #eff2f6;
 
   .Div {
@@ -234,9 +234,7 @@
             background: linear-gradient(to bottom, #2bbe60, #0f9d58);
             border: 1px solid #0f9d58;
             border-radius: 2px;
-            box-shadow:
-              0 1px 3px rgb (0 0 0 / 8%),
-              inset 0 -1px 4px rgb (151 159 175 / 20%);
+            box-shadow: 0 1px 3px rgb (0 0 0 / 8%), inset 0 -1px 4px rgb (151 159 175 / 20%);
             box-sizing: border-box;
             cursor: pointer;
             display: inline-block;
@@ -257,9 +255,7 @@
             background: linear-gradient(to bottom, #3699ff, #3d8bda);
             border: 1px solid #3699ff;
             border-radius: 2px;
-            box-shadow:
-              0 1px 3px rgb (0 0 0 / 8%),
-              inset 0 -1px 4px rgb (151 159 175 / 20%);
+            box-shadow: 0 1px 3px rgb (0 0 0 / 8%), inset 0 -1px 4px rgb (151 159 175 / 20%);
             box-sizing: border-box;
             cursor: pointer;
             display: inline-block;
@@ -284,26 +280,13 @@
           border: 1px solid #ccc;
           border-left: none;
           overflow: auto;
-          padding: 4px 30px;
+          padding: 8px 30px;
           .ValidateTabGroup {
             list-style: none;
             display: flex;
             flex-direction: row;
             gap: 12px;
             align-items: center;
-            .ValidateTabGroupButton {
-              display: flex;
-              margin-left: 62px;
-              flex-direction: row;
-              gap: 12px;
-              align-items: center;
-            }
-            .ValidateTabGroupButtonRender {
-              display: flex;
-              flex-direction: row;
-              gap: 12px;
-              align-items: center;
-            }
 
             button {
               padding: 2px 4px;
