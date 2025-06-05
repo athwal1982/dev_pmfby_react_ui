@@ -157,7 +157,7 @@ const PageRouter = () => {
         <Route exact path="/OfflineGrievance" element={<Page component={<OfflineGrievance />} title="Offline Grievance" />} />
         <Route exact path="/SosAgeing" element={<Page component={<SosAgeing />} title="Sos Ageing" />} />
         <Route exact path="/NCIPTicketSync" element={<Page component={<NCIPTicketSync />} title="NCIP Ticket Sync" />} />
-       <Route exact path="/BotFarmerTicket" element={<Page component={<BotFarmerTicket />} title="Bot Farmer Tickets" />} />
+        <Route exact path="/BotFarmerTicket" element={<Page component={<BotFarmerTicket />} title="Bot Farmer Tickets" />} />
         <Route exact path="/BIDashboard" element={<BIDashboard />} />
       </Routes>
     </Router>

@@ -40,10 +40,19 @@ const OfflineGrievance = () => {
     { ID: 2, Value: "Twitter" },
     { ID: 3, Value: "LinkedIn" },
     { ID: 4, Value: "WhatsApp" },
+    { ID: 5, Value: "Any Other Source" },
   ]);
   const [isIdentified] = useState([
     { ID: 1, Value: "Yes" },
     { ID: 2, Value: "No" },
+  ]);
+
+  const [fromWhereList] = useState([
+    { ID: 1, Value: "CPGRAMS" },
+    { ID: 2, Value: "HAM Office" },
+    { ID: 3, Value: "Secretary Office" },
+    { ID: 4, Value: "Joint Secretary Office" },
+    { ID: 5, Value: "Directly to Department/Section" },
   ]);
 
   const [formValuesGI, setFormValuesGI] = useState({
@@ -65,6 +74,8 @@ const OfflineGrievance = () => {
     txtTicketCategory: null,
     txtDocumentUpload: "",
     txtTicketDescription: "",
+    txtSourcePhysicalLetter: null,
+    txtSourceEmail: null,
   });
 
   const [formValidationKRPHError, setFormValidationKRPHError] = useState({});
@@ -1012,7 +1023,32 @@ const OfflineGrievance = () => {
                 </InputGroup>
                 <span className="login_ErrorTxt">{formValidationKRPHError["txtComplaintDate"]}</span>
               </Typography>
+               <Typography
+                sx={{
+                  fontFamily: "Quicksand, sans-serif",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "2px",
+                  fontSize: "14px",
+                }}
+              >
+                <span>
+                  Source
+                </span>{" "}
+                <InputGroup>
+                  <InputControl
+                    Input_type="select"
+                    name="txtSourceEmail"
+                    getOptionLabel={(option) => `${option.Value}`}
+                    value={formValuesGI.txtSourceEmail}
+                    getOptionValue={(option) => `${option}`}
+                    options={fromWhereList}
+                    ControlTxt="Source"
+                    onChange={(e) => updateStateGI("txtSourceEmail", e)}
+                  />
+                </InputGroup>
 
+              </Typography>
               <Typography
                 sx={{
                   fontFamily: "Quicksand, sans-serif",
@@ -1312,7 +1348,32 @@ const OfflineGrievance = () => {
                 </InputGroup>
                 <span className="login_ErrorTxt">{formValidationKRPHError["txtComplaintDate"]}</span>
               </Typography>
+               <Typography
+                sx={{
+                  fontFamily: "Quicksand, sans-serif",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "2px",
+                  fontSize: "14px",
+                }}
+              >
+                <span>
+                  Source
+                </span>{" "}
+                <InputGroup>
+                  <InputControl
+                    Input_type="select"
+                    name="txtSourcePhysicalLetter"
+                    getOptionLabel={(option) => `${option.label}`}
+                    value={formValuesGI.txtSourcePhysicalLetter}
+                    getOptionValue={(option) => `${option}`}
+                    options={fromWhereList}
+                    ControlTxt="Source"
+                    onChange={(e) => updateStateGI("txtSourcePhysicalLetter", e)}
+                  />
+                </InputGroup>
 
+              </Typography>
 
               <Typography
                 sx={{

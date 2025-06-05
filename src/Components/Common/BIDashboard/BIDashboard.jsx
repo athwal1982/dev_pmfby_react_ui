@@ -25,7 +25,7 @@ const BIDashboard = () => {
           </Box>
           </Box>
          <Box style={{padding: "5px 0px 0px 0px"}}>
-            <iframe src="https://mui.com/"  width="100%" height="560px" allowFullScreen="true" frameBorder="0">
+            <iframe src="#"  width="100%" height="560px" allowFullScreen="true" frameBorder="0">
             </iframe>
          </Box> 
          </Box>
