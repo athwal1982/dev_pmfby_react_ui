@@ -89,8 +89,8 @@ const PageRouter = () => {
         <Route exact path="/ticket-history" element={<TicketHistory />} />
         <Route exact path="/croploss" element={<CropLossintimationTickets />} />
         <Route exact path="/ticketSuccess" element={<TicketSuccess />} />
-        A<Route exact path="/complaint-status" element={<ComplaintStatus />} />
-        <Route exact path="/OfflineIntimation" element={<OfflineIntimation />} title="Offline Intimation" />
+        <Route exact path="/complaint-status" element={<ComplaintStatus />} />
+        <Route exact path="/OfflineIntimation" element={<Page component={<OfflineIntimation />} title="Offline Intimation" />} />
         {/* ------------ End of new routes ------------ */}
         <Route exact path="/" element={<PageAuthenticator />} />
         {/* <Route path="/" element={<Index />} /> */}
