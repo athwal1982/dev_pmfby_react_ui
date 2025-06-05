@@ -1364,7 +1364,7 @@ const OfflineGrievance = () => {
                   <InputControl
                     Input_type="select"
                     name="txtSourcePhysicalLetter"
-                    getOptionLabel={(option) => `${option.label}`}
+                    getOptionLabel={(option) => `${option.Value}`}
                     value={formValuesGI.txtSourcePhysicalLetter}
                     getOptionValue={(option) => `${option}`}
                     options={fromWhereList}
