@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { smsotpsend, verifyOtp } from "Components/Common/Login/ForgotPasswordModal/Servcie/Methods";
 import publicIp from "public-ip";
-import { sha256 } from "crypto-hash";
 import bcrypt from "bcryptjs";
+import { sha256 } from "crypto-hash";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { useNavigate } from "react-router-dom";
 import { setSessionStorage, encryptStringData, decryptStringData } from "../../../../Components/Common/Login/Auth/auth";
@@ -58,7 +58,6 @@ function AddLoginLogics() {
   const [btnLoaderActiveNcip, setBtnLoaderActiveNcip] = useState(false);
 
   const handleLogin = async (formValues, enteredCaptcha, captchaCode, setCaptchaCode, setAlertMessage) => {
-    
     if (formValues.txtLoginId === "") {
       setAlertMessage({
         type: "error",
@@ -111,15 +110,14 @@ function AddLoginLogics() {
       // A  const user = { ...result.responseData };
       // A  setSessionStorage("user", user);
       // A  navigate("/welcome");
-      // A } else {
+      // A} else {
       // A  setAlertMessage({
       // A    type: "error",
       // A    message: result.responseMessage,
       // A  });
       // A  setBtnLoaderActive(false);
       // A  setCaptchaCode(generateCaptcha());
-      // }
-      debugger;
+      // A}
       const encryptUserName = encryptStringData(formValues.txtLoginId ? formValues.txtLoginId : "");
       const hashPass = await sha256(formValues.txtPassword ? formValues.txtPassword : "");
       setBtnLoaderActive(true);
@@ -133,7 +131,7 @@ function AddLoginLogics() {
         setBtnLoaderActive(false);
         if (result.responseCode === 1) {
           if (!(result.responseData.token && result.responseData.token.Token && result.responseData.token.expirationTime)) {
-            setCaptchaCode(generateCaptcha());
+            createCaptcha();
             setAlertMessage({
               type: "error",
               message: "Token is missing in the response",
@@ -144,9 +142,10 @@ function AddLoginLogics() {
             ...result.responseData,
           };
           setSessionStorage("user", user);
+          console.log(user);
           navigate("/welcome");
         } else {
-         setCaptchaCode(generateCaptcha());
+          createCaptcha();
           setAlertMessage({
             type: "error",
             message: result.responseMessage,
@@ -154,7 +153,7 @@ function AddLoginLogics() {
         }
       } else {
         setBtnLoaderActive(false);
-        setCaptchaCode(generateCaptcha());
+        createCaptcha();
         setAlertMessage({
           type: "error",
           message: resultSaltVal.responseMessage,
@@ -171,7 +170,6 @@ function AddLoginLogics() {
   };
 
   const handleLoginNcip = async (formValuesNcip, enteredCaptcha, captchaCode, setCaptchaCode, setAlertMessage) => {
-    
     try {
       if (formValuesNcip.txtmobileno === "") {
         setAlertMessage({
@@ -515,8 +513,6 @@ function AddLoginLogics() {
   }, [otpFieldVisible]);
 
   const handleMobileInputSubmission = async () => {
-    
-
     try {
       if (!mobileNum.trim()) {
         setAlertMessage({ type: "error", message: "Please enter mobile number" });
@@ -624,7 +620,6 @@ function AddLoginLogics() {
   };
 
   const handleOtpSubmit = async (e) => {
-    
     e.preventDefault();
     if (otp.length === 0) {
       setAlertMessage({

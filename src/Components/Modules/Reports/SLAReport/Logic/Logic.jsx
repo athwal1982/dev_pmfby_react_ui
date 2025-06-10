@@ -68,8 +68,6 @@ function SLAReportLogic() {
   const [filteredSLACallDataList, setFilteredSLACallDataList] = useState([]);
 
   const getSLACallData = async () => {
-    
-
     try {
       setSLACallDataList(true);
       if (!validateForm()) {
@@ -119,7 +117,7 @@ function SLAReportLogic() {
     if (!validateForm()) {
       return;
     }
-    
+
     if (formValues.txtFromDate) {
       if (formValues.txtToDate) {
         if (formValues.txtFromDate > formValues.txtToDate) {

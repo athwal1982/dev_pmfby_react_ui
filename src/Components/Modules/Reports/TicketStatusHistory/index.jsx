@@ -1,4 +1,3 @@
-
 import React from "react";
 import TicketStatusHistory from "./Views/TicketStatusHistory";
 import TicketStatusHistoryLogics from "./Logic/Logic";
@@ -46,4 +45,3 @@ function TicketStatusHistoryPage() {
 }
 
 export default TicketStatusHistoryPage;
-

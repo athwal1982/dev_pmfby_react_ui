@@ -137,7 +137,6 @@ function UnAssignUsersPopUpLogic() {
   };
 
   const updateUnAssignedUserList = (newlyAddedUser) => {
-    
     if (gridApiUnAssign) {
       const rowData = [];
       if (newlyAddedUser && newlyAddedUser.length > 0) {
@@ -151,7 +150,6 @@ function UnAssignUsersPopUpLogic() {
   };
 
   useEffect(() => {
-    
     if (deletedAssignedRow) {
       console.log(deletedAssignedRow, "deletedAssignedRow");
       updateUnAssignedUserList(deletedAssignedRow);
@@ -166,7 +164,6 @@ function UnAssignUsersPopUpLogic() {
 
   const [btnLoaderActive, setBtnLoaderActive] = useState(false);
   const handleSave = async (e, updateAssignedUserList) => {
-    
     try {
       if (e) e.preventDefault();
       const checkedItem = getSelectedRowData();

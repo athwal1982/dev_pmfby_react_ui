@@ -42,7 +42,6 @@ function AddLoginLogics() {
 
   const [captchaCode, setCaptchaCode] = useState("");
   const createCaptcha = () => {
-    
     // A clear the contents of captcha div first
     document.getElementById("captcha").innerHTML = "";
     const charsArray = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@!#$%^&*";
@@ -73,7 +72,6 @@ function AddLoginLogics() {
 
   const [captchaCodeNcip, setCaptchaCodeNcip] = useState("");
   const createCaptchaNcip = () => {
-    
     // A clear the contents of captcha div first
     document.getElementById("captchaNcip").innerHTML = "";
     const charsArray = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@!#$%^&*";
@@ -100,7 +98,6 @@ function AddLoginLogics() {
 
   const [btnLoaderActive, setBtnLoaderActive] = useState(false);
   const handleLogin = async (captchaCode) => {
-    
     try {
       if (formValues.txtLoginId === "") {
         setAlertMessage({
@@ -206,7 +203,6 @@ function AddLoginLogics() {
 
   const [btnLoaderActiveNcip, setBtnLoaderActiveNcip] = useState(false);
   const handleLoginNcip = async (captchaCodeNcip) => {
-    
     try {
       if (formValuesNcip.txtmobileno === "") {
         setAlertMessage({
@@ -294,7 +290,6 @@ function AddLoginLogics() {
   const [captchaCodefarmer, setCaptchaCodefarmer] = useState("");
   const createCaptchafarmer = () => {
     if (farmertab != 0) {
-      
       // A clear the contents of captcha div first
       document.getElementById("captchafarmer").innerHTML = "";
       const charsArray = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@!#$%^&*";
@@ -393,7 +388,6 @@ function AddLoginLogics() {
 
   const [btnLoaderActivefarmer, setBtnLoaderActivefarmer] = useState(false);
   const handleLoginfarmer = async (captchaCodefarmer) => {
-    
     if (formValuesfarmer.txtmobilenofarmer === "") {
       setAlertMessage({
         type: "error",
@@ -451,7 +445,6 @@ function AddLoginLogics() {
   };
 
   const callKrphAllActivityPage = async () => {
-    
     try {
       const urlSearchParams = new URLSearchParams(window.location.search);
       const params = Object.fromEntries(urlSearchParams.entries());

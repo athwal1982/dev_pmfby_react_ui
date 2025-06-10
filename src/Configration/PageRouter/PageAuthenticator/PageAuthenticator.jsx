@@ -16,16 +16,16 @@ function PageAuthenticator() {
       if (servicesuccessData === "TC" || servicesuccessData === "CD") {
         return <Navigate to="/ServiceSuccess" />;
       }
-     // Areturn <Navigate to="/login" />;
+      // Areturn <Navigate to="/login" />;
       return <Navigate to="/krph" />;
     } else if (pathUrl.indexOf("BIDashboard") !== -1) {
-         return <Navigate to="/BIDashboard" />;
+      return <Navigate to="/BIDashboard" />;
     }
     return <Navigate to="/welcome" />;
   }
   if (pathUrl.indexOf("ImportantInstructions") !== -1) {
     return <Navigate to="/ImportantInstructions" />;
-  } 
+  }
   //  Areturn <Navigate to="/login" />;
 
   return <Navigate to="/krph" />;

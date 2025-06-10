@@ -21,7 +21,6 @@ function ProfileManagementLogics() {
 
   const [gridApi, setGridApi] = useState();
   const onGridReady = (params) => {
-    
     setGridApi(params.api);
   };
 
@@ -73,7 +72,7 @@ function ProfileManagementLogics() {
         WPFURL: menu.WPFURL,
         WinURL: menu.WinURL,
       };
-      
+
       if (menu.UnderMenuID.toString() !== "0") {
         const parentMenu = menuListData.find((x) => x.MenuMasterID.toString() === menu.UnderMenuID.toString());
         if (parentMenu !== null && parentMenu !== undefined) {
@@ -84,7 +83,7 @@ function ProfileManagementLogics() {
       menuTreeListData.push(menuData);
     });
     console.log("menuTreeListData", menuTreeListData);
-    
+
     menuTreeListData.forEach((menu) => {
       menu.orgHierarchy = menu.orgHierarchy.reverse();
     });
@@ -124,7 +123,7 @@ function ProfileManagementLogics() {
 
       const result = await userProfileMenuAssign(formData);
       setIsLoadingMenuList(false);
-      
+
       if (result.response.responseCode === 1) {
         if (ViewMode === "AssignMenu" || ViewMode === "UNAssignMenu") {
           if (result.response.responseData && result.response.responseData.ProfileMenuID !== 0) {
@@ -188,13 +187,11 @@ function ProfileManagementLogics() {
   };
 
   const onAssignMenu = (menu) => {
-    
     console.log("onUnAssignMenu", menu);
     getMenuListData(0, profileListData.UserProfileID, 0, menu.MenuMasterID, "AssignMenu");
   };
 
   const onGetMenuClick = (moduleData) => {
-    
     console.log(moduleData);
     setProfileListData(moduleData);
     getMenuListData(0, moduleData.UserProfileID, 0, 0, "AssignedMenu");
@@ -202,13 +199,11 @@ function ProfileManagementLogics() {
   };
 
   const onUnAssignMenu = (menu) => {
-    
     console.log("onUnAssignMenu", menu);
     getMenuListData(menu.ProfileMenuID, profileListData.UserProfileID, 0, menu.MenuMasterID, "UNAssignMenu");
   };
 
   const getUserProfileData = async () => {
-    
     try {
       setProfileMasterData([]);
       setFilterProfileMasterData([]);
@@ -259,7 +254,6 @@ function ProfileManagementLogics() {
   };
 
   useEffect(() => {
-    
     getUserProfileData();
   }, []);
 

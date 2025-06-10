@@ -34,7 +34,6 @@ function NCIPLogin() {
   };
 
   const handleLogin = async () => {
-    
     try {
       await handleLoginNcip(formValuesNcip, enteredCaptcha, captchaCode, setCaptchaCode, setAlertMessage);
     } catch (error) {

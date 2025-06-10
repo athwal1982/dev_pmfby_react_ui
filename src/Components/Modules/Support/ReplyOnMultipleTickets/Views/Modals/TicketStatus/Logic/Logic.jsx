@@ -20,7 +20,6 @@ function TicketStatusLogic() {
 
   const [btnLoaderActive, setBtnLoaderActive] = useState(false);
   const handleSave = async (selectedTicketsData, showfunc, updateReplyOnMultipleTicket) => {
-    
     let popUpMsg = "";
     if (value === "" || value === "<p></p>") {
       popUpMsg = "Ticket comment is required!";
@@ -222,7 +221,6 @@ function TicketStatusLogic() {
   const [ticketStatusList, setTicketStatusList] = useState([]);
   const [isLoadingTicketStatusList, setIsTicketStatusList] = useState(false);
   const getTicketStatusListData = async () => {
-    
     try {
       setTicketStatusList([]);
       setIsTicketStatusList(true);

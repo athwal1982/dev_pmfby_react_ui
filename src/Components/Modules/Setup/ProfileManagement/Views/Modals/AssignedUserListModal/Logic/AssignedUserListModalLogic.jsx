@@ -21,14 +21,12 @@ function AssignedUserListModalLogic() {
 
   const [searchTextAssigendUser, setSearchTextAssigendUser] = useState("");
   const onSearchAssignedUser = (val) => {
-    
     setSearchTextAssigendUser(val);
     assignedUserGridApi.setQuickFilter(val);
     assignedUserGridApi.refreshCells();
   };
 
   const getAssignedUserListData = async (data) => {
-    
     try {
       setAssignedUserList([]);
       setFilteredAssignedUserList([]);
@@ -66,7 +64,6 @@ function AssignedUserListModalLogic() {
   };
 
   const updateAssignedUserList = (assignedList) => {
-    
     console.log(assignedList, "coming");
 
     if (assignedList && assignedList.length > 0) {

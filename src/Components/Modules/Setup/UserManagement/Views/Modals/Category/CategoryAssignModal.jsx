@@ -64,7 +64,6 @@ function CategoryAssignModal({ showfunc, selectedUserData }) {
   } = CategoryAssignModalLogic();
 
   useEffect(() => {
-    
     setSelectedUser(selectedUserData);
     getCategoryListData(selectedUserData);
   }, [selectedUserData]);

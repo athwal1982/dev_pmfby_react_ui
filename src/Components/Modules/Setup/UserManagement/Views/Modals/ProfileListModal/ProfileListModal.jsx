@@ -19,7 +19,6 @@ function ProfileListModal({ showfunc, selectedUserData, updateUserDataList }) {
   } = ProfileListModalLogic();
 
   useEffect(() => {
-    
     setSelectedUser(selectedUserData);
     getProfileListData(selectedUserData);
   }, [selectedUserData]);

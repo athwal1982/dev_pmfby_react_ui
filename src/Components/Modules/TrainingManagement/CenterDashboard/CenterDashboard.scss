@@ -1,11 +1,11 @@
 $colors: (
-  "yellow": #FFD700,
-  "orange": #FFA500,
-  "red": #FF4500,
-  "dark-red": #DC143C,
-  "pink": #FF69B4,
-  "green": #32CD32,
-  "dark-green": #008000
+  "yellow": #ffd700,
+  "orange": #ffa500,
+  "red": #ff4500,
+  "dark-red": #dc143c,
+  "pink": #ff69b4,
+  "green": #32cd32,
+  "dark-green": #008000,
 );
 
 @each $name, $color in $colors {
@@ -16,7 +16,7 @@ $colors: (
 
 .center-dashboard-container {
   padding: 1rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f5f7fa;
   min-height: 100vh;
 
@@ -45,13 +45,7 @@ $colors: (
         content: "";
         position: absolute;
         inset: 0;
-        background: repeating-linear-gradient(
-          -45deg,
-          rgba(0, 0, 0, 0.05) 0px,
-          rgba(0, 0, 0, 0.05) 10px,
-          transparent 10px,
-          transparent 20px
-        );
+        background: repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.05) 0px, rgba(0, 0, 0, 0.05) 10px, transparent 10px, transparent 20px);
         opacity: 0.2;
         pointer-events: none;
         border-radius: 10px;
@@ -88,15 +82,17 @@ $colors: (
   }
 
   .center-status {
-    background: #E3F7B6;
+    background: #e3f7b6;
     padding: 12px;
     border-radius: 10px;
     margin-bottom: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(135deg, #E3F7B6, #E3F7B6);
+    background: linear-gradient(135deg, #e3f7b6, #e3f7b6);
     position: relative;
     overflow: hidden;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition:
+      transform 0.3s ease-in-out,
+      box-shadow 0.3s ease-in-out;
 
     &:before {
       content: "";
@@ -111,49 +107,46 @@ $colors: (
     }
 
     .month {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+
+      .month-info {
+        width: 100%;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-      
-        .month-info {
-          width: 100%;
+        flex-direction: column;
+
+        .month-status {
+          font-size: 0.9rem;
+          // font-weight: 600;
+          // margin-bottom: 0.5rem;
+        }
+
+        .dropdown-container {
           display: flex;
-          flex-direction: column; 
-      
-          .month-status {
+          gap: 0.75rem;
+
+          .month-dropdown-year-center,
+          .month-status-center {
+            padding: 0.4rem 0.7rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
             font-size: 0.9rem;
-            // font-weight: 600;
-            // margin-bottom: 0.5rem;
-          }
-      
-          .dropdown-container {
-            display: flex;
-            gap: 0.75rem;            
-
-
-           .month-dropdown-year-center,
-            .month-status-center{
-                padding: 0.4rem 0.7rem; 
-                border-radius: 6px;
-                border: 1px solid #ccc;
-                font-size: 0.9rem;
-                background-color: #fff;
-            }
-            
+            background-color: #fff;
           }
         }
       }
-   
+    }
 
     .center-cards {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
       margin-top: 1rem;
-      background: #E3F7B6;
+      background: #e3f7b6;
 
-      .center-card2{
+      .center-card2 {
         background: #fff;
         padding: 15px;
         width: 35%;
@@ -163,42 +156,41 @@ $colors: (
         position: relative; // For positioning the icon
 
         .icon {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            padding: 8px 6px 8px 6px;
-            background-color: #A4D3D3;
-            border-radius: 10px;
+          position: absolute;
+          top: 15px;
+          right: 20px;
+          padding: 8px 6px 8px 6px;
+          background-color: #a4d3d3;
+          border-radius: 10px;
 
-            img {
-                width: 30px;
-                height: 27px;
-            }
+          img {
+            width: 30px;
+            height: 27px;
+          }
         }
 
         h4 {
-            font-size: 14px;
-            margin-bottom: 30px;
-            font-weight: 500;
+          font-size: 14px;
+          margin-bottom: 30px;
+          font-weight: 500;
         }
 
-
         div {
-            display: flex;
-            gap: 20px;
+          display: flex;
+          gap: 20px;
         }
 
         .number {
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 5px;
+          font-size: 16px;
+          font-weight: bold;
+          margin-top: 5px;
         }
 
         .subtext {
-            font-weight: bold;
-            margin-top: 5px;
-            font-size: 12px;
-            color: #666;
+          font-weight: bold;
+          margin-top: 5px;
+          font-size: 12px;
+          color: #666;
         }
       }
       .center-card3 {
@@ -208,55 +200,52 @@ $colors: (
         border-radius: 10px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         position: relative;
-      
+
         .icon {
           position: absolute;
           top: 15px;
           right: 20px;
           padding: 8px 6px;
-          background-color: #D5B8F3;
+          background-color: #d5b8f3;
           border-radius: 10px;
-      
+
           img {
             width: 30px;
             height: auto;
           }
         }
-      
+
         h4 {
           font-size: 1rem;
           margin-bottom: 0.8rem;
           color: #2e3a59;
         }
-      
+
         .number {
           font-size: 1.1rem;
           font-weight: bold;
           color: #0e4a8b;
         }
-      
+
         .subtext {
           font-size: 0.8rem;
           color: #666;
           margin-bottom: 0.8rem;
         }
-      
+
         .number-container {
           display: flex;
           flex-wrap: wrap;
-          align-items: flex-end; 
+          align-items: flex-end;
           gap: 0.6rem;
           margin-top: 80px;
-      
+
           .number {
             flex: 1 1 30px;
             text-align: center;
           }
         }
       }
-      
     }
   }
-
- 
 }

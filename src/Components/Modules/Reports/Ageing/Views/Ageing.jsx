@@ -25,33 +25,33 @@ function AgeingReport({
   const [selectedRowData, setSelectedRowData] = useState([]);
   const openAgeingTicketListClick = (data, headerName) => {
     setSelectedRowData(data);
-    
+
     if (data) {
       let pViewMode =
         formValues && formValues.txtReportFilter && formValues.txtReportFilter.Value === "Insurance"
           ? "I"
           : formValues.txtReportFilter.Value === "State"
-          ? "S"
-          : formValues.txtReportFilter.Value === "Category"
-          ? "C"
-          : formValues.txtReportFilter.Value === "Status"
-          ? "All"
-          : "";
+            ? "S"
+            : formValues.txtReportFilter.Value === "Category"
+              ? "C"
+              : formValues.txtReportFilter.Value === "Status"
+                ? "All"
+                : "";
       let pFiterlID = data && data.ID ? data.ID : 0;
       let pageingPeriodsID =
         headerName === "Total Open Ticket"
           ? "0"
           : headerName === "0-3 days"
-          ? "1"
-          : headerName === "4-7 days"
-          ? "2"
-          : headerName === "8-12 days"
-          ? "3"
-          : headerName === "13-15 days"
-          ? "4"
-          : headerName === "More than 16"
-          ? "5"
-          : "";
+            ? "1"
+            : headerName === "4-7 days"
+              ? "2"
+              : headerName === "8-12 days"
+                ? "3"
+                : headerName === "13-15 days"
+                  ? "4"
+                  : headerName === "More than 16"
+                    ? "5"
+                    : "";
       getAgeingReportsDetailsList(pViewMode, pFiterlID, pageingPeriodsID);
     }
     setOpenAgeingTicketModal(!openAgeingTicketModal);
@@ -60,13 +60,13 @@ function AgeingReport({
     <>
       {openAgeingTicketModal && (
         <Suspense fallback={<Loader />}>
-        <AgeingTicketList
-          openAgeingTicketListClick={openAgeingTicketListClick}
-          selectedRowData={selectedRowData}
-          ageingTicketCountList={ageingTicketCountList}
-          isLoadingAgeingTicketCountList={isLoadingAgeingTicketCountList}
-          exportAgeingTicketListClick={exportAgeingTicketListClick}
-        />
+          <AgeingTicketList
+            openAgeingTicketListClick={openAgeingTicketListClick}
+            selectedRowData={selectedRowData}
+            ageingTicketCountList={ageingTicketCountList}
+            isLoadingAgeingTicketCountList={isLoadingAgeingTicketCountList}
+            exportAgeingTicketListClick={exportAgeingTicketListClick}
+          />
         </Suspense>
       )}
       <div className={BizClass.PageStart}>
@@ -109,12 +109,12 @@ function AgeingReport({
                 ? formValues.txtReportFilter.Value === "Insurance"
                   ? "Insurance Company"
                   : formValues.txtReportFilter.Value === "State"
-                  ? "State Name"
-                  : formValues.txtReportFilter.Value === "Category"
-                  ? "Category"
-                  : formValues.txtReportFilter.Value === "Status"
-                  ? "Status"
-                  : "#"
+                    ? "State Name"
+                    : formValues.txtReportFilter.Value === "Category"
+                      ? "Category"
+                      : formValues.txtReportFilter.Value === "Status"
+                        ? "Status"
+                        : "#"
                 : "#"
             }
             width={280}

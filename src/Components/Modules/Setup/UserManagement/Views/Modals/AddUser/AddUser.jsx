@@ -37,7 +37,6 @@ function AddUser({ showfunc, referenceTypeOptions, updateUserData, setConfirmAle
   };
 
   const handleCancel = () => {
-    
     setConfirmAlert({
       open: true,
       title: "Cancel Confirmation",

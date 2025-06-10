@@ -9,11 +9,7 @@ import { getSessionStorage } from "../../../Common/Login/Auth/auth";
 import { CSCUserTrainingAssignManageData } from "../Services/Methods";
 import "./CenterTraining.scss";
 
-
-function AssignUnAssignTrainee({
-  toggleAssignUnAssignCenterModal,
-  assignUnAssignTraineeModal,
-}) {
+function AssignUnAssignTrainee({ toggleAssignUnAssignCenterModal, assignUnAssignTraineeModal }) {
   const setAlertMessage = AlertMessage();
   const userData = getSessionStorage("user");
   const [assignedTraineeGridApi, setAssignedTraineeGridApi] = useState();
@@ -41,12 +37,9 @@ function AssignUnAssignTrainee({
       const formdata = {
         viewMode: "GETALLUSER",
         cSCAppAccessTypeID: 503,
-        centerID: assignUnAssignTraineeModal && assignUnAssignTraineeModal.CenterMasterID
-          ? assignUnAssignTraineeModal.CenterMasterID.toString()
-          : "0",
-        trainingMasterID: assignUnAssignTraineeModal && assignUnAssignTraineeModal.TrainingMasterID
-          ? assignUnAssignTraineeModal.TrainingMasterID.toString()
-          : "0",
+        centerID: assignUnAssignTraineeModal && assignUnAssignTraineeModal.CenterMasterID ? assignUnAssignTraineeModal.CenterMasterID.toString() : "0",
+        trainingMasterID:
+          assignUnAssignTraineeModal && assignUnAssignTraineeModal.TrainingMasterID ? assignUnAssignTraineeModal.TrainingMasterID.toString() : "0",
         userID: "0",
         trainingUserAssignmentID: "0",
       };
@@ -79,12 +72,9 @@ function AssignUnAssignTrainee({
       const formdata = {
         viewMode: "UNASSIGN",
         cSCAppAccessTypeID: 503,
-        centerID: assignUnAssignTraineeModal && assignUnAssignTraineeModal.CenterMasterID
-          ? assignUnAssignTraineeModal.CenterMasterID.toString()
-          : "0",
-        trainingMasterID: assignUnAssignTraineeModal && assignUnAssignTraineeModal.TrainingMasterID
-          ? assignUnAssignTraineeModal.TrainingMasterID.toString()
-          : "0",
+        centerID: assignUnAssignTraineeModal && assignUnAssignTraineeModal.CenterMasterID ? assignUnAssignTraineeModal.CenterMasterID.toString() : "0",
+        trainingMasterID:
+          assignUnAssignTraineeModal && assignUnAssignTraineeModal.TrainingMasterID ? assignUnAssignTraineeModal.TrainingMasterID.toString() : "0",
         userID: data.UserID,
         trainingUserAssignmentID: data.TrainingUserAssignmentID,
       };
@@ -112,7 +102,6 @@ function AssignUnAssignTrainee({
           type: "error",
           message: result.response.responseMessage,
         });
-
       }
     } catch (error) {
       setAlertMessage({ open: true, type: "error", message: error });
@@ -149,12 +138,9 @@ function AssignUnAssignTrainee({
       const formdata = {
         viewMode: "ASSIGN",
         cSCAppAccessTypeID: 503,
-        centerID: assignUnAssignTraineeModal && assignUnAssignTraineeModal.CenterMasterID
-          ? assignUnAssignTraineeModal.CenterMasterID.toString()
-          : "0",
-        trainingMasterID: assignUnAssignTraineeModal && assignUnAssignTraineeModal.TrainingMasterID
-          ? assignUnAssignTraineeModal.TrainingMasterID.toString()
-          : "0",
+        centerID: assignUnAssignTraineeModal && assignUnAssignTraineeModal.CenterMasterID ? assignUnAssignTraineeModal.CenterMasterID.toString() : "0",
+        trainingMasterID:
+          assignUnAssignTraineeModal && assignUnAssignTraineeModal.TrainingMasterID ? assignUnAssignTraineeModal.TrainingMasterID.toString() : "0",
         userID: UserIds,
         trainingUserAssignmentID: "0",
       };
@@ -167,25 +153,20 @@ function AssignUnAssignTrainee({
           message: result.response.responseMessage,
         });
         if (result.response.responseData) {
-          const responseAssignedIds = result.response.responseData.AssignedID
-            ? result.response.responseData.AssignedID.split(",")
-            : [];
+          const responseAssignedIds = result.response.responseData.AssignedID ? result.response.responseData.AssignedID.split(",") : [];
           console.log(responseAssignedIds);
           let assignedIds = [];
           if (responseAssignedIds.length > 0) {
-            assignedIds = responseAssignedIds.reduce(
-              (assignmentIdList, data) => {
-                const splitData = data.split("|");
-                if (splitData.length > 0 && splitData[0] && splitData[1]) {
-                  assignmentIdList.push({
-                    UserID: splitData[0],
-                    TrainingUserAssignmentID: splitData[1],
-                  });
-                }
-                return assignmentIdList;
-              },
-              []
-            );
+            assignedIds = responseAssignedIds.reduce((assignmentIdList, data) => {
+              const splitData = data.split("|");
+              if (splitData.length > 0 && splitData[0] && splitData[1]) {
+                assignmentIdList.push({
+                  UserID: splitData[0],
+                  TrainingUserAssignmentID: splitData[1],
+                });
+              }
+              return assignmentIdList;
+            }, []);
           }
 
           if (assignedIds.length > 0) {
@@ -254,19 +235,14 @@ function AssignUnAssignTrainee({
     <>
       <Modal
         varient="half"
-        title={`Assign/Unassign Trainee (${assignUnAssignTraineeModal.TrainingTitle
-          ? assignUnAssignTraineeModal.TrainingTitle
-          : ""
-          })`}
+        title={`Assign/Unassign Trainee (${assignUnAssignTraineeModal.TrainingTitle ? assignUnAssignTraineeModal.TrainingTitle : ""})`}
         right={0}
         width="50vw"
         height="100vh"
         show={toggleAssignUnAssignCenterModal}
       >
         <Modal.Body>
-          <div
-            className="PageStart"
-          >
+          <div className="PageStart">
             <div className="custom-search-container">
               <input
                 type="text"
@@ -303,44 +279,18 @@ function AssignUnAssignTrainee({
                 cellRendererParams={{
                   onClickDeleteAssignedTrainee,
                 }}
-
               />
-              <DataGrid.Column
-                field="#"
-                headerName="Sr No."
-                width={75}
-                flex={1}
-                valueGetter="node.rowIndex + 1"
-                pinned="left"
-              />
+              <DataGrid.Column field="#" headerName="Sr No." width={75} flex={1} valueGetter="node.rowIndex + 1" pinned="left" />
               <DataGrid.Column
                 field="AssignmentFlag"
                 headerName="Status"
                 width={110}
                 flex={1}
-                valueFormatter={(param) =>
-
-                  param.value === 1 ? "Assigned" : " Not Assigned"
-                }
+                valueFormatter={(param) => (param.value === 1 ? "Assigned" : " Not Assigned")}
               />
-              <DataGrid.Column
-                field="UserID"
-                headerName="User ID"
-                width={100}
-                flex={1}
-              />
-              <DataGrid.Column
-                field="NAME"
-                headerName="Trainee Name"
-                width={150}
-                flex={1}
-              />
-              <DataGrid.Column
-                field="Center"
-                flex={1}
-                headerName="Center Name"
-                width={120}
-              />
+              <DataGrid.Column field="UserID" headerName="User ID" width={100} flex={1} />
+              <DataGrid.Column field="NAME" headerName="Trainee Name" width={150} flex={1} />
+              <DataGrid.Column field="Center" flex={1} headerName="Center Name" width={120} />
             </DataGrid>
           </div>
         </Modal.Body>
@@ -376,10 +326,7 @@ const assignedTraineeActionTemplate = (props) => {
             marginRight: "3px",
           }}
         >
-          <FiTrash2
-            style={{ fontSize: "15px", color: "#5d6d7e" }}
-            onClick={() => props.onClickDeleteAssignedTrainee(props.data)}
-          />
+          <FiTrash2 style={{ fontSize: "15px", color: "#5d6d7e" }} onClick={() => props.onClickDeleteAssignedTrainee(props.data)} />
         </span>
       ) : null}
     </div>

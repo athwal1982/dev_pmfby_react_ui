@@ -182,7 +182,6 @@ export const apiCallingWithFormData = async (requestApiData, apiPath) => {
 };
 
 export const ClientApiCalling = async (requestApiData, apiPath, header) => {
-  
   try {
     const requestData = {
       ...requestApiData.main,
@@ -220,12 +219,10 @@ export const ClientApiCalling = async (requestApiData, apiPath, header) => {
 };
 
 export const ClientApiCalling2 = async (requestApiData, apiPath, header) => {
-  
   const userMenuID = getSessionStorage("UserMenuId");
   const user = getSessionStorage("user");
 
   try {
-    
     const requestData = {
       ...requestApiData.main,
       menuMasterID: userMenuID,

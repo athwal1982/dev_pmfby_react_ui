@@ -20,7 +20,6 @@ function InsuranceCompanyManagementLogics() {
   };
 
   const getInsuranceCompanyData = async () => {
-    
     try {
       setLoadingInsuranceCompanyDataList(true);
       const result = await getIsuranceCompanyListData({ insuranceMasterID: 0, insuranceMasterName: "#ALL" });

@@ -1,30 +1,19 @@
 import React, { useState } from "react";
 import { DataGrid, PageBar } from "Framework/Components/Layout";
 import PropTypes from "prop-types";
-import * as XLSX from "xlsx"; 
+import * as XLSX from "xlsx";
 import BizClass from "./TrainingReport.module.scss";
 import TrainingReportLogic from "../Logic/Logic";
 import { getTrainingReport } from "../Services/Methods";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 
-
 const TrainingReport = () => {
-  const {
-    centers,
-    selectedCenter,
-    setSelectedCenter,
-    selectedYear,
-    setSelectedYear,
-    selectedMonth,
-    setSelectedMonth,
-    months,
-    years,
-  } = TrainingReportLogic();
-   const setAlertMessage = AlertMessage();
-  
+  const { centers, selectedCenter, setSelectedCenter, selectedYear, setSelectedYear, selectedMonth, setSelectedMonth, months, years } = TrainingReportLogic();
+  const setAlertMessage = AlertMessage();
+
   const [reportData, setReportData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]); 
-  const [searchQuery, setSearchQuery] = useState(""); 
+  const [filteredData, setFilteredData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const fetchReport = async () => {
     const formData = {
       SPViewMode: "SUPERADMINREPORT",
@@ -46,19 +35,15 @@ const TrainingReport = () => {
       console.error("Error fetching report data:", error);
     }
   };
-  
+
   const handleLocalSearch = (query) => {
     setSearchQuery(query);
-    
+
     if (query.trim() === "") {
       setFilteredData(reportData);
     } else {
       const lowerQuery = query.toLowerCase();
-      const filtered = reportData.filter((row) =>
-        Object.values(row).some(
-          (value) => value && value.toString().toLowerCase().includes(lowerQuery)
-        )
-      );
+      const filtered = reportData.filter((row) => Object.values(row).some((value) => value && value.toString().toLowerCase().includes(lowerQuery)));
       setFilteredData(filtered);
     }
   };
@@ -71,21 +56,18 @@ const TrainingReport = () => {
       });
       return;
     }
-  
-   
+
     const formattedData = reportData.map(({ training_hours, ...rest }) => ({
       ...rest,
       "Training_hours (In Minutes)": training_hours,
     }));
-  
+
     const worksheet = XLSX.utils.json_to_sheet(formattedData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Training Report");
-  
+
     XLSX.writeFile(workbook, "Training_Report.xlsx");
   };
-  
-  
 
   return (
     <div className={BizClass.PageStart}>
@@ -112,36 +94,39 @@ const TrainingReport = () => {
         />
 
         <PageBar.Search value={searchQuery} onChange={(e) => handleLocalSearch(e.target.value)} onClick={fetchReport} />
-     
-        <PageBar.Button onClick={() => { setSelectedMonth(""); setSelectedYear(""); setSelectedCenter(""); }} title="Clear">
+
+        <PageBar.Button
+          onClick={() => {
+            setSelectedMonth("");
+            setSelectedYear("");
+            setSelectedCenter("");
+          }}
+          title="Clear"
+        >
           Clear
         </PageBar.Button>
         <PageBar.ExcelButton onClick={exportToXLS}>Export</PageBar.ExcelButton>
       </PageBar>
 
       <DataGrid rowData={filteredData} pagination={true}>
-  <DataGrid.Column 
-    headerName="Sr. No." 
-    width={100} 
-    valueGetter={(params) => params.node.rowIndex + 1} 
-  />
-  <DataGrid.Column field="agent_name" headerName="Agent Name" width={150} />
-  <DataGrid.Column field="agent_number" headerName="Agent Number" width={150} />
-  <DataGrid.Column field="CenterName" headerName="Center Name" width={150} />
-  <DataGrid.Column field="date_of_joining" headerName="Date of Joining" width={150} />
-  <DataGrid.Column 
-    field="IsPresent" 
-    headerName="Present" 
-    width={100}  
-    valueGetter={(params) => {
-      if (params.data.IsPresent === "Y") return "Present";
-      if (params.data.IsPresent === "N") return "Absent";
-      return params.data.IsPresent; 
-    }}
-  />
-  <DataGrid.Column field="TrainingScore" headerName="Score" width={100} />
-  <DataGrid.Column field="TrainingTitle" headerName="Training Title" width={200} />
-   {/* <DataGrid.Column 
+        <DataGrid.Column headerName="Sr. No." width={100} valueGetter={(params) => params.node.rowIndex + 1} />
+        <DataGrid.Column field="agent_name" headerName="Agent Name" width={150} />
+        <DataGrid.Column field="agent_number" headerName="Agent Number" width={150} />
+        <DataGrid.Column field="CenterName" headerName="Center Name" width={150} />
+        <DataGrid.Column field="date_of_joining" headerName="Date of Joining" width={150} />
+        <DataGrid.Column
+          field="IsPresent"
+          headerName="Present"
+          width={100}
+          valueGetter={(params) => {
+            if (params.data.IsPresent === "Y") return "Present";
+            if (params.data.IsPresent === "N") return "Absent";
+            return params.data.IsPresent;
+          }}
+        />
+        <DataGrid.Column field="TrainingScore" headerName="Score" width={100} />
+        <DataGrid.Column field="TrainingTitle" headerName="Training Title" width={200} />
+        {/* <DataGrid.Column 
   field="training_hours" 
   headerName="Training Hours" 
   width={100}  
@@ -151,13 +136,12 @@ const TrainingReport = () => {
     return `${hours} hrs`; 
   }} 
 /> */}
-<DataGrid.Column field="training_hours" headerName="Training Hours(In Minutes)" width={200} />
-<DataGrid.Column field="TrainingMeetingLink" headerName="Meeting Link" width={300} />
- 
-  <DataGrid.Column field="training_type" headerName="Training Type" width={150} />
-  <DataGrid.Column field="date" headerName="Training Date" width={150} />
-</DataGrid>
+        <DataGrid.Column field="training_hours" headerName="Training Hours(In Minutes)" width={200} />
+        <DataGrid.Column field="TrainingMeetingLink" headerName="Meeting Link" width={300} />
 
+        <DataGrid.Column field="training_type" headerName="Training Type" width={150} />
+        <DataGrid.Column field="date" headerName="Training Date" width={150} />
+      </DataGrid>
     </div>
   );
 };

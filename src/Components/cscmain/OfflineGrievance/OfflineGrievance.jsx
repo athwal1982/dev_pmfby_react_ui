@@ -5,10 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { InputControl, InputGroup } from "Framework/OldFramework/FormComponents/FormComponents";
 import { KrphButton } from "../../Common/KrphAllActivitiesND/Widgets/KrphButton";
 import { getSessionStorage, setSessionStorage } from "Components/Common/Login/Auth/auth";
-import {
-  getMasterDataBindingDataList,
-  getDistrictByState,
-} from "../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
+import { getMasterDataBindingDataList, getDistrictByState } from "../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
 import { getMasterDataBinding } from "../../Modules/Support/ManageTicket/Services/Methods";
 import { ticketDataBindingData } from "Components/Common/Welcome/Service/Methods";
 import BizClass from "../../Common/KrphAllActivitiesND/KrphAllActivitiesND.module.scss";
@@ -19,8 +16,6 @@ const OfflineGrievance = () => {
   const setAlertMessage = AlertMessage();
 
   const tabOptions = ["Social Media", "Physical Letter", "Email", "Other"];
-
-
 
   const [selectedTab, setSelectedTab] = useState("Social Media");
 
@@ -81,7 +76,6 @@ const OfflineGrievance = () => {
   const [formValidationKRPHError, setFormValidationKRPHError] = useState({});
   const validateKRPHInfoField = (name, value) => {
     let errorsMsg = "";
-
 
     if (name === "txtState") {
       if (!value || typeof value === "undefined") {
@@ -221,14 +215,11 @@ const OfflineGrievance = () => {
         txtSocialMedia: null,
       });
     }
-
   };
-
 
   const [stateKRPHDropdownDataList, setStateKRPHDropdownDataList] = useState([]);
   const [isLoadingStateDKRPHropdownDataList, setIsLoadingStateKRPHDropdownDataList] = useState(false);
   const getStateKRPHListData = async () => {
-
     try {
       setIsLoadingStateKRPHDropdownDataList(true);
       const formdata = {
@@ -297,7 +288,6 @@ const OfflineGrievance = () => {
   };
 
   const getticketDataBindingKrphAllActivitiesData = async () => {
-
     try {
       if (getSessionStorage("ticketDataBindingKrphAllActivitiesSsnStrg") === null) {
         const result = await ticketDataBindingData({});
@@ -405,7 +395,6 @@ const OfflineGrievance = () => {
   const [ticketCategoryTypeList, setTicketCategoryTypeList] = useState([]);
   const [isLoadingTicketCategoryTypeList, setIsTicketCategoryTypeList] = useState(false);
   const getTicketCategoryTypeListData = async (pselectedOption, pCropLossDetailID, pMasterName) => {
-
     if (ticketBindingData) {
       setIsTicketCategoryTypeList(true);
       if (pMasterName === "TCKTYP") {
@@ -480,30 +469,21 @@ const OfflineGrievance = () => {
           height: "fit-content",
         }}
       >
-
         {/* Tabs Header */}
         <Box className="tabHeaderWrapper">
-          <Tabs
-            value={selectedTab}
-            onChange={handleTabChange}
-            indicatorColor="primary"
-            textColor="primary"
-            variant="scrollable"
-            scrollButtons="auto"
-          >
+          <Tabs value={selectedTab} onChange={handleTabChange} indicatorColor="primary" textColor="primary" variant="scrollable" scrollButtons="auto">
             {tabOptions.map((tab) => (
               <Tab label={tab} value={tab} key={tab} />
             ))}
           </Tabs>
         </Box>
 
-        <Card sx={{ mt: 0, padding: "10px 25px 25px 25px", borderBottomLeftRadius: 8, borderBottomRightRadius: 8,borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
+        <Card
+          sx={{ mt: 0, padding: "10px 25px 25px 25px", borderBottomLeftRadius: 8, borderBottomRightRadius: 8, borderTopLeftRadius: 0, borderTopRightRadius: 0 }}
+        >
           <Typography sx={{ fontFamily: "Quicksand, sans-serif", fontSize: "16px" }} fontWeight="bold">
-            General Information -  {" " + selectedTab}
+            General Information - {" " + selectedTab}
           </Typography>
-
-
-
 
           {selectedTab === "Social Media" && (
             <Box
@@ -523,9 +503,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  Farmer Name
-                </span>
+                <span>Farmer Name</span>
                 <InputGroup>
                   <InputControl
                     Input_type="input"
@@ -609,9 +587,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  State
-                </span>{" "}
+                <span>State</span>{" "}
                 <InputGroup>
                   <InputControl
                     Input_type="select"
@@ -625,7 +601,6 @@ const OfflineGrievance = () => {
                     onChange={(e) => updateStateGI("txtState", e)}
                   />
                 </InputGroup>
-
               </Typography>
               <Typography
                 sx={{
@@ -636,9 +611,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  District
-                </span>
+                <span>District</span>
                 <InputGroup>
                   <InputControl
                     Input_type="select"
@@ -652,7 +625,6 @@ const OfflineGrievance = () => {
                     onChange={(e) => updateStateGI("txtDistrict", e)}
                   />
                 </InputGroup>
-
               </Typography>
               <Typography
                 sx={{
@@ -663,7 +635,9 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>Complaint Date <span className="asteriskCss">&#42;</span></span>
+                <span>
+                  Complaint Date <span className="asteriskCss">&#42;</span>
+                </span>
                 <InputGroup>
                   <InputControl
                     Input_type="input"
@@ -732,9 +706,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  Year
-                </span>{" "}
+                <span>Year</span>{" "}
                 <InputGroup>
                   <InputControl
                     Input_type="select"
@@ -757,9 +729,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  Season
-                </span>{" "}
+                <span>Season</span>{" "}
                 <InputGroup>
                   <InputControl
                     Input_type="select"
@@ -819,36 +789,35 @@ const OfflineGrievance = () => {
                   />
                 </InputGroup>
                 <span className="login_ErrorTxt">{formValidationKRPHError["txtisIdentified"]}</span>
-
-
               </Typography>
-              {formValuesGI && formValuesGI.txtisIdentified && formValuesGI.txtisIdentified.ID && formValuesGI.txtisIdentified.ID === 1 ? <Typography
-                sx={{
-                  fontFamily: "Quicksand, sans-serif",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "2px",
-                  fontSize: "14px",
-                }}
-              >
-                <span>
-                  Insurance Company <span className="asteriskCss">&#42;</span> :
-                </span>{" "}
-                <InputGroup>
-                  <InputControl
-                    Input_type="select"
-                    name="txtInsuranceCompany"
-                    getOptionLabel={(option) => `${option.CompanyName}`}
-                    value={formValuesGI.txtInsuranceCompany}
-                    getOptionValue={(option) => `${option}`}
-                    options={insuranceCompanyList}
-                    ControlTxt="Insurance Company"
-                    onChange={(e) => updateStateGI("txtInsuranceCompany", e)}
-                  />
-                </InputGroup>
-                <span className="login_ErrorTxt">{formValidationKRPHError["txtInsuranceCompany"]}</span>
-              </Typography> : null}
-
+              {formValuesGI && formValuesGI.txtisIdentified && formValuesGI.txtisIdentified.ID && formValuesGI.txtisIdentified.ID === 1 ? (
+                <Typography
+                  sx={{
+                    fontFamily: "Quicksand, sans-serif",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "2px",
+                    fontSize: "14px",
+                  }}
+                >
+                  <span>
+                    Insurance Company <span className="asteriskCss">&#42;</span> :
+                  </span>{" "}
+                  <InputGroup>
+                    <InputControl
+                      Input_type="select"
+                      name="txtInsuranceCompany"
+                      getOptionLabel={(option) => `${option.CompanyName}`}
+                      value={formValuesGI.txtInsuranceCompany}
+                      getOptionValue={(option) => `${option}`}
+                      options={insuranceCompanyList}
+                      ControlTxt="Insurance Company"
+                      onChange={(e) => updateStateGI("txtInsuranceCompany", e)}
+                    />
+                  </InputGroup>
+                  <span className="login_ErrorTxt">{formValidationKRPHError["txtInsuranceCompany"]}</span>
+                </Typography>
+              ) : null}
             </Box>
           )}
 
@@ -870,9 +839,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  Farmer Name
-                </span>
+                <span>Farmer Name</span>
                 <InputGroup>
                   <InputControl
                     Input_type="input"
@@ -914,7 +881,9 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>Email ID <span className="asteriskCss">&#42;</span></span>{" "}
+                <span>
+                  Email ID <span className="asteriskCss">&#42;</span>
+                </span>{" "}
                 <InputGroup>
                   <InputControl
                     Input_type="input"
@@ -956,9 +925,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  State
-                </span>{" "}
+                <span>State</span>{" "}
                 <InputGroup>
                   <InputControl
                     Input_type="select"
@@ -972,7 +939,6 @@ const OfflineGrievance = () => {
                     onChange={(e) => updateStateGI("txtState", e)}
                   />
                 </InputGroup>
-
               </Typography>
               <Typography
                 sx={{
@@ -983,9 +949,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  District
-                </span>
+                <span>District</span>
                 <InputGroup>
                   <InputControl
                     Input_type="select"
@@ -999,7 +963,6 @@ const OfflineGrievance = () => {
                     onChange={(e) => updateStateGI("txtDistrict", e)}
                   />
                 </InputGroup>
-
               </Typography>
               <Typography
                 sx={{
@@ -1010,7 +973,9 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>Complaint Date <span className="asteriskCss">&#42;</span></span>
+                <span>
+                  Complaint Date <span className="asteriskCss">&#42;</span>
+                </span>
                 <InputGroup>
                   <InputControl
                     Input_type="input"
@@ -1023,7 +988,7 @@ const OfflineGrievance = () => {
                 </InputGroup>
                 <span className="login_ErrorTxt">{formValidationKRPHError["txtComplaintDate"]}</span>
               </Typography>
-               <Typography
+              <Typography
                 sx={{
                   fontFamily: "Quicksand, sans-serif",
                   display: "flex",
@@ -1032,9 +997,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  Source
-                </span>{" "}
+                <span>Source</span>{" "}
                 <InputGroup>
                   <InputControl
                     Input_type="select"
@@ -1047,7 +1010,6 @@ const OfflineGrievance = () => {
                     onChange={(e) => updateStateGI("txtSourceEmail", e)}
                   />
                 </InputGroup>
-
               </Typography>
               <Typography
                 sx={{
@@ -1058,9 +1020,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  Year
-                </span>{" "}
+                <span>Year</span>{" "}
                 <InputGroup>
                   <InputControl
                     Input_type="select"
@@ -1083,9 +1043,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  Season
-                </span>{" "}
+                <span>Season</span>{" "}
                 <InputGroup>
                   <InputControl
                     Input_type="select"
@@ -1145,36 +1103,35 @@ const OfflineGrievance = () => {
                   />
                 </InputGroup>
                 <span className="login_ErrorTxt">{formValidationKRPHError["txtisIdentified"]}</span>
-
-
               </Typography>
-              {formValuesGI && formValuesGI.txtisIdentified && formValuesGI.txtisIdentified.ID && formValuesGI.txtisIdentified.ID === 1 ? <Typography
-                sx={{
-                  fontFamily: "Quicksand, sans-serif",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "2px",
-                  fontSize: "14px",
-                }}
-              >
-                <span>
-                  Insurance Company <span className="asteriskCss">&#42;</span> :
-                </span>{" "}
-                <InputGroup>
-                  <InputControl
-                    Input_type="select"
-                    name="txtInsuranceCompany"
-                    getOptionLabel={(option) => `${option.CompanyName}`}
-                    value={formValuesGI.txtInsuranceCompany}
-                    getOptionValue={(option) => `${option}`}
-                    options={insuranceCompanyList}
-                    ControlTxt="Insurance Company"
-                    onChange={(e) => updateStateGI("txtInsuranceCompany", e)}
-                  />
-                </InputGroup>
-                <span className="login_ErrorTxt">{formValidationKRPHError["txtInsuranceCompany"]}</span>
-              </Typography> : null}
-
+              {formValuesGI && formValuesGI.txtisIdentified && formValuesGI.txtisIdentified.ID && formValuesGI.txtisIdentified.ID === 1 ? (
+                <Typography
+                  sx={{
+                    fontFamily: "Quicksand, sans-serif",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "2px",
+                    fontSize: "14px",
+                  }}
+                >
+                  <span>
+                    Insurance Company <span className="asteriskCss">&#42;</span> :
+                  </span>{" "}
+                  <InputGroup>
+                    <InputControl
+                      Input_type="select"
+                      name="txtInsuranceCompany"
+                      getOptionLabel={(option) => `${option.CompanyName}`}
+                      value={formValuesGI.txtInsuranceCompany}
+                      getOptionValue={(option) => `${option}`}
+                      options={insuranceCompanyList}
+                      ControlTxt="Insurance Company"
+                      onChange={(e) => updateStateGI("txtInsuranceCompany", e)}
+                    />
+                  </InputGroup>
+                  <span className="login_ErrorTxt">{formValidationKRPHError["txtInsuranceCompany"]}</span>
+                </Typography>
+              ) : null}
             </Box>
           )}
 
@@ -1196,9 +1153,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  Farmer Name
-                </span>
+                <span>Farmer Name</span>
                 <InputGroup>
                   <InputControl
                     Input_type="input"
@@ -1281,9 +1236,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  State
-                </span>{" "}
+                <span>State</span>{" "}
                 <InputGroup>
                   <InputControl
                     Input_type="select"
@@ -1297,7 +1250,6 @@ const OfflineGrievance = () => {
                     onChange={(e) => updateStateGI("txtState", e)}
                   />
                 </InputGroup>
-
               </Typography>
               <Typography
                 sx={{
@@ -1308,9 +1260,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  District
-                </span>
+                <span>District</span>
                 <InputGroup>
                   <InputControl
                     Input_type="select"
@@ -1324,7 +1274,6 @@ const OfflineGrievance = () => {
                     onChange={(e) => updateStateGI("txtDistrict", e)}
                   />
                 </InputGroup>
-
               </Typography>
               <Typography
                 sx={{
@@ -1335,7 +1284,9 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>Complaint Date <span className="asteriskCss">&#42;</span></span>
+                <span>
+                  Complaint Date <span className="asteriskCss">&#42;</span>
+                </span>
                 <InputGroup>
                   <InputControl
                     Input_type="input"
@@ -1348,7 +1299,7 @@ const OfflineGrievance = () => {
                 </InputGroup>
                 <span className="login_ErrorTxt">{formValidationKRPHError["txtComplaintDate"]}</span>
               </Typography>
-               <Typography
+              <Typography
                 sx={{
                   fontFamily: "Quicksand, sans-serif",
                   display: "flex",
@@ -1357,9 +1308,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  Source
-                </span>{" "}
+                <span>Source</span>{" "}
                 <InputGroup>
                   <InputControl
                     Input_type="select"
@@ -1372,7 +1321,6 @@ const OfflineGrievance = () => {
                     onChange={(e) => updateStateGI("txtSourcePhysicalLetter", e)}
                   />
                 </InputGroup>
-
               </Typography>
 
               <Typography
@@ -1384,9 +1332,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  Year
-                </span>{" "}
+                <span>Year</span>{" "}
                 <InputGroup>
                   <InputControl
                     Input_type="select"
@@ -1409,9 +1355,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  Season
-                </span>{" "}
+                <span>Season</span>{" "}
                 <InputGroup>
                   <InputControl
                     Input_type="select"
@@ -1471,36 +1415,35 @@ const OfflineGrievance = () => {
                   />
                 </InputGroup>
                 <span className="login_ErrorTxt">{formValidationKRPHError["txtisIdentified"]}</span>
-
-
               </Typography>
-              {formValuesGI && formValuesGI.txtisIdentified && formValuesGI.txtisIdentified.ID && formValuesGI.txtisIdentified.ID === 1 ? <Typography
-                sx={{
-                  fontFamily: "Quicksand, sans-serif",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "2px",
-                  fontSize: "14px",
-                }}
-              >
-                <span>
-                  Insurance Company <span className="asteriskCss">&#42;</span> :
-                </span>{" "}
-                <InputGroup>
-                  <InputControl
-                    Input_type="select"
-                    name="txtInsuranceCompany"
-                    getOptionLabel={(option) => `${option.CompanyName}`}
-                    value={formValuesGI.txtInsuranceCompany}
-                    getOptionValue={(option) => `${option}`}
-                    options={insuranceCompanyList}
-                    ControlTxt="Insurance Company"
-                    onChange={(e) => updateStateGI("txtInsuranceCompany", e)}
-                  />
-                </InputGroup>
-                <span className="login_ErrorTxt">{formValidationKRPHError["txtInsuranceCompany"]}</span>
-              </Typography> : null}
-
+              {formValuesGI && formValuesGI.txtisIdentified && formValuesGI.txtisIdentified.ID && formValuesGI.txtisIdentified.ID === 1 ? (
+                <Typography
+                  sx={{
+                    fontFamily: "Quicksand, sans-serif",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "2px",
+                    fontSize: "14px",
+                  }}
+                >
+                  <span>
+                    Insurance Company <span className="asteriskCss">&#42;</span> :
+                  </span>{" "}
+                  <InputGroup>
+                    <InputControl
+                      Input_type="select"
+                      name="txtInsuranceCompany"
+                      getOptionLabel={(option) => `${option.CompanyName}`}
+                      value={formValuesGI.txtInsuranceCompany}
+                      getOptionValue={(option) => `${option}`}
+                      options={insuranceCompanyList}
+                      ControlTxt="Insurance Company"
+                      onChange={(e) => updateStateGI("txtInsuranceCompany", e)}
+                    />
+                  </InputGroup>
+                  <span className="login_ErrorTxt">{formValidationKRPHError["txtInsuranceCompany"]}</span>
+                </Typography>
+              ) : null}
             </Box>
           )}
 
@@ -1522,9 +1465,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  Farmer Name
-                </span>
+                <span>Farmer Name</span>
                 <InputGroup>
                   <InputControl
                     Input_type="input"
@@ -1606,9 +1547,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  State
-                </span>{" "}
+                <span>State</span>{" "}
                 <InputGroup>
                   <InputControl
                     Input_type="select"
@@ -1622,7 +1561,6 @@ const OfflineGrievance = () => {
                     onChange={(e) => updateStateGI("txtState", e)}
                   />
                 </InputGroup>
-
               </Typography>
               <Typography
                 sx={{
@@ -1633,9 +1571,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  District
-                </span>
+                <span>District</span>
                 <InputGroup>
                   <InputControl
                     Input_type="select"
@@ -1649,9 +1585,7 @@ const OfflineGrievance = () => {
                     onChange={(e) => updateStateGI("txtDistrict", e)}
                   />
                 </InputGroup>
-
               </Typography>
-
 
               <Typography
                 sx={{
@@ -1662,7 +1596,9 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>Complaint Date <span className="asteriskCss">&#42;</span></span>
+                <span>
+                  Complaint Date <span className="asteriskCss">&#42;</span>
+                </span>
                 <InputGroup>
                   <InputControl
                     Input_type="input"
@@ -1693,7 +1629,6 @@ const OfflineGrievance = () => {
                     name="txtSourceOfGrievance"
                     value={formValuesGI.txtSourceOfGrievance}
                     onChange={(e) => updateStateGI("txtSourceOfGrievance", e.target.value)}
-
                   />
                 </InputGroup>
                 <span className="login_ErrorTxt">{formValidationKRPHError["txtSourceOfGrievance"]}</span>
@@ -1708,9 +1643,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  Year
-                </span>{" "}
+                <span>Year</span>{" "}
                 <InputGroup>
                   <InputControl
                     Input_type="select"
@@ -1733,9 +1666,7 @@ const OfflineGrievance = () => {
                   fontSize: "14px",
                 }}
               >
-                <span>
-                  Season
-                </span>{" "}
+                <span>Season</span>{" "}
                 <InputGroup>
                   <InputControl
                     Input_type="select"
@@ -1795,43 +1726,38 @@ const OfflineGrievance = () => {
                   />
                 </InputGroup>
                 <span className="login_ErrorTxt">{formValidationKRPHError["txtisIdentified"]}</span>
-
-
               </Typography>
-              {formValuesGI && formValuesGI.txtisIdentified && formValuesGI.txtisIdentified.ID && formValuesGI.txtisIdentified.ID === 1 ? <Typography
-                sx={{
-                  fontFamily: "Quicksand, sans-serif",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "2px",
-                  fontSize: "14px",
-                }}
-              >
-                <span>
-                  Insurance Company <span className="asteriskCss">&#42;</span> :
-                </span>{" "}
-                <InputGroup>
-                  <InputControl
-                    Input_type="select"
-                    name="txtInsuranceCompany"
-                    getOptionLabel={(option) => `${option.CompanyName}`}
-                    value={formValuesGI.txtInsuranceCompany}
-                    getOptionValue={(option) => `${option}`}
-                    options={insuranceCompanyList}
-                    ControlTxt="Insurance Company"
-                    onChange={(e) => updateStateGI("txtInsuranceCompany", e)}
-                  />
-                </InputGroup>
-                <span className="login_ErrorTxt">{formValidationKRPHError["txtInsuranceCompany"]}</span>
-              </Typography> : null}
-
+              {formValuesGI && formValuesGI.txtisIdentified && formValuesGI.txtisIdentified.ID && formValuesGI.txtisIdentified.ID === 1 ? (
+                <Typography
+                  sx={{
+                    fontFamily: "Quicksand, sans-serif",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "2px",
+                    fontSize: "14px",
+                  }}
+                >
+                  <span>
+                    Insurance Company <span className="asteriskCss">&#42;</span> :
+                  </span>{" "}
+                  <InputGroup>
+                    <InputControl
+                      Input_type="select"
+                      name="txtInsuranceCompany"
+                      getOptionLabel={(option) => `${option.CompanyName}`}
+                      value={formValuesGI.txtInsuranceCompany}
+                      getOptionValue={(option) => `${option}`}
+                      options={insuranceCompanyList}
+                      ControlTxt="Insurance Company"
+                      onChange={(e) => updateStateGI("txtInsuranceCompany", e)}
+                    />
+                  </InputGroup>
+                  <span className="login_ErrorTxt">{formValidationKRPHError["txtInsuranceCompany"]}</span>
+                </Typography>
+              ) : null}
             </Box>
           )}
-
         </Card>
-
-
-
 
         <AnimatePresence mode="wait">
           <motion.div key="farmer" initial="hidden" animate="visible" exit="exit" variants={transitionVariants}>
@@ -1890,9 +1816,7 @@ const OfflineGrievance = () => {
                 </div>
                 <div className="container_agent">
                   <div className="form-group_agent">
-                    <label className="ticket-label_agent">
-                      Crop Name
-                    </label>
+                    <label className="ticket-label_agent">Crop Name</label>
                     <InputGroup>
                       <InputControl
                         Input_type="input"
@@ -1902,7 +1826,6 @@ const OfflineGrievance = () => {
                         autoComplete="off"
                       />
                     </InputGroup>
-
                   </div>
                   <div className="form-group_agent">
                     <label className="ticket-label_agent">
@@ -1918,7 +1841,6 @@ const OfflineGrievance = () => {
                         name="txtDocumentUpload"
                         value={formValuesGI.txtDocumentUpload}
                         onChange={(e) => updateStateGI(e.target.name, e.target.files[0])}
-
                       />
                       <KrphButton type="button" varient="primary" onClick={() => handleResetFile()}>
                         {" "}
@@ -1942,20 +1864,13 @@ const OfflineGrievance = () => {
                     />
                   </InputGroup>
                   <p className={BizClass.CounterDescKRPH}>
-                    {formValuesGI.txtTicketDescription && formValuesGI.txtTicketDescription.length
-                      ? formValuesGI.txtTicketDescription.length
-                      : 0}{" "}
-                    / {500}
+                    {formValuesGI.txtTicketDescription && formValuesGI.txtTicketDescription.length ? formValuesGI.txtTicketDescription.length : 0} / {500}
                   </p>
                   <span className="login_ErrorTxt">{formValidationKRPHError["txtTicketDescription"]}</span>
                 </div>
 
                 <div style={{ display: "flex" }}>
-                  <KrphButton
-                    type="button"
-                    varient="secondary"
-                    onClick={() => supportTicketOnClick()}
-                  >
+                  <KrphButton type="button" varient="secondary" onClick={() => supportTicketOnClick()}>
                     Submit
                   </KrphButton>
                 </div>

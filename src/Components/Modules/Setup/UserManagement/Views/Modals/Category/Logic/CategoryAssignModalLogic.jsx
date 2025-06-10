@@ -30,7 +30,7 @@ function CategoryAssignModalLogic() {
     try {
       console.log("pselectedUserData", pselectedUserData);
       setSelectedUser(pselectedUserData);
-      
+
       setIsLoadingCategoryList(true);
       const formdata = {
         filterID: 1,
@@ -43,7 +43,6 @@ function CategoryAssignModalLogic() {
       console.log(result, "ticktCategoryType");
       setIsLoadingCategoryList(false);
       if (result.response.responseCode === 1) {
-        
         if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
           setCategoryList(result.response.responseData.masterdatabinding);
           console.log("result.response.responseData.masterdatabinding", result.response.responseData.masterdatabinding);
@@ -67,7 +66,6 @@ function CategoryAssignModalLogic() {
 
   const [gridApi, setGridApi] = useState();
   const onAssinGridReady = (params) => {
-    
     setGridApi(params.api);
     console.log("params.api)", params.api);
   };
@@ -85,7 +83,6 @@ function CategoryAssignModalLogic() {
       console.log(result, "result");
       setBtnLoaderActive(false);
       if (result.response.responseCode === 1) {
-        
         if (formdata.viewMode === "GETASSIGNED") {
           if (result.response.responseData && result.response.responseData.UserCategoryAssign && result.response.responseData.UserCategoryAssign.length > 0) {
             setAssignCategorylist(result.response.responseData.UserCategoryAssign);
@@ -106,7 +103,6 @@ function CategoryAssignModalLogic() {
           }
         } else if (formdata.viewMode !== "GETASSIGNED" && formdata.viewMode !== "ASSIGNALL" && formdata.viewMode !== "UNASSIGNALL") {
           if (gridApi) {
-            
             console.log("categoryGridApi", gridApi);
             let count = 0;
             gridApi.forEachNode(function (rowNode) {
@@ -118,7 +114,7 @@ function CategoryAssignModalLogic() {
                   rowNode.data.UserCategoryID = null;
                   rowNode.data.AssignmentFlag = 0;
                 }
-                
+
                 if (rowNode.data.AssignmentFlag === 0) {
                   count += 1;
                 } else {
@@ -145,7 +141,7 @@ function CategoryAssignModalLogic() {
             supportTicketTypeId: Number(selectedCategory.SupportTicketTypeID),
             ticketCategoryId: "",
           };
-          
+
           userCategoryAssignManageList(formdata);
         }
       } else {
@@ -166,7 +162,6 @@ function CategoryAssignModalLogic() {
   };
 
   const onAssignCategory = (category) => {
-    
     if (category && category.TicketCategoryID) {
       setSelectedAssign(category);
       console.log("Subcategory", category, selectedassign);
@@ -179,13 +174,12 @@ function CategoryAssignModalLogic() {
         supportTicketTypeId: Number(category.SupportTicketTypeID),
         ticketCategoryId: "",
       };
-      
+
       userCategoryAssignManageList(formdata);
     }
   };
 
   const OnAssignAll = (action) => {
-    
     if (selectedCategory && selectedCategory.SupportTicketTypeID) {
       console.log("selectedCategory", selectedCategory);
       const formdata = {
@@ -197,13 +191,12 @@ function CategoryAssignModalLogic() {
         supportTicketTypeId: Number(selectedCategory.SupportTicketTypeID),
         ticketCategoryId: "",
       };
-      
+
       userCategoryAssignManageList(formdata);
     }
   };
 
   const onUnAssignCategory = (category) => {
-    
     console.log("onUnAssignCategory", category);
     const formdata = {
       viewMode: "UNASSIGN",
@@ -214,11 +207,10 @@ function CategoryAssignModalLogic() {
       supportTicketTypeId: Number(category.SupportTicketTypeID),
       ticketCategoryId: "",
     };
-    
+
     userCategoryAssignManageList(formdata);
   };
   const onGetAssignCategory = (moduleData) => {
-    
     console.log("setSelectedCategory", moduleData);
 
     setSelectedCategory(moduleData);
@@ -232,7 +224,7 @@ function CategoryAssignModalLogic() {
         supportTicketTypeId: Number(moduleData.SupportTicketTypeID),
         ticketCategoryId: "",
       };
-      
+
       userCategoryAssignManageList(formdata);
     } else {
       setAlertMessage({

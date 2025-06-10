@@ -20,7 +20,6 @@ function InsuranceCompLogics() {
   const [totalSatatusCountCrpLos, settotalSatatusCountCrpLos] = useState();
   const [satatusCountInfomn, setSatatusCountInfomn] = useState({});
   const getChartSatatusCountDataInsuranceComp = async (pfilterID, pLoginID, pMasterName, pRefressh) => {
-    
     try {
       if (getSessionStorage("satatusCountSsnStrg") === null || (getSessionStorage("satatusCountSsnStrg") !== null && pRefressh === "yes")) {
         setIsLoadingChartSatatusCountData(true);
@@ -170,7 +169,7 @@ function InsuranceCompLogics() {
     }
   };
   // A const getChartSatatusCountDataInsuranceComp = async (pfilterID, pLoginID, pMasterName, pRefressh) => {
-  // A  
+  // A
   // A  try {
   // A    if (getSessionStorage("satatusCountSsnStrg") === null || (getSessionStorage("satatusCountSsnStrg") !== null && pRefressh === "yes")) {
   // A      setIsLoadingChartSatatusCountData(true);
@@ -1149,7 +1148,6 @@ function InsuranceCompLogics() {
   const [state7, setstate7] = useState({});
   const [isLoadingDistrictWiseData, setIsLoadingDistrictWiseData] = useState(false);
   const getDistrictWiseData = async (pfilterID, pLoginID, pMasterName, pRefressh) => {
-    
     try {
       if (getSessionStorage("state7SsnStrg") === null || (getSessionStorage("state7SsnStrg") !== null && pRefressh === "yes")) {
         setIsLoadingDistrictWiseData(true);
@@ -1347,7 +1345,6 @@ function InsuranceCompLogics() {
   }, []);
 
   const handleRefreshTicketType = () => {
-    
     getChartTypeWiseData(2, userData && userData.LoginID ? userData.LoginID : 0, "BYHDR", "yes");
   };
 

@@ -322,7 +322,7 @@ function FarmerCreatedTicket() {
 
   const updateState = (name, value) => {
     setFormValues({ ...formValues, [name]: value });
-    
+
     if (name === "txtTicketCategoryType") {
       setFormValues({
         ...formValues,
@@ -387,7 +387,6 @@ function FarmerCreatedTicket() {
   };
 
   const getOneDayTicketData = async () => {
-    
     setshowHideDownload(false);
     SetTicketFiltersTab();
     settotalSatatusCount("0");
@@ -396,7 +395,6 @@ function FarmerCreatedTicket() {
   };
 
   const getFilterTicketsClick = async () => {
-    
     setshowHideDownload(true);
     SetTicketFiltersTab();
     settotalSatatusCount("0");
@@ -405,7 +403,6 @@ function FarmerCreatedTicket() {
   };
 
   const searchByMobileTicketsOnClick = async (pageIndex, pageSize) => {
-    
     try {
       let ticketNoVal = "";
       let mobileNoVal = "";
@@ -640,7 +637,6 @@ function FarmerCreatedTicket() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const handlePageChange = (page) => {
-    
     setCurrentPage(page);
     // ... do something with `page`
     if (viewTypeMode === "FILTER" && page >= 1) {
@@ -657,7 +653,6 @@ function FarmerCreatedTicket() {
   const [showHideDownload, setshowHideDownload] = useState(true);
   const [showHideManageTicket, setshowHideManageTicket] = useState(false);
   const getFarmersTickets = async (pviewTYP, pType, pageIndex, pageSize) => {
-    
     setViewTypeMode(pviewTYP);
     let TicketStatusID = 0;
     if (pType === "") {
@@ -898,7 +893,6 @@ function FarmerCreatedTicket() {
   };
 
   useEffect(() => {
-    
     if (userData && userData.data && userData.data.data && userData.data.data.result) {
       getFarmersTickets("MOBILE", "", 1, 20);
     } else {

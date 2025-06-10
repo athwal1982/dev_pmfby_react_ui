@@ -32,7 +32,6 @@ function CropLossIntimationReportLogics() {
   };
 
   const getGrievanceReportData = async () => {
-    
     try {
       setLoadingGrievanceReportDataList(true);
 

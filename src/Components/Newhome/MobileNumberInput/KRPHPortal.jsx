@@ -83,47 +83,55 @@ const KRPHPortal = () => {
       case "Support-GOI":
         return (
           <Suspense fallback={<Loader />}>
-          <AdminLogin
-            handleOtpSent={handleOtpSent}
-            captchaCode={captchaCode}
-            enteredCaptcha={enteredCaptcha}
-            setSelectedOption={setSelectedOption}
-            handleCaptchaChange={handleCaptchaChange}
-            captchaError={captchaError}
-          />
+            <AdminLogin
+              handleOtpSent={handleOtpSent}
+              captchaCode={captchaCode}
+              enteredCaptcha={enteredCaptcha}
+              setSelectedOption={setSelectedOption}
+              handleCaptchaChange={handleCaptchaChange}
+              captchaError={captchaError}
+            />
           </Suspense>
         );
       case "Support-CSC":
         return (
           <Suspense fallback={<Loader />}>
-          <AdminLogin
-            handleOtpSent={handleOtpSent}
-            captchaCode={captchaCode}
-            enteredCaptcha={enteredCaptcha}
-            setSelectedOption={setSelectedOption}
-            handleCaptchaChange={handleCaptchaChange}
-            captchaError={captchaError}
-          />
+            <AdminLogin
+              handleOtpSent={handleOtpSent}
+              captchaCode={captchaCode}
+              enteredCaptcha={enteredCaptcha}
+              setSelectedOption={setSelectedOption}
+              handleCaptchaChange={handleCaptchaChange}
+              captchaError={captchaError}
+            />
           </Suspense>
         );
 
       case "Support-IC":
         return (
           <Suspense fallback={<Loader />}>
-          <AdminLogin
-            handleOtpSent={handleOtpSent}
-            captchaCode={captchaCode}
-            enteredCaptcha={enteredCaptcha}
-            setSelectedOption={setSelectedOption}
-            handleCaptchaChange={handleCaptchaChange}
-            captchaError={captchaError}
-          />
+            <AdminLogin
+              handleOtpSent={handleOtpSent}
+              captchaCode={captchaCode}
+              enteredCaptcha={enteredCaptcha}
+              setSelectedOption={setSelectedOption}
+              handleCaptchaChange={handleCaptchaChange}
+              captchaError={captchaError}
+            />
           </Suspense>
         );
       case "NCIP-BNK":
-        return  <Suspense fallback={<Loader />}><NCIPLogin /></Suspense>;
+        return (
+          <Suspense fallback={<Loader />}>
+            <NCIPLogin />
+          </Suspense>
+        );
       case "NCIP-ST":
-        return  <Suspense fallback={<Loader />}><NCIPLogin /></Suspense>;
+        return (
+          <Suspense fallback={<Loader />}>
+            <NCIPLogin />
+          </Suspense>
+        );
       case "CHPass":
         return null;
       default:

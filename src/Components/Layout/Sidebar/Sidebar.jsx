@@ -124,8 +124,8 @@ function Sidebar({ isCollapsed }) {
     if (submenu.name === "Calling Dashboard") {
       getCallingdashboard();
     } else if (submenu.name === "BI Dashboard") {
-       const pathUrl = window.location.href;
-       window.open( pathUrl + "/BIDashboard","_blank");
+      const pathUrl = window.location.href;
+      window.open(pathUrl + "/BIDashboard", "_blank");
     } else {
       getUserRightDataList(userData && userData.LoginID ? userData.LoginID : 0, submenu.menuMasterID, submenu, "SubMenu");
     }
@@ -182,8 +182,8 @@ function Sidebar({ isCollapsed }) {
         return enquiry;
       case "Notification":
         return Notification;
-       case "Crop Notification":
-        return Notification;  
+      case "Crop Notification":
+        return Notification;
       case "Premium Calculator":
         return premCalc;
       case "FAQ":
@@ -233,7 +233,7 @@ function Sidebar({ isCollapsed }) {
   const handleMenuToggle2 = (id) => {
     debugger;
     // AsetActiveMenuId(id);
-  
+
     setOpenMenus((prevState) => ({
       ...Object.keys(prevState).reduce((acc, key) => ({ ...acc, [key]: false }), {}),
       [id]: !prevState[id],

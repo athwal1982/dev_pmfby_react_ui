@@ -148,7 +148,6 @@ function OfflineIntimation() {
   const [ticketCategoryTypeList, setTicketCategoryTypeList] = useState([]);
   const [isLoadingTicketCategoryTypeList, setIsTicketCategoryTypeList] = useState(false);
   const getTicketCategoryTypeListData = async (pselectedOption, pCropLossDetailID, pMasterName) => {
-    
     if (ticketBindingData) {
       setIsTicketCategoryTypeList(true);
       if (pMasterName === "TCKTYP") {
@@ -572,7 +571,6 @@ function OfflineIntimation() {
   });
 
   const updateStateMN = (name, value) => {
-    
     setFormValuesMN({ ...formValuesMN, [name]: value });
     formValidationSupportTicketError[name] = validateFieldSupportTicket(name, value);
     if (name === "txtStateValidateMobile") {
@@ -648,8 +646,6 @@ function OfflineIntimation() {
   const [btnLoaderSupportTicketActive, setBtnLoaderSupportTicketActive] = useState(false);
 
   const supportTicketOnClick = async () => {
-    
-
     if (!handleValidationSupportTicket()) {
       return;
     }

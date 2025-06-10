@@ -42,7 +42,6 @@ function UploadedFileStatusList({ uploadedFileStatusOnClick, setAlertMessage }) 
   const [isLoadinguploadedFileStatusDataList, setisLoadinguploadedFileStatusDataList] = useState([]);
 
   const getUploadedFileStatusList = async () => {
-    
     try {
       setisLoadinguploadedFileStatusDataList(true);
 
@@ -77,7 +76,6 @@ function UploadedFileStatusList({ uploadedFileStatusOnClick, setAlertMessage }) 
   };
 
   const ViewuploadedfilestatusData = async (pdata) => {
-    
     try {
       setisLoadinguploadedFileStatusDataList(true);
 

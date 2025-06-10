@@ -1,7 +1,7 @@
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { useState } from "react";
 import moment from "moment";
-import { dateToCompanyFormat, dateToSpecificFormat,dateFormatDefault, daysdifference } from "Configration/Utilities/dateformat";
+import { dateToCompanyFormat, dateToSpecificFormat, dateFormatDefault, daysdifference } from "Configration/Utilities/dateformat";
 import * as XLSX from "xlsx";
 import { complaintMailReport } from "../Services/Methods";
 
@@ -24,7 +24,6 @@ function IrdaiEscalationLogics() {
 
   const [IrdaiEscalationListItemSearch, setIrdaiEscalationListItemSearch] = useState("");
   const onChangeIrdaiEscalationList = (val) => {
-    
     setIrdaiEscalationListItemSearch(val);
     gridApi.setQuickFilter(val);
   };
@@ -57,7 +56,6 @@ function IrdaiEscalationLogics() {
   };
 
   const getIrdaiEscalationData = async () => {
-    
     try {
       setLoadingIrdaiEscalationDataList(true);
 
@@ -89,7 +87,6 @@ function IrdaiEscalationLogics() {
   };
 
   const updateState = (name, value) => {
-    
     setFormValues({ ...formValues, [name]: value });
   };
 
@@ -131,7 +128,6 @@ function IrdaiEscalationLogics() {
   };
 
   const exportClick = () => {
-    
     // A const excelParams = {
     // A  fileName: "Ticket History",
     // A };

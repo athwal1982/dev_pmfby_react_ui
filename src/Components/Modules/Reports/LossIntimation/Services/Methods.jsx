@@ -2,7 +2,6 @@ import { ApiCalling } from "Services/Utilities/ApiCalling/ApiCalling";
 import APIEndpoints from "./EndPoints";
 
 export const getSupportTicketCategoryReport = async (formData) => {
-  
   try {
     const requestData = {
       main: {

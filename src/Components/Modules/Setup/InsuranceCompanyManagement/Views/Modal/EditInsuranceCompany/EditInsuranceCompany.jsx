@@ -8,7 +8,6 @@ function EditInsuranceCompany({ showfunc, seletedData }) {
   const { formValues, updateState, btnLoaderActive, formValidationError, handleSave, getSelectedRowData } = EditInsuranceCompanyLogics();
 
   useEffect(() => {
-    
     getSelectedRowData(seletedData);
   }, []);
 

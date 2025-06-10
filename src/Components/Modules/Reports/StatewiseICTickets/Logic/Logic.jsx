@@ -37,7 +37,6 @@ function StatewiseICTicketsLogics() {
   const [ticketStatusList, setTicketStatusList] = useState([]);
   const [isLoadingTicketStatusList, setIsTicketStatusList] = useState(false);
   const getTicketStatusListData = async () => {
-    
     try {
       setTicketStatusList([]);
       setIsTicketStatusList(true);
@@ -79,7 +78,6 @@ function StatewiseICTicketsLogics() {
 
   const [StatewiseICTicketsListItemSearch, setStatewiseICTicketsListItemSearch] = useState("");
   const onChangeStatewiseICTicketsList = (val) => {
-    
     setStatewiseICTicketsListItemSearch(val);
     gridApi.setQuickFilter(val);
   };
@@ -104,7 +102,27 @@ function StatewiseICTicketsLogics() {
 
     // Append totals row to worksheet
     XLSX.utils.sheet_add_json(worksheet, [totals], { skipHeader: true, origin: -1 });
-    worksheet["!cols"] = [{ width: 60 }, { width: 20 }, { width: 20 }, { width: 20 }, { width: 20 }, { width: 20 },{ width: 20 }, { width: 20 }, { width: 20 }, { width: 20 }, { width: 20 }, { width: 20 },{ width: 20 }, { width: 20 }, { width: 20 }, { width: 20 }, { width: 20 }, { width: 20 },{ width: 20 }];
+    worksheet["!cols"] = [
+      { width: 60 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+    ];
     XLSX.writeFile(
       workbook,
       `Statewise_IC_Tickets${formValues.txtYearFilter && formValues.txtYearFilter.label ? `_${formValues.txtYearFilter.label}` : ""}${
@@ -121,7 +139,6 @@ function StatewiseICTicketsLogics() {
   };
 
   const getStatewiseICTicketsData = async () => {
-    
     try {
       let formattedStartDate = "";
       let formattedEndDate = "";
@@ -165,7 +182,6 @@ function StatewiseICTicketsLogics() {
   };
 
   const updateState = (name, value) => {
-    
     setFormValues({ ...formValues, [name]: value });
   };
 
@@ -196,7 +212,6 @@ function StatewiseICTicketsLogics() {
   };
 
   const exportClick = () => {
-    
     // A const excelParams = {
     // A  fileName: "Ticket History",
     // A };
@@ -253,8 +268,7 @@ function StatewiseICTicketsLogics() {
         TATA_AIG: value.TATA_AIG ? Number(value.TATA_AIG) : 0,
         United_India: value.United_India ? Number(value.United_India) : 0,
         Universal_Sompo: value.Universal_Sompo ? Number(value.Universal_Sompo) : 0,
-        
-        
+
         Total:
           (value.AIC ? Number(value.AIC) : 0) +
           (value.Bajaj_Allianz ? Number(value.Bajaj_Allianz) : 0) +

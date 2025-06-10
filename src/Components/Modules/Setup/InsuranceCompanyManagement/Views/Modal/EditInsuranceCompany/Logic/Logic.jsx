@@ -3,7 +3,6 @@ import { useState } from "react";
 import { updateInsuranceMaster } from "../Service/Methods";
 
 function EditInsuranceCompanyLogics() {
-  
   const setAlertMessage = AlertMessage();
   const [btnloaderActive, setBtnLoaderActive] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState();
@@ -69,7 +68,6 @@ function EditInsuranceCompanyLogics() {
     });
   };
   const handleSave = async (e, showfunc) => {
-    
     if (e) e.preventDefault();
     if (!handleValidation()) {
       return;

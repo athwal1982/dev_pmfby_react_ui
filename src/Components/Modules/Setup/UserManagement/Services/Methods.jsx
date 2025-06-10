@@ -2,7 +2,6 @@ import { ApiCalling } from "Services/Utilities/ApiCalling/ApiCalling";
 import APIEndpoints from "./Endpoints";
 
 export const getUserListData = async (formData) => {
-  
   try {
     const requestData = {
       main: {
@@ -24,7 +23,6 @@ export const getUserListData = async (formData) => {
 };
 
 export const userUpdateActiveStatus = async (formData) => {
-  
   try {
     const requestData = {
       main: {

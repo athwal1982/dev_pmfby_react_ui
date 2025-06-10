@@ -34,7 +34,6 @@ function ProfileManagementPage() {
 
   const [assignedUserListModal, setAssignedUserListModal] = useState(false);
   const toggleAssignedUserListModal = (data) => {
-    
     setAssignedUserListModal(!assignedUserListModal);
     setAssignedUsersModal(data);
   };
@@ -43,36 +42,48 @@ function ProfileManagementPage() {
 
   const [assignedUserProfileRightListModal, setAssignedUserProfileRightListModal] = useState(false);
   const toggleAssignedUserProfileRightListModal = (data) => {
-    
     setAssignedUserProfileRightListModal(!assignedUserProfileRightListModal);
     setAssignedUsersProfileRightModal(data);
   };
 
   return (
     <>
-      {addUserProfileModal ?  <Suspense fallback={<Loader />}><AddUserProfile showfunc={toggleAddUserProfileModal} updateProfileMgmt={updateProfileMgmt} /></Suspense> : null}
-      {assignedUserListModal &&  <Suspense fallback={<Loader />}><AssignedUserListModal showfunc={toggleAssignedUserListModal} assignedUsersModal={assignedUsersModal} /></Suspense>}
-      {assignedUserProfileRightListModal && (
-         <Suspense fallback={<Loader />}><AssignedUserProfileRightListModal showfunc={toggleAssignedUserProfileRightListModal} assignedUsersProfileRightModal={assignedUsersProfileRightModal} /></Suspense>
+      {addUserProfileModal ? (
+        <Suspense fallback={<Loader />}>
+          <AddUserProfile showfunc={toggleAddUserProfileModal} updateProfileMgmt={updateProfileMgmt} />
+        </Suspense>
+      ) : null}
+      {assignedUserListModal && (
+        <Suspense fallback={<Loader />}>
+          <AssignedUserListModal showfunc={toggleAssignedUserListModal} assignedUsersModal={assignedUsersModal} />
+        </Suspense>
       )}
-       <Suspense fallback={<Loader />}>
-      <ProfileManagement
-        filterProfileMasterData={filterProfileMasterData}
-        isLoadingProfileMasterData={isLoadingProfileMasterData}
-        toggleAddUserProfileModal={toggleAddUserProfileModal}
-        onProfileGridReady={onProfileGridReady}
-        onGetMenuClick={onGetMenuClick}
-        menuListData={menuListData}
-        treeMenuListData={treeMenuListData}
-        onGridReady={onGridReady}
-        onAssignMenu={onAssignMenu}
-        onUnAssignMenu={onUnAssignMenu}
-        toggleAssignedUserListModal={toggleAssignedUserListModal}
-        onSearch={onSearch}
-        onRefreshClick={onRefreshClick}
-        onSearchMenuList={onSearchMenuList}
-        toggleAssignedUserProfileRightListModal={toggleAssignedUserProfileRightListModal}
-      />
+      {assignedUserProfileRightListModal && (
+        <Suspense fallback={<Loader />}>
+          <AssignedUserProfileRightListModal
+            showfunc={toggleAssignedUserProfileRightListModal}
+            assignedUsersProfileRightModal={assignedUsersProfileRightModal}
+          />
+        </Suspense>
+      )}
+      <Suspense fallback={<Loader />}>
+        <ProfileManagement
+          filterProfileMasterData={filterProfileMasterData}
+          isLoadingProfileMasterData={isLoadingProfileMasterData}
+          toggleAddUserProfileModal={toggleAddUserProfileModal}
+          onProfileGridReady={onProfileGridReady}
+          onGetMenuClick={onGetMenuClick}
+          menuListData={menuListData}
+          treeMenuListData={treeMenuListData}
+          onGridReady={onGridReady}
+          onAssignMenu={onAssignMenu}
+          onUnAssignMenu={onUnAssignMenu}
+          toggleAssignedUserListModal={toggleAssignedUserListModal}
+          onSearch={onSearch}
+          onRefreshClick={onRefreshClick}
+          onSearchMenuList={onSearchMenuList}
+          toggleAssignedUserProfileRightListModal={toggleAssignedUserProfileRightListModal}
+        />
       </Suspense>
     </>
   );

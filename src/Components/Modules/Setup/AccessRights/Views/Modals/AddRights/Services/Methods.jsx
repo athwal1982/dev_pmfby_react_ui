@@ -2,7 +2,6 @@ import { ApiCalling } from "Services/Utilities/ApiCalling/ApiCalling";
 import APIEndpoints from "./EndPoints";
 
 export const getmenuMasterDataBinding = async () => {
-  
   try {
     const requestData = {
       main: {
@@ -22,7 +21,6 @@ export const getmenuMasterDataBinding = async () => {
 };
 
 export const addRightsMaster = async (formData) => {
-  
   try {
     const requestData = {
       main: {

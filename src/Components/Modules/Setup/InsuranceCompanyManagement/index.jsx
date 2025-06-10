@@ -7,8 +7,6 @@ const InsuranceCompanyManagement = React.lazy(() => import("./Views/InsuranceCom
 const AddInsuranceCompany = React.lazy(() => import("./Views/Modal/AddInsuranceCompany/AddInsuranceCompany"));
 const EditInsuranceCompany = React.lazy(() => import("./Views/Modal/EditInsuranceCompany/EditInsuranceCompany"));
 
-
-
 function InsuranceCompanyManagementPage() {
   const [addInsuranceCompanyModal, setAddInsuranceCompanyModal] = useState(false);
   const [editInsuranceCompanyModal, setEditInsuranceCompanyModal] = useState(false);
@@ -32,20 +30,26 @@ function InsuranceCompanyManagementPage() {
   return (
     <>
       {addInsuranceCompanyModal ? (
-        <Suspense fallback={<Loader />}><AddInsuranceCompany showfunc={toggleAddInsuranceCompanyModal} updateInsuranceCompanyData={updateInsuranceCompanyData} /></Suspense>
+        <Suspense fallback={<Loader />}>
+          <AddInsuranceCompany showfunc={toggleAddInsuranceCompanyModal} updateInsuranceCompanyData={updateInsuranceCompanyData} />
+        </Suspense>
       ) : null}
-      {editInsuranceCompanyModal ? <Suspense fallback={<Loader />}><EditInsuranceCompany showfunc={toggleEditInsuranceCompanyModal} seletedData={seletedData} /></Suspense> : null}
+      {editInsuranceCompanyModal ? (
+        <Suspense fallback={<Loader />}>
+          <EditInsuranceCompany showfunc={toggleEditInsuranceCompanyModal} seletedData={seletedData} />
+        </Suspense>
+      ) : null}
       <Suspense fallback={<Loader />}>
-      <InsuranceCompanyManagement
-        isLoadingInsuranceCompanyDataList={isLoadingInsuranceCompanyDataList}
-        insuranceCompanyDataList={insuranceCompanyDataList}
-        onGridReady={onGridReady}
-        toggleAddInsuranceCompanyModal={toggleAddInsuranceCompanyModal}
-        onChangeInsuranceCompanyList={onChangeInsuranceCompanyList}
-        insuranceCompanyListItemSearch={insuranceCompanyListItemSearch}
-        getInsuranceCompanyList={getInsuranceCompanyList}
-        toggleEditInsuranceCompanyModal={toggleEditInsuranceCompanyModal}
-      />
+        <InsuranceCompanyManagement
+          isLoadingInsuranceCompanyDataList={isLoadingInsuranceCompanyDataList}
+          insuranceCompanyDataList={insuranceCompanyDataList}
+          onGridReady={onGridReady}
+          toggleAddInsuranceCompanyModal={toggleAddInsuranceCompanyModal}
+          onChangeInsuranceCompanyList={onChangeInsuranceCompanyList}
+          insuranceCompanyListItemSearch={insuranceCompanyListItemSearch}
+          getInsuranceCompanyList={getInsuranceCompanyList}
+          toggleEditInsuranceCompanyModal={toggleEditInsuranceCompanyModal}
+        />
       </Suspense>
     </>
   );

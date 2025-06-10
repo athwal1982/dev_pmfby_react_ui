@@ -1,4 +1,4 @@
-import React, { useState,Suspense } from "react";
+import React, { useState, Suspense } from "react";
 import { Loader } from "Framework/Components/Widgets";
 import UserManagementLogics from "./Logic/Logic";
 import ConfirmDialog from "Framework/ConfirmDialog/ConfirmDialog";
@@ -44,7 +44,6 @@ function UserManagementPage() {
 
   const [profileListModal, setProfileListModal] = useState(false);
   const toggleProfileListModal = (data) => {
-    
     setProfileListModal(!profileListModal);
     setSelectedUserData(data);
   };
@@ -120,63 +119,87 @@ function UserManagementPage() {
     <>
       {confirmAlert.open && <ConfirmDialog confirmAlert={confirmAlert} setConfirmAlert={setConfirmAlert} />}
       {addUserModal ? (
-         <Suspense fallback={<Loader />}>
-        <AddUser showfunc={toggleAddVisitModal} updateUserData={updateUserData} referenceTypeOptions={referenceTypeOptions} setConfirmAlert={setConfirmAlert} /></Suspense>
+        <Suspense fallback={<Loader />}>
+          <AddUser
+            showfunc={toggleAddVisitModal}
+            updateUserData={updateUserData}
+            referenceTypeOptions={referenceTypeOptions}
+            setConfirmAlert={setConfirmAlert}
+          />
+        </Suspense>
       ) : null}
       {profileListModal && <ProfileListModal showfunc={toggleProfileListModal} selectedUserData={selectedUserData} updateUserDataList={updateUserDataList} />}
       {assignStateListModal ? (
-         <Suspense fallback={<Loader />}>
-        <AssignStateListModal showfunc={toggleAssignStateListModal} selectedUserData={selectedUserData} updateUserDataList={updateUserDataList} /></Suspense>
+        <Suspense fallback={<Loader />}>
+          <AssignStateListModal showfunc={toggleAssignStateListModal} selectedUserData={selectedUserData} updateUserDataList={updateUserDataList} />
+        </Suspense>
       ) : null}
       {assignDistrictListModal ? (
-         <Suspense fallback={<Loader />}>
-        <AssignDistrictListModal showfunc={toggleCloseDistrictListModal} selectedUserData={selectedUserData} updateUserDataList={updateUserDataList} /></Suspense>
+        <Suspense fallback={<Loader />}>
+          <AssignDistrictListModal showfunc={toggleCloseDistrictListModal} selectedUserData={selectedUserData} updateUserDataList={updateUserDataList} />
+        </Suspense>
       ) : null}
       {assignSubDistrictListModal ? (
-         <Suspense fallback={<Loader />}>
-        <AssignSubDistrictListModal showfunc={toggleCloseSubDistrictListModal} selectedUserData={selectedUserData} updateUserDataList={updateUserDataList} /></Suspense>
+        <Suspense fallback={<Loader />}>
+          <AssignSubDistrictListModal showfunc={toggleCloseSubDistrictListModal} selectedUserData={selectedUserData} updateUserDataList={updateUserDataList} />
+        </Suspense>
       ) : null}
       {assignBlockListModal ? (
-         <Suspense fallback={<Loader />}>
-        <AssignBlockListModal showfunc={toggleCloseBlockListModal} selectedUserData={selectedUserData} updateUserDataList={updateUserDataList} /></Suspense>
+        <Suspense fallback={<Loader />}>
+          <AssignBlockListModal showfunc={toggleCloseBlockListModal} selectedUserData={selectedUserData} updateUserDataList={updateUserDataList} />
+        </Suspense>
       ) : null}
 
-      {resetPasswordModal ? <Suspense fallback={<Loader />}><ResetPasswordModal showfunc={toggleResetPasswordModal} selectedUserData={selectedUserData} /></Suspense> : null}
-      {categoryModal ? <Suspense fallback={<Loader />}><CategoryModal showfunc={toggleCloseCategoryModal} selectedUserData={selectedUserData} /></Suspense> : null}
+      {resetPasswordModal ? (
+        <Suspense fallback={<Loader />}>
+          <ResetPasswordModal showfunc={toggleResetPasswordModal} selectedUserData={selectedUserData} />
+        </Suspense>
+      ) : null}
+      {categoryModal ? (
+        <Suspense fallback={<Loader />}>
+          <CategoryModal showfunc={toggleCloseCategoryModal} selectedUserData={selectedUserData} />
+        </Suspense>
+      ) : null}
       {assignRegionalOfficeListModal ? (
-         <Suspense fallback={<Loader />}>
-        <AssignRegionalOfficeModal showfunc={toggleAssignRegionalOfficeListModal} selectedUserData={selectedUserData} updateUserDataList={updateUserDataList} /></Suspense>
+        <Suspense fallback={<Loader />}>
+          <AssignRegionalOfficeModal
+            showfunc={toggleAssignRegionalOfficeListModal}
+            selectedUserData={selectedUserData}
+            updateUserDataList={updateUserDataList}
+          />
+        </Suspense>
       ) : null}
       {assignInsCompModal ? (
         <Suspense fallback={<Loader />}>
-        <AssignInsCompModal showfunc={toggleAssignInsCompModal} selectedUserData={selectedUserData} updateUserDataList={updateUserDataList} /></Suspense>
+          <AssignInsCompModal showfunc={toggleAssignInsCompModal} selectedUserData={selectedUserData} updateUserDataList={updateUserDataList} />
+        </Suspense>
       ) : null}
-       <Suspense fallback={<Loader />}>
-      <UserManagement
-        filteredUserDataList={filteredUserDataList}
-        isLoadingUserDataList={isLoadingUserDataList}
-        toggleAddVisitModal={toggleAddVisitModal}
-        onGridReady={onGridReady}
-        getUsersList={getUsersList}
-        onChangeUserList={onChangeUserList}
-        userListItemSearch={userListItemSearch}
-        onActiveUser={onActiveUser}
-        onDeActiveUser={onDeActiveUser}
-        toggleProfileListModal={toggleProfileListModal}
-        toggleAssignStateListModal={toggleAssignStateListModal}
-        toggleAssignDistrictListModal={toggleAssignDistrictListModal}
-        toggleAssignSubDistrictListModal={toggleAssignSubDistrictListModal}
-        toggleAssignBlockListModal={toggleAssignBlockListModal}
-        toggleCloseSubDistrictListModal={toggleCloseSubDistrictListModal}
-        toggleCloseBlockListModal={toggleCloseBlockListModal}
-        toggleResetPasswordModal={toggleResetPasswordModal}
-        toggleCategoryModal={toggleCategoryModal}
-        toggleCloseCategoryModal={toggleCloseCategoryModal}
-        toggleCloseDistrictListModal={toggleCloseDistrictListModal}
-        toggleAssignRegionalOfficeListModal={toggleAssignRegionalOfficeListModal}
-        toggleAssignInsCompModal={toggleAssignInsCompModal}
-        onClearSearchClick={onClearSearchClick}
-      />
+      <Suspense fallback={<Loader />}>
+        <UserManagement
+          filteredUserDataList={filteredUserDataList}
+          isLoadingUserDataList={isLoadingUserDataList}
+          toggleAddVisitModal={toggleAddVisitModal}
+          onGridReady={onGridReady}
+          getUsersList={getUsersList}
+          onChangeUserList={onChangeUserList}
+          userListItemSearch={userListItemSearch}
+          onActiveUser={onActiveUser}
+          onDeActiveUser={onDeActiveUser}
+          toggleProfileListModal={toggleProfileListModal}
+          toggleAssignStateListModal={toggleAssignStateListModal}
+          toggleAssignDistrictListModal={toggleAssignDistrictListModal}
+          toggleAssignSubDistrictListModal={toggleAssignSubDistrictListModal}
+          toggleAssignBlockListModal={toggleAssignBlockListModal}
+          toggleCloseSubDistrictListModal={toggleCloseSubDistrictListModal}
+          toggleCloseBlockListModal={toggleCloseBlockListModal}
+          toggleResetPasswordModal={toggleResetPasswordModal}
+          toggleCategoryModal={toggleCategoryModal}
+          toggleCloseCategoryModal={toggleCloseCategoryModal}
+          toggleCloseDistrictListModal={toggleCloseDistrictListModal}
+          toggleAssignRegionalOfficeListModal={toggleAssignRegionalOfficeListModal}
+          toggleAssignInsCompModal={toggleAssignInsCompModal}
+          onClearSearchClick={onClearSearchClick}
+        />
       </Suspense>
     </>
   );

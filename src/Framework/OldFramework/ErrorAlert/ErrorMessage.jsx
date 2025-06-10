@@ -5,7 +5,6 @@ import { IoCloseSharp } from "react-icons/io5";
 import "./ErrorMessage.scss";
 
 const ErrorMessage = (props) => {
-  
   const onClose = () => {
     props.setMsgAlert({ open: false, type: "", msg: "" });
   };

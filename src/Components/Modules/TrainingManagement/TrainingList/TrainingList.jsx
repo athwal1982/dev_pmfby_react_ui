@@ -51,15 +51,14 @@ const TrainingList = () => {
   const [duration, setDuration] = useState("");
   const [trainingLink, setTrainingLink] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-    const [totalMinutes, setTotalMinutes] = useState(null);
-    const [openAgentScoreModal, setOpenAgentScoreModal] = useState(false);
-    const [selectedAgentData, setSelectedAgentData] = useState(null);
-    
+  const [totalMinutes, setTotalMinutes] = useState(null);
+  const [openAgentScoreModal, setOpenAgentScoreModal] = useState(false);
+  const [selectedAgentData, setSelectedAgentData] = useState(null);
 
-    const toggleAgentScoreModal = (data) => {
-      setSelectedTrainingDetails(data);
-      setOpenAgentScoreModal(!openAgentScoreModal);
-    };
+  const toggleAgentScoreModal = (data) => {
+    setSelectedTrainingDetails(data);
+    setOpenAgentScoreModal(!openAgentScoreModal);
+  };
 
   const toggleTrainingByAdminModal = (data) => {
     setSelectedTrainingDetails(data);
@@ -67,26 +66,20 @@ const TrainingList = () => {
     settrainingByAdminModal(data);
   };
 
-
-
-
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
 
   const toggleEditTrainingModal = (data) => {
-    
     setSelectedData(data);
     setEditModalOpen(true);
   };
 
   const fetchAllTraining = async (page = 1, query = "") => {
-    
     try {
       const response = await getTrainingListData({ page, limit, searchQuery: query });
       let data = response.response.responseData.items;
       let responseCode = response.response.responseCode;
       if (responseCode === 1) {
-
         setRowData(data);
         setFilteredData(data);
         setTotalPages(response.response.responseData.totalPages);
@@ -99,10 +92,7 @@ const TrainingList = () => {
     }
   };
 
-
-
   const fetchTrainersByCenter = async (centerId) => {
-    
     try {
       const formData = {
         SPMODE: "TRAINEE",
@@ -118,7 +108,7 @@ const TrainingList = () => {
           data.map((trainer) => ({
             value: trainer.UserID,
             label: trainer.Name,
-          }))
+          })),
         );
       } else {
         setTrainers([]);
@@ -128,9 +118,7 @@ const TrainingList = () => {
     }
   };
 
-
   const handleCenterChange = (selectedOption) => {
-    
     setselectedCenter(selectedOption);
 
     if (selectedOption) {
@@ -139,8 +127,7 @@ const TrainingList = () => {
   };
 
   const setTrainer = async () => {
-    
-    const selectedTrainerIds = selectedTrainers.map(trainer => trainer.value);
+    const selectedTrainerIds = selectedTrainers.map((trainer) => trainer.value);
     const selectedCenterId = selectedCenter ? parseInt(selectedCenter.value, 10) : null;
     // A const selectedCenterId = selectedCenter.length > 0 ? parseInt(selectedCenter[0].value, 10) : null;
     if (!selectedTraining) {
@@ -183,34 +170,32 @@ const TrainingList = () => {
     setSelectedTraining(null);
   };
 
- 
   const ActionCellRenderer = (props) => {
     const { TrainingDate, StartTime, TrainingTypeID } = props.data;
-    const currentTime = new Date(); 
-  
+    const currentTime = new Date();
+
     const trainingDateObj = new Date(TrainingDate);
     const trainingDateOnly = new Date(trainingDateObj.getFullYear(), trainingDateObj.getMonth(), trainingDateObj.getDate());
-  
+
     const trainingDatePlus7 = new Date(trainingDateOnly);
     trainingDatePlus7.setDate(trainingDatePlus7.getDate() + 30);
-  
+
     const [hours, minutes, seconds] = StartTime.split(":").map(Number);
     const startTimeObj = new Date(trainingDateObj);
     startTimeObj.setHours(hours, minutes, seconds, 0);
-  
+
     const currentDateOnly = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate());
-  
+
     const isStarted = trainingDateOnly <= currentDateOnly && startTimeObj <= currentTime;
     const isWithin7Days = currentDateOnly <= trainingDatePlus7;
-  
-  
+
     const getIconStyle = (disabled) => ({
       cursor: disabled ? "not-allowed" : "pointer",
       color: disabled ? "gray" : "green",
       marginRight: "10px",
       opacity: disabled ? 0.5 : 1,
     });
-  
+
     return (
       <>
         <i
@@ -219,21 +204,21 @@ const TrainingList = () => {
           onClick={isWithin7Days ? () => toggleAssignUnAssignCenterModal(props.data) : null}
           title="Assign/Unassign Center"
         ></i>
-  
+
         <i
           className="fa fa-user-graduate"
           style={getIconStyle(!isWithin7Days)}
           onClick={isWithin7Days ? () => toggleAssignUnAssignTraineeByAdminModal(props.data) : null}
           title="Assign/Unassign Trainee"
         ></i>
-  
+
         <i
           className="fa fa-bookmark"
           style={getIconStyle(!isWithin7Days)}
           onClick={isWithin7Days ? () => toggleTrainingByAdminModal(props.data) : null}
           title="Mark Training"
         ></i>
-  
+
         {TrainingTypeID === 11001 && (
           <i
             className="fa fa-file-alt"
@@ -242,13 +227,8 @@ const TrainingList = () => {
             title="Mark Assessment Score"
           ></i>
         )}
-         <i
-            className="fa fa-edit"
-            style={getIconStyle(false)}
-            onClick={() => toggleEditTrainingModal(props.data)}
-            title="Edit Training"
-          ></i>
-  
+        <i className="fa fa-edit" style={getIconStyle(false)} onClick={() => toggleEditTrainingModal(props.data)} title="Edit Training"></i>
+
         {/* {!isStarted && (
           <i
             className="fa fa-edit"
@@ -260,16 +240,8 @@ const TrainingList = () => {
       </>
     );
   };
-  
-  
-  
-  
-  
-  
 
   const [columnDefs] = useState([
-
-
     {
       headerName: "Action",
       field: "action",
@@ -313,8 +285,7 @@ const TrainingList = () => {
       sortable: true,
       filter: true,
       width: 110,
-      valueFormatter: (param) =>
-        param.value ? moment(param.value).format("DD-MM-YYYY") : "",
+      valueFormatter: (param) => (param.value ? moment(param.value).format("DD-MM-YYYY") : ""),
     },
     {
       headerName: "Start Time",
@@ -322,8 +293,7 @@ const TrainingList = () => {
       sortable: true,
       filter: true,
       width: 100,
-      valueGetter: (node) =>
-        node.data.StartTime ? Convert24FourHourAndMinute(node.data.StartTime) : null,
+      valueGetter: (node) => (node.data.StartTime ? Convert24FourHourAndMinute(node.data.StartTime) : null),
     },
     {
       headerName: "End Time",
@@ -331,8 +301,7 @@ const TrainingList = () => {
       sortable: true,
       filter: true,
       width: 100,
-      valueGetter: (node) =>
-        node.data.EndTime ? Convert24FourHourAndMinute(node.data.EndTime) : null,
+      valueGetter: (node) => (node.data.EndTime ? Convert24FourHourAndMinute(node.data.EndTime) : null),
     },
     {
       headerName: "Created By",
@@ -350,17 +319,13 @@ const TrainingList = () => {
       valueGetter: (node) => {
         return node.data.InsertedDateTime
           ? dateToSpecificFormat(
-            `${node.data.InsertedDateTime.split("T")[0]} ${Convert24FourHourAndMinute(
-              node.data.InsertedDateTime.split("T")[1]
-            )}`,
-            "DD-MM-YYYY HH:mm"
-          )
+              `${node.data.InsertedDateTime.split("T")[0]} ${Convert24FourHourAndMinute(node.data.InsertedDateTime.split("T")[1])}`,
+              "DD-MM-YYYY HH:mm",
+            )
           : null;
       },
     },
-
   ]);
-
 
   const handlePageChange = (newPage) => {
     if (newPage > 0 && newPage <= totalPages) {
@@ -370,70 +335,48 @@ const TrainingList = () => {
 
   const renderPagination = () => (
     <div className="pagination-container">
-      <button
-        onClick={() => handlePageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-      >
+      <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
         <i className="fas fas fa-arrow-left"></i>
       </button>
       <span>
         Page {currentPage} of {totalPages}
       </span>
-      <button
-        onClick={() => handlePageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-      >
+      <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
         <i className="fas fas fa-arrow-right"></i>
       </button>
     </div>
   );
-
-
 
   const handleSearchInputChange = _.debounce((query) => {
     setSearchQuery(query);
     fetchAllTraining(1, query);
   }, 500);
 
-  const [assignUnAssignCenterModal, setAssignUnAssignCenterModal] =
-    useState(false);
-  const [openAssignUnAssignCenterModal, setOpenAssignAssignCenterModal] =
-    useState(false);
+  const [assignUnAssignCenterModal, setAssignUnAssignCenterModal] = useState(false);
+  const [openAssignUnAssignCenterModal, setOpenAssignAssignCenterModal] = useState(false);
   const toggleAssignUnAssignCenterModal = (data) => {
-    
     setOpenAssignAssignCenterModal(!openAssignUnAssignCenterModal);
 
     setAssignUnAssignCenterModal(data);
   };
 
-  const [assignUnAssignTraineeByAdminModal, setAssignUnAssignTraineeByAdminModal] =
-    useState(false);
-  const [trainingByAdminModal, settrainingByAdminModal] =
-    useState(false);
-  const [openAssignUnAssignTraineeByAdminModal, setOpenAssignAssignTraineeByAdminModal] =
-    useState(false);
-  const [opentrainingByAdminModal, setOpentrainingByAdminModal] =
-    useState(false);
+  const [assignUnAssignTraineeByAdminModal, setAssignUnAssignTraineeByAdminModal] = useState(false);
+  const [trainingByAdminModal, settrainingByAdminModal] = useState(false);
+  const [openAssignUnAssignTraineeByAdminModal, setOpenAssignAssignTraineeByAdminModal] = useState(false);
+  const [opentrainingByAdminModal, setOpentrainingByAdminModal] = useState(false);
   const toggleAssignUnAssignTraineeByAdminModal = (data) => {
-    
     setOpenAssignAssignTraineeByAdminModal(!openAssignUnAssignTraineeByAdminModal);
 
     setAssignUnAssignTraineeByAdminModal(data);
   };
 
-
   useEffect(() => {
-    
     fetchAllTraining(currentPage, searchQuery);
-
   }, [currentPage, searchQuery]);
 
   // A edit code
 
-
-
   const fetchTrainingTypes = async () => {
-    
     try {
       const data = await getTrainingTypeData({ MODE: "#ALL", TrainingID: null });
       if (data.response.responseCode === 1) {
@@ -450,7 +393,6 @@ const TrainingList = () => {
   };
 
   useEffect(() => {
-    
     fetchTrainingTypes();
     if (selectedData?.TrainingMasterId) {
       setTrainingTitle(selectedData.TrainingTitle || "");
@@ -459,7 +401,7 @@ const TrainingList = () => {
       setTrainingDate(new Date(selectedData.TrainingDate));
       setStartTime(selectedData.StartTime || "");
       setEndTime(selectedData.EndTime || "");
-      setTotalMinutes(selectedData.Duration || "" );
+      setTotalMinutes(selectedData.Duration || "");
 
       const startDate = new Date(`1970-01-01T${selectedData.StartTime}`);
       const endDate = new Date(`1970-01-01T${selectedData.EndTime}`);
@@ -467,88 +409,66 @@ const TrainingList = () => {
       const hours = Math.floor(diffInMinutes / 60);
       const minutes = diffInMinutes % 60;
       setDuration(`${hours}hrs ${minutes}min`);
-    
+
       if (selectedData.startTime && selectedData.endTime) {
-       
         calculateDuration(selectedData.startTime, selectedData.endTime);
       }
-      
     }
   }, [selectedData]);
-  
-
-
- 
-  
-
-
-
-
-
- 
 
   const handleSubmit = async (e) => {
-    
     e.preventDefault();
     setIsSubmitting(true);
 
-   
     const startDate = new Date(`1970-01-01T${startTime}`);
     const endDate = new Date(`1970-01-01T${endTime}`);
 
     if (endDate <= startDate) {
-        setAlertMessage({ type: "error", message: "Enter a valid time. End time cannot be before start time." });
-        setIsSubmitting(false);
-        return;
+      setAlertMessage({ type: "error", message: "Enter a valid time. End time cannot be before start time." });
+      setIsSubmitting(false);
+      return;
     }
 
     const updatedTraining = {
-        trainingMasterID: selectedData.TrainingMasterId,
-        trainingTypeID: parseInt(selectedModule),
-        trainingDate: trainingDate.toISOString().split("T")[0],
-        startTime: startTime,
-        endTime: endTime,
-        duration: totalMinutes,
-        trainingTitle: trainingTitle,
-        trainingLink: trainingLink,
+      trainingMasterID: selectedData.TrainingMasterId,
+      trainingTypeID: parseInt(selectedModule),
+      trainingDate: trainingDate.toISOString().split("T")[0],
+      startTime: startTime,
+      endTime: endTime,
+      duration: totalMinutes,
+      trainingTitle: trainingTitle,
+      trainingLink: trainingLink,
     };
 
     try {
-        const response = await setCSCUpdateTraining(updatedTraining);
-        if (response.response.responseCode === 1) {
-            setAlertMessage({ type: "success", message: response.response.responseMessage });
-            setEditModalOpen(false);
-            fetchAllTraining("", "");
-        } else {
-            setAlertMessage({ type: "error", message: response.response.responseMessage });
-        }
+      const response = await setCSCUpdateTraining(updatedTraining);
+      if (response.response.responseCode === 1) {
+        setAlertMessage({ type: "success", message: response.response.responseMessage });
+        setEditModalOpen(false);
+        fetchAllTraining("", "");
+      } else {
+        setAlertMessage({ type: "error", message: response.response.responseMessage });
+      }
     } catch (error) {
-        setAlertMessage({ type: "error", message: error });
+      setAlertMessage({ type: "error", message: error });
     } finally {
-        setIsSubmitting(false);
+      setIsSubmitting(false);
     }
-};
-
-
-
-  
-
+  };
 
   const calculateDuration = (start, end) => {
-    
     if (!start || !end) {
-        setDuration("");
-        setTotalMinutes(null);
-        return;
+      setDuration("");
+      setTotalMinutes(null);
+      return;
     }
 
     const startDate = new Date(`1970-01-01T${start}`);
     const endDate = new Date(`1970-01-01T${end}`);
 
     if (endDate <= startDate) {
-        
-        setTotalMinutes(null);
-        return;
+      setTotalMinutes(null);
+      return;
     }
 
     const diffInMinutes = Math.floor((endDate - startDate) / (1000 * 60));
@@ -558,8 +478,8 @@ const TrainingList = () => {
 
     console.log(`Calculated Duration: ${hours}h ${minutes}m`);
     setDuration(`${hours}hrs ${minutes}min`);
-    setTotalMinutes(totalCalculatedMinutes); 
-};
+    setTotalMinutes(totalCalculatedMinutes);
+  };
   const handleStartTimeChange = (value) => {
     setStartTime(value);
     calculateDuration(value, endTime);
@@ -567,13 +487,12 @@ const TrainingList = () => {
 
   const handleEndTimeChange = (value) => {
     setEndTime(value);
-    
+
     if (startTime) {
       const start = new Date(`1970-01-01T${startTime}`);
       const end = new Date(`1970-01-01T${endTime}`);
 
       if (end <= start) {
-      
         return;
       }
     }
@@ -581,121 +500,117 @@ const TrainingList = () => {
     calculateDuration(startTime, value);
   };
 
-
   return (
     <>
-      {  isEditModalOpen && (
-      <div className="edittraining-form-wrapper">
-        <div className="edittraining-form-container">
-          <div className="header-color">
-            <h5 className="edittraining-heading" style={{ marginBottom: "8px" }}>
-              Edit Training Details
-            </h5>
-            <IoMdClose className="close-icon" onClick={() => setEditModalOpen(false)} />
+      {isEditModalOpen && (
+        <div className="edittraining-form-wrapper">
+          <div className="edittraining-form-container">
+            <div className="header-color">
+              <h5 className="edittraining-heading" style={{ marginBottom: "8px" }}>
+                Edit Training Details
+              </h5>
+              <IoMdClose className="close-icon" onClick={() => setEditModalOpen(false)} />
+            </div>
+            <form onSubmit={handleSubmit}>
+              <div className="edittraining-form-row">
+                <div className="edittraining-form-group">
+                  <label>Training Title</label>
+                  <input type="text" value={trainingTitle} onChange={(e) => setTrainingTitle(e.target.value)} />
+                </div>
+                <div className="edittraining-form-group">
+                  <label>Training Type</label>
+                  <select value={selectedModule} onChange={(e) => setSelectedModule(e.target.value)}>
+                    <option value="">Choose Training Type</option>
+                    {trainingTypes?.map((type) => (
+                      <option key={type.TrainingID} value={type.TrainingID}>
+                        {type.TrainingName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="edittraining-form-row">
+                <div className="edittraining-form-group">
+                  <label htmlFor="training-date">Training Scheduled Date</label>
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DatePicker
+                      id="training-date"
+                      value={trainingDate || null}
+                      onChange={(newDate) => setTrainingDate(newDate)}
+                      minDate={new Date().setMonth(new Date().getMonth() - 1)}
+                    />
+                  </LocalizationProvider>
+                </div>
+                <div className="edittraining-form-group">
+                  <label>Start Time</label>
+                  <input type="time" value={startTime} onChange={(e) => handleStartTimeChange(e.target.value)} required />
+                </div>
+              </div>
+
+              <div className="edittraining-form-row">
+                <div className="edittraining-form-group">
+                  <label>End Time</label>
+                  <input type="time" value={endTime} onChange={(e) => handleEndTimeChange(e.target.value)} />
+                </div>
+                <div className="edittraining-form-group">
+                  <label>Duration</label>
+                  <input style={{ width: "300px" }} type="text" value={duration} disabled />
+                </div>
+              </div>
+
+              <div className="edittraining-form-row">
+                <div className="edittraining-form-group" style={{ marginTop: "-80px" }}>
+                  <label>Training Link</label>
+                  <input type="text" value={trainingLink} onChange={(e) => setTrainingLink(e.target.value)} />
+                </div>
+              </div>
+
+              <div className="edittraining-button-group">
+                <button type="submit" disabled={isSubmitting} className="edittraining-submit-btn">
+                  {isSubmitting ? (
+                    "Updating..."
+                  ) : (
+                    <>
+                      <FaEdit /> Update
+                    </>
+                  )}
+                </button>
+                <button type="button" onClick={() => setEditModalOpen(false)} className="edittraining-cancel-btn">
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
-          <form onSubmit={handleSubmit}>
-            <div className="edittraining-form-row">
-              <div className="edittraining-form-group">
-                <label>Training Title</label>
-                <input type="text" value={trainingTitle} onChange={(e) => setTrainingTitle(e.target.value)} />
-              </div>
-              <div className="edittraining-form-group">
-                <label>Training Type</label>
-                <select value={selectedModule} onChange={(e) => setSelectedModule(e.target.value)}>
-                  <option value="">Choose Training Type</option>
-                  {trainingTypes?.map((type) => (
-                    <option key={type.TrainingID} value={type.TrainingID}>
-                      {type.TrainingName}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div className="edittraining-form-row">
-              <div className="edittraining-form-group">
-                <label htmlFor="training-date">
-                  Training Scheduled Date 
-                </label>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DatePicker
-                    id="training-date"
-                    value={trainingDate || null}
-                    onChange={(newDate) => setTrainingDate(newDate)}
-                    minDate={new Date().setMonth(new Date().getMonth() - 1)}
-                  />
-                </LocalizationProvider>
-              </div>
-              <div className="edittraining-form-group">
-                <label>Start Time</label>
-                <input type="time" value={startTime} onChange={(e) => handleStartTimeChange(e.target.value)} required />
-              </div>
-            </div>
-
-            <div className="edittraining-form-row">
-              <div className="edittraining-form-group">
-                <label>End Time</label>
-                <input type="time" value={endTime} onChange={(e) => handleEndTimeChange(e.target.value)} />
-              </div>
-              <div className="edittraining-form-group">
-                <label>Duration</label>
-                <input style={{ width: "300px" }} type="text" value={duration} disabled />
-              </div>
-            </div>
-
-            <div className="edittraining-form-row">
-              <div className="edittraining-form-group" style={{ marginTop: "-80px" }}>
-                <label>Training Link</label>
-                <input type="text" value={trainingLink} onChange={(e) => setTrainingLink(e.target.value)} />
-              </div>
-            </div>
-
-            <div className="edittraining-button-group">
-              <button type="submit" disabled={isSubmitting} className="edittraining-submit-btn">
-                {isSubmitting ? "Updating..." : <><FaEdit /> Update</>}
-              </button>
-              <button type="button" onClick={() => setEditModalOpen(false)} className="edittraining-cancel-btn">
-                Cancel
-              </button>
-            </div>
-          </form>
         </div>
-      </div>
-    )}
+      )}
 
       {openAssignUnAssignCenterModal && (
         <Suspense fallback={<Loader />}>
-        <AssignUnAssignCenter
-          toggleAssignUnAssignCenterModal={toggleAssignUnAssignCenterModal}
-          assignUnAssignCenterModal={assignUnAssignCenterModal}
-        />
+          <AssignUnAssignCenter toggleAssignUnAssignCenterModal={toggleAssignUnAssignCenterModal} assignUnAssignCenterModal={assignUnAssignCenterModal} />
         </Suspense>
       )}
       {openAssignUnAssignTraineeByAdminModal && (
         <Suspense fallback={<Loader />}>
-        <AssignUnassginTraineeByAdmin
-          toggleAssignUnAssignTraineeByAdminModal={toggleAssignUnAssignTraineeByAdminModal}
-          assignUnAssignTraineeByAdminModal={assignUnAssignTraineeByAdminModal}
-        />
+          <AssignUnassginTraineeByAdmin
+            toggleAssignUnAssignTraineeByAdminModal={toggleAssignUnAssignTraineeByAdminModal}
+            assignUnAssignTraineeByAdminModal={assignUnAssignTraineeByAdminModal}
+          />
         </Suspense>
       )}
       {opentrainingByAdminModal && (
         <Suspense fallback={<Loader />}>
-        <TrainingDetailsPopUp
-          toggleTrainingByAdminModal={toggleTrainingByAdminModal}
-          trainingByAdminModal={trainingByAdminModal}
-          trainingDetails={selectedTrainingDetails}
-        />
+          <TrainingDetailsPopUp
+            toggleTrainingByAdminModal={toggleTrainingByAdminModal}
+            trainingByAdminModal={trainingByAdminModal}
+            trainingDetails={selectedTrainingDetails}
+          />
         </Suspense>
       )}
 
-{openAgentScoreModal && (
-  <Suspense fallback={<Loader />}>
-        <AgentScore
-          toggleAgentScoreModal={toggleAgentScoreModal}
-          agentScoreModal={openAgentScoreModal}
-          trainingDetails={selectedTrainingDetails}
-        />
+      {openAgentScoreModal && (
+        <Suspense fallback={<Loader />}>
+          <AgentScore toggleAgentScoreModal={toggleAgentScoreModal} agentScoreModal={openAgentScoreModal} trainingDetails={selectedTrainingDetails} />
         </Suspense>
       )}
 
@@ -712,23 +627,15 @@ const TrainingList = () => {
               />
             </div>
 
-
-            <button
-              className="create-agent-button"
-              onClick={() => navigate("/CreateNewTraining")}
-            >
+            <button className="create-agent-button" onClick={() => navigate("/CreateNewTraining")}>
               Create Training &nbsp; <i className="fas fas fa-arrow-right"></i>
             </button>
-
           </div>
 
           <div className="ag-theme-alpine ag-grid-container">
             <AgGridReact
               rowData={Array.isArray(filteredData) ? filteredData : []}
-              columnDefs={[
-                { headerName: "S.No", valueGetter: (params) => params.node.rowIndex + 1, width: 80 },
-                ...columnDefs,
-              ]}
+              columnDefs={[{ headerName: "S.No", valueGetter: (params) => params.node.rowIndex + 1, width: 80 }, ...columnDefs]}
               components={{ ActionCellRenderer }}
               defaultColDef={{
                 resizable: true,
@@ -738,7 +645,6 @@ const TrainingList = () => {
               }}
               rowHeight={30}
             />
-
 
             {selectedTraining && (
               <Modal AgentScore={showModal} onHide={handleClose} centered className="custom-modal" size="lg">
@@ -757,28 +663,22 @@ const TrainingList = () => {
                   <form>
                     <div className="row mb-3">
                       <div className="col-md-4">
-                        <label htmlFor="trainingId" className="form-label small-bold-label">Training ID *</label>
-                        <input
-                          type="text"
-                          className="form-control form-control-sm"
-                          id="trainingId"
-                          value={selectedTraining.TrainingMasterId}
-                          readOnly
-                        />
+                        <label htmlFor="trainingId" className="form-label small-bold-label">
+                          Training ID *
+                        </label>
+                        <input type="text" className="form-control form-control-sm" id="trainingId" value={selectedTraining.TrainingMasterId} readOnly />
                       </div>
 
                       <div className="col-md-4">
-                        <label htmlFor="trainingName" className="form-label small-bold-label">Training Name *</label>
-                        <input
-                          type="text"
-                          className="form-control form-control-sm"
-                          id="trainingName"
-                          value={selectedTraining.TrainingName}
-                          readOnly
-                        />
+                        <label htmlFor="trainingName" className="form-label small-bold-label">
+                          Training Name *
+                        </label>
+                        <input type="text" className="form-control form-control-sm" id="trainingName" value={selectedTraining.TrainingName} readOnly />
                       </div>
                       <div className="col-md-4">
-                        <label htmlFor="trainingDate" className="form-label small-bold-label">Training Date *</label>
+                        <label htmlFor="trainingDate" className="form-label small-bold-label">
+                          Training Date *
+                        </label>
                         <input
                           type="text"
                           className="form-control form-control-sm"
@@ -790,10 +690,10 @@ const TrainingList = () => {
                     </div>
 
                     <div className="row mb-3">
-
-
                       <div className="col-md-4">
-                        <label htmlFor="startTime" className="form-label small-bold-label">Start Time *</label>
+                        <label htmlFor="startTime" className="form-label small-bold-label">
+                          Start Time *
+                        </label>
                         <input
                           type="text"
                           className="form-control form-control-sm"
@@ -803,7 +703,9 @@ const TrainingList = () => {
                         />
                       </div>
                       <div className="col-md-4">
-                        <label htmlFor="endTime" className="form-label small-bold-label">End Time *</label>
+                        <label htmlFor="endTime" className="form-label small-bold-label">
+                          End Time *
+                        </label>
                         <input
                           type="text"
                           className="form-control form-control-sm"
@@ -815,9 +717,6 @@ const TrainingList = () => {
                     </div>
 
                     <div className="row mb-3">
-
-
-
                       <div className="col-md-4">
                         <label htmlFor="center" className="form-label small-bold-label">
                           Center *
@@ -846,37 +745,21 @@ const TrainingList = () => {
                           placeholder="Select Trainee(s)"
                         />
                       </div>
-
-
-
-
                     </div>
                   </form>
                 </Modal.Body>
 
                 <Modal.Footer className="py-2" style={{ fontSize: "0.875rem" }}>
-                  <Button
-                    size="sm"
-                    onClick={() => setTrainer()}
-                    style={{ backgroundColor: "#004d00", border: "none", pointerEvents: "auto" }}
-                  >
+                  <Button size="sm" onClick={() => setTrainer()} style={{ backgroundColor: "#004d00", border: "none", pointerEvents: "auto" }}>
                     Assign
                   </Button>
 
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={handleClose}
-                    style={{ backgroundColor: "#6c757d", border: "none", pointerEvents: "auto" }}
-                  >
+                  <Button variant="secondary" size="sm" onClick={handleClose} style={{ backgroundColor: "#6c757d", border: "none", pointerEvents: "auto" }}>
                     Close
                   </Button>
-
                 </Modal.Footer>
               </Modal>
             )}
-
-
           </div>
 
           {renderPagination()}
@@ -887,5 +770,3 @@ const TrainingList = () => {
 };
 
 export default TrainingList;
-
-

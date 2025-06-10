@@ -142,7 +142,6 @@ function AddRegionalMasterOfficeLogics() {
   };
 
   const handleSave = async (e, updateUserData) => {
-    
     if (e) e.preventDefault();
     if (!handleValidation()) {
       return;

@@ -22,20 +22,20 @@ function MenuToUser() {
   } = MenuToUserLogics();
   return (
     <Suspense fallback={<Loader />}>
-    <MenuToUserManagement
-      treeMenuListData={treeMenuListData}
-      isLoadingMenuList={isLoadingMenuList}
-      filteredUserDataList={filteredUserDataList}
-      isLoadingUserDataList={isLoadingUserDataList}
-      onGridReady={onGridReady}
-      updateState={updateState}
-      formValues={formValues}
-      userNameSelect={userNameSelect}
-      onChangeMenuList={onChangeMenuList}
-      menuListItemSearch={menuListItemSearch}
-      getMenuLists={getMenuLists}
-      onAssignUnAssignMenu={onAssignUnAssignMenu}
-    />
+      <MenuToUserManagement
+        treeMenuListData={treeMenuListData}
+        isLoadingMenuList={isLoadingMenuList}
+        filteredUserDataList={filteredUserDataList}
+        isLoadingUserDataList={isLoadingUserDataList}
+        onGridReady={onGridReady}
+        updateState={updateState}
+        formValues={formValues}
+        userNameSelect={userNameSelect}
+        onChangeMenuList={onChangeMenuList}
+        menuListItemSearch={menuListItemSearch}
+        getMenuLists={getMenuLists}
+        onAssignUnAssignMenu={onAssignUnAssignMenu}
+      />
     </Suspense>
   );
 }

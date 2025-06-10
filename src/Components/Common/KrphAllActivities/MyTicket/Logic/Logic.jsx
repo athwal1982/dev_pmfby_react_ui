@@ -125,9 +125,6 @@ function MyTicketLogics() {
   const [selectedPolicyDetails, setSelectedPolicyDetails] = useState([]);
   const getPolicyDetailsOfFarmer = async (pticketData) => {
     try {
-      
-
-      
       let result = "";
       let formData = "";
 
@@ -228,7 +225,6 @@ function MyTicketLogics() {
 
   const [btnLoaderActiveOld, setBtnLoaderActiveOld] = useState(false);
   const handleSaveOld = async (e) => {
-    
     if (e) e.preventDefault();
     let popUpMsg = "";
     if (value === "") {
@@ -310,7 +306,6 @@ function MyTicketLogics() {
 
   const SendSMSToFarmerAgaintSupportTicket = async (ptemplateID, pmobileNO, psupportTicketNo) => {
     try {
-      
       const formData = {
         templateID: ptemplateID,
         mobileNO: pmobileNO,
@@ -338,7 +333,6 @@ function MyTicketLogics() {
   // A };
 
   const updateStatusSupportTicket = async () => {
-    
     try {
       const formData = {
         supportTicketID: ticketData.SupportTicketID,
@@ -377,7 +371,6 @@ function MyTicketLogics() {
 
   const [btnLoaderActive1, setBtnLoaderActive1] = useState(false);
   const handleSave = async (e) => {
-    
     if (e) e.preventDefault();
     let popUpMsg = "";
     if (value === "" || value === "<p></p>") {
@@ -681,7 +674,6 @@ function MyTicketLogics() {
   const [ticketStatusList, setTicketStatusList] = useState([]);
   const [isLoadingTicketStatusList, setIsTicketStatusList] = useState(false);
   const getTicketStatusListData = async () => {
-    
     try {
       setTicketStatusList([]);
       setIsTicketStatusList(true);
@@ -718,7 +710,6 @@ function MyTicketLogics() {
 
   const [btnloaderStatusTicketActive, setBtnloaderStatusTicketActive] = useState(false);
   const updateStatusSupportTicketOnClick = async () => {
-    
     try {
       const chkAccessALL = ticketData && ticketData.AccessALL ? ticketData.AccessALL : "";
 
@@ -883,7 +874,6 @@ function MyTicketLogics() {
   const [selectedHistoryData, setSelectedHistoryData] = useState();
   const [btnLoaderActiveEditTicketComment, setbtnLoaderActiveEditTicketComment] = useState(false);
   const handleSaveEditTicketComment = async (toggleEditTicketCommentModal) => {
-    
     console.log(ticketData);
     if (valueEditTicketComment === "" || valueEditTicketComment === "<p></p>" || valueEditTicketComment === "<p><br></p>") {
       popUpMsg = "Ticket comment is required!";
@@ -933,7 +923,6 @@ function MyTicketLogics() {
 
   const [btnLoaderActiveComment, setbtnLoaderActiveComment] = useState(false);
   const handleAddComment = async (e) => {
-    
     try {
       if (e) e.preventDefault();
       let popUpMsg = "";

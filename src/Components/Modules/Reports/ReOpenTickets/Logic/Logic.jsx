@@ -3,7 +3,7 @@ import { useState } from "react";
 import moment from "moment";
 import { dateToCompanyFormat, dateToSpecificFormat, getCurrentDateTimeTick } from "Configration/Utilities/dateformat";
 import * as XLSX from "xlsx";
-import { convert }  from "html-to-text";
+import { convert } from "html-to-text";
 import { GetSupportTicketReopenDetailReport } from "../Services/Methods";
 
 function ReOpenTicketsLogic() {
@@ -21,7 +21,6 @@ function ReOpenTicketsLogic() {
   };
 
   const updateState = (name, value) => {
-    
     setFormValues({ ...formValues, [name]: value });
   };
 
@@ -36,7 +35,6 @@ function ReOpenTicketsLogic() {
   const [reOpenTicketsDataList, setReOpenTicketsDataList] = useState(false);
   const [reOpenTicketsDataListItemSearch, setReOpenTicketsDataListItemSearch] = useState("");
   const onChangeReOpenTicketsDataList = (val) => {
-    
     setReOpenTicketsDataListItemSearch(val);
     gridApi.setQuickFilter(val);
   };
@@ -64,7 +62,7 @@ function ReOpenTicketsLogic() {
       { width: 15 },
       { width: 55 },
       { width: 15 },
-      { width: 200},
+      { width: 200 },
     ];
     const uniqueDateTimeTick = getCurrentDateTimeTick();
     XLSX.writeFile(workbook, `ReOpenTickets_${uniqueDateTimeTick}.xlsx`);
@@ -81,7 +79,6 @@ function ReOpenTicketsLogic() {
   const [filteredReOpenTicketsDataList, setFilteredReOpenTicketsDataList] = useState([]);
 
   const getReOpenTicketsData = async () => {
-    
     try {
       setReOpenTicketsDataListLoading(true);
 
@@ -152,7 +149,6 @@ function ReOpenTicketsLogic() {
   };
 
   const exportClick = () => {
-    
     if (reOpenTicketsDataList.length === 0) {
       setAlertMessage({
         type: "error",

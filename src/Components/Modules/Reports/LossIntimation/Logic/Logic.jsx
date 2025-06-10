@@ -21,8 +21,11 @@ function LossIntimationReportLogics() {
   const [isLoadingGrievanceReportDataList, setLoadingGrievanceReportDataList] = useState(false);
   const setAlertMessage = AlertMessage();
 
-   const ticketBindingData = getSessionStorage("ticketDataBindingSsnStrg");
-   const [cropStageData] = useState([{lable: " Standing Crop Stage", value:"1"},{lable: "Harvested Stage", value:"2"}]);
+  const ticketBindingData = getSessionStorage("ticketDataBindingSsnStrg");
+  const [cropStageData] = useState([
+    { lable: " Standing Crop Stage", value: "1" },
+    { lable: "Harvested Stage", value: "2" },
+  ]);
 
   const [gridApi, setGridApi] = useState();
   const onGridReady = (params) => {
@@ -70,7 +73,8 @@ function LossIntimationReportLogics() {
         stateID: 0,
         cropLossDetailID: formValues.txtLossAt && formValues.txtLossAt.CropLossDetailID ? formValues.txtLossAt.CropLossDetailID : 0,
         ticketCategoryID: formValues.txtTicketCategory && formValues.txtTicketCategory.TicketCategoryID ? formValues.txtTicketCategory.TicketCategoryID : 0,
-        supportTicketTypeID: formValues.txtTicketCategoryType && formValues.txtTicketCategoryType.SupportTicketTypeID ? formValues.txtTicketCategoryType.SupportTicketTypeID : 0,
+        supportTicketTypeID:
+          formValues.txtTicketCategoryType && formValues.txtTicketCategoryType.SupportTicketTypeID ? formValues.txtTicketCategoryType.SupportTicketTypeID : 0,
         fromdate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
         toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
         ticketHeaderID: 4,
@@ -157,114 +161,112 @@ function LossIntimationReportLogics() {
     }
   };
 
-    const [ticketCategoryTypeList, setTicketCategoryTypeList] = useState([]);
-    const [isLoadingTicketCategoryTypeList, setIsTicketCategoryTypeList] = useState(false);
-    const getTicketCategoryTypeListData = async (pselectedOption, pCropLossDetailID, pMasterName) => {
-      
-      if (ticketBindingData) {
-        setIsTicketCategoryTypeList(true);
-        if (pMasterName === "TCKTYP") {
-          const filterticketBindingData = ticketBindingData.CRPTYP.filter((data) => {
-            return data.CategoryHeadID === Number(pselectedOption);
-          });
-          const sortticketBindingData = filterticketBindingData.sort((a, b) => {
-            if (a.SupportTicketTypeName < b.SupportTicketTypeName) return -1;
-          });
-          setTicketCategoryTypeList(sortticketBindingData);
-        } else if (pMasterName === "CRPTYP") {
-          const filterticketBindingData = ticketBindingData.CRPTYP.filter((data) => {
-            return data.CategoryHeadID === Number(pselectedOption) && data.CropLossDetailID === pCropLossDetailID;
-          });
-          const sortticketBindingData = filterticketBindingData.sort((a, b) => {
-            if (a.SupportTicketTypeName < b.SupportTicketTypeName) return -1;
-          });
-          setTicketCategoryTypeList(sortticketBindingData);
-        }
-        setIsTicketCategoryTypeList(false);
-      } else {
-        setTicketCategoryTypeList([]);
+  const [ticketCategoryTypeList, setTicketCategoryTypeList] = useState([]);
+  const [isLoadingTicketCategoryTypeList, setIsTicketCategoryTypeList] = useState(false);
+  const getTicketCategoryTypeListData = async (pselectedOption, pCropLossDetailID, pMasterName) => {
+    if (ticketBindingData) {
+      setIsTicketCategoryTypeList(true);
+      if (pMasterName === "TCKTYP") {
+        const filterticketBindingData = ticketBindingData.CRPTYP.filter((data) => {
+          return data.CategoryHeadID === Number(pselectedOption);
+        });
+        const sortticketBindingData = filterticketBindingData.sort((a, b) => {
+          if (a.SupportTicketTypeName < b.SupportTicketTypeName) return -1;
+        });
+        setTicketCategoryTypeList(sortticketBindingData);
+      } else if (pMasterName === "CRPTYP") {
+        const filterticketBindingData = ticketBindingData.CRPTYP.filter((data) => {
+          return data.CategoryHeadID === Number(pselectedOption) && data.CropLossDetailID === pCropLossDetailID;
+        });
+        const sortticketBindingData = filterticketBindingData.sort((a, b) => {
+          if (a.SupportTicketTypeName < b.SupportTicketTypeName) return -1;
+        });
+        setTicketCategoryTypeList(sortticketBindingData);
       }
-      // A try {
-      // A  setIsTicketCategoryTypeList(true);
-      // A  const formdata = {
-      // A    filterID: pselectedOption,
-      // A    filterID1: pCropLossDetailID,
-      // A    masterName: pMasterName, // A "TCKTYP",
-      // A    searchText: "#ALL",
-      // A    searchCriteria: "AW",
-      // A  };
-      // A  const result = await getMasterDataBindingDataList(formdata);
-      // A  console.log(result, "ticktCategoryType");
-      // A  setIsTicketCategoryTypeList(false);
-      // A  if (result.response.responseCode === 1) {
-      // A    if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
-      // A      setTicketCategoryTypeList(result.response.responseData.masterdatabinding);
-      // A    } else {
-      // A      setTicketCategoryTypeList([]);
-      // A    }
+      setIsTicketCategoryTypeList(false);
+    } else {
+      setTicketCategoryTypeList([]);
+    }
+    // A try {
+    // A  setIsTicketCategoryTypeList(true);
+    // A  const formdata = {
+    // A    filterID: pselectedOption,
+    // A    filterID1: pCropLossDetailID,
+    // A    masterName: pMasterName, // A "TCKTYP",
+    // A    searchText: "#ALL",
+    // A    searchCriteria: "AW",
+    // A  };
+    // A  const result = await getMasterDataBindingDataList(formdata);
+    // A  console.log(result, "ticktCategoryType");
+    // A  setIsTicketCategoryTypeList(false);
+    // A  if (result.response.responseCode === 1) {
+    // A    if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
+    // A      setTicketCategoryTypeList(result.response.responseData.masterdatabinding);
+    // A    } else {
+    // A      setTicketCategoryTypeList([]);
+    // A    }
+    // A  } else {
+    // A    setAlertMessage({
+    // A      type: "error",
+    // A      message: result.response.responseMessage,
+    // A    });
+    // A  }
+    // A} catch (error) {
+    // A  console.log(error);
+    // A  setAlertMessage({
+    // A    type: "error",
+    // A    message: error,
+    // A  });
+    // A}
+  };
+
+  const [lossAtList, setLossAtList] = useState([]);
+  const [isLoadingLossAtList, setIsLoadingLossAtList] = useState(false);
+  const getLossAtListData = async (pCropStageID) => {
+    try {
+      if (ticketBindingData) {
+        setIsLoadingLossAtList(true);
+        const filterticketBindingData = ticketBindingData.CRPDTL.filter((data) => {
+          return data.CropStageID === Number(pCropStageID);
+        });
+        setLossAtList(filterticketBindingData);
+        setIsLoadingLossAtList(false);
+      } else {
+        setLossAtList([]);
+      }
+      // A setIsLoadingLossAtList(true);
+      // A const formdata = {
+      // A  filterID: pCropStageID,
+      // A  filterID1: 0,
+      // A  masterName: "CRPDTL",
+      // A  searchText: "#ALL",
+      // A  searchCriteria: "AW",
+      // A};
+      // A const result = await getMasterDataBindingDataList(formdata);
+      // A setIsLoadingLossAtList(false);
+      // A setLossAtList([]);
+      // A if (result.response.responseCode === 1) {
+      // A if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
+      // A    setLossAtList(result.response.responseData.masterdatabinding);
       // A  } else {
-      // A    setAlertMessage({
-      // A      type: "error",
-      // A      message: result.response.responseMessage,
-      // A    });
+      // A    setLossAtList([]);
       // A  }
-      // A} catch (error) {
-      // A  console.log(error);
+      // A} else {
       // A  setAlertMessage({
       // A    type: "error",
-      // A    message: error,
+      // A    message: result.response.responseMessage,
       // A  });
-      // A}
-    };
-
-      const [lossAtList, setLossAtList] = useState([]);
-      const [isLoadingLossAtList, setIsLoadingLossAtList] = useState(false);
-      const getLossAtListData = async (pCropStageID) => {
-        try {
-          if (ticketBindingData) {
-            setIsLoadingLossAtList(true);
-            const filterticketBindingData = ticketBindingData.CRPDTL.filter((data) => {
-              return data.CropStageID === Number(pCropStageID);
-            });
-            setLossAtList(filterticketBindingData);
-            setIsLoadingLossAtList(false);
-          } else {
-            setLossAtList([]);
-          }
-          // A setIsLoadingLossAtList(true);
-          // A const formdata = {
-          // A  filterID: pCropStageID,
-          // A  filterID1: 0,
-          // A  masterName: "CRPDTL",
-          // A  searchText: "#ALL",
-          // A  searchCriteria: "AW",
-          // A};
-          // A const result = await getMasterDataBindingDataList(formdata);
-          // A setIsLoadingLossAtList(false);
-          // A setLossAtList([]);
-          // A if (result.response.responseCode === 1) {
-          // A if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
-          // A    setLossAtList(result.response.responseData.masterdatabinding);
-          // A  } else {
-          // A    setLossAtList([]);
-          // A  }
-          // A} else {
-          // A  setAlertMessage({
-          // A    type: "error",
-          // A    message: result.response.responseMessage,
-          // A  });
-          // }
-        } catch (error) {
-          console.log(error);
-          setAlertMessage({
-            type: "error",
-            message: error,
-          });
-        }
-      };
+      // }
+    } catch (error) {
+      console.log(error);
+      setAlertMessage({
+        type: "error",
+        message: error,
+      });
+    }
+  };
 
   const updateState = (name, value) => {
-    
     setFormValues({ ...formValues, [name]: value });
     if (name === "txtCropStageData") {
       setFormValues({

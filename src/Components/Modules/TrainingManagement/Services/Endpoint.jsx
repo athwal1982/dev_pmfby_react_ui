@@ -15,7 +15,7 @@ const APIEndpoints = {
     CSCUpdateAgentBYID: "FGMS/CSCUpdateAgentBYID",
     CSCUpdateAttendance: "FGMS/CSCUpdateAttendance",
     CSCUpdateTraining: "FGMS/CSCUpdateTraining",
-    CSCAssessmentUpdateMark: "FGMS/CSCAssessmentUpdateMark"
+    CSCAssessmentUpdateMark: "FGMS/CSCAssessmentUpdateMark",
   },
 };
 

@@ -23,7 +23,6 @@ export const getMasterDataBinding = async (formData) => {
 };
 
 export const userProfileMenuAssign = async (formData) => {
-  
   try {
     const requestData = {
       main: {
@@ -45,7 +44,6 @@ export const userProfileMenuAssign = async (formData) => {
 };
 
 export const userDistrictAssignManage = async (formData) => {
-  
   try {
     const requestData = {
       main: {
@@ -67,7 +65,6 @@ export const userDistrictAssignManage = async (formData) => {
 };
 
 export const manageUserProfileAssign = async (formData) => {
-  
   try {
     const requestData = {
       main: {
@@ -89,7 +86,6 @@ export const manageUserProfileAssign = async (formData) => {
 };
 
 export const getUserProfileRight = async (formData) => {
-  
   try {
     const requestData = {
       main: {
@@ -111,7 +107,6 @@ export const getUserProfileRight = async (formData) => {
 };
 
 export const manageUserProfileRightAssign = async (formData) => {
-  
   try {
     const requestData = {
       main: {

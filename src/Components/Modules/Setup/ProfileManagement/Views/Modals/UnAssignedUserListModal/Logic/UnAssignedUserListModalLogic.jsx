@@ -26,7 +26,6 @@ function UnAssignedUserListModalLogic() {
   const setAlertMessage = AlertMessage();
 
   const getUnAssignedUserListData = async (data) => {
-    
     try {
       setUnassignedUserList([]);
       setFiltereUnAssignedUserList([]);
@@ -144,21 +143,17 @@ function UnAssignedUserListModalLogic() {
 
   const [gridApiUnAssign, setGridApiUnAssign] = useState();
   const onGridReadyUnAssign = (params) => {
-    
     setGridApiUnAssign(params.api);
   };
 
   const [searchTextUnAssigendUser, setSearchTextUnAssigendUser] = useState("");
   const onSearchUnAssignedUser = (val) => {
-    
     setSearchTextUnAssigendUser(val);
     gridApiUnAssign.setQuickFilter(val);
     gridApiUnAssign.refreshCells();
   };
 
   const updateUnAssignedUserList = (newlyAddedUser) => {
-    
-
     if (newlyAddedUser && newlyAddedUser.length > 0) {
       newlyAddedUser.forEach((data) => {
         if (!unAssignedUserList.some((x) => x.AccessID.toString() === data.AccessID.toString())) {
@@ -177,7 +172,6 @@ function UnAssignedUserListModalLogic() {
   };
 
   useEffect(() => {
-    
     if (deletedAssignedRow) {
       updateUnAssignedUserList(deletedAssignedRow);
     }
@@ -191,7 +185,6 @@ function UnAssignedUserListModalLogic() {
 
   const [btnLoaderActive, setBtnLoaderActive] = useState(false);
   const handleSave = async (e, updateAssignedUserList) => {
-    
     try {
       if (e) e.preventDefault();
       const checkedItem = getSelectedRowData();

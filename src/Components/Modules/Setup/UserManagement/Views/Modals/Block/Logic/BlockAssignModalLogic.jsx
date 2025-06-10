@@ -30,7 +30,7 @@ function BlockAssignModalLogic() {
     try {
       console.log("pselectedUserData", pselectedUserData);
       setSelectedUser(pselectedUserData);
-      
+
       setIsLoadingDistrictList(true);
       const userData = getSessionStorage("user");
       const formdata = {
@@ -44,7 +44,6 @@ function BlockAssignModalLogic() {
       console.log(result, "District");
       setIsLoadingDistrictList(false);
       if (result.response.responseCode === 1) {
-        
         if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
           setDistrictList(result.response.responseData.masterdatabinding);
           console.log("result.response.responseData.masterdatabinding", result.response.responseData.masterdatabinding);
@@ -68,7 +67,6 @@ function BlockAssignModalLogic() {
 
   const [gridApi, setGridApi] = useState();
   const onAssinGridReady = (params) => {
-    
     setGridApi(params.api);
     console.log("params.api)", params.api);
   };
@@ -86,7 +84,6 @@ function BlockAssignModalLogic() {
       console.log(result, "result");
       setBtnLoaderActive(false);
       if (result.response.responseCode === 1) {
-        
         if (formdata.viewMode === "GETASSIGNED") {
           if (
             result.response.responseData &&
@@ -111,7 +108,6 @@ function BlockAssignModalLogic() {
           }
         } else if (formdata.viewMode !== "GETASSIGNED" && formdata.viewMode !== "ASSIGNALL" && formdata.viewMode !== "UNASSIGNALL") {
           if (gridApi) {
-            
             console.log("districtGridApi", gridApi);
             let count = 0;
             gridApi.forEachNode(function (rowNode) {
@@ -123,7 +119,7 @@ function BlockAssignModalLogic() {
                   rowNode.data.UserBlockID = null;
                   rowNode.data.AssignmentFlag = 0;
                 }
-                
+
                 if (rowNode.data.AssignmentFlag === 0) {
                   count += 1;
                 } else {
@@ -150,7 +146,7 @@ function BlockAssignModalLogic() {
             subDistrictMasterCode: selectedDistrict.SubDistrictMasterCode,
             blockMasterCode: "",
           };
-          
+
           userBlockAssignManageList(formdata);
         }
       } else {
@@ -171,8 +167,6 @@ function BlockAssignModalLogic() {
   };
 
   const onAssignDistrict = (district) => {
-    
-
     if (district && district.SubDistrictMasterCode) {
       setSelectedAssign(district);
       console.log("Block", district, selectedassign);
@@ -185,13 +179,12 @@ function BlockAssignModalLogic() {
         subDistrictMasterCode: district.SubDistrictMasterCode,
         blockMasterCode: "",
       };
-      
+
       userBlockAssignManageList(formdata);
     }
   };
 
   const OnAssignAll = (action) => {
-    
     if (selectedDistrict && selectedDistrict.SubDistrictMasterCode) {
       console.log("selectedDistrict", selectedDistrict);
       const formdata = {
@@ -203,13 +196,12 @@ function BlockAssignModalLogic() {
         subDistrictMasterCode: selectedDistrict.SubDistrictMasterCode,
         blockMasterCode: "",
       };
-      
+
       userBlockAssignManageList(formdata);
     }
   };
 
   const onUnAssignDistrict = (block) => {
-    
     console.log("onUnAssignDistrict", block);
     const formdata = {
       viewMode: "UNASSIGN",
@@ -220,11 +212,10 @@ function BlockAssignModalLogic() {
       subDistrictMasterCode: selectedDistrict.SubDistrictMasterCode,
       blockMasterCode: "",
     };
-    
+
     userBlockAssignManageList(formdata);
   };
   const onGetAssignDistrict = (moduleData) => {
-    
     console.log("setSelectedDistrict", moduleData);
 
     setSelectedDistrict(moduleData);
@@ -238,7 +229,7 @@ function BlockAssignModalLogic() {
         subDistrictMasterCode: moduleData.SubDistrictMasterCode,
         blockMasterCode: "",
       };
-      
+
       userBlockAssignManageList(formdata);
     } else {
       setAlertMessage({

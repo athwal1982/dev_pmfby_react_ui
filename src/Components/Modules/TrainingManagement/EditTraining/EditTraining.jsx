@@ -61,15 +61,14 @@ const EditTraining = ({ trainingData, onClose }) => {
     }
   }, [trainingData]);
 
-
   const calculateEndTime = (start, duration) => {
     if (!start || !duration) return "";
-    
+
     const [hours, minutes] = start.split(":").map(Number);
     const newEndTime = new Date();
     newEndTime.setHours(hours + parseInt(duration), minutes, 0);
 
-    return newEndTime.toTimeString().slice(0, 5); 
+    return newEndTime.toTimeString().slice(0, 5);
   };
 
   useEffect(() => {
@@ -117,7 +116,9 @@ const EditTraining = ({ trainingData, onClose }) => {
   return (
     <div className="edittraining-form-wrapper">
       <div className="edittraining-form-container">
-        <h5 className="edittraining-heading" style={{ marginBottom: "20px" }}>Edit Training Details</h5>
+        <h5 className="edittraining-heading" style={{ marginBottom: "20px" }}>
+          Edit Training Details
+        </h5>
         <IoMdClose className="close-icon" onClick={onClose} />
         <form onSubmit={handleSubmit}>
           <div className="edittraining-form-row">
@@ -130,7 +131,9 @@ const EditTraining = ({ trainingData, onClose }) => {
               <select value={selectedModule} onChange={(e) => setSelectedModule(e.target.value)}>
                 <option value="">Choose Training Type</option>
                 {trainingTypes.map((type) => (
-                  <option key={type.TrainingID} value={type.TrainingID}>{type.TrainingName}</option>
+                  <option key={type.TrainingID} value={type.TrainingID}>
+                    {type.TrainingName}
+                  </option>
                 ))}
               </select>
             </div>
@@ -182,9 +185,17 @@ const EditTraining = ({ trainingData, onClose }) => {
           </div>
           <div className="edittraining-button-group">
             <button type="submit" disabled={isSubmitting} className="edittraining-submit-btn">
-              {isSubmitting ? "Updating..." : <><FaEdit /> Update</>}
+              {isSubmitting ? (
+                "Updating..."
+              ) : (
+                <>
+                  <FaEdit /> Update
+                </>
+              )}
             </button>
-            <button type="button" onClick={onClose} className="edittraining-cancel-btn">Cancel</button>
+            <button type="button" onClick={onClose} className="edittraining-cancel-btn">
+              Cancel
+            </button>
           </div>
         </form>
       </div>

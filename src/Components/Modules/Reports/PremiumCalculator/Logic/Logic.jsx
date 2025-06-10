@@ -24,7 +24,6 @@ function PremiumCalculatorReportLogics() {
 
   const [premiumCalculatorListItemSearch, setPremiumCalculatorListItemSearch] = useState("");
   const onChangePremiumCalculatorList = (val) => {
-    
     setPremiumCalculatorListItemSearch(val);
     gridApi.setQuickFilter(val);
   };
@@ -133,7 +132,6 @@ function PremiumCalculatorReportLogics() {
   };
 
   const getPremiumCalculatorData = async () => {
-    
     try {
       setLoadingPremiumCalculatorDataList(true);
 
@@ -165,7 +163,6 @@ function PremiumCalculatorReportLogics() {
   };
 
   const updateState = (name, value) => {
-    
     setFormValues({ ...formValues, [name]: value });
   };
 
@@ -182,7 +179,6 @@ function PremiumCalculatorReportLogics() {
   };
 
   const exportClick = () => {
-    
     // A const excelParams = {
     // A  fileName: "Ticket History",
     // A };

@@ -94,7 +94,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 4px; /* Reduce space between elements */
-  
+
   .create-agent-button {
     padding: 6px; /* Reduce padding */
     font-size: 11px;
@@ -104,18 +104,17 @@
     border-radius: 3px;
     font-weight: 600;
     cursor: pointer;
-    
+
     &:hover {
       background-color: #004d00;
     }
-    
+
     i {
       display: inline-block;
       animation: move-arrow 2s infinite;
     }
   }
 }
-
 
 @keyframes move-arrow {
   0% {
@@ -215,24 +214,15 @@
   overflow: auto;
 }
 
-
-
-
-
-
-
-
 .custom-pagebar {
   background-color: #045400;
   padding: 10px;
 }
 
 .custom-search {
-
   padding: 6px;
   font-size: 14px;
 }
-
 
 .custom-search:focus {
   border-color: #045400;
@@ -264,7 +254,7 @@
 }
 .custom-search-input::placeholder {
   color: #004d00;
-  opacity: 0.5; 
+  opacity: 0.5;
 }
 
 .custom-button-AssignUnassign {
@@ -305,9 +295,7 @@
 }
 
 .custom-data-grid .ag-header {
-
   background-color: #004d00 !important;
-
 }
 
 .custom-data-grid .ag-header-cell {
@@ -323,12 +311,11 @@
   background-color: #ffffff;
   border-radius: 6px;
   margin-top: 5px;
-  padding: 6px 12px;;
+  padding: 6px 12px;
   transition: all 0.3s ease-in-out;
   position: relative;
   border: 1px solid #004d00;
 }
-
 
 .edittraining-form-wrapper {
   position: fixed;
@@ -341,11 +328,10 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
- 
 
   .edittraining-form-container {
     position: relative;
-      border: 1px solid #006400;
+    border: 1px solid #006400;
     background: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -353,27 +339,25 @@
     max-width: 95%;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
     animation: fadeIn 0.3s ease-in-out;
-    
 
-    .header-color{
+    .header-color {
       color: #004d00;
       margin-bottom: 15px;
     }
-    
+
     .close-icon {
- background-color: #004d00;
- border-radius: 50%;
+      background-color: #004d00;
+      border-radius: 50%;
       position: absolute;
       top: 20px;
       right: 20px;
       font-size: 20px;
       color: white;
       cursor: pointer;
-      transition: color 0.3s ease, transform 0.2s ease-in-out;
-
-    
-  }
-    
+      transition:
+        color 0.3s ease,
+        transform 0.2s ease-in-out;
+    }
 
     form {
       display: grid;
@@ -471,43 +455,39 @@
   }
 }
 
-
-
 .edittraining-form-group input:focus,
 .edittraining-form-group select:focus {
-    border-color: #075307;
-    box-shadow: 0 0 4px rgba(7, 83, 7, 0.5);
+  border-color: #075307;
+  box-shadow: 0 0 4px rgba(7, 83, 7, 0.5);
 }
 
-
 .import-input {
-
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
   cursor: pointer;
-   width: 250px;
+  width: 250px;
 }
 
 .custom-button-reset {
-  padding: 12px 18px;  
+  padding: 12px 18px;
   font-size: 12px;
   font-weight: 600;
-height: 38px;
+  height: 38px;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+  transition:
+    background-color 0.2s ease-in-out,
+    transform 0.1s ease-in-out;
 
   &:hover {
-   
-    transform: scale(1.05);  
+    transform: scale(1.05);
   }
 
   &:active {
- 
-    transform: scale(0.95);  
+    transform: scale(0.95);
   }
 
   &:disabled {

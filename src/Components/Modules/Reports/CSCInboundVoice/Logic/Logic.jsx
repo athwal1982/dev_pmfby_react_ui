@@ -24,7 +24,6 @@ function CSCInboundVoiceLogics() {
 
   const [CSCInboundVoiceListItemSearch, setCSCInboundVoiceListItemSearch] = useState("");
   const onChangeCSCInboundVoiceList = (val) => {
-    
     setCSCInboundVoiceListItemSearch(val);
     gridApi.setQuickFilter(val);
   };
@@ -62,7 +61,6 @@ function CSCInboundVoiceLogics() {
   };
 
   const getCSCInboundVoiceData = async () => {
-    
     try {
       setLoadingCSCInboundVoiceDataList(true);
 
@@ -95,7 +93,6 @@ function CSCInboundVoiceLogics() {
   };
 
   const updateState = (name, value) => {
-    
     setFormValues({ ...formValues, [name]: value });
   };
 
@@ -137,7 +134,6 @@ function CSCInboundVoiceLogics() {
   };
 
   const exportClick = () => {
-    
     // A const excelParams = {
     // A  fileName: "Ticket History",
     // A };

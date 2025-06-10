@@ -13,7 +13,6 @@ function MenuToUserLogics() {
   const [isLoadingUserDataList, setLoadingUserDataList] = useState(false);
   const setAlertMessage = AlertMessage();
   const getUserData = async () => {
-    
     try {
       setLoadingUserDataList(true);
       const result = await getUserListData();

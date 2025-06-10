@@ -4,10 +4,7 @@ import TrainingReportLogic from "./Logic/Logic";
 
 function TrainingReportPage() {
   debugger;
-  return (
-    <TrainingReport
-    />
-  );
+  return <TrainingReport />;
 }
 
 export default TrainingReportPage;

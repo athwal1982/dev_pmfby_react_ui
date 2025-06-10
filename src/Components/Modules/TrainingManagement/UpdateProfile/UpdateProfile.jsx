@@ -99,17 +99,16 @@ const UpdateProfile = () => {
     };
 
     const payload = {
-        SPViewMode: "UPDATEBYAGENT",
-        SPUserID: formData.agentID,
-        email: formData.email,
-        gender: String(genderMapping[formData.gender] ?? ""), 
-        experience: parseInt(formData.experience, 10) || 0, 
-        designation: formData.designation,
-        JoiningDate: "",
-        RejoiningDate:"",
-        ExitDate: "",
-      };
-      
+      SPViewMode: "UPDATEBYAGENT",
+      SPUserID: formData.agentID,
+      email: formData.email,
+      gender: String(genderMapping[formData.gender] ?? ""),
+      experience: parseInt(formData.experience, 10) || 0,
+      designation: formData.designation,
+      JoiningDate: "",
+      RejoiningDate: "",
+      ExitDate: "",
+    };
 
     try {
       const response = await UpdateAgentProfile(payload);
@@ -119,7 +118,6 @@ const UpdateProfile = () => {
         setAlertMessage({
           message: "Profile updated successfully",
           type: "success",
-         
         });
         navigate("/AgentTrainings");
       } else {
@@ -165,28 +163,28 @@ const UpdateProfile = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="form-group">
-              <label  className="UpdateProfile-form-label">Agent ID</label>
+              <label className="UpdateProfile-form-label">Agent ID</label>
               <input type="text" name="agentID" value={formData.agentID} disabled />
             </div>
             <div className="form-group">
-              <label  className="UpdateProfile-form-label">Full Name</label>
+              <label className="UpdateProfile-form-label">Full Name</label>
               <input type="text" name="fullName" value={formData.fullName} disabled />
             </div>
             <div className="form-group">
-              <label  className="UpdateProfile-form-label">Mobile Number</label>
+              <label className="UpdateProfile-form-label">Mobile Number</label>
               <input type="text" name="mobile" value={formData.mobile} disabled />
             </div>
           </div>
 
           <div className="form-row">
             <div className="form-group">
-              <label  className="UpdateProfile-form-label">Email</label>
+              <label className="UpdateProfile-form-label">Email</label>
               <input type="email" name="email" value={formData.email} onChange={handleChange} />
               {errors.email && <span className="error">{errors.email}</span>}
             </div>
 
             <div className="form-group">
-              <label  className="UpdateProfile-form-label">Gender</label>
+              <label className="UpdateProfile-form-label">Gender</label>
               <select name="gender" value={formData.gender} onChange={handleChange}>
                 <option value="">Select</option>
                 <option value="Male">Male</option>
@@ -197,7 +195,7 @@ const UpdateProfile = () => {
             </div>
 
             <div className="form-group">
-              <label  className="UpdateProfile-form-label">Experience</label>
+              <label className="UpdateProfile-form-label">Experience</label>
               <input type="text" name="experience" value={formData.experience} onChange={handleChange} />
               {errors.experience && <span className="error">{errors.experience}</span>}
             </div>
@@ -205,7 +203,7 @@ const UpdateProfile = () => {
 
           <div className="form-row">
             <div className="form-group">
-              <label  className="UpdateProfile-form-label">Designation</label>
+              <label className="UpdateProfile-form-label">Designation</label>
               <input type="text" name="designation" value={formData.designation} onChange={handleChange} />
               {errors.designation && <span className="error">{errors.designation}</span>}
             </div>
@@ -215,7 +213,7 @@ const UpdateProfile = () => {
 
           <div className="form-actions">
             <button type="submit" className="submit-btn">
-             Update Profile
+              Update Profile
             </button>
           </div>
         </form>

@@ -34,7 +34,6 @@ function AdminLogin({ handleOtpSent, setSelectedOption }) {
   };
 
   const handleClick = async () => {
-    
     setLoader(true);
 
     try {

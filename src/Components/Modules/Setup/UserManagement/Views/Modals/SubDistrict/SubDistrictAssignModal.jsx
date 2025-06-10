@@ -64,7 +64,6 @@ function SubDistrictAssignModal({ showfunc, selectedUserData }) {
   } = SubDistrictAssignModalLogic();
 
   useEffect(() => {
-    
     setSelectedUser(selectedUserData);
     getStateListData(selectedUserData);
   }, [selectedUserData]);

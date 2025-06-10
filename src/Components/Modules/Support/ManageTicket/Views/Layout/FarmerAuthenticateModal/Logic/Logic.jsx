@@ -96,8 +96,6 @@ function FarmerAuthenticateLogics() {
         return;
       }
 
-      
-
       setBtnloaderActive(true);
       let result = "";
       let formData = "";

@@ -90,21 +90,31 @@ const EditAgent = ({ user, onClose }) => {
           <form className="EditAgent-form" onSubmit={handleSubmit}>
             <div className="EditAgent-form-row">
               <div className="EditAgent-form-group">
-                <label className="EditAgent-form-label" htmlFor="agentID">Agent ID *</label>
+                <label className="EditAgent-form-label" htmlFor="agentID">
+                  Agent ID *
+                </label>
                 <input type="text" id="agentID" name="agentID" value={formData.agentID} readOnly />
               </div>
               <div className="EditAgent-form-group">
-                <label className="EditAgent-form-label" htmlFor="DisplayName">Name *</label>
+                <label className="EditAgent-form-label" htmlFor="DisplayName">
+                  Name *
+                </label>
                 <input type="text" id="DisplayName" name="DisplayName" value={formData.DisplayName} onChange={handleChange} />
               </div>
               <div className="EditAgent-form-group">
-                <label className="EditAgent-form-label" htmlFor="Status">Agent Status *</label>
+                <label className="EditAgent-form-label" htmlFor="Status">
+                  Agent Status *
+                </label>
                 <input type="text" id="Status" name="Status" value={formData.Status === "Y" ? "Enabled" : "Disabled"} readOnly />
               </div>
             </div>
             <div className="EditAgent-form-actions">
-              <button type="button" onClick={onClose} className="EditAgent-cancel-button">Cancel</button>
-              <button type="submit" className="EditAgent-submit-btn">Modify Agent</button>
+              <button type="button" onClick={onClose} className="EditAgent-cancel-button">
+                Cancel
+              </button>
+              <button type="submit" className="EditAgent-submit-btn">
+                Modify Agent
+              </button>
             </div>
           </form>
         </div>

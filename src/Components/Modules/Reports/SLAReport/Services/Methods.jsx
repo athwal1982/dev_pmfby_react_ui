@@ -6,7 +6,6 @@ const API_ENDPOINT = "https://fgms.smartping.io/api/sla_call_report";
 const LOGIN_API_URL = "https://fgms.smartping.io/api/login";
 
 export const login = async (username, password) => {
-  
   try {
     const response = await axios.post(
       LOGIN_API_URL,
@@ -56,11 +55,10 @@ export const login = async (username, password) => {
 };
 
 export const fetchSLAReport = async (startDate, endDate, report_type) => {
-  
   try {
     const username = APIVariables.user;
     const password = APIVariables.pass;
-    let result  = "";
+    let result = "";
     if (getSessionStorage("SLAReport") === null) {
       result = await login(username, password);
       const validTillToken = new Date();
@@ -73,14 +71,13 @@ export const fetchSLAReport = async (startDate, endDate, report_type) => {
         const now = new Date();
         if (now > date) {
           sessionStorage.removeItem("SLAReport");
-          result = await login(username,password);
+          result = await login(username, password);
         } else {
           const resultSLAReportSSrg = getSessionStorage("SLAReport");
           const access_token = resultSLAReportSSrg.resultToken;
           result = { responseCode: 1, responseData: access_token, responseMessage: "success" };
         }
       }
-      
     }
     if (result.responseCode === 1) {
       const response = await axios.post(

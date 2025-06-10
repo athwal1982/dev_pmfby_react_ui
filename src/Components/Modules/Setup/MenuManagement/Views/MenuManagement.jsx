@@ -10,7 +10,6 @@ const cellTemplate = (props) => {
   const menuData = props.data;
   const onDeleteClick = () => {};
   const onAddClick = () => {
-    
     props.openSubmenuPopup({ open: true, data: menuData, isEditMode: false });
   };
   const onEditClick = () => {

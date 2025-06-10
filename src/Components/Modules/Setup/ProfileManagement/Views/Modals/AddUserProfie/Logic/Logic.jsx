@@ -30,7 +30,6 @@ function AddUserProfileLogics() {
   const [BrHeadType, setBrHeadType] = useState([]);
   const [isLoadingBrHeadType, setIsLoadingBrHeadtype] = useState(false);
   const getBrHeadType = async () => {
-    
     try {
       setIsLoadingBrHeadtype(true);
       const formData = {
@@ -79,7 +78,6 @@ function AddUserProfileLogics() {
       if (!handleValidation()) {
         return;
       }
-      
 
       setBtnloaderActive(true);
       const formData = {

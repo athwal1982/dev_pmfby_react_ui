@@ -26,7 +26,6 @@ function TicketCustomerDetail({
   const userData = getSessionStorage("user");
 
   const copyToClipboard = (id) => {
-    
     /* Get the text field */
     const copyText = document.getElementById(id);
     /* Copy the text inside the text field */

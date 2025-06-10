@@ -9,10 +9,7 @@ export const getTrainingTypeData = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(
-      requestData,
-      APIEndpoints.Training.GetTrainingType,
-    );
+    const result = await ApiCalling(requestData, APIEndpoints.Training.GetTrainingType);
     if (result.responseCode === 1) {
       if (result.responseData) {
         return { response: result };
@@ -36,10 +33,7 @@ export const setCSCUpdateTraining = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(
-      requestData,
-      APIEndpoints.Training.CSCUpdateTraining,
-    );
+    const result = await ApiCalling(requestData, APIEndpoints.Training.CSCUpdateTraining);
     if (result.responseCode === 1) {
       if (result.responseData) {
         return { response: result };
@@ -63,10 +57,7 @@ export const getTrainingListData = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(
-      requestData,
-      APIEndpoints.Training.GetTrainingList,
-    );
+    const result = await ApiCalling(requestData, APIEndpoints.Training.GetTrainingList);
     if (result.responseCode === 1) {
       if (result.responseData) {
         return { response: result };
@@ -90,10 +81,7 @@ export const createTrainingData = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(
-      requestData,
-      APIEndpoints.Training.CreateTraining,
-    );
+    const result = await ApiCalling(requestData, APIEndpoints.Training.CreateTraining);
     if (result.responseCode === 1) {
       if (result.responseData) {
         return { response: result };
@@ -117,10 +105,7 @@ export const getUpcomingTrainings = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(
-      requestData,
-      APIEndpoints.Training.GetUpcomingTrainingList,
-    );
+    const result = await ApiCalling(requestData, APIEndpoints.Training.GetUpcomingTrainingList);
     if (result.responseCode === 1) {
       if (result.responseData) {
         return { response: result };
@@ -144,10 +129,7 @@ export const getTrainerList = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(
-      requestData,
-      APIEndpoints.Training.GetTrainerList,
-    );
+    const result = await ApiCalling(requestData, APIEndpoints.Training.GetTrainerList);
     if (result.responseCode === 1) {
       if (result.responseData) {
         return { response: result };
@@ -171,10 +153,7 @@ export const setAssignList = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(
-      requestData,
-      APIEndpoints.Training.SetAssignList,
-    );
+    const result = await ApiCalling(requestData, APIEndpoints.Training.SetAssignList);
     if (result.responseCode === 1) {
       if (result.responseData) {
         return { response: result };
@@ -198,10 +177,7 @@ export const setUpdateAttendance = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(
-      requestData,
-      APIEndpoints.Training.CSCUpdateAttendance,
-    );
+    const result = await ApiCalling(requestData, APIEndpoints.Training.CSCUpdateAttendance);
     if (result.responseCode === 1) {
       if (result.responseData) {
         return { response: result };
@@ -225,10 +201,7 @@ export const cSCCenterTrainingAssignManageData = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(
-      requestData,
-      APIEndpoints.Training.CSCCenterTrainingAssignManage,
-    );
+    const result = await ApiCalling(requestData, APIEndpoints.Training.CSCCenterTrainingAssignManage);
     if (result.responseCode === 1) {
       if (result.responseData) {
         return { response: result };
@@ -252,10 +225,7 @@ export const CSCCenterWiseTrainingData = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(
-      requestData,
-      APIEndpoints.Training.CSCCenterWiseTraining,
-    );
+    const result = await ApiCalling(requestData, APIEndpoints.Training.CSCCenterWiseTraining);
     if (result.responseCode === 1) {
       if (result.responseData) {
         return { response: result };
@@ -279,10 +249,7 @@ export const CSCUserTrainingAssignManageData = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(
-      requestData,
-      APIEndpoints.Training.CSCUserTrainingAssignManage,
-    );
+    const result = await ApiCalling(requestData, APIEndpoints.Training.CSCUserTrainingAssignManage);
     if (result.responseCode === 1) {
       if (result.responseData) {
         return { response: result };
@@ -306,10 +273,7 @@ export const getAgentTraining = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(
-      requestData,
-      APIEndpoints.Training.CSCCenterWiseTraining,
-    );
+    const result = await ApiCalling(requestData, APIEndpoints.Training.CSCCenterWiseTraining);
     if (result.responseCode === 1) {
       if (result.responseData) {
         return { response: result };
@@ -333,10 +297,7 @@ export const getAgentDetails = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(
-      requestData,
-      APIEndpoints.Training.CSCAgentBYID,
-    );
+    const result = await ApiCalling(requestData, APIEndpoints.Training.CSCAgentBYID);
     if (result.responseCode === 1) {
       if (result.responseData) {
         return { response: result };
@@ -360,10 +321,7 @@ export const UpdateAgentProfile = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(
-      requestData,
-      APIEndpoints.Training.CSCUpdateAgentBYID,
-    );
+    const result = await ApiCalling(requestData, APIEndpoints.Training.CSCUpdateAgentBYID);
     if (result.responseCode === 1) {
       if (result.responseData) {
         return { response: result };
@@ -387,10 +345,7 @@ export const CSCAssessmentUpdateMark = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(
-      requestData,
-      APIEndpoints.Training.CSCAssessmentUpdateMark,
-    );
+    const result = await ApiCalling(requestData, APIEndpoints.Training.CSCAssessmentUpdateMark);
     if (result.responseCode === 1) {
       if (result.responseData) {
         return { response: result };
@@ -414,10 +369,7 @@ export const gettraineeDashboradData = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(
-      requestData,
-      APIEndpoints.Training.CSCDashboard,
-    );
+    const result = await ApiCalling(requestData, APIEndpoints.Training.CSCDashboard);
     if (result.responseCode === 1) {
       if (result.responseData) {
         return { response: result };
@@ -432,4 +384,3 @@ export const gettraineeDashboradData = async (formData) => {
     };
   }
 };
-

@@ -21,7 +21,6 @@ function AssignedUserProfileRightListModalLogic() {
 
   const [searchTextAssigendUserProfileRight, setSearchTextAssigendUserProfileRight] = useState("");
   const onSearchAssignedUserProfileRight = (val) => {
-    
     setSearchTextAssigendUserProfileRight(val);
     assignedUserProfileRightGridApi.setQuickFilter(val);
     assignedUserProfileRightGridApi.refreshCells();
@@ -29,7 +28,6 @@ function AssignedUserProfileRightListModalLogic() {
 
   const [profileRightData, setProfileRightData] = useState([]);
   const getAssignedUserProfileRightListData = async (data) => {
-    
     setProfileRightData(data);
     try {
       setAssignedUserProfileRightList([]);
@@ -66,7 +64,6 @@ function AssignedUserProfileRightListModalLogic() {
   };
 
   const updateAssignedUserProfileRightList = (assignedList) => {
-    
     console.log(assignedList, "coming");
 
     if (assignedList && assignedList.length > 0) {
@@ -119,7 +116,6 @@ function AssignedUserProfileRightListModalLogic() {
   };
 
   const onUnAssignMenuRight = async (data) => {
-    
     console.log(data);
     try {
       const formdata = {
@@ -160,7 +156,6 @@ function AssignedUserProfileRightListModalLogic() {
   };
 
   const onAssignMenuRight = async (data) => {
-    
     console.log(data);
     try {
       const formdata = {

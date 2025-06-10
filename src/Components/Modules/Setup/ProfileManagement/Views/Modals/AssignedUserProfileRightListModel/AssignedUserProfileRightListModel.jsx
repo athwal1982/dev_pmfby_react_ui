@@ -57,7 +57,6 @@ function AssignedUserProfileRightListModal({ showfunc, assignedUsersProfileRight
   } = AssignedUserProfileRightListModalLogic();
 
   useEffect(() => {
-    
     getAssignedUserProfileRightListData(assignedUsersProfileRightModal);
   }, [assignedUsersProfileRightModal]);
 

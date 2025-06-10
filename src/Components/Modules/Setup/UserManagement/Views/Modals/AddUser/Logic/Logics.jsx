@@ -26,7 +26,6 @@ function AddUserLogics() {
   const [filterLocationType, setFilterLocationType] = useState([]);
   const [isLoadingLocationType, setIsLoadingLocationType] = useState(false);
   const getLocationType = async () => {
-    
     try {
       setIsLoadingLocationType(true);
       const userData = getSessionStorage("user");
@@ -58,7 +57,6 @@ function AddUserLogics() {
   const [isLoadingBrHeadType, setIsLoadingBrHeadtype] = useState(false);
 
   const getBrHeadType = async () => {
-    
     try {
       setIsLoadingBrHeadtype(true);
       const userData = getSessionStorage("user");
@@ -98,7 +96,6 @@ function AddUserLogics() {
   const [userType, setUserType] = useState([]);
   const [isLoadingUserType, setIsLoadingUserType] = useState(false);
   const getUserType = async () => {
-    
     try {
       setIsLoadingUserType(true);
       const userData = getSessionStorage("user");
@@ -134,7 +131,6 @@ function AddUserLogics() {
   const [selectedState, setSelectedState] = useState([]);
   const [isLoadingSelectedState, setIsLoadingSelectedState] = useState(false);
   const getState = async () => {
-    
     try {
       setIsLoadingSelectedState(true);
       const formdata = {
@@ -163,7 +159,6 @@ function AddUserLogics() {
   const [referenceType, setReferenceType] = useState([]);
   const [isLoadingReferenceType, setIsLoadingReferenceType] = useState(false);
   const getreferenceType = async (bmcgCode) => {
-    
     try {
       setIsLoadingReferenceType(true);
 
@@ -304,7 +299,6 @@ function AddUserLogics() {
   const [formValidationError, setFormValidationError] = useState({});
   const [lblUserReference, setlblUserReference] = useState("User Reference");
   const updateState = (name, value) => {
-    
     setFormValues({ ...formValues, [name]: value });
     formValidationError[name] = validateField(name, value);
     if (name === "txtReferenceType") {
@@ -319,7 +313,6 @@ function AddUserLogics() {
       setBrHeadType([]);
     }
     if (name === "txtBRHeadType") {
-      
       formValues.txtUserReference = null;
       setFormValues({
         ...formValues,
@@ -340,7 +333,6 @@ function AddUserLogics() {
       }
     }
     if (name === "txtUserType") {
-      
       if (value && value.AppAccessTypeID.toString() === "495") {
         setFormValues({
           ...formValues,
@@ -447,7 +439,7 @@ function AddUserLogics() {
     if (!handleValidation()) {
       return;
     }
-    
+
     try {
       const encryptUserName = encryptStringData(formValues.txtLoginName ? formValues.txtLoginName : "");
       const hashPass = await sha256(formValues.txtPassword ? formValues.txtPassword : "");
@@ -483,7 +475,6 @@ function AddUserLogics() {
       const result = await addNewUser(formData);
       const userData = getSessionStorage("user");
       if (result.response.responseCode === 1) {
-        
         if (result.response && result.response.responseData) {
           const newlyAddedUser = [
             {

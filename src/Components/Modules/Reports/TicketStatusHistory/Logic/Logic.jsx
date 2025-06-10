@@ -28,7 +28,6 @@ function TicketStatusHistoryLogics() {
 
   const [ticketStatusListItemSearch, setTicketStatusListItemSearch] = useState("");
   const onChangeTicketStatusList = (val) => {
-    
     setTicketStatusListItemSearch(val);
     gridApi.setQuickFilter(val);
   };
@@ -137,7 +136,6 @@ function TicketStatusHistoryLogics() {
   };
 
   const getTicketStatusData = async () => {
-    
     try {
       const dateDiffrence = daysdifference(dateFormatDefault(formValues.txtFromDate), dateFormatDefault(formValues.txtToDate));
       if (dateDiffrence > 31) {
@@ -153,7 +151,8 @@ function TicketStatusHistoryLogics() {
         ticketHeaderID: 0,
         supportTicketTypeID: 0,
         ticketCategoryID: 0,
-        insuranceCompanyID: formValues.txtInsuranceCompany && formValues.txtInsuranceCompany.CompanyID ? formValues.txtInsuranceCompany.CompanyID.toString() : "#ALL", 
+        insuranceCompanyID:
+          formValues.txtInsuranceCompany && formValues.txtInsuranceCompany.CompanyID ? formValues.txtInsuranceCompany.CompanyID.toString() : "#ALL",
         stateID: formValues.txtState && formValues.txtState.StateMasterID ? formValues.txtState.StateMasterID.toString() : "#ALL",
         fromdate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
         toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
@@ -182,7 +181,6 @@ function TicketStatusHistoryLogics() {
   };
 
   const updateState = (name, value) => {
-    
     setFormValues({ ...formValues, [name]: value });
   };
 
@@ -216,7 +214,6 @@ function TicketStatusHistoryLogics() {
   };
 
   const exportClick = () => {
-    
     if (ticketStatusDataList.length === 0) {
       setAlertMessage({
         type: "error",
@@ -236,7 +233,6 @@ function TicketStatusHistoryLogics() {
       Inprogress2: "In-Progress - 2",
       Resolved2: "Resolved - 2",
       ReOpen2: "Re-Open - 2",
-     
     };
     const mappedData = ticketStatusDataList.map((value) => {
       return {

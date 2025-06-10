@@ -17,7 +17,7 @@ const AnyOtherTextField = ({ id, value, onChange, placeholder }) => (
   />
 );
 
-const FeedbackQuestions = ({ feedbackResponses, onFeedbackChange, setfeedbackSubmit,dcryptUNQEID,farmerName,farmerMobileNumber,dcryptUID }) => {
+const FeedbackQuestions = ({ feedbackResponses, onFeedbackChange, setfeedbackSubmit, dcryptUNQEID, farmerName, farmerMobileNumber, dcryptUID }) => {
   const [questions, setQuestions] = useState([]);
   const [hoveredBox, setHoveredBox] = useState(null);
   const [validationErrors, setValidationErrors] = useState({});
@@ -38,7 +38,6 @@ const FeedbackQuestions = ({ feedbackResponses, onFeedbackChange, setfeedbackSub
   const handleMouseLeave = () => {
     setHoveredBox(null);
   };
-
 
   const handleSubmit = async () => {
     debugger;
@@ -118,7 +117,7 @@ const FeedbackQuestions = ({ feedbackResponses, onFeedbackChange, setfeedbackSub
     debugger;
     try {
       const response = await submitFeedback(payload);
-      if(response && response.responseCode === 1) {
+      if (response && response.responseCode === 1) {
         toast.success("Form submitted successfully!");
         setfeedbackSubmit(true);
       } else {

@@ -30,7 +30,7 @@ function SubDistrictAssignModalLogic() {
     try {
       console.log("pselectedUserData", pselectedUserData);
       setSelectedUser(pselectedUserData);
-      
+
       setIsLoadingDistrictList(true);
       const userData = getSessionStorage("user");
       const formdata = {
@@ -44,7 +44,6 @@ function SubDistrictAssignModalLogic() {
       console.log(result, "District");
       setIsLoadingDistrictList(false);
       if (result.response.responseCode === 1) {
-        
         if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
           setDistrictList(result.response.responseData.masterdatabinding);
           console.log("result.response.responseData.masterdatabinding", result.response.responseData.masterdatabinding);
@@ -68,7 +67,6 @@ function SubDistrictAssignModalLogic() {
 
   const [gridApi, setGridApi] = useState();
   const onAssinGridReady = (params) => {
-    
     setGridApi(params.api);
     console.log("params.api)", params.api);
   };
@@ -86,7 +84,6 @@ function SubDistrictAssignModalLogic() {
       console.log(result, "result");
       setBtnLoaderActive(false);
       if (result.response.responseCode === 1) {
-        
         if (formdata.viewMode === "GETASSIGNED") {
           if (
             result.response.responseData &&
@@ -111,7 +108,6 @@ function SubDistrictAssignModalLogic() {
           }
         } else if (formdata.viewMode !== "GETASSIGNED" && formdata.viewMode !== "ASSIGNALL" && formdata.viewMode !== "UNASSIGNALL") {
           if (gridApi) {
-            
             console.log("districtGridApi", gridApi);
             let count = 0;
             gridApi.forEachNode(function (rowNode) {
@@ -123,7 +119,7 @@ function SubDistrictAssignModalLogic() {
                   rowNode.data.UserSubDistrictID = null;
                   rowNode.data.AssignmentFlag = 0;
                 }
-                
+
                 if (rowNode.data.AssignmentFlag === 0) {
                   count += 1;
                 } else {
@@ -150,7 +146,7 @@ function SubDistrictAssignModalLogic() {
             districtMasterCode: selectedDistrict.DistrictMasterCode,
             subDistrictMasterCode: "",
           };
-          
+
           userSubDistrictAssignManageList(formdata);
         }
       } else {
@@ -171,8 +167,6 @@ function SubDistrictAssignModalLogic() {
   };
 
   const onAssignDistrict = (district) => {
-    
-
     if (district && district.SubDistrictMasterCode) {
       setSelectedAssign(district);
       console.log("Subdistrict", district, selectedassign);
@@ -185,13 +179,12 @@ function SubDistrictAssignModalLogic() {
         districtMasterCode: selectedDistrict.DistrictMasterCode,
         subDistrictMasterCode: "",
       };
-      
+
       userSubDistrictAssignManageList(formdata);
     }
   };
 
   const OnAssignAll = (action) => {
-    
     if (selectedDistrict && selectedDistrict.StateMasterID) {
       console.log("selectedDistrict", selectedDistrict);
       const formdata = {
@@ -203,13 +196,12 @@ function SubDistrictAssignModalLogic() {
         districtMasterCode: selectedDistrict.DistrictMasterCode,
         subDistrictMasterCode: "",
       };
-      
+
       userSubDistrictAssignManageList(formdata);
     }
   };
 
   const onUnAssignDistrict = (district) => {
-    
     console.log("onUnAssignDistrict", district);
 
     const formdata = {
@@ -221,11 +213,10 @@ function SubDistrictAssignModalLogic() {
       districtMasterCode: selectedDistrict.DistrictMasterCode,
       subDistrictMasterCode: "",
     };
-    
+
     userSubDistrictAssignManageList(formdata);
   };
   const onGetAssignDistrict = (moduleData) => {
-    
     console.log("setSelectedDistrict", moduleData);
 
     setSelectedDistrict(moduleData);
@@ -239,7 +230,7 @@ function SubDistrictAssignModalLogic() {
         districtMasterCode: moduleData.DistrictMasterCode,
         subDistrictMasterCode: "",
       };
-      
+
       userSubDistrictAssignManageList(formdata);
     } else {
       setAlertMessage({

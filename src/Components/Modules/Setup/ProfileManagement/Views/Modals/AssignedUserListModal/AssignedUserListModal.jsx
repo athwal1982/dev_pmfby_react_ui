@@ -40,7 +40,6 @@ function AssignedUserListModal({ showfunc, assignedUsersModal }) {
   } = AssignedUserListModalLogic();
 
   useEffect(() => {
-    
     getAssignedUserListData(assignedUsersModal);
   }, [assignedUsersModal]);
 

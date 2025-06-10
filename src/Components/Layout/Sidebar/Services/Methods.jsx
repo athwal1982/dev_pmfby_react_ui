@@ -2,7 +2,6 @@ import axios from "axios";
 import APIVariables from "./OuterApiVariables";
 
 export const fetchCallingDashboardlogin = async () => {
-  
   try {
     const LOGIN_API_URL = "https://fgms.smartping.io/api/login";
     const response = await axios.post(
@@ -32,7 +31,6 @@ export const fetchCallingDashboardlogin = async () => {
 };
 
 export const fetchCallingDashboardlogOut = async (token) => {
-  
   try {
     const LOGOUT_API_URL = "https://fgms.smartping.io/api/logout";
     const response = await axios.post(

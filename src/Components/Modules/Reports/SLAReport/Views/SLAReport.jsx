@@ -72,8 +72,8 @@ function SLAReport() {
             formValues.txtTicketCategory && formValues.txtTicketCategory.value !== "MONTH" ? moment(param.value).format("DD-MM-YYYY") : param.value
           }
         />
-         {/* <DataGrid.Column field="user_group" headerName="User Group" width="120px" /> */}
-         <DataGrid.Column field="uptime" headerName="System Uptime (%)" width="170px" />
+        {/* <DataGrid.Column field="user_group" headerName="User Group" width="120px" /> */}
+        <DataGrid.Column field="uptime" headerName="System Uptime (%)" width="170px" />
         <DataGrid.Column field="asa" headerName="Avg Speed To Answer(%)" width="200px" />
         <DataGrid.Column field="aht" headerName="Avg Handle Time (%)" width="180px" />
         <DataGrid.Column field="rating" headerName="Call Quality Score (%)" width="175px" />

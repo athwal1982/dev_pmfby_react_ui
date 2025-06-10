@@ -1,7 +1,7 @@
 const APIEndpoints = {
   Reports: {
     GetSupportTicketCategoryReport: "FGMS/GetSupportTicketCategoryReport",
-    GetSupportTicketCategoryReportMongo:"FGMS/GetSupportTicketCategoryReportMongo",
+    GetSupportTicketCategoryReportMongo: "FGMS/GetSupportTicketCategoryReportMongo",
   },
 };
 

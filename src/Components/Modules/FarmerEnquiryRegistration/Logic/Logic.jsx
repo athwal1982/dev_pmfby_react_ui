@@ -226,7 +226,7 @@ function FarmerEnquiryRegistrationLogics() {
         aadharNumber: "",
         accountNumber: "",
       };
-      
+
       setIsLoadingEnquiryList(true);
       const result = await checkFarmerexists(formdata);
       console.log(result, "Enquiry list");
@@ -432,7 +432,6 @@ function FarmerEnquiryRegistrationLogics() {
 
   // A const updateFarmersTickets = (data) => {
   const updateFarmersTickets = (newlyAddedFarmerEnquiry, penquiryGridApi) => {
-    
     // A enquiryDataList.unshift(data);
 
     // A if (enquiryGridApi) {
@@ -1125,7 +1124,6 @@ function FarmerEnquiryRegistrationLogics() {
       if (!value || typeof value === "undefined") {
         errorsMsg = "Mobile Number is required!";
       } else if (value) {
-        
         if (!regex.test(value)) {
           errorsMsg = "Mobile Number is not valid!";
         } else if (value.length < 10) {
@@ -1376,7 +1374,7 @@ function FarmerEnquiryRegistrationLogics() {
   const [stateCropLossIntimation, setStateCropLossIntimation] = useState("NA");
   const updateStateForByLocation = (name, value) => {
     console.log("name ,", name, "value", value);
-    
+
     if (name === "txtStateForByLocation") {
       setFormValuesForByLocation({
         ...formValuesForByLocation,
@@ -1489,7 +1487,6 @@ function FarmerEnquiryRegistrationLogics() {
     formValidationSupportTicketError[name] = validateFieldSupportTicket(name, value);
   };
   const getCalculatorDataOnClick = (value) => {
-    
     if (value || typeof value !== "undefined") {
       if (formValuesForByLocation.txtCropForCalculate && formValuesForByLocation.txtCropForCalculate.sumInsured) {
         const calculatedSumInsured =
@@ -2012,7 +2009,7 @@ function FarmerEnquiryRegistrationLogics() {
       setBtnLoaderActive(false);
       console.log(result, "result");
       setStateCropLossIntimation("NA");
-      
+
       if (result.response.responseCode.toString() === "0") {
         const formdata1 = {
           viewMode: "MOBILE",
@@ -2021,7 +2018,7 @@ function FarmerEnquiryRegistrationLogics() {
           aadharNumber: "",
           accountNumber: "",
         };
-        
+
         const result1 = await checkFarmerexists(formdata1);
 
         if (result1.response && result1.response.responseCode.toString() === "0") {
@@ -2555,7 +2552,6 @@ function FarmerEnquiryRegistrationLogics() {
   const [isBtndisabled, setisBtndisabled] = useState(0);
   const [btnLoaderSupportTicketActive, setBtnLoaderSupportTicketActive] = useState(false);
   const farmerEnquiryOnClick = async (penquiryGridApi) => {
-    
     try {
       console.log("formValuesForByLocation", formValuesForByLocation);
       if (!handleValidationSupportTicket()) {
@@ -2650,7 +2646,7 @@ function FarmerEnquiryRegistrationLogics() {
       const result = await addFarmer(formData);
       setBtnLoaderSupportTicketActive(false);
       setisBtndisabled(0);
-      
+
       if (result.response.responseCode === 1) {
         if (result.response && result.response.responseData) {
           const newlyAddedFarmerEnquiry = [
@@ -2741,7 +2737,6 @@ function FarmerEnquiryRegistrationLogics() {
   };
 
   const farmerEnquiryUpdateOnClick = async () => {
-    
     try {
       if (!handleValidationSupportTicket()) {
         return;
@@ -2784,7 +2779,7 @@ function FarmerEnquiryRegistrationLogics() {
       const result = await checkFarmerUpdateInDbData(formData);
       setBtnLoaderSupportTicketActive(false);
       setisBtndisabled(0);
-      
+
       if (result.response.responseCode === 1) {
         if (result.response && result.response.responseData) {
           setAlertMessage({
@@ -2865,7 +2860,6 @@ function FarmerEnquiryRegistrationLogics() {
   };
 
   const supportTicketGrievenceAndCropLossIntimationOnClick = async () => {
-    
     try {
       if (!handleValidationSupportTicket()) {
         return;
@@ -3029,8 +3023,6 @@ function FarmerEnquiryRegistrationLogics() {
     setEnquiryPopup(!EnquiryPopup);
   };
   const EnquiryDetails = (data) => {
-    
-
     console.log("data", data.data);
     setSelectedEnquiry(data.data);
     setValue("");
@@ -3051,7 +3043,6 @@ function FarmerEnquiryRegistrationLogics() {
   };
   const [btnLoaderActive1, setBtnLoaderActive1] = useState(false);
   const handleSave = async (e) => {
-    
     if (e) e.preventDefault();
     let popUpMsg = "";
     if (value === "" || value === "<p><p>") {

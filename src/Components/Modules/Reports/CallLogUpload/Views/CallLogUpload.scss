@@ -58,7 +58,9 @@ $alert-success-color: #28a745;
             background-color: #007bff; // Blue color
             color: $secondary-color;
             border: none;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition:
+              background-color 0.3s ease,
+              transform 0.3s ease;
           }
 
           .download-icon {

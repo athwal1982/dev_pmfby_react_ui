@@ -94,7 +94,6 @@ function FarmerEnquiryTicketsLogics() {
   const [totalSatatusCount, settotalSatatusCount] = useState("0");
   const [showHideDownload, setshowHideDownload] = useState(true);
   const getFarmersTickets = async (pviewTYP) => {
-    
     if (showHideDownload === false) {
       const dateDiffrence = daysdifference(dateFormatDefault(formValues.txtFromDate), dateFormatDefault(formValues.txtToDate));
       if (formValues.txtFromDate === "") {
@@ -404,7 +403,6 @@ function FarmerEnquiryTicketsLogics() {
   };
 
   const searchByMobileTicketsOnClick = async () => {
-    
     try {
       let ticketNoVal = "";
       let mobileNoVal = "";
@@ -895,13 +893,11 @@ function FarmerEnquiryTicketsLogics() {
   };
 
   const getOneDayTicketData = async () => {
-    
     setshowHideDownload(false);
     SetTicketFiltersTab();
   };
 
   const getFilterTicketsClick = async () => {
-    
     setshowHideDownload(true);
     SetTicketFiltersTab();
   };

@@ -122,7 +122,11 @@ function FarmerEnquiryTickets() {
 
   return (
     <>
-      {openMyTicketModal &&  <Suspense fallback={<Loader />}><MyTicketPage showfunc={openMyTicketPage} selectedData={selectedData} /></Suspense>}
+      {openMyTicketModal && (
+        <Suspense fallback={<Loader />}>
+          <MyTicketPage showfunc={openMyTicketPage} selectedData={selectedData} />
+        </Suspense>
+      )}
       <div className={BizClass.Box}>
         <div className={BizClass.PageBar}>
           {viewEnquiryTicketRight ? (
@@ -140,34 +144,34 @@ function FarmerEnquiryTickets() {
             </div>
           ) : null}
           <Suspense fallback={<Loader />}>
-          <HeaderPortal>
-            {/* {userData.BRHeadTypeID.toString() === "124003" || userData.BRHeadTypeID.toString() === "0" ? null : ( */}
+            <HeaderPortal>
+              {/* {userData.BRHeadTypeID.toString() === "124003" || userData.BRHeadTypeID.toString() === "0" ? null : ( */}
 
-            {viewEnquiryTicketRight ? (
-              <>
-                <PageBar.Select
-                  ControlTxt="Search By"
-                  name="SearchByFilter"
-                  getOptionLabel={(option) => `${option.label}`}
-                  getOptionValue={(option) => `${option}`}
-                  options={searchByoptions}
-                  value={filterValues.SearchByFilter}
-                  onChange={(e) => updateFilterState("SearchByFilter", e)}
-                />
-                <PageBar.Search
-                  placeholder="Search "
-                  name="txtSearchFilter"
-                  value={filterValues.txtSearchFilter}
-                  onChange={(e) => updateFilterState(e.target.name, e.target.value)}
-                  onClick={() => searchByMobileTicketsOnClick()}
-                  style={{ width: "158px" }}
-                />
-              </>
-            ) : null}
-            <PageBar.Button onClick={() => goBackOnClick()} title="Go Back" style={{ display: "flex", alignItems: "center" }}>
-              Back
-            </PageBar.Button>
-          </HeaderPortal>
+              {viewEnquiryTicketRight ? (
+                <>
+                  <PageBar.Select
+                    ControlTxt="Search By"
+                    name="SearchByFilter"
+                    getOptionLabel={(option) => `${option.label}`}
+                    getOptionValue={(option) => `${option}`}
+                    options={searchByoptions}
+                    value={filterValues.SearchByFilter}
+                    onChange={(e) => updateFilterState("SearchByFilter", e)}
+                  />
+                  <PageBar.Search
+                    placeholder="Search "
+                    name="txtSearchFilter"
+                    value={filterValues.txtSearchFilter}
+                    onChange={(e) => updateFilterState(e.target.name, e.target.value)}
+                    onClick={() => searchByMobileTicketsOnClick()}
+                    style={{ width: "158px" }}
+                  />
+                </>
+              ) : null}
+              <PageBar.Button onClick={() => goBackOnClick()} title="Go Back" style={{ display: "flex", alignItems: "center" }}>
+                Back
+              </PageBar.Button>
+            </HeaderPortal>
           </Suspense>
         </div>
         <div className={BizClass.MainBox}>

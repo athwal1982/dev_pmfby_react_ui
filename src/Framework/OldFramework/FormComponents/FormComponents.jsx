@@ -174,7 +174,7 @@ export const InputControl = React.forwardRef((props, ref) => {
             placeholder={`${ControlTxt}`}
             className={MaxLength === "" ? "DynBiz_AddPopup_Inputbox" : "DynBiz_AddPopup_Inputbox DynBiz_AddPopup_InputboxMaxLength"}
             maxLength={maxLength}
-            style={{ width: `${controlwidth}`, whiteSpace:"nowrap" }}
+            style={{ width: `${controlwidth}`, whiteSpace: "nowrap" }}
             ref={ref}
             {...rest}
           />

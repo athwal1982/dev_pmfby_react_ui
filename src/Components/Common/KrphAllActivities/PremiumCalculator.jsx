@@ -322,7 +322,6 @@ function PremiumCalculator({ objStateData, objDistrictData, formValuesGI, dcrypt
   };
 
   const SavevalidateFarmerOnClick = async () => {
-    
     try {
       const formData = {
         CallingMasterID: 0,
@@ -427,7 +426,6 @@ function PremiumCalculator({ objStateData, objDistrictData, formValuesGI, dcrypt
   };
 
   const getCalculatorDataOnClick = () => {
-    
     if (!handleFarmersValidationCalculator()) {
       return;
     }

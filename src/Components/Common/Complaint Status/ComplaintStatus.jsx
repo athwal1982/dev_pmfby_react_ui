@@ -45,8 +45,6 @@ const ComplaintStatus = () => {
   }, []);
 
   const handleOnExpand = (ticketId) => {
-    
-
     if (expandedTicketId === ticketId) {
       setExpandedTicketId(null);
     } else {
@@ -54,8 +52,6 @@ const ComplaintStatus = () => {
     }
   };
   const fetchHistory = async () => {
-    
-
     if (!mobileNum) return;
     try {
       const response = await checkStatus(mobileNum);
@@ -80,8 +76,6 @@ const ComplaintStatus = () => {
   }, []);
 
   const requestorDetails = useMemo(() => {
-    
-
     if (data && data.responseDynamic) {
       const item = data.responseDynamic.resolved?.[0];
       if (item) {

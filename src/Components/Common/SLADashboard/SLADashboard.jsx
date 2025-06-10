@@ -107,7 +107,6 @@ function SLADashboard() {
   const [systemUptimeData, setSystemUptimeData] = useState([]);
 
   const getSLACallData = async (formattedStartDate, formattedEndDate, pInsuranceCompanyCode) => {
-    
     try {
       const formData = {
         startDate: formattedStartDate,
@@ -216,7 +215,6 @@ function SLADashboard() {
   };
 
   const getSLA1Chart = (arraySLA1) => {
-    
     const pCategories = [];
     const pSeries = { name: "", data: [] };
 
@@ -280,7 +278,6 @@ function SLADashboard() {
   };
 
   const getSLA2Chart = (arraySLA2) => {
-    
     const pCategories = [];
     const pSeries = { name: "", data: [] };
     arraySLA2.forEach((v) => {
@@ -659,7 +656,6 @@ function SLADashboard() {
   });
 
   const updateSearchFormState = (name, value) => {
-    
     setSearchFormValues({ ...searchFormValues, [name]: value });
 
     if (name === "txtMonthFilter") {
@@ -749,8 +745,6 @@ function SLADashboard() {
   };
 
   const getYearMonthICWiseSlaGraph = (pYear, pMonth, pInsuranceCompanyCode) => {
-    
-
     const year = pYear;
     const month = pMonth;
     const startDate = new Date(year, month - 1, 1);
@@ -765,7 +759,6 @@ function SLADashboard() {
   };
 
   const OnClickSubmit = () => {
-    
     if (searchFormValues.txtYearFilter === null || searchFormValues.txtYearFilter === "") {
       setAlertMessage({
         type: "error",

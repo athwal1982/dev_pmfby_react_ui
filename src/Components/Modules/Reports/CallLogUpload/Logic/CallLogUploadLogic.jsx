@@ -47,7 +47,7 @@ function CallLogUploadLogic() {
           CallEndTime: "",
           AgentCallStartTime: "",
           AgentCallEndTime: "",
-          Circle:"",
+          Circle: "",
           CustomerCallSec: "",
           QueueSeconds: "",
           AgentTalkTime: "",
@@ -71,7 +71,7 @@ function CallLogUploadLogic() {
         CallEndTime: "Call End Time",
         AgentCallStartTime: "Agent Call Start Time",
         AgentCallEndTime: "Agent Call End Time",
-        Circle:"Circle",
+        Circle: "Circle",
         CustomerCallSec: "Customer Call Sec",
         QueueSeconds: "Queue Seconds",
         AgentTalkTime: "Agent TalkTime",
@@ -83,7 +83,6 @@ function CallLogUploadLogic() {
         ICStatus: "IC Status",
         Ticketnumber: "Ticket Number",
         Source: "Source",
-
       };
       const mappedData = serviceDataFormat.map((value) => {
         return {
@@ -142,77 +141,74 @@ function CallLogUploadLogic() {
 
   const validateColumns = (data) => {
     const errors = [];
-  
-  
+
     const columnTypeMapping = {
-      "Customer": "numeric_10_digit",
-      "Campaign": "alphabetic",
-      "Status": "alphabetic_sentence",
+      Customer: "numeric_10_digit",
+      Campaign: "alphabetic",
+      Status: "alphabetic_sentence",
       "Agent ID": "numeric",
-      "Agent": "numeric",
+      Agent: "numeric",
       "Call Start Time": "date_time",
       "Call End Time": "date_time",
       "Agent Call Start Time": "date_time",
       "Agent Call End Time": "date_time",
-      "circle": "alphabetic",
+      circle: "alphabetic",
       "Customer Call Sec": "numeric",
       "Queue Seconds": "numeric",
       "Agent TalkTime": "numeric",
       "Unique ID": "numeric_10_decimal",
       "Transfer Status": "alphabetic",
       "Customer pulse": "numeric",
-      "Date": "date",
+      Date: "date",
       "IC Name": "alphabetic_sentence",
       "IC Status": "alphabetic",
       "Ticket Number": "numeric",
-      "Source": "alphabetic"
-
+      Source: "alphabetic",
     };
-  
+
     const dateTimeRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
-  
+
     data.forEach((row, rowIndex) => {
       Object.keys(row).forEach((column) => {
         const value = row[column].toString().trim();
         const expectedType = columnTypeMapping[column];
-  
+
         // Skip validation for undefined or empty columns
         if (!value) return;
-  
+
         // Validation based on the expected type
         if (expectedType === "numeric" && isNaN(value)) {
           errors.push(`Invalid value in row ${rowIndex + 2}, column "${column}". Expected numeric value.`);
         }
-  
+
         if (expectedType === "numeric_10_digit" && !/^\d{10}$/.test(value)) {
           errors.push(`Invalid value in row ${rowIndex + 2}, column "${column}". Expected a 10-digit numeric value.`);
         }
-  
+
         if (expectedType === "numeric_10_decimal" && !/^\d+(\.\d{1,10})?$/.test(value)) {
           errors.push(`Invalid value in row ${rowIndex + 2}, column "${column}". Expected numeric value with up to 10 decimal places.`);
         }
-  
+
         if (expectedType === "alphabetic" && /[0-9]/.test(value)) {
           errors.push(`Invalid value in row ${rowIndex + 2}, column "${column}". Expected alphabetic value.`);
         }
-  
+
         if (expectedType === "alphabetic_sentence" && /[0-9]/.test(value)) {
           errors.push(`Invalid value in row ${rowIndex + 2}, column "${column}". Expected alphabetic value or sentence.`);
         }
-  
+
         if (expectedType === "date" && isNaN(Date.parse(value))) {
           errors.push(`Invalid value in row ${rowIndex + 2}, column "${column}". Expected a valid date.`);
         }
-  
+
         if (expectedType === "date_time" && !dateTimeRegex.test(value)) {
           errors.push(`Invalid value in row ${rowIndex + 2}, column "${column}". Expected a valid date-time format YYYY-MM-DD HH:MM:SS.`);
         }
       });
     });
-  
+
     return errors;
   };
-  
 
   const updateStateCallLogUpload = (name, value) => {
     setFormValuesCallLogUpload({ ...formValuesCallLogUpload, [name]: value });
@@ -254,8 +250,6 @@ function CallLogUploadLogic() {
   const [messageClass, setMessageClass] = useState("");
   const [btnLoaderActive, setBtnLoaderActive] = useState(false);
   const handleSubmit = async (e) => {
-
-   
     e.preventDefault();
     if (!handleValidation()) {
       return;
@@ -320,8 +314,8 @@ function CallLogUploadLogic() {
           "Ticket Number",
           "Source",
         ];
-  
-        const missingColumns = requiredColumns.filter(column => !Object.keys(obj).includes(column));
+
+        const missingColumns = requiredColumns.filter((column) => !Object.keys(obj).includes(column));
         if (missingColumns.length > 0) {
           setAlertMessage({
             open: true,
@@ -341,32 +335,31 @@ function CallLogUploadLogic() {
         // A }
 
         const columnTypeMapping = {
-          "Customer": "numeric_10_digit",
-          "Campaign": "alphabetic",
-          "Status": "alphabetic_sentence",
+          Customer: "numeric_10_digit",
+          Campaign: "alphabetic",
+          Status: "alphabetic_sentence",
           "Agent ID": "numeric",
-          "Agent": "numeric",
+          Agent: "numeric",
           "Call Start Time": "date_time",
           "Call End Time": "date_time",
           "Agent Call Start Time": "date_time",
           "Agent Call End Time": "date_time",
-          "circle": "alphabetic",
+          circle: "alphabetic",
           "Customer Call Sec": "numeric",
           "Queue Seconds": "numeric",
           "Agent TalkTime": "numeric",
           "Unique ID": "numeric_10_decimal",
           "Transfer Status": "alphabetic",
           "Customer pulse": "numeric",
-          "Date": "date",
+          Date: "date",
           "IC Name": "alphabetic_sentence",
           "IC Status": "alphabetic",
           "Ticket Number": "numeric",
-          "Source": "alphabetic"
-    
+          Source: "alphabetic",
         };
-      
+
         const dateTimeRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
-    
+
         let rtnval = true;
         for (let rowIndex = 0; rowIndex < data.length; rowIndex++) {
           if (!rtnval) {
@@ -381,119 +374,119 @@ function CallLogUploadLogic() {
               if (expectedType === "numeric" && isNaN(value)) {
                 setAlertMessage({
                   type: "error",
-                     message: `Invalid value in row ${rowIndex + 2}, column "${column}". Expected numeric value.`,
-                    });
-                    rtnval = false;
-                    break;
+                  message: `Invalid value in row ${rowIndex + 2}, column "${column}". Expected numeric value.`,
+                });
+                rtnval = false;
+                break;
               }
-        
+
               if (expectedType === "numeric_10_digit" && !/^\d{10}$/.test(value)) {
                 setAlertMessage({
                   type: "error",
-                     message: `Invalid value in row ${rowIndex + 2}, column "${column}". Expected numeric value.`,
-                    });
-                    rtnval = false;
-                    break;
+                  message: `Invalid value in row ${rowIndex + 2}, column "${column}". Expected numeric value.`,
+                });
+                rtnval = false;
+                break;
               }
               if (expectedType === "numeric_10_decimal" && !/^\d+(\.\d{1,10})?$/.test(value)) {
                 setAlertMessage({
                   type: "error",
-                     message: `Invalid value in row ${rowIndex + 2}, column "${column}". Expected numeric value with up to 10 decimal places.`,
-                    });
-                  rtnval = false;
-                    break;
+                  message: `Invalid value in row ${rowIndex + 2}, column "${column}". Expected numeric value with up to 10 decimal places.`,
+                });
+                rtnval = false;
+                break;
               }
-        
+
               if (expectedType === "alphabetic" && /[0-9]/.test(value)) {
                 setAlertMessage({
                   type: "error",
-                     message: `Invalid value in row ${rowIndex + 2}, column "${column}". Expected alphabetic value.`,
-                    });
-                  rtnval = false;
-                    break;
+                  message: `Invalid value in row ${rowIndex + 2}, column "${column}". Expected alphabetic value.`,
+                });
+                rtnval = false;
+                break;
               }
-        
+
               if (expectedType === "alphabetic_sentence" && /[0-9]/.test(value)) {
                 setAlertMessage({
                   type: "error",
-                     message: `Invalid value in row ${rowIndex + 2}, column "${column}". Expected alphabetic value or sentence.`,
-                    });
-                  rtnval = false;
-                    break;
+                  message: `Invalid value in row ${rowIndex + 2}, column "${column}". Expected alphabetic value or sentence.`,
+                });
+                rtnval = false;
+                break;
               }
-        
+
               if (expectedType === "date" && isNaN(Date.parse(value))) {
                 setAlertMessage({
                   type: "error",
-                     message: `Invalid value in row ${rowIndex + 2}, column "${column}". Expected a valid date.`,
-                    });
-                  rtnval = false;
-                    break;
+                  message: `Invalid value in row ${rowIndex + 2}, column "${column}". Expected a valid date.`,
+                });
+                rtnval = false;
+                break;
               }
-        
+
               if (expectedType === "date_time" && !dateTimeRegex.test(value)) {
                 setAlertMessage({
                   type: "error",
-                     message: `Invalid value in row ${rowIndex + 2}, column "${column}". Expected a valid date-time format YYYY-MM-DD HH:MM:SS.`,
-                    });
-                  rtnval = false;
-                    break;
+                  message: `Invalid value in row ${rowIndex + 2}, column "${column}". Expected a valid date-time format YYYY-MM-DD HH:MM:SS.`,
+                });
+                rtnval = false;
+                break;
               }
             }
           }
         }
         if (rtnval === true) {
-        try {
-          const dataForUpload = data.map((val) => ({
-            customerNumber: String(val["Customer"]), 
-            campaign: val["Campaign"],
-            status: val["Status"],
-            agentID: String(val["Agent ID"]),
-            agent: String(val["Agent"]),
-            callStartTime: val["Call Start Time"],
-            callEndTime: val["Call End Time"],
-            agentCallStartTime: val["Agent Call Start Time"],
-            agentCallEndTime: val["Agent Call End Time"],
-            circle: String(val["Circle"]),
-            customerCallSec: String(val["Customer Call Sec"]),
-            queueSeconds: String(val["Queue Seconds"]),
-            agentTalkTime: String(val["Agent TalkTime"]),
-            uniqueID: String(val["Unique ID"]),
-            transferStatus: val["Transfer Status"],
-            customerPulse: String(val["Customer pulse"]),
-            date: val["Date"] ? dateToSpecificFormat(val["Date"], "DD-MM-YYYY") : "",
-            iCName: val["IC Name"],
-            iCStatus: val["IC Status"],
-            ticketNumber: String(val["Ticket Number"]),
-            source: String(val["Source"]),
-          }));
-  
-          const formdata = {
-            customers: dataForUpload,
-          };
-          setBtnLoaderActive(true);
+          try {
+            const dataForUpload = data.map((val) => ({
+              customerNumber: String(val["Customer"]),
+              campaign: val["Campaign"],
+              status: val["Status"],
+              agentID: String(val["Agent ID"]),
+              agent: String(val["Agent"]),
+              callStartTime: val["Call Start Time"],
+              callEndTime: val["Call End Time"],
+              agentCallStartTime: val["Agent Call Start Time"],
+              agentCallEndTime: val["Agent Call End Time"],
+              circle: String(val["Circle"]),
+              customerCallSec: String(val["Customer Call Sec"]),
+              queueSeconds: String(val["Queue Seconds"]),
+              agentTalkTime: String(val["Agent TalkTime"]),
+              uniqueID: String(val["Unique ID"]),
+              transferStatus: val["Transfer Status"],
+              customerPulse: String(val["Customer pulse"]),
+              date: val["Date"] ? dateToSpecificFormat(val["Date"], "DD-MM-YYYY") : "",
+              iCName: val["IC Name"],
+              iCStatus: val["IC Status"],
+              ticketNumber: String(val["Ticket Number"]),
+              source: String(val["Source"]),
+            }));
 
-          const result = await uploadCallLogs(formdata);
-          setBtnLoaderActive(false);
-          if (result.responseCode === 1) {
-            setAlertMessage({
-              type: "success",
-              message: result.responseMessage,
-            });
-            handleResetFile();
-          } else {
+            const formdata = {
+              customers: dataForUpload,
+            };
+            setBtnLoaderActive(true);
+
+            const result = await uploadCallLogs(formdata);
+            setBtnLoaderActive(false);
+            if (result.responseCode === 1) {
+              setAlertMessage({
+                type: "success",
+                message: result.responseMessage,
+              });
+              handleResetFile();
+            } else {
+              setAlertMessage({
+                type: "error",
+                message: result.responseMessage,
+              });
+            }
+          } catch (error) {
             setAlertMessage({
               type: "error",
-              message: result.responseMessage,
+              message: error.message,
             });
           }
-        } catch (error) {
-          setAlertMessage({
-            type: "error",
-            message: error.message,
-          });
         }
-      }
       } else {
         setAlertMessage({
           type: "error",

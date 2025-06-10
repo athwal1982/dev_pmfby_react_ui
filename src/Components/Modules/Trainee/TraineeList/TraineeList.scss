@@ -226,7 +226,6 @@
   margin-left: 10px;
 }
 
-
 .switch {
   position: relative;
   display: inline-block;
@@ -234,13 +233,11 @@
   height: 20px;
 }
 
-
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
-
 
 .slider {
   position: absolute;
@@ -266,20 +263,17 @@
   transition: 0.4s;
 }
 
-
-input:checked+.slider {
+input:checked + .slider {
   background-color: #4caf50;
 }
 
-input:checked+.slider:before {
+input:checked + .slider:before {
   transform: translateX(14px);
 }
-
 
 .round {
   border-radius: 34px;
 }
-
 
 .styled-dropdown {
   width: 250px;
@@ -296,13 +290,11 @@ input:checked+.slider:before {
 
 .styled-dropdown:hover {
   border-color: #004d00;
-
 }
 
 .styled-dropdown:focus {
   outline: none;
   border-color: #004d00;
-
 }
 
 .styled-button {
@@ -313,25 +305,23 @@ input:checked+.slider:before {
   font-size: 12px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
   margin: 0 15px;
-
 }
 
 .styled-button:hover {
   background-color: #004d00;
-
 }
 
 .styled-button:active {
   transform: scale(0.98);
-
 }
 
 .styled-button:disabled {
   cursor: not-allowed;
 }
-
 
 .modal-overlay {
   position: fixed;
@@ -347,7 +337,6 @@ input:checked+.slider:before {
   z-index: 1000;
 }
 
-
 .modal-content {
   background: white;
   padding: 20px;
@@ -357,7 +346,6 @@ input:checked+.slider:before {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   position: relative;
 }
-
 
 .modal-content h2 {
   margin: 0 0 20px;
@@ -379,7 +367,6 @@ input:checked+.slider:before {
 .modal-close-btn:hover {
   color: #004d00;
 }
-
 
 .modal-row {
   display: flex;
@@ -408,7 +395,6 @@ input:checked+.slider:before {
   font-size: 13px;
 }
 
-
 .modal-buttons {
   display: flex;
   justify-content: space-between;
@@ -436,7 +422,6 @@ input:checked+.slider:before {
   opacity: 0.8;
 }
 
-
 .modal-overlay.show {
   display: flex !important;
   visibility: visible !important;
@@ -446,7 +431,7 @@ input:checked+.slider:before {
 .color-legend {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; 
+  align-items: flex-start;
   margin-bottom: 1px;
 }
 
@@ -469,6 +454,12 @@ input:checked+.slider:before {
   font-weight: 500;
 }
 
-.red { background-color: red; }
-.orange { background-color: orange; }
-.green { background-color: green; }
+.red {
+  background-color: red;
+}
+.orange {
+  background-color: orange;
+}
+.green {
+  background-color: green;
+}

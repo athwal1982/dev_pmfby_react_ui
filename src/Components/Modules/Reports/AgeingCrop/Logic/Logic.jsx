@@ -77,7 +77,6 @@ function AgeingCropReportLogics() {
   };
 
   const getAgeingCropReportsList = async (pViewMode) => {
-    
     try {
       setLoadingAgeingCropReportDataList(true);
 
@@ -116,7 +115,6 @@ function AgeingCropReportLogics() {
   };
 
   const updateState = (name, value) => {
-    
     setFormValues({ ...formValues, [name]: value });
     if (name === "txtReportFilter") {
       setFormValues({
@@ -135,7 +133,6 @@ function AgeingCropReportLogics() {
   };
 
   const exportAgeingTicketListClick = () => {
-    
     if (ageingTicketCountList.length === 0) {
       setAlertMessage({
         type: "error",
@@ -224,7 +221,7 @@ function AgeingCropReportLogics() {
   const getAgeingCropReportsDetailsList = async (pViewMode, pFilterID, pageingPeriodsID, pticketStatusID) => {
     try {
       setIsLoadingAgeingTicketCountList(true);
-      
+
       const formData = {
         viewMode: pViewMode,
         stateID: pViewMode === "S" ? pFilterID : 0,

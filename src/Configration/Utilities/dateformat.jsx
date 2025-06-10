@@ -104,10 +104,10 @@ export const convertToLocalDate = (date) => {
   return new Date(localDate.getTime() - userTimezoneOffset);
 };
 
- export const convertTotalMinutesToFormatedHours = (data) => {
+export const convertTotalMinutesToFormatedHours = (data) => {
   debugger;
-        const hours = Math.floor(data / 60);
-        const minutes = data % 60;
-        const formattedHours = hours > 0 && minutes > 0  ? `${hours} hr ${minutes} min` : `${hours} hr`;
-        return formattedHours;
-    };
+  const hours = Math.floor(data / 60);
+  const minutes = data % 60;
+  const formattedHours = hours > 0 && minutes > 0 ? `${hours} hr ${minutes} min` : `${hours} hr`;
+  return formattedHours;
+};

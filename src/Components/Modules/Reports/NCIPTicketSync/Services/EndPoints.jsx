@@ -1,6 +1,6 @@
 const APIEndpoints = {
   Reports: {
-      GetNCIPTicketSyncReport: "FGMS/GetNCIPTicketSyncReport",
+    GetNCIPTicketSyncReport: "FGMS/GetNCIPTicketSyncReport",
   },
 };
 

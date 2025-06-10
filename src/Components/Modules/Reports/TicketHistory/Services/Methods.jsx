@@ -2,7 +2,6 @@ import { ApiCalling } from "Services/Utilities/ApiCalling/ApiCalling";
 import APIEndpoints from "./EndPoints";
 
 export const getSupportTicketDetailReport = async (formData) => {
-  
   try {
     const requestData = {
       main: {
@@ -18,7 +17,6 @@ export const getSupportTicketDetailReport = async (formData) => {
 };
 
 export const getSupportTicketDetailReportMongo = async (formData) => {
-  
   try {
     const requestData = {
       main: {

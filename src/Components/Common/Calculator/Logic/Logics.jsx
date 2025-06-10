@@ -297,7 +297,7 @@ function CalculatorLogics() {
   const updateStateForCalculator = (name, value) => {
     setFormValuesForCalculator({ ...formValuesForCalculator, [name]: value });
     formValidationFarmersError[name] = validateFarmersField(name, value);
-    
+
     if (name === "txtStateForCalculator") {
       setFormValuesForCalculator({
         ...formValuesForCalculator,

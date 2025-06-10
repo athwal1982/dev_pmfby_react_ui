@@ -29,7 +29,6 @@ function TicketHistoryLogics() {
 
   const [ticketHistoryListItemSearch, setTicketHistoryListItemSearch] = useState("");
   const onChangeTicketHistoryList = (val) => {
-    
     setTicketHistoryListItemSearch(val);
     gridApi.setQuickFilter(val);
   };
@@ -183,7 +182,6 @@ function TicketHistoryLogics() {
   };
 
   const getTicketHistoryData = async (pType) => {
-    
     try {
       const dateDiffrence = daysdifference(dateFormatDefault(formValues.txtFromDate), dateFormatDefault(formValues.txtToDate));
       if (dateDiffrence > 31) {
@@ -232,7 +230,6 @@ function TicketHistoryLogics() {
   };
 
   const updateState = (name, value) => {
-    
     setFormValues({ ...formValues, [name]: value });
   };
 
@@ -269,7 +266,6 @@ function TicketHistoryLogics() {
   };
 
   const exportClick = () => {
-    
     // A const excelParams = {
     // A  fileName: "Ticket History",
     // A };
@@ -363,7 +359,7 @@ function TicketHistoryLogics() {
         SowingDate: value.SowingDate
           ? dateToSpecificFormat(`${value.SowingDate.split("T")[0]} ${Convert24FourHourAndMinute(value.SowingDate.split("T")[1])}`, "DD-MM-YYYY HH:mm")
           : "",
-        CreatedBY: value.CreatedBY,    
+        CreatedBY: value.CreatedBY,
         TicketDescription: value.TicketDescription,
       };
     });

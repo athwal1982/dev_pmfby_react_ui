@@ -70,8 +70,6 @@ const Textmessagecomponent = ({
   const setAlertMessage = AlertMessage();
 
   const handleGetData = async () => {
-    
-
     const user = getSessionStorage("user");
 
     const options = {

@@ -21,7 +21,6 @@ function ForgotPasswordLogics() {
 
   const [captchaCodeforgot, setCaptchaCodeforgot] = useState("");
   const createCaptchaforgot = () => {
-    
     // A clear the contents of captcha div first
     document.getElementById("captchaforgot").innerHTML = "";
     const charsArray = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@!#$%^&*";
@@ -137,7 +136,6 @@ function ForgotPasswordLogics() {
   };
 
   const checkUserNameForForGotPassword = async () => {
-    
     try {
       const encryptUserName = encryptStringData(formValues.txtUsername ? formValues.txtUsername : "");
       const formData = {
@@ -166,7 +164,6 @@ function ForgotPasswordLogics() {
   };
 
   const verifyOTPForForGotPassword = async () => {
-    
     try {
       const encryptUserName = encryptStringData(formValues.txtUsername ? formValues.txtUsername : "");
       const formData = {
@@ -200,7 +197,6 @@ function ForgotPasswordLogics() {
   };
 
   const createNewPasswordForGotPassword = async () => {
-    
     try {
       const hashPass = await sha256(formValues.txtNewPassword ? formValues.txtNewPassword : "");
       const formData = {
@@ -261,7 +257,6 @@ function ForgotPasswordLogics() {
     }
   };
   const handleSubmit = async () => {
-    
     try {
       if (!handleValidation()) {
         return;

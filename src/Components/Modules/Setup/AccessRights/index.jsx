@@ -19,26 +19,33 @@ function AccessRightsPage() {
 
   const [assignUsersPopUp, setAssignUsersPopUp] = useState(false);
   const toggleAssignUserPopUp = (data) => {
-    
     setAssignUsersPopUp(!assignUsersPopUp);
     setAssignedUsersPopUp(data);
   };
 
   return (
     <>
-      {assignUsersPopUp ? <Suspense fallback={<Loader />}><AssignUsersPopup showfunc={toggleAssignUserPopUp} assignedUsersPopUp={assignedUsersPopUp} /></Suspense> : null}
-      {addUserModal ? <Suspense fallback={<Loader />}><AddRights showfunc={toggleAddRightsModal} updateRightsData={updateRightsData} /></Suspense> : null}
+      {assignUsersPopUp ? (
+        <Suspense fallback={<Loader />}>
+          <AssignUsersPopup showfunc={toggleAssignUserPopUp} assignedUsersPopUp={assignedUsersPopUp} />
+        </Suspense>
+      ) : null}
+      {addUserModal ? (
+        <Suspense fallback={<Loader />}>
+          <AddRights showfunc={toggleAddRightsModal} updateRightsData={updateRightsData} />
+        </Suspense>
+      ) : null}
       <Suspense fallback={<Loader />}>
-      <AccessRights
-        toggleAddRightsModal={toggleAddRightsModal}
-        onGridReady={onGridReady}
-        filteredRightsDataList={filteredRightsDataList}
-        isLoadingRightsData={isLoadingRightsData}
-        toggleAssignUserPopUp={toggleAssignUserPopUp}
-        onChangeRightsList={onChangeRightsList}
-        getRightsList={getRightsList}
-        userRightsItemSearch={userRightsItemSearch}
-      />
+        <AccessRights
+          toggleAddRightsModal={toggleAddRightsModal}
+          onGridReady={onGridReady}
+          filteredRightsDataList={filteredRightsDataList}
+          isLoadingRightsData={isLoadingRightsData}
+          toggleAssignUserPopUp={toggleAssignUserPopUp}
+          onChangeRightsList={onChangeRightsList}
+          getRightsList={getRightsList}
+          userRightsItemSearch={userRightsItemSearch}
+        />
       </Suspense>
     </>
   );

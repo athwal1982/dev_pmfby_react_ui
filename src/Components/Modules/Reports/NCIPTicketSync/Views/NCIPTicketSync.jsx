@@ -21,15 +21,15 @@ function NCIPTicketSync({
   return (
     <div className={BizClass.PageStart}>
       <PageBar>
-       <PageBar.Select
-                 control={"select"}
-                 label="Year"
-                 name="txtYearFilter"
-                 getOptionLabel={(option) => `${option.label}`}
-                 value={formValues.txtYearFilter}
-                 getOptionValue={(option) => `${option}`}
-                 options={yearList}
-                 onChange={(e) => updateState("txtYearFilter", e)}
+        <PageBar.Select
+          control={"select"}
+          label="Year"
+          name="txtYearFilter"
+          getOptionLabel={(option) => `${option.label}`}
+          value={formValues.txtYearFilter}
+          getOptionValue={(option) => `${option}`}
+          options={yearList}
+          onChange={(e) => updateState("txtYearFilter", e)}
         />
         <PageBar.Search onChange={(e) => onChangeNCIPTicketSyncDataList(e.target.value)} onClick={() => getNCIPTicketSyncDataList()} />
         <PageBar.Button onClick={() => onClickClearSearchFilter()} title="Clear">
@@ -42,7 +42,7 @@ function NCIPTicketSync({
 
       <DataGrid rowData={filteredNCIPTicketSyncDataList} loader={isLoadingNCIPTicketSyncDataList ? <Loader /> : false} onGridReady={onGridReady}>
         <DataGrid.Column valueGetter="node.rowIndex + 1" field="#" headerName="Sr No." width={80} pinned="left" />
-        <DataGrid.Column field="MONTH" headerName="Month" width="170px"  />
+        <DataGrid.Column field="MONTH" headerName="Month" width="170px" />
         <DataGrid.Column field="YEAR" headerName="Year" width="170px" cellStyle={{ "text-align": "right" }} />
         <DataGrid.Column field="TotalTicket" headerName="Total Ticket" width="175px" cellStyle={{ "text-align": "right" }} />
         <DataGrid.Column field="Sync" headerName="Sync" width="170px" cellStyle={{ "text-align": "right" }} />

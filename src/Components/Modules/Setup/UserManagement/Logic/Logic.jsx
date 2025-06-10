@@ -22,7 +22,6 @@ function UserManagementLogics() {
   };
 
   const getUserData = async () => {
-    
     try {
       setLoadingUserDataList(true);
       const userData = getSessionStorage("user");
@@ -57,7 +56,6 @@ function UserManagementLogics() {
   };
 
   const updateUserData = (newlyAddedUser) => {
-    
     console.log("newlyAddedUser", newlyAddedUser);
     if (gridApi) {
       const rowData = [];
@@ -80,7 +78,6 @@ function UserManagementLogics() {
   };
 
   const ActiveInActiveUserUpdate = async (data, pActiveStatus) => {
-    
     try {
       setLoadingUserDataList(true);
       const updateActiveStatus = pActiveStatus && pActiveStatus === "Y" ? "N" : pActiveStatus === "N" ? "Y" : "";
@@ -137,9 +134,7 @@ function UserManagementLogics() {
       console.log("data profile list", data);
       const itemsToUpdate = [];
       gridApi.forEachNode(function (rowNode) {
-        
         if (rowNode.data.AppAccessID.toString() === data.AppAccessID.toString()) {
-          
           rowNode.data.AssignmentFlag = "1";
           rowNode.data.ProfileName = data.ProfileName;
           console.log("rowNode.data", rowNode.data);
@@ -152,7 +147,6 @@ function UserManagementLogics() {
     }
   };
   const onClearSearchClick = () => {
-    
     setUserListItemSearch("");
   };
 

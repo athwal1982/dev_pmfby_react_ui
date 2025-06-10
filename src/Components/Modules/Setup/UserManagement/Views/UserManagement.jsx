@@ -36,7 +36,7 @@ const cellActionTemplate = (props) => {
       {cellData &&
       cellData.LocationTypeID.toString() === "1" &&
       ChkBRTypeID !== "124005" &&
-      (userData.AppAccessTypeID.toString() === "472") &&
+      userData.AppAccessTypeID.toString() === "472" &&
       userData.LoginID.toString() === (cellData && cellData.InsertUserID ? cellData.InsertUserID.toString() : "0") ? (
         <RiHome2Fill
           style={{ fontSize: "16px", color: "#34495E", cursor: "pointer" }}
@@ -44,12 +44,13 @@ const cellActionTemplate = (props) => {
           title="State Assign"
         />
       ) : null}
-      {cellData &&
-      cellData.LocationTypeID.toString() === "1"  && userData &&  userData.AppAccessTypeID.toString() === "999" ?  <RiHome2Fill
+      {cellData && cellData.LocationTypeID.toString() === "1" && userData && userData.AppAccessTypeID.toString() === "999" ? (
+        <RiHome2Fill
           style={{ fontSize: "16px", color: "#34495E", cursor: "pointer" }}
           onClick={() => props.toggleAssignStateListModal(props.data)}
           title="State Assign"
-        /> : null }
+        />
+      ) : null}
       {cellData &&
       cellData.LocationTypeID.toString() === "2" &&
       userData.AppAccessTypeID.toString() === "472" &&

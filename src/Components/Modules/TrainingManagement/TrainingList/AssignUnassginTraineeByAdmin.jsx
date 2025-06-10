@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef  } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { AlertMessage, Loader } from "Framework/Components/Widgets";
 import Modal from "Framework/Components/Layout/Modal/Modal";
 import { DataGrid, PageBar } from "Framework/Components/Layout";
@@ -9,25 +9,16 @@ import { cSCCenterTrainingAssignManageData, CSCUserTrainingAssignManageData } fr
 import "./TrainingList.scss";
 import * as XLSX from "xlsx";
 
-
-
-function AssignUnassginTraineeByAdmin({
-  toggleAssignUnAssignTraineeByAdminModal,
-  assignUnAssignTraineeByAdminModal,
-}) {
+function AssignUnassginTraineeByAdmin({ toggleAssignUnAssignTraineeByAdminModal, assignUnAssignTraineeByAdminModal }) {
   const setAlertMessage = AlertMessage();
 
-
   const [centerMasterID, setCenterMasterID] = useState("0");
-  const [fileKey, setFileKey] = useState(Date.now()); 
+  const [fileKey, setFileKey] = useState(Date.now());
   const fileInputRef = useRef(null);
-  
 
   const [filterValues, setFilterValues] = useState({
     txtAssignedCenter: null,
   });
-
-
 
   const updateState = (name, value) => {
     setFilterValues((prev) => ({
@@ -38,10 +29,8 @@ function AssignUnassginTraineeByAdmin({
     if (name === "txtAssignedCenter" && value) {
       getAssignedUserListData(value);
       setCenterMasterID(value.CenterMasterID);
-
     }
   };
-
 
   const [assignedTraineeByAdminGridApi, setAssignedTraineeByAdminGridApi] = useState();
   const onAssignedTraineeByAdminGridReady = (params) => {
@@ -62,7 +51,6 @@ function AssignUnassginTraineeByAdmin({
   const [TraineeUserID, setTraineeUserID] = useState([]);
   const [Exceldata, setExcelData] = useState([]);
 
-
   const getAssignedUserListData = async (data) => {
     debugger;
     // A setProfileRightData(data);
@@ -73,9 +61,7 @@ function AssignUnassginTraineeByAdmin({
         viewMode: "GETALLUSER",
         cSCAppAccessTypeID: 503,
         centerID: data.CenterMasterID ? data.CenterMasterID.toString() : "0",
-        trainingMasterID: data && data.TrainingMasterID
-          ? data.TrainingMasterID.toString()
-          : "0",
+        trainingMasterID: data && data.TrainingMasterID ? data.TrainingMasterID.toString() : "0",
         userID: "0",
         trainingUserAssignmentID: "0",
       };
@@ -84,9 +70,8 @@ function AssignUnassginTraineeByAdmin({
       if (result.response.responseCode === 1) {
         if (result.response.responseData && result.response.responseData.CscAssignManage.length > 0) {
           setTraineeByAdminList(result.response.responseData.CscAssignManage);
-         
-        
-          setTraineeUserID(result.response.responseData.CscAssignManage.map(item => item["UserID"]));
+
+          setTraineeUserID(result.response.responseData.CscAssignManage.map((item) => item["UserID"]));
         } else {
           setTraineeByAdminList([]);
         }
@@ -115,16 +100,17 @@ function AssignUnassginTraineeByAdmin({
       const formdata = {
         viewMode: "GETALLCENTER",
         centerID: "0",
-        trainingMasterID: assignUnAssignTraineeByAdminModal && assignUnAssignTraineeByAdminModal.TrainingMasterId
-          ? assignUnAssignTraineeByAdminModal.TrainingMasterId.toString()
-          : "0",
+        trainingMasterID:
+          assignUnAssignTraineeByAdminModal && assignUnAssignTraineeByAdminModal.TrainingMasterId
+            ? assignUnAssignTraineeByAdminModal.TrainingMasterId.toString()
+            : "0",
         trainingCenterAssignmentID: "0",
       };
       const result = await cSCCenterTrainingAssignManageData(formdata);
       setIsLoadingCenterList(false);
       if (result.response.responseCode === 1) {
         if (result.response.responseData && result.response.responseData.CscAssignManage.length > 0) {
-          const filteredData = result.response.responseData.CscAssignManage.filter(item => item.AssignmentFlag === 1);
+          const filteredData = result.response.responseData.CscAssignManage.filter((item) => item.AssignmentFlag === 1);
           setCenterList(filteredData);
         } else {
           setCenterList([]);
@@ -151,14 +137,10 @@ function AssignUnassginTraineeByAdmin({
         viewMode: "UNASSIGN",
         cSCAppAccessTypeID: 503,
         centerID: centerMasterID ? centerMasterID.toString() : "0",
-        trainingMasterID:
-          assignUnAssignTraineeByAdminModal.TrainingMasterId
-            ? assignUnAssignTraineeByAdminModal.TrainingMasterId.toString()
-            : "0",
+        trainingMasterID: assignUnAssignTraineeByAdminModal.TrainingMasterId ? assignUnAssignTraineeByAdminModal.TrainingMasterId.toString() : "0",
         userID: data.UserID,
         trainingUserAssignmentID: data.TrainingUserAssignmentID,
       };
-
 
       const result = await CSCUserTrainingAssignManageData(formdata);
       if (result.response.responseCode === 1) {
@@ -184,14 +166,12 @@ function AssignUnassginTraineeByAdmin({
           type: "error",
           message: result.response.responseMessage,
         });
-
       }
     } catch (error) {
       setAlertMessage({ open: true, type: "error", message: error });
       console.log(error);
     }
   };
-
 
   const getSelectedRowData = () => {
     debugger;
@@ -200,29 +180,22 @@ function AssignUnassginTraineeByAdmin({
     return selectedData;
   };
 
-
-
   const handleFileUpload = (event) => {
     debugger;
     const file = event.target.files[0];
-  
-    if (
-      file &&
-      (file.type === "application/vnd.ms-excel" ||
-        file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-    ) {
+
+    if (file && (file.type === "application/vnd.ms-excel" || file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")) {
       const reader = new FileReader();
-  
+
       reader.onload = (e) => {
         const data = new Uint8Array(e.target.result);
         const workbook = XLSX.read(data, { type: "array" });
-  
+
         const sheetName = workbook.SheetNames[0];
         const sheet = workbook.Sheets[sheetName];
-  
+
         const jsonData = XLSX.utils.sheet_to_json(sheet);
-        
-        
+
         if (!jsonData.some((row) => row.hasOwnProperty("User_ID"))) {
           setAlertMessage({
             type: "error",
@@ -230,13 +203,13 @@ function AssignUnassginTraineeByAdmin({
           });
           return;
         }
-  
+
         const ids = jsonData.map((item) => item["User_ID"].toString());
-  
+
         setExcelData(ids);
-  
+
         let matchedCount = 0;
-  
+
         if (assignedTraineeByAdminGridApi) {
           assignedTraineeByAdminGridApi.forEachNode((node) => {
             if (ids.includes(node.data.UserID.toString())) {
@@ -244,11 +217,10 @@ function AssignUnassginTraineeByAdmin({
               matchedCount++;
             }
           });
-  
+
           assignedTraineeByAdminGridApi.refreshCells();
         }
-  
-      
+
         if (matchedCount > 0) {
           setAlertMessage({
             type: "success",
@@ -261,7 +233,7 @@ function AssignUnassginTraineeByAdmin({
           });
         }
       };
-  
+
       reader.readAsArrayBuffer(file);
     } else {
       setAlertMessage({
@@ -270,15 +242,6 @@ function AssignUnassginTraineeByAdmin({
       });
     }
   };
-  
-
-  
-  
-  
-
- 
-  
-
 
   const [btnLoaderActive, setBtnLoaderActive] = useState(false);
   const handleSave = async (e) => {
@@ -301,11 +264,7 @@ function AssignUnassginTraineeByAdmin({
         return;
       }
 
-
-
-      const UserIds = checkedItem
-        .map((data) => data.UserID.toString())
-        .join(",");
+      const UserIds = checkedItem.map((data) => data.UserID.toString()).join(",");
 
       setBtnLoaderActive(true);
 
@@ -313,10 +272,7 @@ function AssignUnassginTraineeByAdmin({
         viewMode: "ASSIGN",
         cSCAppAccessTypeID: 503,
         centerID: centerMasterID ? centerMasterID.toString() : "0",
-        trainingMasterID:
-          assignUnAssignTraineeByAdminModal.TrainingMasterId
-            ? assignUnAssignTraineeByAdminModal.TrainingMasterId.toString()
-            : "0",
+        trainingMasterID: assignUnAssignTraineeByAdminModal.TrainingMasterId ? assignUnAssignTraineeByAdminModal.TrainingMasterId.toString() : "0",
         userID: UserIds,
         trainingUserAssignmentID: "0",
       };
@@ -329,15 +285,13 @@ function AssignUnassginTraineeByAdmin({
           type: "success",
           message: result.response.responseMessage,
         });
-        setFileKey(Date.now()); 
+        setFileKey(Date.now());
         if (fileInputRef.current) {
-          fileInputRef.current.value = ""; 
+          fileInputRef.current.value = "";
         }
 
         if (result.response.responseData) {
-          const responseAssignedIds = result.response.responseData?.AssignedID
-            ? result.response.responseData.AssignedID.split(",")
-            : [];
+          const responseAssignedIds = result.response.responseData?.AssignedID ? result.response.responseData.AssignedID.split(",") : [];
 
           let assignedIds = [];
           if (responseAssignedIds.length > 0) {
@@ -355,12 +309,8 @@ function AssignUnassginTraineeByAdmin({
 
           if (assignedIds.length > 0) {
             const updatedTraineeList = TraineeByAdminList.map((x) => {
-              let pUserID = !Array.isArray(x)
-                ? x.UserID.toString()
-                : x[0].UserID.toString();
-              let assignedUser = assignedIds.find(
-                (data) => pUserID === data.UserID.toString()
-              );
+              let pUserID = !Array.isArray(x) ? x.UserID.toString() : x[0].UserID.toString();
+              let assignedUser = assignedIds.find((data) => pUserID === data.UserID.toString());
 
               if (assignedUser) {
                 return {
@@ -393,8 +343,6 @@ function AssignUnassginTraineeByAdmin({
       });
     }
   };
-  
-
 
   const checkboxSelection = (params) => {
     console.log(params);
@@ -411,38 +359,30 @@ function AssignUnassginTraineeByAdmin({
     }
     if (params.node.rowIndex % 2 === 0) {
       return { background: "white" };
-    }          
+    }
     return { background: "white" };
   };
 
-
   const handleReset = () => {
-    setExcelData([]); 
-    setTraineeUserID([]); 
-    setFilterValues({ txtAssignedCenter: null }); 
-    setCenterMasterID("0"); 
-    setSearchTextAssigendTraineeByAdmin(""); 
-    setTraineeByAdminList([]); 
+    setExcelData([]);
+    setTraineeUserID([]);
+    setFilterValues({ txtAssignedCenter: null });
+    setCenterMasterID("0");
+    setSearchTextAssigendTraineeByAdmin("");
+    setTraineeByAdminList([]);
 
-    setFileKey(Date.now()); 
+    setFileKey(Date.now());
     if (fileInputRef.current) {
-      fileInputRef.current.value = ""; 
+      fileInputRef.current.value = "";
     }
-  
+
     if (assignedTraineeByAdminGridApi) {
-      assignedTraineeByAdminGridApi.deselectAll(); 
-      assignedTraineeByAdminGridApi.setRowData([]); 
+      assignedTraineeByAdminGridApi.deselectAll();
+      assignedTraineeByAdminGridApi.setRowData([]);
     }
-  
+
     setAlertMessage({ type: "success", message: "Reset successful!" });
   };
- 
-
-
-
-  
-
-
 
   useEffect(() => {
     debugger;
@@ -453,19 +393,14 @@ function AssignUnassginTraineeByAdmin({
     <>
       <Modal
         varient="half"
-        title={`Trainee Allocation(${assignUnAssignTraineeByAdminModal.TrainingTitle
-          ? assignUnAssignTraineeByAdminModal.TrainingTitle
-          : ""
-          })`}
+        title={`Trainee Allocation(${assignUnAssignTraineeByAdminModal.TrainingTitle ? assignUnAssignTraineeByAdminModal.TrainingTitle : ""})`}
         right={0}
         width="70vw"
         height="100vh"
         show={toggleAssignUnAssignTraineeByAdminModal}
       >
         <Modal.Body>
-          <div
-            className="PageStart"
-          >
+          <div className="PageStart">
             <div className="top-actions">
               <div className="custom-ddl-container">
                 <PageBar.Select
@@ -479,24 +414,18 @@ function AssignUnassginTraineeByAdmin({
                   value={CenterList.find((center) => center.CenterMasterID === filterValues.txtAssignedCenter) || null}
                   onChange={(e) => updateState("txtAssignedCenter", e)}
                 />
-
               </div>
               <input
-               key={fileKey}
-  type="file"
-  accept=".csv, .xls, .xlsx"
-  onChange={handleFileUpload}
-  className="import-input"
-  disabled={!filterValues.txtAssignedCenter} 
-/>
-<Button
-    type="Button"
-    varient="secondary"
-    onClick={handleReset}
-    className="custom-button-reset"
-  >
-    Reset
-  </Button>
+                key={fileKey}
+                type="file"
+                accept=".csv, .xls, .xlsx"
+                onChange={handleFileUpload}
+                className="import-input"
+                disabled={!filterValues.txtAssignedCenter}
+              />
+              <Button type="Button" varient="secondary" onClick={handleReset} className="custom-button-reset">
+                Reset
+              </Button>
 
               <div className="custom-search-container">
                 <input
@@ -506,7 +435,6 @@ function AssignUnassginTraineeByAdmin({
                   className="custom-search-input"
                   placeholder="Search Trainee..."
                 />
-
               </div>
             </div>
             <DataGrid
@@ -530,63 +458,38 @@ function AssignUnassginTraineeByAdmin({
                 width={80}
                 headerCheckboxSelection
                 headerCheckboxSelectionFilteredOnly
-              // A  checkboxSelection={checkboxSelection}
-              checkboxSelection={(params) => params.node.data.AssignmentFlag !== 1}
+                // A  checkboxSelection={checkboxSelection}
+                checkboxSelection={(params) => params.node.data.AssignmentFlag !== 1}
                 tooltipField="Assign The TraineeByAdmin"
                 cellRenderer="assignedTraineeByAdminActionTemplate"
                 cellRendererParams={{
                   onClickDeleteAssignedTrainee,
                 }}
-
               />
-              <DataGrid.Column
-                field="#"
-                headerName="Sr No."
-                width={75}
-                flex={1}
-                valueGetter="node.rowIndex + 1"
-                pinned="left"
-              />
+              <DataGrid.Column field="#" headerName="Sr No." width={75} flex={1} valueGetter="node.rowIndex + 1" pinned="left" />
               <DataGrid.Column
                 field="AssignmentFlag"
                 headerName="Status"
                 width={110}
                 flex={1}
-                valueFormatter={(param) =>
-                  param.value === 1 ? "Assigned" : " Not Assigned"
-                }
+                valueFormatter={(param) => (param.value === 1 ? "Assigned" : " Not Assigned")}
               />
-              <DataGrid.Column
-                field="UserID"
-                headerName="User ID"
-                width={100}
-                flex={1}
-              />
-              <DataGrid.Column
-                field="NAME"
-                headerName="Trainee Name"
-                width={150}
-                flex={1}
-              />
-              <DataGrid.Column
-                field="Center"
-                flex={1}
-                headerName="Center Name"
-                width={120}
-              />
+              <DataGrid.Column field="UserID" headerName="User ID" width={100} flex={1} />
+              <DataGrid.Column field="NAME" headerName="Trainee Name" width={150} flex={1} />
+              <DataGrid.Column field="Center" flex={1} headerName="Center Name" width={120} />
             </DataGrid>
           </div>
         </Modal.Body>
         <Modal.Footer>
-        <Button
-    type="Button"
-    varient="danger"
-    onClick={(e) => handleSave(e)}
-    trigger={btnLoaderActive ? "true" : "false"}
-    className="custom-button-AssignUnassign"
-  >
-    Save
-  </Button>
+          <Button
+            type="Button"
+            varient="danger"
+            onClick={(e) => handleSave(e)}
+            trigger={btnLoaderActive ? "true" : "false"}
+            className="custom-button-AssignUnassign"
+          >
+            Save
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
@@ -608,10 +511,7 @@ const assignedTraineeByAdminActionTemplate = (props) => {
             marginRight: "3px",
           }}
         >
-          <FiTrash2
-            style={{ fontSize: "15px", color: "#5d6d7e" }}
-            onClick={() => props.onClickDeleteAssignedTrainee(props.data)}
-          />
+          <FiTrash2 style={{ fontSize: "15px", color: "#5d6d7e" }} onClick={() => props.onClickDeleteAssignedTrainee(props.data)} />
         </span>
       ) : null}
     </div>

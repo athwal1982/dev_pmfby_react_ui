@@ -5,7 +5,14 @@ import publicIp from "public-ip";
 // A import { getCurrentDateTimeTick } from "Configration/Utilities/dateformat";
 import { getSessionStorage, getUserRightCodeAccess } from "Components/Common/Login/Auth/auth";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
-import { getSupportTicketReview, addSupportTicketReview, getMasterDataBinding, ticketStatusUpdate, editSupportTicketReview, addCSCSupportTicketReview } from "../Services/Services";
+import {
+  getSupportTicketReview,
+  addSupportTicketReview,
+  getMasterDataBinding,
+  ticketStatusUpdate,
+  editSupportTicketReview,
+  addCSCSupportTicketReview,
+} from "../Services/Services";
 import { getFarmerPolicyDetail, sendSMSToFarmer } from "../../../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
 
 function MyTicketLogics() {
@@ -118,9 +125,6 @@ function MyTicketLogics() {
   const [selectedPolicyDetails, setSelectedPolicyDetails] = useState([]);
   const getPolicyDetailsOfFarmer = async (pticketData) => {
     try {
-      
-
-      
       let result = "";
       let formData = "";
 
@@ -221,7 +225,6 @@ function MyTicketLogics() {
 
   const [btnLoaderActiveOld, setBtnLoaderActiveOld] = useState(false);
   const handleSaveOld = async (e) => {
-    
     if (e) e.preventDefault();
     let popUpMsg = "";
     if (value === "") {
@@ -303,7 +306,6 @@ function MyTicketLogics() {
 
   const SendSMSToFarmerAgaintSupportTicket = async (ptemplateID, pmobileNO, psupportTicketNo) => {
     try {
-      
       const formData = {
         templateID: ptemplateID,
         mobileNO: pmobileNO,
@@ -331,7 +333,6 @@ function MyTicketLogics() {
   // A };
 
   const updateStatusSupportTicket = async () => {
-    
     try {
       const formData = {
         supportTicketID: ticketData.SupportTicketID,
@@ -370,7 +371,6 @@ function MyTicketLogics() {
 
   const [btnLoaderActive1, setBtnLoaderActive1] = useState(false);
   const handleSave = async (e) => {
-    
     if (e) e.preventDefault();
     let popUpMsg = "";
     if (value === "" || value === "<p></p>") {
@@ -604,7 +604,7 @@ function MyTicketLogics() {
           const user = getSessionStorage("user");
           const newlyAddedEntry = {
             CreatedBY: user && user.UserDisplayName ? user.UserDisplayName.toString() : "",
-            UserType:user && user.UserCompanyType ? user.UserCompanyType.toString() : "",
+            UserType: user && user.UserCompanyType ? user.UserCompanyType.toString() : "",
             AgentUserID: ticketData.AgentUserID ? ticketData.AgentUserID : "0",
             // A HasDocument: phasDocument,
             HasDocument: 0,
@@ -674,7 +674,6 @@ function MyTicketLogics() {
   const [ticketStatusList, setTicketStatusList] = useState([]);
   const [isLoadingTicketStatusList, setIsTicketStatusList] = useState(false);
   const getTicketStatusListData = async () => {
-    
     try {
       setTicketStatusList([]);
       setIsTicketStatusList(true);
@@ -711,7 +710,6 @@ function MyTicketLogics() {
 
   const [btnloaderStatusTicketActive, setBtnloaderStatusTicketActive] = useState(false);
   const updateStatusSupportTicketOnClick = async () => {
-    
     try {
       const chkAccessALL = ticketData && ticketData.AccessALL ? ticketData.AccessALL : "";
 
@@ -876,9 +874,8 @@ function MyTicketLogics() {
   const [selectedHistoryData, setSelectedHistoryData] = useState();
   const [btnLoaderActiveEditTicketComment, setbtnLoaderActiveEditTicketComment] = useState(false);
   const handleSaveEditTicketComment = async (toggleEditTicketCommentModal) => {
-    
     console.log(ticketData);
-    if (valueEditTicketComment === "" || valueEditTicketComment === "<p></p>" || valueEditTicketComment === "<p><br></p>" ) {
+    if (valueEditTicketComment === "" || valueEditTicketComment === "<p></p>" || valueEditTicketComment === "<p><br></p>") {
       popUpMsg = "Ticket comment is required!";
       setAlertMessage({
         type: "warning",
@@ -898,7 +895,7 @@ function MyTicketLogics() {
       setbtnLoaderActiveEditTicketComment(FaLaptopHouse);
       if (result.response.responseCode === 1) {
         for (let i = 0; i < chatListDetails.length; i += 1) {
-          if(selectedHistoryData.TicketHistoryID === chatListDetails[i].TicketHistoryID) {
+          if (selectedHistoryData.TicketHistoryID === chatListDetails[i].TicketHistoryID) {
             chatListDetails[i].TicketDescription = valueEditTicketComment;
             break;
           }
@@ -922,24 +919,21 @@ function MyTicketLogics() {
         message: error,
       });
     }
-    
   };
 
-  
   const [btnLoaderActiveComment, setbtnLoaderActiveComment] = useState(false);
   const handleAddComment = async (e) => {
-    
     try {
-    if (e) e.preventDefault();
-    let popUpMsg = "";
-    if (value === "" || value === "<p></p>") {
-      popUpMsg = "Ticket comment is required!";
-      setAlertMessage({
-        type: "warning",
-        message: popUpMsg,
-      });
-      return;
-    }
+      if (e) e.preventDefault();
+      let popUpMsg = "";
+      if (value === "" || value === "<p></p>") {
+        popUpMsg = "Ticket comment is required!";
+        setAlertMessage({
+          type: "warning",
+          message: popUpMsg,
+        });
+        return;
+      }
       const formData = {
         ticketHistoryID: 0,
         supportTicketID: ticketData.SupportTicketID,
@@ -958,7 +952,7 @@ function MyTicketLogics() {
           const user = getSessionStorage("user");
           const newlyAddedEntry = {
             CreatedBY: user && user.UserDisplayName ? user.UserDisplayName.toString() : "",
-            UserType:user && user.UserCompanyType ? user.UserCompanyType.toString() : "",
+            UserType: user && user.UserCompanyType ? user.UserCompanyType.toString() : "",
             AgentUserID: ticketData.AgentUserID ? ticketData.AgentUserID : "0",
             HasDocument: 0,
             InsertIPAddress: ip,
@@ -978,7 +972,6 @@ function MyTicketLogics() {
             type: "success",
             message: result.response.responseMessage,
           });
-          
         }
       } else {
         setAlertMessage({
@@ -986,10 +979,7 @@ function MyTicketLogics() {
           message: result.response.responseMessage,
         });
       }
-
-    }  catch (error) {
-
-    }
+    } catch (error) {}
   };
 
   return {

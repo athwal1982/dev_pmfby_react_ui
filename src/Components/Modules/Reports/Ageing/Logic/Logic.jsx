@@ -114,7 +114,6 @@ function AgeingReportLogics() {
   };
 
   const updateState = (name, value) => {
-    
     setFormValues({ ...formValues, [name]: value });
     if (name === "txtReportFilter") {
       setFormValues({
@@ -133,7 +132,6 @@ function AgeingReportLogics() {
   };
 
   const exportAgeingTicketListClick = () => {
-    
     if (ageingTicketCountList.length === 0) {
       setAlertMessage({
         type: "error",
@@ -222,7 +220,7 @@ function AgeingReportLogics() {
   const getAgeingReportsDetailsList = async (pViewMode, pFilterID, pageingPeriodsID, pticketStatusID) => {
     try {
       setIsLoadingAgeingTicketCountList(true);
-      
+
       const formData = {
         viewMode: pViewMode,
         stateID: pViewMode === "S" ? pFilterID : 0,

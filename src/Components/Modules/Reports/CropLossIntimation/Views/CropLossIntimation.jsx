@@ -117,8 +117,8 @@ function LossIntimationReport({
             return node.data.OnTimeIntimationFlag && node.data.OnTimeIntimationFlag === "NO"
               ? "Late"
               : node.data.OnTimeIntimationFlag === "YES"
-              ? "On-time"
-              : null;
+                ? "On-time"
+                : null;
           }}
         />
         <DataGrid.Column

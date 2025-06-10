@@ -223,8 +223,6 @@ const Contentcard = ({ name, value, icon, color, currentmenu, keyvalue, handlech
             </Typography>
             <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
               <input type="file" onChange={handleFileChange} accept=".xlsx, .xls" />
-
-           
             </Box>
             <Button
               onClick={handledemoImportReport}

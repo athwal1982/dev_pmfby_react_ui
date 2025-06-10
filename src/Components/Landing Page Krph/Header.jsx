@@ -263,7 +263,7 @@ const Header = ({ language, handleLanguageChange, handleWhatsAppClick }) => {
               )}
             </Stack>
 
-            <Stack direction="row" alignItems="center" spacing={1} style={{display: "none"}}>
+            <Stack direction="row" alignItems="center" spacing={1} style={{ display: "none" }}>
               {language === "English" ? (
                 <Typography sx={{ color: "white", fontFamily: "Quicksand, sans-serif", fontSize: { xs: "12px", md: "14px" } }}>Change Language:</Typography>
               ) : language === "Hindi" ? (
@@ -333,13 +333,16 @@ const Header = ({ language, handleLanguageChange, handleWhatsAppClick }) => {
           <Box className="logo-container-landing">
             {language === "English" ? (
               <a href="https://pmfby.gov.in/" target="_blank">
-              <LogoPMFBY style={{ width: "85%" }} /></a>
+                <LogoPMFBY style={{ width: "85%" }} />
+              </a>
             ) : language === "Hindi" ? (
               <a href="https://pmfby.gov.in/" target="_blank">
-              <LogoPMFBYHindi style={{ width: "85%" }} /></a>
+                <LogoPMFBYHindi style={{ width: "85%" }} />
+              </a>
             ) : (
               <a href="https://pmfby.gov.in/" target="_blank">
-              <LogoPMFBY style={{ width: "85%" }} /></a>
+                <LogoPMFBY style={{ width: "85%" }} />
+              </a>
             )}
           </Box>
 
@@ -355,7 +358,7 @@ const Header = ({ language, handleLanguageChange, handleWhatsAppClick }) => {
                   style={{ display: "inline-block", borderRight: index < menuItems.length - 1 ? "1px solid #ccc" : "none", paddingRight: "10px" }}
                 >
                   <Button
-                    sx={{ textTransform: "none",  }}
+                    sx={{ textTransform: "none" }}
                     onClick={isDropdown ? (e) => handleClick(e, label) : () => handleGotoKrph(path)}
                     className={isActive ? "custom-button-login-landing active" : "custom-button-login-landing"}
                   >
@@ -396,7 +399,7 @@ const Header = ({ language, handleLanguageChange, handleWhatsAppClick }) => {
                             alignItems: "center",
                             color: "rgb(104, 110, 116)",
                             textAlign: "left",
-                            fontSize:"14px"
+                            fontSize: "14px",
                           }}
                         >
                           {language === "English" ? subItem.label : language === "Hindi" ? subItem.labelHindi : subItem.label}

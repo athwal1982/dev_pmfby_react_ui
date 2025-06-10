@@ -20,7 +20,6 @@ function CallLogDataLogic() {
   };
 
   const updateState = (name, value) => {
-    
     setFormValues({ ...formValues, [name]: value });
   };
 
@@ -34,7 +33,6 @@ function CallLogDataLogic() {
   const [CallLogHistoryDataList, setCallLogHistoryDataList] = useState(false);
   const [callLogDataListItemSearch, setCallLogDataListItemSearch] = useState("");
   const onChangeCallLogDataList = (val) => {
-    
     setCallLogDataListItemSearch(val);
     gridApi.setQuickFilter(val);
   };
@@ -77,7 +75,6 @@ function CallLogDataLogic() {
   const [filteredCallLogDataList, setFilteredCallLogDataList] = useState([]);
 
   const getCallLogData = async () => {
-    
     try {
       setCallLogDataList(true);
 
@@ -130,7 +127,6 @@ function CallLogDataLogic() {
     getCallLogData();
   };
   const exportClick = () => {
-    
     // A const excelParams = {
     // A  fileName: "Ticket History",
     // A };

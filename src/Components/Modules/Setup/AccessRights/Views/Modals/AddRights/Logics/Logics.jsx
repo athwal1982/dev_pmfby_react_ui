@@ -16,7 +16,6 @@ function AddRightsLogics() {
   const [isLoadingMenuType, setIsLoadingMenuType] = useState(false);
   const setAlertMessage = AlertMessage();
   const getMenuMaster = async () => {
-    
     try {
       setIsLoadingMenuType(true);
       const result = await getmenuMasterDataBinding();

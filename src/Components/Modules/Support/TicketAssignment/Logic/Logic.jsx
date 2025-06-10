@@ -57,13 +57,11 @@ function TicketAssignmentLogics() {
   const [isLoadingTicketAssignment, setIsLoadingTicketAssignment] = useState(false);
 
   useEffect(() => {
-    
     getStateListData();
   }, []);
 
   const [TicketAssignmentModalList, setTicketAssignmentModalList] = useState("");
   const onChangeTicketAssignmentModalList = (val) => {
-    
     setTicketAssignmentModalList(val);
     gridReadyTicketCount.setQuickFilter(val);
   };
@@ -81,14 +79,12 @@ function TicketAssignmentLogics() {
   };
 
   const updateUserTicketCount = (userIds, Ticketlength) => {
-    
     setUserList((prevList) =>
       prevList.map((user) => (userIds.includes(user.AppAccessID) ? { ...user, ticketcount: (user.ticketcount || 0) + Ticketlength } : user)),
     );
   };
 
   const handleAssignTickets = async () => {
-    
     try {
       const fetchTicket = getSelectedRowDataTicket();
       const fetchUser = getSelectedRowDataUser();
@@ -173,7 +169,6 @@ function TicketAssignmentLogics() {
   };
 
   const getUserWiseTicketLister = async (AppAccessId) => {
-    
     try {
       setLoadingUserTicketList(true);
       setIsLoadingTicketAssignment(true);
@@ -252,7 +247,6 @@ function TicketAssignmentLogics() {
   };
 
   const onSearchTickets = async () => {
-    
     try {
       const dateDiffrence = daysdifference(dateFormatDefault(filterValues.txtFromDate), dateFormatDefault(filterValues.txtToDate));
       if (dateDiffrence > 31) {
@@ -388,7 +382,6 @@ function TicketAssignmentLogics() {
   const [ticketCount, setTicketCount] = useState();
   const [isLoadingStateList, setIsLoadingStateList] = useState(false);
   const getStateListData = async () => {
-    
     try {
       setStateList([]);
       setIsLoadingStateList(true);
@@ -436,8 +429,6 @@ function TicketAssignmentLogics() {
   };
 
   const updateFilterState = (name, value) => {
-    
-
     setFilterValues((prevValues) => {
       const updatedValues = { ...prevValues, [name]: value };
 

@@ -9,7 +9,6 @@ function ServiceSuccess({ getSupportTicketNo, setServiceSuccessState }) {
   const servicesuccessData = getSessionStorage("servicesuccess");
 
   const CreateMoreBtnOnClick = () => {
-    
     setServiceSuccessState("UNSUCCESS");
   };
   useEffect(() => {

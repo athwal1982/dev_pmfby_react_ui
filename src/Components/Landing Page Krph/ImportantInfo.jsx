@@ -210,7 +210,7 @@ const ImportantInfo = ({ language, setLanguage }) => {
             >
               <DialogTitle
                 sx={{
-                  fontSize:"18px",
+                  fontSize: "18px",
                   padding: "5px 24px 5px 24px",
                   bgcolor: "#075307",
                   color: "white",

@@ -721,7 +721,7 @@ function AddTicketLogics() {
       // A const result = await getSubDistrictByStateANDDistrictDataList(formdata);
       const result = await getLevel4Data(formdata);
       console.log(result, "SubDistrict Data");
-      
+
       setIsLoadingSubDistrictForByLocationDropdownDataList(false);
       if (result.response.responseCode === 1) {
         // A if (
@@ -771,7 +771,6 @@ function AddTicketLogics() {
   };
 
   const getLocationHierarchyListData = async (pStateAlphaCode, pStateMasterID, pSeason, pYear, pScheme) => {
-    
     try {
       const pschemeID =
         pScheme === ""
@@ -1179,7 +1178,6 @@ function AddTicketLogics() {
   };
 
   const updateStateForByLocation = (name, value) => {
-    
     setFormValuesForByLocation({ ...formValuesForByLocation, [name]: value });
     console.log("name , value", name, value);
     formValidationFarmersError[name] = validateFarmersField(name, value);
@@ -1585,7 +1583,6 @@ function AddTicketLogics() {
   const [ticketCategoryTypeList, setTicketCategoryTypeList] = useState([]);
   const [isLoadingTicketCategoryTypeList, setIsTicketCategoryTypeList] = useState(false);
   const getTicketCategoryTypeListData = async (pselectedOption, pCropLossDetailID, pMasterName) => {
-    
     if (ticketBindingData) {
       setIsTicketCategoryTypeList(true);
       if (pMasterName === "TCKTYP") {
@@ -1884,7 +1881,7 @@ function AddTicketLogics() {
     try {
       const errors = {};
       let formIsValid = true;
-      
+
       // A errors["txtDocumentUpload"] = validateFieldSupportTicket("txtDocumentUpload", formValuesTicketCreation.txtDocumentUpload);
       errors["txtCallerMobileNumber"] = validateFieldSupportTicket("txtCallerMobileNumber", formValuesCallerInformation.txtCallerMobileNumber);
       errors["txtSchemeForFarmerInfo"] = validateFieldSupportTicket("txtSchemeForFarmerInfo", formValuesForFarmerInfo.txtSchemeForFarmerInfo);
@@ -1935,7 +1932,6 @@ function AddTicketLogics() {
 
   const [stateCropLossIntimation, setStateCropLossIntimation] = useState("NA");
   const updateStateTicketCreation = (name, value) => {
-    
     setFormValuesTicketCreation({ ...formValuesTicketCreation, [name]: value });
     formValidationSupportTicketError[name] = validateFieldSupportTicket(name, value);
     if (name === "txtTicketCategoryType") {
@@ -2245,7 +2241,6 @@ function AddTicketLogics() {
   };
 
   const handleFarmersValidation = () => {
-    
     try {
       const errors = {};
       let formIsValid = true;
@@ -2397,7 +2392,6 @@ function AddTicketLogics() {
   };
 
   const fetchfarmersTicketSummary = () => {
-    
     getfarmersTicketSummaryData(fetchfarmersummary);
   };
 
@@ -2716,7 +2710,7 @@ function AddTicketLogics() {
   const onCellDoubleClicked = (event) => {
     setSelectedFarmer(event.data);
     console.log(event.data);
-    
+
     setFormValuesForFarmerInfo({
       ...formValuesForFarmerInfo,
       txtSeasonForFarmerInfo: {
@@ -2734,7 +2728,7 @@ function AddTicketLogics() {
   const updateStateForFarmerInfo = (name, value) => {
     setFormValuesForFarmerInfo({ ...formValuesForFarmerInfo, [name]: value });
     formValidationFarmersInfoError[name] = validateFarmersInfoField(name, value);
-    
+
     //  Aif (name === "txtYearForFarmerInfo") {
     //  A if (value) {
     //  A   if (value.Value < runningCurrentYear) {
@@ -2791,7 +2785,7 @@ function AddTicketLogics() {
   };
   const onCellDoubleClickedDetails = (event) => {
     setSelectedOption("2");
-    
+
     setClaimOrGrievenceDisabled(false);
     setSelectedClaimOrGrievence("CI");
     setSelectedInsuranceDetails(event.data);
@@ -2968,7 +2962,7 @@ function AddTicketLogics() {
               });
             } else {
               aryayInsuranceCompany.push(result.response.responseData.data.result);
-              
+
               setInsuranceCompanyData(aryayInsuranceCompany[0]);
               toggleInsuranceCompanyModal();
             }
@@ -3005,7 +2999,6 @@ function AddTicketLogics() {
   const [isLoadingApplicationNoDatGreivence, setIsLoadingApplicationNodatGreivence] = useState(false);
 
   const getPolicyOfFarmerGreivenceOnClick = async () => {
-    
     if (!handleFarmersInfoValidation()) {
       return;
     }
@@ -3133,7 +3126,6 @@ function AddTicketLogics() {
   const [btnLoaderTicketHistoryActive, setBtnLoaderTicketHistoryActive] = useState(false);
   const [isLoadingTicketHistory, setIsLoadingTicketHistory] = useState(false);
   const getTicketHistoryOnClick = async (pTicketStatusID) => {
-    
     try {
       setBtnLoaderTicketHistoryActive(true);
       setIsLoadingTicketHistory(true);
@@ -3211,7 +3203,7 @@ function AddTicketLogics() {
   };
 
   // A const getTicketHistoryOnClick = async (pTicketStatusID) => {
-  // A  
+  // A
   // A  try {
   // A    setBtnLoaderTicketHistoryActive(true);
   // A    setIsLoadingTicketHistory(true);
@@ -3301,7 +3293,6 @@ function AddTicketLogics() {
   const [btnLoaderClaimStatusActive, setBtnLoaderClaimStatusActive] = useState(false);
   const [isLoadingClaimStatusData, setIsLoadingClaimStatusData] = useState(false);
   const getClaimStatusOnClick = async (pApplicationNo) => {
-    
     try {
       setBtnLoaderClaimStatusActive(true);
       setIsLoadingClaimStatusData(true);
@@ -3479,7 +3470,6 @@ function AddTicketLogics() {
   const [btnLoaderSupportTicketActive, setBtnLoaderSupportTicketActive] = useState(false);
   // A const supportTicketOnClick = async (updateFarmersTickets, updateFarmersTicketsStatusCount, showfunc) => {
   const supportTicketOnClick = async (updateFarmersTickets, showfunc) => {
-    
     try {
       if (selectedFarmer.length === 0 && selectedFarmer.length !== undefined) {
         setAlertMessage({
@@ -3901,7 +3891,6 @@ function AddTicketLogics() {
   const [customeWindowWidth, setCustomeWindowWidth] = useState("45.7vw");
   const [customeWindowHeight, setCustomeWindowHeight] = useState("60vh");
   const OnClickCustomeWindow = (ptype) => {
-    
     if (ptype === "S") {
       setopenCustomeWindow("B");
       setCustomeWindowWidth("92.5vw");

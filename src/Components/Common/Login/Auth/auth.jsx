@@ -67,7 +67,7 @@ export const checkAuthExist = () => {
 };
 
 // A export const checkAuthExist = () => {
-// A  
+// A
 // A  const userData = getSessionStorage("user");
 // A  const pCurrentDateTime = getSessionStorage("CurrentDateAndTime");
 // A  if (userData && pCurrentDateTime) {

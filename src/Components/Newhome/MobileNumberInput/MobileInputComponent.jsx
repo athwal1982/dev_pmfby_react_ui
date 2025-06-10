@@ -34,7 +34,6 @@ function MobileInputComponent() {
   const authToken = "3509AA77-1ABA-410F-9CB2-51D59AAEC0383509AA77-1ABA-410F-9CB2-51D59AAEC038";
 
   const handleOtpSubmit1 = async (e) => {
-    
     e.preventDefault();
     if (otp.join("") === "2024") {
       try {
@@ -154,7 +153,6 @@ function MobileInputComponent() {
   }, [countdown]);
 
   const handleMobileInputSubmission = async (e) => {
-    
     const ip = await publicIp.v4();
 
     if (mobileNum === "") {
@@ -198,7 +196,6 @@ function MobileInputComponent() {
   };
 
   const handleButtonClick = (e) => {
-    
     if (!mobileNum || mobileNum.length !== 10) {
       setAlertMessage({
         type: "error",
@@ -279,7 +276,6 @@ function MobileInputComponent() {
   };
 
   const handleOtpSubmit = async (e) => {
-    
     if (otp.length == 0) {
       setAlertMessage({
         type: "error",
@@ -346,7 +342,6 @@ function MobileInputComponent() {
   };
 
   const handlePopupAction = async (action) => {
-    
     setShowPopup(false);
     if (action === "complaintStatus") {
       navigate("/complaint-status", { state: { mobileNum } });

@@ -80,10 +80,10 @@ function FarmerCallingHistory({
             return node.data.IsRegistered && node.data.IsRegistered === "U"
               ? "Unregistred Farmer"
               : node.data.IsRegistered === "R"
-              ? "Registred Farmer"
-              : node.data.IsRegistered === "D"
-              ? "Farmer registred with duplicate number"
-              : "";
+                ? "Registred Farmer"
+                : node.data.IsRegistered === "D"
+                  ? "Farmer registred with duplicate number"
+                  : "";
           }}
           width="290px"
         />

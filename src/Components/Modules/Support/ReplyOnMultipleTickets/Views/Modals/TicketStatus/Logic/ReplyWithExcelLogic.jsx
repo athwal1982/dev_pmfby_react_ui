@@ -138,7 +138,6 @@ function ReplyWithExcelLogic() {
   const [excelFile, setExcelFile] = useState(null);
 
   const updateStateReplyWithExcel = (name, value) => {
-    
     setFormValuesReplyWithExcel({ ...formValuesReplyWithExcel, [name]: value });
     setformValidationReplyWithExcelError[name] = validateFieldSupportTicket(name, value);
     if (name === "txtDocumentUpload") {
@@ -170,7 +169,7 @@ function ReplyWithExcelLogic() {
     try {
       const errors = {};
       let formIsValid = true;
-      
+
       errors["txtDocumentUpload"] = validateFieldSupportTicket("txtDocumentUpload", formValuesReplyWithExcel.txtDocumentUpload);
       if (Object.values(errors).join("").toString()) {
         formIsValid = false;
@@ -190,7 +189,6 @@ function ReplyWithExcelLogic() {
   const [successStatusMsg, setsuccessStatusMsg] = useState("");
   const [btnLoaderActive, setBtnLoaderActive] = useState(false);
   const handleSave = async (showfunc, filterValues, setFarmersTicketData, setSatatusCount, settotalSatatusCount, farmersTicketData) => {
-    
     if (farmersTicketData.length === 0) {
       setAlertMessage({
         type: "error",
@@ -229,7 +227,6 @@ function ReplyWithExcelLogic() {
       }
     }
     if (excelFile !== null) {
-      
       const workBook = XLSX.read(excelFile, { type: "buffer" });
       const workSheetName = workBook.SheetNames[0];
       const wokrSheet = workBook.Sheets[workSheetName];

@@ -92,7 +92,6 @@ function MyTicketLogics() {
 
   const [btnLoaderActiveOld, setBtnLoaderActiveOld] = useState(false);
   const handleSaveOld = async (e) => {
-    
     if (e) e.preventDefault();
     let popUpMsg = "";
     if (value === "") {
@@ -174,7 +173,7 @@ function MyTicketLogics() {
 
   // A const SendSMSToFarmerAgaintSupportTicket = async (ptemplateID, pmobileNO, psupportTicketNo) => {
   // A  try {
-  // A    
+  // A
   // A    const formData = {
   // A      templateID: ptemplateID,
   // A      mobileNO: pmobileNO,
@@ -197,7 +196,6 @@ function MyTicketLogics() {
   // A };
 
   const updateStatusSupportTicket = async () => {
-    
     try {
       const formData = {
         farmerSupportTicketID: ticketData.FarmerSupportTicketID,
@@ -236,7 +234,6 @@ function MyTicketLogics() {
 
   const [btnLoaderActive1, setBtnLoaderActive1] = useState(false);
   const handleSave = async (e) => {
-    
     if (e) e.preventDefault();
     let popUpMsg = "";
     if (value === "" || value === "<p><p>") {
@@ -450,7 +447,6 @@ function MyTicketLogics() {
   const [ticketStatusList, setTicketStatusList] = useState([]);
   const [isLoadingTicketStatusList, setIsTicketStatusList] = useState(false);
   const getTicketStatusListData = async () => {
-    
     try {
       setTicketStatusList([]);
       setIsTicketStatusList(true);
@@ -488,7 +484,6 @@ function MyTicketLogics() {
   const [bankDropdownDataList, setBankDropdownDataList] = useState([]);
   const [isLoadingBankDropdownDataList, setIsLoadingBankDropdownDataList] = useState(false);
   const getBankListData = async () => {
-    
     try {
       setIsLoadingBankDropdownDataList(true);
       const formdata = {
@@ -528,7 +523,6 @@ function MyTicketLogics() {
 
   const [btnloaderStatusTicketActive, setBtnloaderStatusTicketActive] = useState(false);
   const updateStatusSupportTicketOnClick = async () => {
-    
     try {
       const chkAccessALL = ticketData && ticketData.AccessALL ? ticketData.AccessALL : "";
 

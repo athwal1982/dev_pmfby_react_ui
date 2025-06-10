@@ -2,7 +2,6 @@ import { ApiCalling } from "Services/Utilities/ApiCalling/ApiCalling";
 import APIEndpoints from "./EndPoints";
 
 export const getUserProfileListData = async (formData) => {
-  
   try {
     const requestData = {
       main: {
@@ -24,7 +23,6 @@ export const getUserProfileListData = async (formData) => {
 };
 
 export const userProfileMenuAssign = async (formData) => {
-  
   try {
     const requestData = {
       main: {
@@ -46,7 +44,6 @@ export const userProfileMenuAssign = async (formData) => {
 };
 
 export const manageUserProfileAssign = async (formData) => {
-  
   try {
     const requestData = {
       main: {
@@ -68,7 +65,6 @@ export const manageUserProfileAssign = async (formData) => {
 };
 
 export const getUserProfileRight = async (formData) => {
-  
   try {
     const requestData = {
       main: {
@@ -90,7 +86,6 @@ export const getUserProfileRight = async (formData) => {
 };
 
 export const manageUserProfileRightAssign = async (formData) => {
-  
   try {
     const requestData = {
       main: {

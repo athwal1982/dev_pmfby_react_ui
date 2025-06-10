@@ -29,7 +29,6 @@ function TicketCustomerDetail({
   const userData = getSessionStorage("user");
 
   const copyToClipboard = (id) => {
-    
     /* Get the text field */
     const copyText = document.getElementById(id);
     /* Copy the text inside the text field */
@@ -70,7 +69,6 @@ function TicketCustomerDetail({
     });
   };
   const excelDownloadFarmerData = () => {
-    
     const columnOrder = {
       Season: "Season",
       Year: "Year",
@@ -95,7 +93,7 @@ function TicketCustomerDetail({
     };
     const mappedData = [
       {
-        Season: ticketData && ticketData.RequestSeason && ticketData.RequestSeason === 1 ? "Kharif" :  ticketData.RequestSeason === 2 ? "Rabi" : "",
+        Season: ticketData && ticketData.RequestSeason && ticketData.RequestSeason === 1 ? "Kharif" : ticketData.RequestSeason === 2 ? "Rabi" : "",
         Year: ticketData && ticketData.RequestYear ? ticketData.RequestYear : "",
         resState: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].resState : "",
         resDistrict: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].resDistrict : "",
@@ -172,8 +170,8 @@ function TicketCustomerDetail({
             <RiNewspaperLine />
             <p>
               Season - Year :
-              <span id="spnSeasonYear">                
-                {ticketData && ticketData.RequestSeason && ticketData.RequestSeason === 1 ? "Kharif" :  ticketData.RequestSeason === 2 ? "Rabi" : ""} -{" "}
+              <span id="spnSeasonYear">
+                {ticketData && ticketData.RequestSeason && ticketData.RequestSeason === 1 ? "Kharif" : ticketData.RequestSeason === 2 ? "Rabi" : ""} -{" "}
                 {ticketData && ticketData.RequestYear ? ticketData.RequestYear : ""}
               </span>
             </p>

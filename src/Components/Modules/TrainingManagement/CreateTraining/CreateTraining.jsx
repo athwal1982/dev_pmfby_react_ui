@@ -37,7 +37,6 @@ const CreateTraining = () => {
   const [trainingDurationErrorMsg, settrainingDurationErrorMsg] = useState("");
   const [totalMinutes, setTotalMinutes] = useState(null);
 
-
   const handleDateChange = (newDate) => {
     if (newDate) {
       const adjustedDate = new Date(newDate.getTime() + 5.5 * 60 * 60 * 1000);
@@ -140,48 +139,44 @@ const CreateTraining = () => {
     calculateDuration(startTime, e.target.value);
   };
 
-
   const handleSubmit = async (e) => {
     debugger;
 
-    
     const startDate = new Date(`1970-01-01T${startTime}`);
     const endDate = new Date(`1970-01-01T${endTime}`);
 
     if (endDate <= startDate) {
-        setAlertMessage({ type: "error", message: "Enter a valid time. End time cannot be before start time." });
-
-  
+      setAlertMessage({ type: "error", message: "Enter a valid time. End time cannot be before start time." });
     }
     e.preventDefault();
     if (trainingTitle === "") {
       settrainingTitleErrorMsg("Training title is required!");
       return;
     } else {
-         settrainingTitleErrorMsg("");
+      settrainingTitleErrorMsg("");
     }
     if (selectedModule === "") {
       settrainingTypeErrorMsg("Training type is required!");
       return;
     } else {
-         settrainingTypeErrorMsg("");
-      }
+      settrainingTypeErrorMsg("");
+    }
 
     if (trainingLink === "") {
       settrainingLinkErrorMsg("Meet/VC Link is required!");
       return;
     } else {
-         settrainingLinkErrorMsg("");
-      }
+      settrainingLinkErrorMsg("");
+    }
 
     if (trainingLink !== "") {
       const meetRegex = /^https:\/\/meet\.google\.com\/([a-z]{3}-[a-z]{4}-[a-z]{3}|lookup\/[a-zA-Z0-9]+)(\?.*)?$/;
 
       if (!meetRegex.test(trainingLink)) {
-       settrainingLinkErrorMsg("Meet/VC Link is not valid!");
-       return;
+        settrainingLinkErrorMsg("Meet/VC Link is not valid!");
+        return;
       } else {
-         settrainingLinkErrorMsg("");
+        settrainingLinkErrorMsg("");
       }
     }
 
@@ -189,29 +184,29 @@ const CreateTraining = () => {
       settrainingDateErrorMsg("Training schedule date is required!");
       return;
     } else {
-         settrainingDateErrorMsg("");
-      }
+      settrainingDateErrorMsg("");
+    }
 
     if (startTime === "") {
       settrainingStartDateErrorMsg("Start time is required!");
       return;
     } else {
-         settrainingStartDateErrorMsg("");
-      }
+      settrainingStartDateErrorMsg("");
+    }
 
     if (endTime === "") {
       settrainingEndDateErrorMsg("End time is required!");
       return;
-    }  else {
-         settrainingEndDateErrorMsg("");
-      }
+    } else {
+      settrainingEndDateErrorMsg("");
+    }
 
     if (duration === "") {
       settrainingDurationErrorMsg("Duration is required!");
       return;
     } else {
-         settrainingDurationErrorMsg("");
-      }
+      settrainingDurationErrorMsg("");
+    }
 
     const trainingData = {
       TrainingTypeID: selectedModule,
@@ -278,8 +273,6 @@ const CreateTraining = () => {
     return `${hours}:${minutes} ${period}`;
   };
 
- 
-
   useEffect(() => {
     fetchTrainingTypes();
     fetchExistingTrainingDates();
@@ -307,43 +300,38 @@ const CreateTraining = () => {
         setDuration(durationInHours);
       }
     }
-       if (trainingTitle !== "") settrainingTitleErrorMsg("");
-       if (selectedModule !== "") settrainingTypeErrorMsg("");
-       // A if (trainingLink !== "") settrainingLinkErrorMsg("");
-       // A if (trainingDate !== null) settrainingDateErrorMsg("");
-       if (startTime !== "") settrainingStartDateErrorMsg("");
-       if (endTime !== "") settrainingEndDateErrorMsg("");
-       if (duration !== "") settrainingDurationErrorMsg("");
+    if (trainingTitle !== "") settrainingTitleErrorMsg("");
+    if (selectedModule !== "") settrainingTypeErrorMsg("");
+    // A if (trainingLink !== "") settrainingLinkErrorMsg("");
+    // A if (trainingDate !== null) settrainingDateErrorMsg("");
+    if (startTime !== "") settrainingStartDateErrorMsg("");
+    if (endTime !== "") settrainingEndDateErrorMsg("");
+    if (duration !== "") settrainingDurationErrorMsg("");
   }, [trainingData]);
 
+  const calculateDuration = (start, end) => {
+    if (!start || !end) {
+      setDuration("");
+      setTotalMinutes(null);
+      return;
+    }
 
+    const startDate = new Date(`1970-01-01T${start}`);
+    const endDate = new Date(`1970-01-01T${end}`);
 
-const calculateDuration = (start, end) => {
-  if (!start || !end) {
-    setDuration("");
-    setTotalMinutes(null);
-    return;
-  }
+    if (endDate <= startDate) {
+      setDuration("Invalid Time Range");
+      setTotalMinutes(null);
+      return;
+    }
 
-  const startDate = new Date(`1970-01-01T${start}`);
-  const endDate = new Date(`1970-01-01T${end}`);
+    const diffInMinutes = Math.floor((endDate - startDate) / (1000 * 60));
+    const hours = Math.floor(diffInMinutes / 60);
+    const minutes = diffInMinutes % 60;
 
-  if (endDate <= startDate) {
-    setDuration("Invalid Time Range");
-    setTotalMinutes(null);
-    return;
-  }
-
-  const diffInMinutes = Math.floor((endDate - startDate) / (1000 * 60));
-  const hours = Math.floor(diffInMinutes / 60);
-  const minutes = diffInMinutes % 60;
-
-  setDuration(`${hours}h ${minutes}m`);
-  setTotalMinutes(diffInMinutes); // Store total minutes separately
-};
-
-
-
+    setDuration(`${hours}h ${minutes}m`);
+    setTotalMinutes(diffInMinutes); // Store total minutes separately
+  };
 
   return (
     <div className="form-wrapper">
@@ -429,7 +417,7 @@ const calculateDuration = (start, end) => {
                 <label className="CreateTraining-form-label" htmlFor="training-end-time">
                   Training End Time <span className="asteriskCss">&#42;</span>
                 </label>
-                <input style={{ width: "200px" }} type="time" id="training-end-time" value={endTime} onChange={handleEndTimeChange}/>
+                <input style={{ width: "200px" }} type="time" id="training-end-time" value={endTime} onChange={handleEndTimeChange} />
                 <span className="login_ErrorTxt">{trainingEndDateErrorMsg}</span>
               </div>
             </div>
@@ -439,14 +427,8 @@ const calculateDuration = (start, end) => {
               <label className="CreateTraining-form-label" htmlFor="training-duration">
                 Duration <span className="asteriskCss">&#42;</span>
               </label>
-              <input 
-  style={{ width: "300px" }} 
-  type="text" 
-  value={duration} 
-  disabled
-/>
+              <input style={{ width: "300px" }} type="text" value={duration} disabled />
 
-          
               <span className="login_ErrorTxt">{trainingDurationErrorMsg}</span>
             </div>
           </div>
@@ -478,13 +460,7 @@ const calculateDuration = (start, end) => {
 
           <div className="button-group">
             <button type="submit" className="submit-btn save-btn" disabled={isSubmitting}>
-              {isSubmitting ? (
-                "Submitting..."
-              ) : (
-                <>
-                Save
-                </>
-              )}
+              {isSubmitting ? "Submitting..." : <>Save</>}
             </button>
 
             <button type="button" className="cancel-btn" onClick={() => navigate("/TrainingList")}>

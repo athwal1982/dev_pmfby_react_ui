@@ -84,7 +84,6 @@ function Page(props) {
   // A  };
   // A }, []);
   const handleCollapse = () => {
-    
     setOpenMenus(false);
   };
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);

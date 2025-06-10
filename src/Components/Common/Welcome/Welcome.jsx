@@ -77,7 +77,7 @@ function Welcome() {
 
               {/* <div className="ContainerPnlInstructions"> */}
               <a href="https://drive.google.com/file/d/11OeQEMPEe9FLlqJ-vNEbCJnRsO7QWmUu/view?usp=sharing" title="Click to View" target="_blank">
-                <img src={ImportantInstructionsImage} style={{width: "734px", height: "530px" }} />
+                <img src={ImportantInstructionsImage} style={{ width: "734px", height: "530px" }} />
               </a>
               {/* </div> */}
             </motion.div>

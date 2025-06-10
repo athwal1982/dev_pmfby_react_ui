@@ -23,7 +23,6 @@ export const getMasterDataBinding = async (formData) => {
 };
 
 export const userBlockAssignManage = async (formData) => {
-  
   try {
     const requestData = {
       main: {

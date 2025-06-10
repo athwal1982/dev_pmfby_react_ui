@@ -26,7 +26,6 @@ function FarmerCallingHistoryLogics() {
 
   const [FarmerCallingHistoryListItemSearch, setFarmerCallingHistoryListItemSearch] = useState("");
   const onChangeFarmerCallingHistoryList = (val) => {
-    
     setFarmerCallingHistoryListItemSearch(val);
     gridApi.setQuickFilter(val);
   };
@@ -61,7 +60,6 @@ function FarmerCallingHistoryLogics() {
   };
 
   const getFarmerCallingHistoryData = async () => {
-    
     try {
       setLoadingFarmerCallingHistoryDataList(true);
 
@@ -94,7 +92,6 @@ function FarmerCallingHistoryLogics() {
   };
 
   const updateState = (name, value) => {
-    
     setFormValues({ ...formValues, [name]: value });
   };
 
@@ -136,7 +133,6 @@ function FarmerCallingHistoryLogics() {
   };
 
   const exportClick = () => {
-    
     // A const excelParams = {
     // A  fileName: "Ticket History",
     // A };
@@ -175,10 +171,10 @@ function FarmerCallingHistoryLogics() {
           ? value.IsRegistered === "U"
             ? "Unregistred Farmer"
             : value.IsRegistered === "R"
-            ? "Registred Farmer"
-            : value.IsRegistered === "D"
-            ? "Farmer registred with duplicate number"
-            : ""
+              ? "Registred Farmer"
+              : value.IsRegistered === "D"
+                ? "Farmer registred with duplicate number"
+                : ""
           : "",
         Reason: value.Reason,
         InsertDateTime: value.InsertDateTime
@@ -227,7 +223,6 @@ function FarmerCallingHistoryLogics() {
   };
 
   useEffect(() => {
-    
     getStateListData();
   }, []);
 

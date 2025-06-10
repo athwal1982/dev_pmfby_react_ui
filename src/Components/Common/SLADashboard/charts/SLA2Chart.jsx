@@ -90,7 +90,6 @@ const SLA2Chart = ({ asaData, ahtData, agenttrainingReportData, seatUtlizationDa
   });
 
   useEffect(() => {
-    
     if (asaData && asaData.length > 0) {
       const labels = asaData.map((item) => item.month); // Extract months
       const values = asaData.map((item) => Number(item.value)); // Extract ASA values

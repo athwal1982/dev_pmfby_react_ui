@@ -56,7 +56,6 @@ function ChatList({
   const [selectedFileForFileViewerURL, setSelectedFileForFileViewerURL] = useState("");
 
   const toggleFileViewerModal = (pAttahmentURL) => {
-    
     setFileViewerIsLoading(true);
     setIsFileViewerModalOpen(!isFileViewerModalOpen);
     setSelectedFileForFileViewerURL(pAttahmentURL);
@@ -65,7 +64,6 @@ function ChatList({
 
   const [isEditTicketCommentModalOpen, setIsEditTicketCommentModalOpen] = useState(false);
   const toggleEditTicketCommentModal = (data) => {
-    
     if (data) {
       setSelectedHistoryData(data);
       setValueEditTicketComment(data.TicketDescription);
@@ -82,7 +80,7 @@ function ChatList({
       });
     }
   };
- 
+
   function stripHtmlTags(html) {
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = html;
@@ -138,12 +136,13 @@ function ChatList({
         </div>
         <div className={BizClass.TicketRemarks}>
           <p>
-          <MdOutlineContentCopy
-          style={{color:"#000000", paddingRight:"5px", fontSize:"18px",cursor:"pointer"}}
-          title="Copy Ticket Description"
-          onClick={() => copyToClipboard(selectedData ? selectedData.TicketDescription : "")}
-         /> Farmer Query :-
-            <span> {selectedData && selectedData.TicketDescription ? parse(selectedData.TicketDescription) : null}  </span>
+            <MdOutlineContentCopy
+              style={{ color: "#000000", paddingRight: "5px", fontSize: "18px", cursor: "pointer" }}
+              title="Copy Ticket Description"
+              onClick={() => copyToClipboard(selectedData ? selectedData.TicketDescription : "")}
+            />{" "}
+            Farmer Query :-
+            <span> {selectedData && selectedData.TicketDescription ? parse(selectedData.TicketDescription) : null} </span>
           </p>
         </div>
         <div className={BizClass.MainBox}>
@@ -184,13 +183,22 @@ function ChatList({
                         <div className={BizClass.ChatBody}>
                           {ChkBRHeadTypeID.toString() === "124003" && selectedData.TicketStatusID.toString() === "109302" && i === 0 ? (
                             <span>
-                              <MdOutlineContentCopy className="copy-icon" title="Copy Ticket Comment" onClick={() => copyToClipboard(stripHtmlTags(data.TicketDescription))} />&nbsp;  
+                              <MdOutlineContentCopy
+                                className="copy-icon"
+                                title="Copy Ticket Comment"
+                                onClick={() => copyToClipboard(stripHtmlTags(data.TicketDescription))}
+                              />
+                              &nbsp;
                               <FaEdit title="Update Comment" onClick={() => toggleEditTicketCommentModal(data)} />
                             </span>
                           ) : (
                             <span>
-                            <MdOutlineContentCopy className="copy-icon" title="Copy Ticket Comment" onClick={() => copyToClipboard(stripHtmlTags(data.TicketDescription))} />
-                          </span>
+                              <MdOutlineContentCopy
+                                className="copy-icon"
+                                title="Copy Ticket Comment"
+                                onClick={() => copyToClipboard(stripHtmlTags(data.TicketDescription))}
+                              />
+                            </span>
                           )}
                           <h4> {parse(data.TicketDescription)}</h4>
                         </div>

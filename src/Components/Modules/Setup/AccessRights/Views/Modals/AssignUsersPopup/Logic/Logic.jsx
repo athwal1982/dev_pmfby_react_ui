@@ -27,7 +27,6 @@ function AssignUserPopUpLogic() {
   const setAlertMessage = AlertMessage();
 
   const getAssignedUserListData = async (data) => {
-    
     try {
       setAssignedUserList([]);
       setFilteredAssignedUserList([]);
@@ -64,7 +63,6 @@ function AssignUserPopUpLogic() {
   };
 
   const updateAssignedUserList = (assignedList) => {
-    
     console.log(assignedList);
     const newlyAddedUser = [];
     if (assignedList && assignedList.length > 0) {

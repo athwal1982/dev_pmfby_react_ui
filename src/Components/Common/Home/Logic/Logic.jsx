@@ -379,7 +379,6 @@ function HomeLogics() {
   const [state3, setstate3] = useState({});
   const [isLoadingChartInsuranceCompanyData, setIsLoadingChartInsuranceCompanyData] = useState(false);
   const getChartInsuranceCompanyData = async (pfilterID, pLoginID, pMasterName, pRefressh) => {
-    
     try {
       if (getSessionStorage("state3SsnStrg") === null || (getSessionStorage("state3SsnStrg") !== null && pRefressh === "yes")) {
         setIsLoadingChartInsuranceCompanyData(true);
@@ -710,7 +709,6 @@ function HomeLogics() {
   const [totalSatatusCountCrpLos, settotalSatatusCountCrpLos] = useState();
   const [satatusCountInfomn, setSatatusCountInfomn] = useState({});
   const getChartSatatusCountData = async (pfilterID, pLoginID, pMasterName, pRefressh) => {
-    
     try {
       if (getSessionStorage("satatusCountSsnStrg") === null || (getSessionStorage("satatusCountSsnStrg") !== null && pRefressh === "yes")) {
         setIsLoadingChartSatatusCountData(true);
@@ -1233,7 +1231,6 @@ function HomeLogics() {
   const [state7, setstate7] = useState({});
   const [isLoadingDistrictWiseData, setIsLoadingDistrictWiseData] = useState(false);
   const getDistrictWiseData = async (pfilterID, pLoginID, pMasterName, pRefressh) => {
-    
     try {
       if (getSessionStorage("state7SsnStrg") === null || (getSessionStorage("state7SsnStrg") !== null && pRefressh === "yes")) {
         setIsLoadingDistrictWiseData(true);
@@ -1438,7 +1435,6 @@ function HomeLogics() {
   }, []);
 
   const handleRefreshTicketType = () => {
-    
     getChartTypeWiseData(2, userData && userData.LoginID ? userData.LoginID : 0, "BYHDR", "yes");
   };
 

@@ -4,50 +4,49 @@ import Modal from "Framework/Components/Layout/Modal/Modal";
 import { DataGrid, PageBar } from "Framework/Components/Layout";
 import { Button } from "Framework/Components/Widgets";
 import { FiTrash2 } from "react-icons/fi";
-import { cSCCenterTrainingAssignManageData } from "../Services/Methods";
-import "./TrainingList.scss";
+import { getCenterNotificationAssignManage } from "../Services/Methods";
+import "../Notifications.module.scss";
 
-function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignCenterModal }) {
+function AssignUnAssignResourcePartner({ toggleAssignUnAssignResourcePartnerModal, assignUnAssignResourcePartnerModal }) {
   const setAlertMessage = AlertMessage();
 
-  const [assignedCenterGridApi, setAssignedCenterGridApi] = useState();
-  const onAssignedCenterGridReady = (params) => {
-    setAssignedCenterGridApi(params.api);
+  const [assignedResourcePartnerGridApi, setAssignedResourcePartnerGridApi] = useState();
+  const onAssignedResourcePartnerGridReady = (params) => {
+    setAssignedResourcePartnerGridApi(params.api);
   };
 
-  const [searchTextAssigendCenter, setSearchTextAssigendCenter] = useState("");
-  const onSearchAssignedCenter = (val) => {
+  const [searchTextAssigendResourcePartner, setSearchTextAssigendResourcePartner] = useState("");
+  const onSearchAssignedResourcePartner = (val) => {
     debugger;
-    setSearchTextAssigendCenter(val);
-    assignedCenterGridApi.setQuickFilter(val);
-    assignedCenterGridApi.refreshCells();
+    setSearchTextAssigendResourcePartner(val);
+    assignedResourcePartnerGridApi.setQuickFilter(val);
+    assignedResourcePartnerGridApi.refreshCells();
   };
 
-  const [CenterList, setCenterList] = useState([]);
-  const [isLoadingCenterList, setIsLoadingCenterList] = useState(false);
-  const getAssignedUserListData = async (data) => {
+  const [ResourcePartnerList, setResourcePartnerList] = useState([]);
+  const [isLoadingResourcePartnerList, setIsLoadingResourcePartnerList] = useState(false);
+  const getAssignedResourcePartnerListData = async (data) => {
     debugger;
-    // A setProfileRightData(data);
     try {
-      setIsLoadingCenterList(true);
+      setIsLoadingResourcePartnerList(true);
       const formdata = {
-        viewMode: "GETALLCENTER",
+        viewMode: "GETRESASSIGNED",
+        notificationCenterID: "0",
+        notificationMasterID: data && data.NotificationMasterID ? data.NotificationMasterID : 0,
         centerID: "0",
-        trainingMasterID: assignUnAssignCenterModal && assignUnAssignCenterModal.TrainingMasterId ? assignUnAssignCenterModal.TrainingMasterId.toString() : "0",
-        trainingCenterAssignmentID: "0",
       };
-      const result = await cSCCenterTrainingAssignManageData(formdata);
-      setIsLoadingCenterList(false);
+      const result = await getCenterNotificationAssignManage(formdata);
+      setIsLoadingResourcePartnerList(false);
       if (result.response.responseCode === 1) {
-        if (result.response.responseData && result.response.responseData.CscAssignManage.length > 0) {
-          setCenterList(result.response.responseData.CscAssignManage);
+        if (result.response.responseData && result.response.responseData.data  && result.response.responseData.data.NotificationCenter && result.response.responseData.data.NotificationCenter.length > 0) {
+          setResourcePartnerList(result.response.responseData.data.NotificationCenter);
         } else {
-          setCenterList([]);
+          setResourcePartnerList([]);
         }
       } else {
         setAlertMessage({
           type: "error",
-          message: result.responseMessage,
+          message: result.response.responseMessage,
         });
       }
     } catch (error) {
@@ -59,31 +58,31 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
     }
   };
 
-  const onClickDeleteAssignedCenter = async (data) => {
+  const onClickDeleteAssignedResourcePartner = async (data) => {
     debugger;
     try {
       const formdata = {
         viewMode: "UNASSIGN",
-        centerID: data.CenterMasterID,
-        trainingMasterID: assignUnAssignCenterModal && assignUnAssignCenterModal.TrainingMasterId ? assignUnAssignCenterModal.TrainingMasterId.toString() : "0",
-        trainingCenterAssignmentID: data.TrainingCenterAssignmentID,
+        notificationCenterID: data.NotificationCenterID,
+        notificationMasterID: assignUnAssignResourcePartnerModal && assignUnAssignResourcePartnerModal.NotificationMasterID ? assignUnAssignResourcePartnerModal.NotificationMasterID : 0,
+        centerID: data.ResourcePartnerID,
       };
-      const result = await cSCCenterTrainingAssignManageData(formdata);
+      const result = await getCenterNotificationAssignManage(formdata);
       if (result.response.responseCode === 1) {
         setAlertMessage({
           type: "success",
           message: result.response.responseMessage,
         });
         data.AssignmentFlag = 0;
-        if (assignedCenterGridApi) {
+        if (assignedResourcePartnerGridApi) {
           const itemsToUpdate = [];
-          assignedCenterGridApi.forEachNode(function (rowNode) {
-            if (rowNode.data.CenterMasterID === data.CenterMasterID) {
+          assignedResourcePartnerGridApi.forEachNode(function (rowNode) {
+            if (rowNode.data.ResourcePartnerID === data.ResourcePartnerID) {
               itemsToUpdate.push(data);
               rowNode.setData(data);
             }
           });
-          assignedCenterGridApi.updateRowData({
+          assignedResourcePartnerGridApi.updateRowData({
             update: itemsToUpdate,
           });
         }
@@ -100,7 +99,7 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
   };
 
   const getSelectedRowData = () => {
-    const selectedNodes = assignedCenterGridApi.getSelectedNodes();
+    const selectedNodes = assignedResourcePartnerGridApi.getSelectedNodes();
     const selectedData = selectedNodes.map((node) => node.data);
     return selectedData;
   };
@@ -119,22 +118,22 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
         });
         return;
       }
-      const CenterIds = checkedItem
+      const ResourcePartnerIds = checkedItem
         .map((data) => {
-          return data.CenterMasterID;
+          return data.ResourcePartnerID;
         })
         .join(",");
 
       setBtnLoaderActive(true);
 
       const formdata = {
-        viewMode: "ASSIGN",
-        centerID: CenterIds,
-        trainingMasterID: assignUnAssignCenterModal && assignUnAssignCenterModal.TrainingMasterId ? assignUnAssignCenterModal.TrainingMasterId.toString() : "0",
-        trainingCenterAssignmentID: "0",
+        viewMode: "RESASSIGN",
+        notificationCenterID: "0",
+        notificationMasterID: assignUnAssignResourcePartnerModal && assignUnAssignResourcePartnerModal.NotificationMasterID ? assignUnAssignResourcePartnerModal.NotificationMasterID : 0,
+        centerID: ResourcePartnerIds,
       };
 
-      const result = await cSCCenterTrainingAssignManageData(formdata);
+      const result = await getCenterNotificationAssignManage(formdata);
       setBtnLoaderActive(false);
       if (result.response.responseCode === 1) {
         setAlertMessage({
@@ -143,7 +142,7 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
         });
 
         if (result.response.responseData) {
-          const responseAssignedIds = result.response.responseData.AssignCenterID ? result.response.responseData.AssignCenterID.split(",") : [];
+          const responseAssignedIds = result.response.responseData && result.response.responseData.data && result.response.responseData.data.NotificationCenterID ? result.response.responseData.data.NotificationCenterID.split(",") : [];
           console.log(responseAssignedIds);
           let assignedIds = [];
           if (responseAssignedIds.length > 0) {
@@ -152,7 +151,7 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
               if (splitData.length > 0 && splitData[0] && splitData[1]) {
                 assignmentIdList.push({
                   CenterMasterID: splitData[0],
-                  TrainingCenterAssignmentID: splitData[1],
+                  NotificationCenterID: splitData[1],
                 });
               }
               return assignmentIdList;
@@ -161,7 +160,7 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
 
           if (assignedIds.length > 0) {
             assignedIds.forEach((data) => {
-              CenterList.forEach((x) => {
+              ResourcePartnerList.forEach((x) => {
                 let pCenterMasterID = "0";
                 if (!Array.isArray(x)) {
                   pCenterMasterID = x.CenterMasterID.toString();
@@ -171,19 +170,18 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
                 if (pCenterMasterID === data.CenterMasterID.toString()) {
                   x.AssignmentFlag = 1;
                   x.CenterMasterID = data.CenterMasterID;
-                  x.TrainingCenterAssignmentID = data.TrainingCenterAssignmentID;
+                  x.NotificationCenterID = data.NotificationCenterID;
                 }
               });
             });
           }
         }
 
-        setCenterList([]);
-        setCenterList(CenterList);
-        if (assignedCenterGridApi) {
-          assignedCenterGridApi.setRowData(CenterList);
+        setResourcePartnerList([]);
+        setResourcePartnerList(ResourcePartnerList);
+        if (assignedResourcePartnerGridApi) {
+          assignedResourcePartnerGridApi.setRowData(ResourcePartnerList);
         }
-        getAssignedUserListData();
       } else {
         setAlertMessage({
           type: "warning",
@@ -217,40 +215,39 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
     return { background: "white" };
   };
   useEffect(() => {
-    debugger;
-    getAssignedUserListData(assignUnAssignCenterModal);
-  }, [assignUnAssignCenterModal]);
+    getAssignedResourcePartnerListData(assignUnAssignResourcePartnerModal);
+  }, []);
 
   return (
     <>
       <Modal
         varient="half"
-        title={`Center Allocation(${assignUnAssignCenterModal.TrainingTitle ? assignUnAssignCenterModal.TrainingTitle : ""})`}
+        title="Resource Partner Allocation"
         right={0}
         width="50vw"
         height="100vh"
-        show={toggleAssignUnAssignCenterModal}
+        show={toggleAssignUnAssignResourcePartnerModal}
       >
         <Modal.Body>
           <div className="PageStart">
             <div className="custom-search-container">
               <input
                 type="text"
-                value={searchTextAssigendCenter}
-                onChange={(e) => onSearchAssignedCenter(e.target.value)}
+                value={searchTextAssigendResourcePartner}
+                onChange={(e) => onSearchAssignedResourcePartner(e.target.value)}
                 className="custom-search-input"
-                placeholder="Search Center..."
+                placeholder="Search Resource Partner..."
               />
             </div>
             <DataGrid
-              rowData={CenterList}
-              loader={isLoadingCenterList ? <Loader /> : null}
+              rowData={ResourcePartnerList}
+              loader={isLoadingResourcePartnerList ? <Loader /> : null}
               suppressRowClickSelection={true}
               rowSelection={"multiple"}
               getRowStyle={getRowStyle}
-              onGridReady={onAssignedCenterGridReady}
+              onGridReady={onAssignedResourcePartnerGridReady}
               frameworkComponents={{
-                assignedCenterActionTemplate,
+                assignedResourcePartnerActionTemplate,
               }}
               domLayout="autoHeight"
               className="custom-data-grid"
@@ -265,10 +262,10 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
                 headerCheckboxSelection
                 headerCheckboxSelectionFilteredOnly
                 checkboxSelection={checkboxSelection}
-                tooltipField="Assign The Center"
-                cellRenderer="assignedCenterActionTemplate"
+                tooltipField="Assign The Resource Partner"
+                cellRenderer="assignedResourcePartnerActionTemplate"
                 cellRendererParams={{
-                  onClickDeleteAssignedCenter,
+                  onClickDeleteAssignedResourcePartner,
                 }}
                 headerComponentParams={{
                   style: { backgroundColor: "#004d00", color: "white", fontSize: "14px", textAlign: "center" },
@@ -296,8 +293,8 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
                 }}
               />
               <DataGrid.Column
-                field="Center"
-                headerName="Center Name"
+                field="ResourcePartnerName"
+                headerName="Resource Partner"
                 width={150}
                 flex={1}
                 headerComponentParams={{
@@ -323,14 +320,14 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
   );
 }
 
-export default AssignUnAssignCenter;
+export default AssignUnAssignResourcePartner;
 
-const assignedCenterActionTemplate = (props) => {
+const assignedResourcePartnerActionTemplate = (props) => {
   return (
     <div style={{ display: "flex" }}>
       {props.data && props.data.AssignmentFlag === 1 ? (
         <span
-          title="Unassign The Center"
+          title="Unassign The Resource Partner"
           style={{
             cursor: "pointer",
             display: "grid",
@@ -338,7 +335,7 @@ const assignedCenterActionTemplate = (props) => {
             marginRight: "3px",
           }}
         >
-          <FiTrash2 style={{ fontSize: "15px", color: "#5d6d7e" }} onClick={() => props.onClickDeleteAssignedCenter(props.data)} />
+          <FiTrash2 style={{ fontSize: "15px", color: "#5d6d7e" }} onClick={() => props.onClickDeleteAssignedResourcePartner(props.data)} />
         </span>
       ) : null}
     </div>

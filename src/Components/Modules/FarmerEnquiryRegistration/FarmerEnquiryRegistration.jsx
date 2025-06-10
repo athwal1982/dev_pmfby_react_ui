@@ -68,49 +68,55 @@ function FarmerEnquiryRegistration() {
     <>
       {EnquiryPopup ? (
         <Suspense fallback={<Loader />}>
-        <EnquiryPopupData
-          isLoadingSelectedTicketEnquiry={isLoadingSelectedTicketEnquiry}
-          selectedTicketEnquiry={selectedTicketEnquiry}
-          showfunc={closeEnquiry}
-          selectedEnquiry={selectedEnquiry}
-          value={value}
-          setValue={setValue}
-          wordcount={wordcount}
-          setWordcount={setWordcount}
-          handleSave={handleSave}
-          btnLoaderActive1={btnLoaderActive1}
-        />
+          <EnquiryPopupData
+            isLoadingSelectedTicketEnquiry={isLoadingSelectedTicketEnquiry}
+            selectedTicketEnquiry={selectedTicketEnquiry}
+            showfunc={closeEnquiry}
+            selectedEnquiry={selectedEnquiry}
+            value={value}
+            setValue={setValue}
+            wordcount={wordcount}
+            setWordcount={setWordcount}
+            handleSave={handleSave}
+            btnLoaderActive1={btnLoaderActive1}
+          />
         </Suspense>
       ) : (
         ""
       )}
-      {addForm ?  <Suspense fallback={<Loader />}><AddEnquiryForm OpenAddForm={OpenAddForm} updateFarmersTickets={updateFarmersTickets} enquiryGridApi={enquiryGridApi} /></Suspense> : ""}
+      {addForm ? (
+        <Suspense fallback={<Loader />}>
+          <AddEnquiryForm OpenAddForm={OpenAddForm} updateFarmersTickets={updateFarmersTickets} enquiryGridApi={enquiryGridApi} />
+        </Suspense>
+      ) : (
+        ""
+      )}
       <div className={BizClass.BizPageStart}>
-         <Suspense fallback={<Loader />}>
-        <HeaderPortal>
-          <PageBar.Select
-            label="Status"
-            control="select"
-            value={searchFormValues.txtActivityStatusFilter}
-            name="txtActivityStatusFilter"
-            getOptionLabel={(option) => `${option.Name}`}
-            getOptionValue={(option) => `${option}`}
-            options={activityStatusFilterData}
-            onChange={(e) => updateSearchFormState("txtActivityStatusFilter", e)}
-          />
-          {viewEnquiryRight ? (
-            <>
-              {" "}
-              <PageBar.Search onClick={() => getEnquiryListData(true)} value={searchEnquiryText} onChange={(e) => onSearchEnquiry(e.target.value)} />{" "}
-            </>
-          ) : null}
-          {addEnqiryRight ? (
-            <>
-              <PageBar.Button onClick={() => OpenAddForm()}>Add</PageBar.Button>{" "}
-            </>
-          ) : null}
-          {viewEnquiryTicketRight ? <PageBar.Button onClick={() => OpenViewFarmerEnquiryTiketsForm()}>View Tickets</PageBar.Button> : null}
-        </HeaderPortal>
+        <Suspense fallback={<Loader />}>
+          <HeaderPortal>
+            <PageBar.Select
+              label="Status"
+              control="select"
+              value={searchFormValues.txtActivityStatusFilter}
+              name="txtActivityStatusFilter"
+              getOptionLabel={(option) => `${option.Name}`}
+              getOptionValue={(option) => `${option}`}
+              options={activityStatusFilterData}
+              onChange={(e) => updateSearchFormState("txtActivityStatusFilter", e)}
+            />
+            {viewEnquiryRight ? (
+              <>
+                {" "}
+                <PageBar.Search onClick={() => getEnquiryListData(true)} value={searchEnquiryText} onChange={(e) => onSearchEnquiry(e.target.value)} />{" "}
+              </>
+            ) : null}
+            {addEnqiryRight ? (
+              <>
+                <PageBar.Button onClick={() => OpenAddForm()}>Add</PageBar.Button>{" "}
+              </>
+            ) : null}
+            {viewEnquiryTicketRight ? <PageBar.Button onClick={() => OpenViewFarmerEnquiryTiketsForm()}>View Tickets</PageBar.Button> : null}
+          </HeaderPortal>
         </Suspense>
         {viewEnquiryRight ? (
           <div className={BizClass.DataGrid}>

@@ -39,11 +39,7 @@ const TraineeList = () => {
         const agent = params.data;
         return (
           <div className="action-icons">
-            <FaEdit
-              className="icon edit-icon"
-              title="Edit"
-              onClick={() => handleEdit(agent)}
-            />
+            <FaEdit className="icon edit-icon" title="Edit" onClick={() => handleEdit(agent)} />
           </div>
         );
       },
@@ -63,7 +59,7 @@ const TraineeList = () => {
     // A        <div
     // A          style={{
     // A            width: `${percentage}%`,
-    // A            backgroundColor: percentage > 0 ? bgColor : "#f0f0f0", 
+    // A            backgroundColor: percentage > 0 ? bgColor : "#f0f0f0",
     // A            height: "20px",
     // A            borderRadius: "10px",
     // A            textAlign: "center",
@@ -79,7 +75,7 @@ const TraineeList = () => {
     // A    );
     // A  },
     // A },
-    
+
     {
       headerName: "Total Hours",
       field: "total_duration_hours",
@@ -92,9 +88,9 @@ const TraineeList = () => {
       field: "attended_sessions",
       sortable: true,
       filter: true,
-      valueGetter: (params) => (params.data.attended_sessions? `${params.data.attended_sessions} ` : "0"),
+      valueGetter: (params) => (params.data.attended_sessions ? `${params.data.attended_sessions} ` : "0"),
     },
-    
+
     {
       headerName: "Status",
       field: "Status",
@@ -126,8 +122,6 @@ const TraineeList = () => {
         }
       },
     },
- 
-    
 
     {
       headerName: "User Name",
@@ -261,8 +255,6 @@ const TraineeList = () => {
         }
       },
     },
-    
-
   ]);
 
   const fetchAllTrainer = async () => {
@@ -295,31 +287,28 @@ const TraineeList = () => {
     debugger;
     try {
       const formData = {
-        page_size: 10, 
-        page_number: page, 
-        totalPages: "", 
-        searchQuery: query, 
-        viewMode: "ALL", 
-        userId: "", 
-        centerMasterID: centerMasterID, 
+        page_size: 10,
+        page_number: page,
+        totalPages: "",
+        searchQuery: query,
+        viewMode: "ALL",
+        userId: "",
+        centerMasterID: centerMasterID,
       };
 
       const result = await getAllAgent(formData);
       debugger;
-      
+
       if (result.response.responseCode === 1) {
-     
-        setRowData(result.response.responseData.traineeList); 
+        setRowData(result.response.responseData.traineeList);
         setFilteredData(result.response.responseData.traineeList);
         setTotalPages(result.response.responseData.totalPages);
       } else {
-       
         setRowData([]);
         setFilteredData([]);
         console.error(result.response.responseMessage);
       }
     } catch (error) {
-
       console.error(error);
     }
   };
@@ -347,7 +336,6 @@ const TraineeList = () => {
     }
   };
 
-
   const renderPagination = () => (
     <div className="pagination-container">
       <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
@@ -363,7 +351,7 @@ const TraineeList = () => {
   );
 
   const handleSearch = () => {
-    setCurrentPage(1); 
+    setCurrentPage(1);
     getAllAgentData(1, searchQuery, selectedCenter);
   };
 
@@ -372,7 +360,6 @@ const TraineeList = () => {
     e.preventDefault();
     const genderMapping = { Male: "0", Female: "1" };
     try {
-
       const formData = {
         SPViewMode: "UPDATEBYADMIN",
         SPUserID: selectedAgent.UserID,
@@ -385,11 +372,7 @@ const TraineeList = () => {
         RejoiningDate: e.target.RejoiningDate.value,
       };
 
-
-
-
       const result = await setCSCUpdateAgentBYID(formData);
-
 
       if (result.response.responseCode === 1) {
         setAlertMessage({
@@ -420,26 +403,27 @@ const TraineeList = () => {
     fetchAllTrainer();
   }, []);
 
-  useEffect(() => {
-  }, [isModalOpen]);
+  useEffect(() => {}, [isModalOpen]);
 
   return (
     <>
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <button className="modal-close-btn" onClick={handleCloseModal}>&times;</button>
+            <button className="modal-close-btn" onClick={handleCloseModal}>
+              &times;
+            </button>
 
             <h2>Edit Agent Details</h2>
             <form onSubmit={handleSubmit}>
               <div className="modal-row">
-              <div className="modal-input">
+                <div className="modal-input">
                   <label className="Trainee-form-label">Agent ID</label>
                   <input type="text" defaultValue={selectedAgent.UserID} disabled />
                 </div>
                 <div className="modal-input">
                   <label className="Trainee-form-label">Name</label>
-                  <input type="text" defaultValue={selectedAgent.Name}  disabled/>
+                  <input type="text" defaultValue={selectedAgent.Name} disabled />
                 </div>
                 <div className="modal-input">
                   <label className="Trainee-form-label">Email</label>
@@ -451,9 +435,8 @@ const TraineeList = () => {
                 </div>
               </div>
 
-
               <div className="modal-row">
-              <div className="modal-input">
+                <div className="modal-input">
                   <label className="Trainee-form-label">Center</label>
                   <input type="text" defaultValue={selectedAgent.Center} disabled />
                 </div>
@@ -471,9 +454,8 @@ const TraineeList = () => {
                 </div>
               </div>
 
-
               <div className="modal-row">
-              <div className="modal-input">
+                <div className="modal-input">
                   <label className="Trainee-form-label">Gender</label>
                   <input type="text" defaultValue={selectedAgent.Gender} disabled />
                 </div>
@@ -482,25 +464,35 @@ const TraineeList = () => {
                   <label className="Trainee-form-label">Date of Birth</label>
                   <input type="date" defaultValue={selectedAgent.DOB} disabled />
                 </div>
-                <div className="modal-input">   <label className="Trainee-form-label">Joining Date</label>
-                  <input type="date" name="JoiningDate" defaultValue={selectedAgent.JoiningDate || ""} /></div>
-                <div className="modal-input">   <label className="Trainee-form-label">Exit Date</label>
-                  <input type="date" name="ExitDate" defaultValue={selectedAgent.ExitDate || ""} /></div>
-              
+                <div className="modal-input">
+                  {" "}
+                  <label className="Trainee-form-label">Joining Date</label>
+                  <input type="date" name="JoiningDate" defaultValue={selectedAgent.JoiningDate || ""} />
+                </div>
+                <div className="modal-input">
+                  {" "}
+                  <label className="Trainee-form-label">Exit Date</label>
+                  <input type="date" name="ExitDate" defaultValue={selectedAgent.ExitDate || ""} />
+                </div>
               </div>
               <div className="modal-row">
-              <div className="modal-input">   <label className="Trainee-form-label">Re-joining Date</label>
-              <input type="date" name="RejoiningDate" defaultValue={selectedAgent.RejoiningDate || ""} /></div>   <div className="modal-input"></div> <div className="modal-input"></div> <div className="modal-input"></div> </div>
-          
+                <div className="modal-input">
+                  {" "}
+                  <label className="Trainee-form-label">Re-joining Date</label>
+                  <input type="date" name="RejoiningDate" defaultValue={selectedAgent.RejoiningDate || ""} />
+                </div>{" "}
+                <div className="modal-input"></div> <div className="modal-input"></div> <div className="modal-input"></div>{" "}
+              </div>
+
               <div className="modal-buttons">
                 <button type="submit">Update</button>
-                <button type="button" onClick={handleCloseModal}>Cancel</button>
-
+                <button type="button" onClick={handleCloseModal}>
+                  Cancel
+                </button>
               </div>
             </form>
           </div>
         </div>
-
       )}
       <div className="form-wrapper-agent">
         <div className="modify-agent-container">
@@ -534,7 +526,6 @@ const TraineeList = () => {
     <span className="legend-item green">More than 80%</span>
   </div>
 </div> */}
-
           </div>
           <div className="ag-theme-alpine ag-grid-container">
             <AgGridReact
@@ -559,13 +550,9 @@ const TraineeList = () => {
           </div>
           {renderPagination()}
         </div>
-
       </div>
-
     </>
   );
 };
 
 export default TraineeList;
-
-

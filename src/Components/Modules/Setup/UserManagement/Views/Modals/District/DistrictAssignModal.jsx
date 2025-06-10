@@ -64,7 +64,6 @@ function DistrictAssignModal({ showfunc, selectedUserData }) {
   } = DistrictAssignModalLogic();
 
   useEffect(() => {
-    
     setSelectedUser(selectedUserData);
     getStateListData(selectedUserData);
   }, [selectedUserData]);

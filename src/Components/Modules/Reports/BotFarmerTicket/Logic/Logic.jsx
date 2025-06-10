@@ -1,6 +1,6 @@
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
-import { useEffect , useState } from "react";
-import { getCurrentDateTimeTick} from "Configration/Utilities/dateformat";
+import { useEffect, useState } from "react";
+import { getCurrentDateTimeTick } from "Configration/Utilities/dateformat";
 import * as XLSX from "xlsx";
 import { convert } from "html-to-text";
 import { getBotFarmerTicketReport } from "../Services/Methods";
@@ -45,14 +45,7 @@ function BotFarmerTicketLogic() {
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    worksheet["!cols"] = [
-      { width: 22 },
-      { width: 22 },
-      { width: 22 },
-      { width: 22 },
-      { width: 22 },
-      { width: 22 },
-    ];
+    worksheet["!cols"] = [{ width: 22 }, { width: 22 }, { width: 22 }, { width: 22 }, { width: 22 }, { width: 22 }];
     const uniqueDateTimeTick = getCurrentDateTimeTick();
     XLSX.writeFile(workbook, `BotFarmerTicket_${uniqueDateTimeTick}.xlsx`);
   };
@@ -67,8 +60,8 @@ function BotFarmerTicketLogic() {
   const [isLoadingBotFarmerTicketDataList, setBotFarmerTicketDataListLoading] = useState(false);
   const [filteredBotFarmerTicketDataList, setFilteredBotFarmerTicketDataList] = useState([]);
 
-  const getBotFarmerTicketDataList = async() => {
-     try {
+  const getBotFarmerTicketDataList = async () => {
+    try {
       setBotFarmerTicketDataListLoading(true);
 
       const formData = {
@@ -132,15 +125,15 @@ function BotFarmerTicketLogic() {
     downloadExcel(rearrangedData);
   };
 
-    useEffect(() => {
-      const now = new Date();
-      const currentYear = now.getFullYear();
-      const yearArray = [];
-      for (let i = 2024; i <= currentYear; i += 1) {
-        yearArray.push({ label: i.toString(), value: i.toString() });
-      }
-      setYearList(yearArray.sort().reverse());
-    }, []);
+  useEffect(() => {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const yearArray = [];
+    for (let i = 2024; i <= currentYear; i += 1) {
+      yearArray.push({ label: i.toString(), value: i.toString() });
+    }
+    setYearList(yearArray.sort().reverse());
+  }, []);
 
   return {
     formValues,

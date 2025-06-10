@@ -71,7 +71,9 @@
     display: flex;
     align-items: left;
     gap: 8px;
-    transition: background-color 0.3s, opacity 0.3s;
+    transition:
+      background-color 0.3s,
+      opacity 0.3s;
   }
 
   .save-btn {
@@ -91,7 +93,9 @@
     display: flex;
     align-items: left;
     gap: 8px;
-    transition: background-color 0.3s, opacity 0.3s;
+    transition:
+      background-color 0.3s,
+      opacity 0.3s;
   }
 
   .clear-btn {
@@ -106,7 +110,9 @@
     display: flex;
     align-items: left;
     gap: 8px;
-    transition: background-color 0.3s, opacity 0.3s;
+    transition:
+      background-color 0.3s,
+      opacity 0.3s;
   }
 
   .scheduled-training-box {

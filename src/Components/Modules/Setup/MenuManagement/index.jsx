@@ -1,4 +1,4 @@
-import React, { useState,Suspense } from "react";
+import React, { useState, Suspense } from "react";
 import MenuManagementLogics from "./Logic/Logic";
 
 // Lazy load components
@@ -9,7 +9,6 @@ const AddMenuPopup = React.lazy(() => import("./Views/AddMenuPopUp/AddMenuPopUp"
 function MenuManagementPage() {
   const [addMenuModal, setAddMenuModal] = useState(false);
   const toggleAddMenuModal = () => {
-    
     setAddMenuModal(!addMenuModal);
   };
 
@@ -28,30 +27,34 @@ function MenuManagementPage() {
 
   return (
     <>
-      {addMenuModal ? <Suspense fallback={<Loader />}><AddMenuPopup showMenufunc={toggleAddMenuModal} updateMenuList={updateMenuList} /></Suspense> : null}
+      {addMenuModal ? (
+        <Suspense fallback={<Loader />}>
+          <AddMenuPopup showMenufunc={toggleAddMenuModal} updateMenuList={updateMenuList} />
+        </Suspense>
+      ) : null}
       {submenuPopupData.open ? (
         <Suspense fallback={<Loader />}>
-        <SubMenuPopup
-          isEditMode={submenuPopupData.isEditMode}
-          openSubmenuPopup={openSubmenuPopup}
-          menuData={submenuPopupData.data}
-          showfunc={toggleAddSubMenuModal}
-          updateMenuList={updateMenuList}
-        />
+          <SubMenuPopup
+            isEditMode={submenuPopupData.isEditMode}
+            openSubmenuPopup={openSubmenuPopup}
+            menuData={submenuPopupData.data}
+            showfunc={toggleAddSubMenuModal}
+            updateMenuList={updateMenuList}
+          />
         </Suspense>
       ) : null}
       <Suspense fallback={<Loader />}>
-      <MenuManagement
-        treeMenuListData={treeMenuListData}
-        isLoadingMenuList={isLoadingMenuList}
-        openSubmenuPopup={openSubmenuPopup}
-        onGridReady={onGridReady}
-        toggleAddMenuModal={toggleAddMenuModal}
-        onChangemenuList={onChangemenuList}
-        getMenuList={getMenuList}
-        menuItemSearch={menuItemSearch}
-      />
-     </Suspense> 
+        <MenuManagement
+          treeMenuListData={treeMenuListData}
+          isLoadingMenuList={isLoadingMenuList}
+          openSubmenuPopup={openSubmenuPopup}
+          onGridReady={onGridReady}
+          toggleAddMenuModal={toggleAddMenuModal}
+          onChangemenuList={onChangemenuList}
+          getMenuList={getMenuList}
+          menuItemSearch={menuItemSearch}
+        />
+      </Suspense>
     </>
   );
 }

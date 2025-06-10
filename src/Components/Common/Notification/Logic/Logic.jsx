@@ -223,7 +223,6 @@ function NotificationLogics() {
   };
 
   const getLocationHierarchyListData = async (pStateAlphaCode, pStateMasterID, pSeason, pYear, pScheme) => {
-    
     try {
       const pschemeID =
         pScheme === ""
@@ -485,7 +484,6 @@ function NotificationLogics() {
   };
 
   const updateStateForByLocation = (name, value) => {
-    
     setFormValuesForByLocation({ ...formValuesForByLocation, [name]: value });
     console.log("name , value", name, value);
     formValidationFarmersError[name] = validateFarmersField(name, value);
@@ -766,7 +764,6 @@ function NotificationLogics() {
   const [stateForByLocationDropdownDataList, setStateForByLocationDropdownDataList] = useState([]);
   const [isLoadingStateForByLocationDropdownDataList, setIsLoadingStateForByLocationDropdownDataList] = useState(false);
   const getStateForByLocationListData = async () => {
-    
     try {
       setIsLoadingStateForByLocationDropdownDataList(true);
       const formdata = {
@@ -837,12 +834,10 @@ function NotificationLogics() {
   const [btnLoaderActive, setBtnLoaderActive] = useState(false);
   const [notificationData, setNotificationData] = useState([]);
   const getNotificationDataOnClick = async () => {
-    
     if (!handleFarmersValidation()) {
       return;
     }
     try {
-      
       let result = "";
       let formData = "";
 

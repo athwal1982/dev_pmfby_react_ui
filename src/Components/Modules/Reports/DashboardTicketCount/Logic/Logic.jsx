@@ -40,7 +40,6 @@ function DashboardTicketCountLogics() {
 
   const [DashboardTicketCountListItemSearch, setDashboardTicketCountListItemSearch] = useState("");
   const onChangeDashboardTicketCountList = (val) => {
-    
     setDashboardTicketCountListItemSearch(val);
     gridApi.setQuickFilter(val);
   };
@@ -52,21 +51,24 @@ function DashboardTicketCountLogics() {
     // A let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
     // A XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
     // Calculate totals for each numeric column
-  const totals = {};
-  const columnKeys = Object.keys(data[0]); // Assumes all rows have the same keys
-  
-  columnKeys.forEach(key => {
-    if (typeof data[0][key] === "number") {
-      totals[key] = data.reduce((sum, row) => sum + (row[key] || 0), 0); // Sum values in each column
-    } else {
-      totals[key] = "Total"; // Label for non-numeric columns
-    }
-  });
+    const totals = {};
+    const columnKeys = Object.keys(data[0]); // Assumes all rows have the same keys
 
-  // Append totals row to worksheet
+    columnKeys.forEach((key) => {
+      if (typeof data[0][key] === "number") {
+        totals[key] = data.reduce((sum, row) => sum + (row[key] || 0), 0); // Sum values in each column
+      } else {
+        totals[key] = "Total"; // Label for non-numeric columns
+      }
+    });
+
+    // Append totals row to worksheet
     XLSX.utils.sheet_add_json(worksheet, [totals], { skipHeader: true, origin: -1 });
-    worksheet["!cols"] = [{ width: 60 }, { width: 15 }, { width: 15 }, { width: 15 }, { width: 20 },{ width: 15 },{ width: 15 }];
-    XLSX.writeFile(workbook, `Dashboard_Ticket_Count${formValues.txtYearFilter && formValues.txtYearFilter.label ? `_${formValues.txtYearFilter.label}` : ""}${formValues.txtMonthFilter && formValues.txtMonthFilter.label ? `_${formValues.txtMonthFilter.label}` : ""}.xlsx`);
+    worksheet["!cols"] = [{ width: 60 }, { width: 15 }, { width: 15 }, { width: 15 }, { width: 20 }, { width: 15 }, { width: 15 }];
+    XLSX.writeFile(
+      workbook,
+      `Dashboard_Ticket_Count${formValues.txtYearFilter && formValues.txtYearFilter.label ? `_${formValues.txtYearFilter.label}` : ""}${formValues.txtMonthFilter && formValues.txtMonthFilter.label ? `_${formValues.txtMonthFilter.label}` : ""}.xlsx`,
+    );
   };
 
   const rearrangeAndRenameColumns = (originalData, columnMapping) => {
@@ -77,7 +79,6 @@ function DashboardTicketCountLogics() {
   };
 
   const getDashboardTicketCountData = async () => {
-    
     try {
       let formattedStartDate = "";
       let formattedEndDate = "";
@@ -86,13 +87,10 @@ function DashboardTicketCountLogics() {
         const month = formValues.txtMonthFilter.value;
         const startDate = new Date(year, month - 1, 1);
         const endDate = new Date(year, month, 0);
-        formattedStartDate = `${startDate.getFullYear()}-${String(startDate.getMonth() + 1).padStart(2, "0")}-${String(startDate.getDate()).padStart(
-          2,
-          "0",
-        )}`;
+        formattedStartDate = `${startDate.getFullYear()}-${String(startDate.getMonth() + 1).padStart(2, "0")}-${String(startDate.getDate()).padStart(2, "0")}`;
         formattedEndDate = `${endDate.getFullYear()}-${String(endDate.getMonth() + 1).padStart(2, "0")}-${String(endDate.getDate()).padStart(2, "0")}`;
       }
-     
+
       setLoadingDashboardTicketCountDataList(true);
 
       const formData = {
@@ -123,7 +121,6 @@ function DashboardTicketCountLogics() {
   };
 
   const updateState = (name, value) => {
-    
     setFormValues({ ...formValues, [name]: value });
   };
 
@@ -138,10 +135,10 @@ function DashboardTicketCountLogics() {
     if (formValues.txtMonthFilter !== null && formValues.txtYearFilter === null) {
       setAlertMessage({
         type: "error",
-       message: "Please select year",
+        message: "Please select year",
       });
       return;
-     }
+    }
     getDashboardTicketCountData();
   };
 
@@ -154,7 +151,6 @@ function DashboardTicketCountLogics() {
   };
 
   const exportClick = () => {
-    
     // A const excelParams = {
     // A  fileName: "Ticket History",
     // A };
@@ -183,7 +179,12 @@ function DashboardTicketCountLogics() {
         Resolved: value.Resolved ? Number(value.Resolved) : 0,
         ResolvedInformation: value.ResolvedInformation ? Number(value.ResolvedInformation) : 0,
         ReOpen: value.ReOpen ? Number(value.ReOpen) : 0,
-        Total: (value.OPEN ? Number(value.OPEN) : 0) + (value.InProgress ? Number(value.InProgress): 0) + (value.Resolved ? Number(value.Resolved) : 0) + (value.ResolvedInformation ? Number(value.ResolvedInformation) : 0) + (value.ReOpen ? Number(value.ReOpen) : 0)
+        Total:
+          (value.OPEN ? Number(value.OPEN) : 0) +
+          (value.InProgress ? Number(value.InProgress) : 0) +
+          (value.Resolved ? Number(value.Resolved) : 0) +
+          (value.ResolvedInformation ? Number(value.ResolvedInformation) : 0) +
+          (value.ReOpen ? Number(value.ReOpen) : 0),
       };
     });
     const rearrangedData = rearrangeAndRenameColumns(mappedData, columnOrder);

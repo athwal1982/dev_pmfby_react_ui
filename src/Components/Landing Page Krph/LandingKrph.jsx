@@ -121,8 +121,8 @@ const LandingKrph = () => {
       setShowHideLogin(false);
       callKrphAllActivityPage();
     } else if (pathUrl.indexOf("userID") !== -1 && pathUrl.indexOf("mobileNumber") !== -1) {
-        setShowHideLogin(false);
-        callAgentDashBoard();
+      setShowHideLogin(false);
+      callAgentDashBoard();
     } else {
       setShowHideLogin(true);
     }

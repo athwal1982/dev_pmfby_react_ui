@@ -3,7 +3,7 @@ import { useState } from "react";
 import { dateToCompanyFormat, dateFormatDefault, dateToSpecificFormat, daysdifference } from "Configration/Utilities/dateformat";
 import moment from "moment";
 import { getMasterDataBinding } from "../../../Support/ManageTicket/Services/Methods";
-import { getSupportTicketCategoryReport,getSupportTicketCategoryReportMongo } from "../Services/Methods";
+import { getSupportTicketCategoryReport, getSupportTicketCategoryReportMongo } from "../Services/Methods";
 
 function GrievanceReportLogics() {
   const [formValues, setFormValues] = useState({
@@ -70,10 +70,10 @@ function GrievanceReportLogics() {
         ticketHeaderID: 1,
       };
       let result = [];
-      if(pType === "MONGO") {
-         result = await getSupportTicketCategoryReportMongo(formData);
+      if (pType === "MONGO") {
+        result = await getSupportTicketCategoryReportMongo(formData);
       } else {
-         result = await getSupportTicketCategoryReport(formData);
+        result = await getSupportTicketCategoryReport(formData);
       }
       setLoadingGrievanceReportDataList(false);
       if (result.responseCode === 1) {

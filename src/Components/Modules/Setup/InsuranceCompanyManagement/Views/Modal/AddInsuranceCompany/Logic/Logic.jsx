@@ -60,7 +60,6 @@ function AddInsuranceCompanyLogics() {
   };
 
   const handleSave = async (e, updateInsuranceCompanyData) => {
-    
     if (e) e.preventDefault();
     if (!handleValidation()) {
       return;

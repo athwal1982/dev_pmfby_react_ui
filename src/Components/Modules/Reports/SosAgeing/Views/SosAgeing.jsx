@@ -25,33 +25,33 @@ function SosAgeingReport({
   const [selectedRowData, setSelectedRowData] = useState([]);
   const openSosAgeingTicketListClick = (data, headerName) => {
     setSelectedRowData(data);
-    
+
     if (data) {
       let pViewMode =
         formValues && formValues.txtReportFilter && formValues.txtReportFilter.Value === "Insurance"
           ? "I"
           : formValues.txtReportFilter.Value === "State"
-          ? "S"
-          : formValues.txtReportFilter.Value === "Category"
-          ? "C"
-          : formValues.txtReportFilter.Value === "Status"
-          ? "All"
-          : "";
+            ? "S"
+            : formValues.txtReportFilter.Value === "Category"
+              ? "C"
+              : formValues.txtReportFilter.Value === "Status"
+                ? "All"
+                : "";
       let pFiterlID = data && data.ID ? data.ID : 0;
       let pSosAgeingPeriodsID =
         headerName === "Total Open Ticket"
           ? "0"
           : headerName === "0-2 days"
-          ? "1"
-          : headerName === "2-4 days"
-          ? "2"
-          : headerName === "4-6 days"
-          ? "3"
-          : headerName === "6-8 days"
-          ? "4"
-          : headerName === "More than 8"
-          ? "5"
-          : "";
+            ? "1"
+            : headerName === "2-4 days"
+              ? "2"
+              : headerName === "4-6 days"
+                ? "3"
+                : headerName === "6-8 days"
+                  ? "4"
+                  : headerName === "More than 8"
+                    ? "5"
+                    : "";
       getSosAgeingReportsDetailsList(pViewMode, pFiterlID, pSosAgeingPeriodsID);
     }
     setOpenSosAgeingTicketModal(!openSosAgeingTicketModal);
@@ -60,13 +60,13 @@ function SosAgeingReport({
     <>
       {openSosAgeingTicketModal && (
         <Suspense fallback={<Loader />}>
-        <SosAgeingTicketList
-          openSosAgeingTicketListClick={openSosAgeingTicketListClick}
-          selectedRowData={selectedRowData}
-          SosAgeingTicketCountList={SosAgeingTicketCountList}
-          isLoadingSosAgeingTicketCountList={isLoadingSosAgeingTicketCountList}
-          exportSosAgeingTicketListClick={exportSosAgeingTicketListClick}
-        />
+          <SosAgeingTicketList
+            openSosAgeingTicketListClick={openSosAgeingTicketListClick}
+            selectedRowData={selectedRowData}
+            SosAgeingTicketCountList={SosAgeingTicketCountList}
+            isLoadingSosAgeingTicketCountList={isLoadingSosAgeingTicketCountList}
+            exportSosAgeingTicketListClick={exportSosAgeingTicketListClick}
+          />
         </Suspense>
       )}
       <div className={BizClass.PageStart}>
@@ -109,12 +109,12 @@ function SosAgeingReport({
                 ? formValues.txtReportFilter.Value === "Insurance"
                   ? "Insurance Company"
                   : formValues.txtReportFilter.Value === "State"
-                  ? "State Name"
-                  : formValues.txtReportFilter.Value === "Category"
-                  ? "Category"
-                  : formValues.txtReportFilter.Value === "Status"
-                  ? "Status"
-                  : "#"
+                    ? "State Name"
+                    : formValues.txtReportFilter.Value === "Category"
+                      ? "Category"
+                      : formValues.txtReportFilter.Value === "Status"
+                        ? "Status"
+                        : "#"
                 : "#"
             }
             width={280}

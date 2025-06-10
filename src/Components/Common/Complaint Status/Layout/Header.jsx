@@ -8,20 +8,20 @@ import { logout } from "../../../Common/Login/Services/Methods";
 const Header = ({ title, showComplaintButton, onComplaintClick, showClaimButton, onComplaintStatus }) => {
   const navigate = useNavigate();
   const userData = getSessionStorage("user");
-  
+
   const handleLogout = async () => {
     debugger;
     try {
-          await logout(userData.LoginID ? userData.LoginID : 0, userData.SessionID ? userData.SessionID : 0);
-          sessionStorage.clear();
-          navigate("/");
-        } catch (error) {
-          console.log(error);
-          setAlertMessage({
-            type: "error",
-            message: error,
-          });
-        }
+      await logout(userData.LoginID ? userData.LoginID : 0, userData.SessionID ? userData.SessionID : 0);
+      sessionStorage.clear();
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      setAlertMessage({
+        type: "error",
+        message: error,
+      });
+    }
   };
   const handleHome = () => {
     sessionStorage.clear();
@@ -101,8 +101,7 @@ const Header = ({ title, showComplaintButton, onComplaintClick, showClaimButton,
                     },
                   }}
                 >
-                  🌿
-                  Crop Loss Intimation
+                  🌿 Crop Loss Intimation
                 </Button>
               </>
             )}
@@ -117,9 +116,9 @@ const Header = ({ title, showComplaintButton, onComplaintClick, showClaimButton,
                 padding: "4px 8px",
                 height: "30px",
                 "&:hover": {
-                  border: "1px solid red", 
-                  color: "red", 
-                  backgroundColor: "transparent", 
+                  border: "1px solid red",
+                  color: "red",
+                  backgroundColor: "transparent",
                 },
               }}
             >

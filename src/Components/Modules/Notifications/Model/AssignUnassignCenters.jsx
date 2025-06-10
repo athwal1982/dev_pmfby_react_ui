@@ -4,10 +4,10 @@ import Modal from "Framework/Components/Layout/Modal/Modal";
 import { DataGrid, PageBar } from "Framework/Components/Layout";
 import { Button } from "Framework/Components/Widgets";
 import { FiTrash2 } from "react-icons/fi";
-import { cSCCenterTrainingAssignManageData } from "../Services/Methods";
-import "./TrainingList.scss";
+import { getCenterNotificationAssignManage } from "../Services/Methods";
+import "../Notifications.module.scss";
 
-function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignCenterModal }) {
+function AssignUnAssignCenters({ toggleAssignUnAssignCentersModal, assignUnAssignCentersModal }) {
   const setAlertMessage = AlertMessage();
 
   const [assignedCenterGridApi, setAssignedCenterGridApi] = useState();
@@ -25,29 +25,27 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
 
   const [CenterList, setCenterList] = useState([]);
   const [isLoadingCenterList, setIsLoadingCenterList] = useState(false);
-  const getAssignedUserListData = async (data) => {
-    debugger;
-    // A setProfileRightData(data);
+  const getAssignedCenterListData = async (data) => {
     try {
       setIsLoadingCenterList(true);
       const formdata = {
-        viewMode: "GETALLCENTER",
+        viewMode: "GETASSIGNED",
+        notificationCenterID: "0",
+        notificationMasterID: data && data.NotificationMasterID ? data.NotificationMasterID : 0,
         centerID: "0",
-        trainingMasterID: assignUnAssignCenterModal && assignUnAssignCenterModal.TrainingMasterId ? assignUnAssignCenterModal.TrainingMasterId.toString() : "0",
-        trainingCenterAssignmentID: "0",
       };
-      const result = await cSCCenterTrainingAssignManageData(formdata);
+      const result = await getCenterNotificationAssignManage(formdata);
       setIsLoadingCenterList(false);
       if (result.response.responseCode === 1) {
-        if (result.response.responseData && result.response.responseData.CscAssignManage.length > 0) {
-          setCenterList(result.response.responseData.CscAssignManage);
+        if (result.response.responseData && result.response.responseData.data  && result.response.responseData.data.NotificationCenter && result.response.responseData.data.NotificationCenter.length > 0) {
+          setCenterList(result.response.responseData.data.NotificationCenter);
         } else {
           setCenterList([]);
         }
       } else {
         setAlertMessage({
           type: "error",
-          message: result.responseMessage,
+          message: result.response.responseMessage,
         });
       }
     } catch (error) {
@@ -64,11 +62,11 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
     try {
       const formdata = {
         viewMode: "UNASSIGN",
+        notificationCenterID: data.NotificationCenterID,
+        notificationMasterID: assignUnAssignCentersModal && assignUnAssignCentersModal.NotificationMasterID ? assignUnAssignCentersModal.NotificationMasterID : 0,
         centerID: data.CenterMasterID,
-        trainingMasterID: assignUnAssignCenterModal && assignUnAssignCenterModal.TrainingMasterId ? assignUnAssignCenterModal.TrainingMasterId.toString() : "0",
-        trainingCenterAssignmentID: data.TrainingCenterAssignmentID,
       };
-      const result = await cSCCenterTrainingAssignManageData(formdata);
+      const result = await getCenterNotificationAssignManage(formdata);
       if (result.response.responseCode === 1) {
         setAlertMessage({
           type: "success",
@@ -129,12 +127,12 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
 
       const formdata = {
         viewMode: "ASSIGN",
+        notificationCenterID: "0",
+        notificationMasterID: assignUnAssignCentersModal && assignUnAssignCentersModal.NotificationMasterID ? assignUnAssignCentersModal.NotificationMasterID : 0,
         centerID: CenterIds,
-        trainingMasterID: assignUnAssignCenterModal && assignUnAssignCenterModal.TrainingMasterId ? assignUnAssignCenterModal.TrainingMasterId.toString() : "0",
-        trainingCenterAssignmentID: "0",
       };
 
-      const result = await cSCCenterTrainingAssignManageData(formdata);
+      const result = await getCenterNotificationAssignManage(formdata);
       setBtnLoaderActive(false);
       if (result.response.responseCode === 1) {
         setAlertMessage({
@@ -143,7 +141,7 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
         });
 
         if (result.response.responseData) {
-          const responseAssignedIds = result.response.responseData.AssignCenterID ? result.response.responseData.AssignCenterID.split(",") : [];
+          const responseAssignedIds = result.response.responseData && result.response.responseData.data && result.response.responseData.data.NotificationCenterID ? result.response.responseData.data.NotificationCenterID.split(",") : [];
           console.log(responseAssignedIds);
           let assignedIds = [];
           if (responseAssignedIds.length > 0) {
@@ -152,7 +150,7 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
               if (splitData.length > 0 && splitData[0] && splitData[1]) {
                 assignmentIdList.push({
                   CenterMasterID: splitData[0],
-                  TrainingCenterAssignmentID: splitData[1],
+                  NotificationCenterID: splitData[1],
                 });
               }
               return assignmentIdList;
@@ -171,7 +169,7 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
                 if (pCenterMasterID === data.CenterMasterID.toString()) {
                   x.AssignmentFlag = 1;
                   x.CenterMasterID = data.CenterMasterID;
-                  x.TrainingCenterAssignmentID = data.TrainingCenterAssignmentID;
+                  x.NotificationCenterID = data.NotificationCenterID;
                 }
               });
             });
@@ -183,7 +181,6 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
         if (assignedCenterGridApi) {
           assignedCenterGridApi.setRowData(CenterList);
         }
-        getAssignedUserListData();
       } else {
         setAlertMessage({
           type: "warning",
@@ -218,18 +215,18 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
   };
   useEffect(() => {
     debugger;
-    getAssignedUserListData(assignUnAssignCenterModal);
-  }, [assignUnAssignCenterModal]);
+    getAssignedCenterListData(assignUnAssignCentersModal);
+  }, []);
 
   return (
     <>
       <Modal
         varient="half"
-        title={`Center Allocation(${assignUnAssignCenterModal.TrainingTitle ? assignUnAssignCenterModal.TrainingTitle : ""})`}
+        title="Center Allocation"
         right={0}
         width="50vw"
         height="100vh"
-        show={toggleAssignUnAssignCenterModal}
+        show={toggleAssignUnAssignCentersModal}
       >
         <Modal.Body>
           <div className="PageStart">
@@ -323,7 +320,7 @@ function AssignUnAssignCenter({ toggleAssignUnAssignCenterModal, assignUnAssignC
   );
 }
 
-export default AssignUnAssignCenter;
+export default AssignUnAssignCenters;
 
 const assignedCenterActionTemplate = (props) => {
   return (

@@ -233,7 +233,6 @@ function KrphAllActivitiesND() {
   };
 
   const updateStateGI = (name, value) => {
-    
     setFormValuesGI({ ...formValuesGI, [name]: value });
     setFormValidationKRPHError[name] = validateKRPHInfoField(name, value);
 
@@ -278,7 +277,6 @@ function KrphAllActivitiesND() {
   const [stateKRPHDropdownDataList, setStateKRPHDropdownDataList] = useState([]);
   const [isLoadingStateDKRPHropdownDataList, setIsLoadingStateKRPHDropdownDataList] = useState(false);
   const getStateKRPHListData = async () => {
-    
     try {
       setIsLoadingStateKRPHDropdownDataList(true);
       const formdata = {
@@ -347,7 +345,6 @@ function KrphAllActivitiesND() {
   };
   const [valisRegistered, setvalisRegistered] = useState("U");
   const validateFarmerByMobileNumberKRPH = async () => {
-    
     try {
       let result = "";
       let formData = "";
@@ -439,7 +436,6 @@ function KrphAllActivitiesND() {
   };
 
   const SavevalidateFarmerDisconnectedOnClick = async () => {
-    
     try {
       const formData = {
         CallingMasterID: getCallingMasterID,
@@ -477,7 +473,6 @@ function KrphAllActivitiesND() {
   };
 
   const SavevalidateFarmerOnClick = async (pdistrictCodeAlpha) => {
-    
     try {
       const formData = {
         CallingMasterID: getCallingMasterID,
@@ -517,7 +512,6 @@ function KrphAllActivitiesND() {
   };
 
   const OnClickBtnAction = (pType) => {
-    
     if (!handleKRPHInfoValidation()) {
       return;
     }
@@ -701,7 +695,6 @@ function KrphAllActivitiesND() {
   const [filterYearListPolicyNumber, setfilterYearListPolicyNumber] = useState([]);
 
   const OnClickSelectedValidateOption = (selectedOption) => {
-    
     clearFarmerAuthenticationForm();
     if (selectedOption === "MN") {
       setSelectedValidateOption("1");
@@ -908,7 +901,6 @@ function KrphAllActivitiesND() {
   const [stateDropdownDataList, setStateDropdownDataList] = useState([]);
   const [isLoadingStateDropdownDataList, setIsLoadingStateDropdownDataList] = useState(false);
   const getStateListData = async () => {
-    
     try {
       setIsLoadingStateDropdownDataList(true);
       const formdata = {
@@ -2530,7 +2522,7 @@ function KrphAllActivitiesND() {
   const updateStateForFarmerInfo = (name, value) => {
     setFormValuesForFarmerInfo({ ...formValuesForFarmerInfo, [name]: value });
     formValidationFarmersInfoError[name] = validateFarmersInfoField(name, value);
-    
+
     //  Aif (name === "txtYearForFarmerInfo") {
     //  A if (value) {
     //  A   if (value.Value < runningCurrentYear) {
@@ -2716,7 +2708,6 @@ function KrphAllActivitiesND() {
   const [btnLoaderClaimStatusActive, setBtnLoaderClaimStatusActive] = useState(false);
   const [isLoadingClaimStatusData, setIsLoadingClaimStatusData] = useState(false);
   const getClaimStatusOnClick = async (pApplicationNo) => {
-    
     try {
       setBtnLoaderClaimStatusActive(true);
       setIsLoadingClaimStatusData(true);
@@ -3285,7 +3276,6 @@ function KrphAllActivitiesND() {
   const [formValidationCounter, setFormValidationCounter] = useState({});
 
   const updateStateTicketCreation = (name, value) => {
-    
     setFormValuesTicketCreation({ ...formValuesTicketCreation, [name]: value });
     formValidationSupportTicketError[name] = validateFieldSupportTicket(name, value);
     if (name === "txtTicketCategoryType") {
@@ -3474,7 +3464,6 @@ function KrphAllActivitiesND() {
   };
 
   const getticketDataBindingKrphAllActivitiesData = async () => {
-    
     try {
       if (getSessionStorage("ticketDataBindingKrphAllActivitiesSsnStrg") === null) {
         const result = await ticketDataBindingData({});
@@ -3540,7 +3529,6 @@ function KrphAllActivitiesND() {
   const [ticketCategoryTypeList, setTicketCategoryTypeList] = useState([]);
   const [isLoadingTicketCategoryTypeList, setIsTicketCategoryTypeList] = useState(false);
   const getTicketCategoryTypeListData = async (pselectedOption, pCropLossDetailID, pMasterName) => {
-    
     if (ticketBindingData) {
       setIsTicketCategoryTypeList(true);
       if (pMasterName === "TCKTYP") {
@@ -3759,7 +3747,6 @@ function KrphAllActivitiesND() {
   const [selectedData, setSelectedData] = useState();
   const [openMyTicketModal, setOpenMyTicketModal] = useState(false);
   const openMyTicketPage = (data) => {
-    
     if (data !== null) {
       setSelectedData(data);
     } else {
@@ -3887,7 +3874,6 @@ function KrphAllActivitiesND() {
 
   const [btnLoaderActiveTicketSummary, setBtnLoaderActiveTicketSummary] = useState(false);
   const getfarmersTicketSummaryData = async (pticketRequestorID) => {
-    
     try {
       let result = "";
       let formData = "";
@@ -3990,7 +3976,6 @@ function KrphAllActivitiesND() {
   const [isBtndisabled, setisBtndisabled] = useState(0);
   const [btnLoaderSupportTicketActive, setBtnLoaderSupportTicketActive] = useState(false);
   const supportTicketOnClick = async () => {
-    
     try {
       if (selectedValidateOption !== "6" && selectedValidateOption !== "7") {
         if (selectedFarmer.length === 0 && selectedFarmer.length !== undefined) {
@@ -4311,7 +4296,6 @@ function KrphAllActivitiesND() {
   const servicesuccessData = getSessionStorage("servicesuccess");
 
   const CreateMoreBtnOnClick = () => {
-    
     setServiceSuccessState("UNSUCCESS");
     handleStepClick(1);
   };

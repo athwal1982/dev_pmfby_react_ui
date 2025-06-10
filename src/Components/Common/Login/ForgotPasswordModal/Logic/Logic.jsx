@@ -21,7 +21,6 @@ function ForgotPasswordLogics() {
 
   const [captchaCodeforgot, setCaptchaCodeforgot] = useState("");
   const createCaptchaforgot = () => {
-    
     // A clear the contents of captcha div first
     document.getElementById("captchaforgot").innerHTML = "";
     const charsArray = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@!#$%^&*";
@@ -262,7 +261,6 @@ function ForgotPasswordLogics() {
     }
   };
   const handleSubmit = async () => {
-    
     try {
       if (!handleValidation()) {
         return;

@@ -23,7 +23,6 @@ export const getMasterDataBinding = async (formData) => {
 };
 
 export const userSubDistrictAssignManage = async (formData) => {
-  
   try {
     const requestData = {
       main: {
@@ -45,7 +44,6 @@ export const userSubDistrictAssignManage = async (formData) => {
 };
 
 export const getUserProfileRight = async (formData) => {
-  
   try {
     const requestData = {
       main: {

@@ -1,6 +1,6 @@
 const APIEndpoints = {
   Reports: {
-      GetBotFarmerTicketReport: "FGMS/GetBotFarmerTicketReport",
+    GetBotFarmerTicketReport: "FGMS/GetBotFarmerTicketReport",
   },
 };
 

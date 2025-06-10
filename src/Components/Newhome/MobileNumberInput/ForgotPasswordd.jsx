@@ -31,7 +31,6 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
   const { formValues, updateState, createNewPasswordForGotPassword, verifyOTPForForGotPassword, checkUserNameForForGotPassword } = ForgotPasswordLogics();
 
   useEffect(() => {
-    
     generateCaptcha();
     setCaptchaCode(generateCaptcha());
   }, []);
@@ -40,17 +39,14 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
     setRevealNewPassword(!revealNewPassword);
   };
   const handleGetOTP1 = async () => {
-    
     setOtpVisible(true);
   };
   const handleSubmitOtp1 = async () => {
-    
     setInvisible(false);
     setPasswordField(true);
     setSelectedOption("");
   };
   const handleConfirm1 = async () => {
-    
     setIsProcessing(true);
     setSelectedOption("CHPass");
     setConfirmationMessage(true);
@@ -69,7 +65,6 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
   };
 
   const handleGetOTP = async () => {
-    
     setLoading(true);
 
     try {
@@ -105,7 +100,6 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
   };
 
   const handleSubmitOtp = async () => {
-    
     setLoading(true);
 
     if (!/^\d{6}$/.test(formValues?.txtOTP)) {
@@ -141,7 +135,6 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
   };
 
   const handleConfirm = async () => {
-    
     try {
       if (!formValues.txtNewPassword.trim() || !formValues.txtConfirmPassword.trim()) {
         setAlertMessage({

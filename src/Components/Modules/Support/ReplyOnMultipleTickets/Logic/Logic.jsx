@@ -138,7 +138,6 @@ function ReplyOnMultipleTicketsLogics() {
   };
 
   const searchTicketListOnClick = async () => {
-    
     try {
       if (filterValues.txtTicketType !== null) {
         if (filterValues.txtTicketType.TicketTypeID === "2") {

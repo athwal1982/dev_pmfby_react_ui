@@ -15,9 +15,7 @@
   .user-options {
     width: 100%;
   }
-
 }
-
 
 .logo-svg2 text {
   fill: white !important;
@@ -523,8 +521,6 @@
   margin-top: 10px;
 }
 
-
-
 .captcha-container img {
   width: 120px;
   height: 40px;
@@ -543,8 +539,6 @@
   .portal-container {
     flex-direction: column;
   }
-
-
 
   .otp-input input {
     width: 40px;
@@ -706,7 +700,8 @@
   font-weight: 500;
 }
 
-@media (max-width: 768px) {}
+@media (max-width: 768px) {
+}
 
 .backtoLogin {
   border: 1px solid #686e74;
@@ -847,10 +842,7 @@
   }
 }
 
-
-
 @media (min-width: 768px) and (max-width: 1024px) {
-
   .right-section,
   .left-section {
     padding: 50px;
@@ -865,29 +857,22 @@
   }
 }
 
-
 @media screen and (max-width: 768px) {
   .user-options {
     width: 380px;
   }
 }
 
-
 @media screen and (max-width: 460px) {
-
   .left-section,
   .right-section {
     flex: none;
     width: 100%;
     padding: 30px 20px;
   }
-
-
 }
 
-
 @media (max-width: 768px) and (min-width: 460px) {
-
   .left-section,
   .right-section {
     flex: none;
@@ -895,8 +880,6 @@
     padding: 20px;
   }
 }
-
-
 
 /* .btm-img-container {
   height: 24%;

@@ -62,7 +62,13 @@ import {
 } from "../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
 import { getCropListDistrictWiseDataList } from "Components/Common/Calculator/Service/Method";
 import { getMasterDataBinding } from "../../Modules/Support/ManageTicket/Services/Methods";
-import { addKRPHSupportTicketdata, krphFarmerCallingHistorydata, checkKRPHFarmerByMobileNumber, farmerTicketSummaryKRPH, addKRPHFarmerSupportTicketData, } from "./Services/Methods";
+import {
+  addKRPHSupportTicketdata,
+  krphFarmerCallingHistorydata,
+  checkKRPHFarmerByMobileNumber,
+  farmerTicketSummaryKRPH,
+  addKRPHFarmerSupportTicketData,
+} from "./Services/Methods";
 import { getUserRightData } from "../../Modules/Setup/MenuManagement/Services/Methods";
 import MyTicketPage from "./MyTicket/index";
 import PremiumCalculator from "./PremiumCalculator";
@@ -165,7 +171,7 @@ function KrphAllActivitiesNDN() {
     txtReason: null,
     txtCallPurpose: null,
   });
-  
+
   const [reasonConnectedDropdownDataList] = useState([
     { ID: 1, Value: "Crop Loss Intimation" },
     { ID: 2, Value: "Grievance" },
@@ -232,7 +238,7 @@ function KrphAllActivitiesNDN() {
       let formIsValid = true;
       errors["txtCallStatus"] = validateKRPHInfoField("txtCallStatus", formValuesGI.txtCallStatus);
       if (formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 1) {
-      errors["txtCallPurpose"] = validateKRPHInfoField("txtCallPurpose", formValuesGI.txtCallPurpose);
+        errors["txtCallPurpose"] = validateKRPHInfoField("txtCallPurpose", formValuesGI.txtCallPurpose);
       }
       if (formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 2) {
         errors["txtReason"] = validateKRPHInfoField("txtReason", formValuesGI.txtReason);
@@ -294,7 +300,6 @@ function KrphAllActivitiesNDN() {
     }
   };
   const SavevalidateFarmerDisconnectedOnClick = async () => {
-    
     try {
       const formData = {
         CallingMasterID: getCallingMasterID,
@@ -336,7 +341,6 @@ function KrphAllActivitiesNDN() {
   };
 
   const SavevalidateFarmerOnpageLand = async (pisRegistered) => {
-    
     setvalisRegistered(pisRegistered);
     try {
       const formData = {
@@ -376,7 +380,6 @@ function KrphAllActivitiesNDN() {
   };
 
   const SavevalidateFarmerOnClick = async (pdistrictCodeAlpha, pdistrictName) => {
-    
     try {
       const formData = {
         CallingMasterID: getCallingMasterID,
@@ -415,7 +418,6 @@ function KrphAllActivitiesNDN() {
   };
 
   const SavevalidateFarmerRegisteredFarmerOnClick = async (pFarmerName, pstateCodeAlpha, pdistrictCodeAlpha, pstateName, pdistrictName) => {
-    
     try {
       const formData = {
         CallingMasterID: getCallingMasterID,
@@ -454,7 +456,6 @@ function KrphAllActivitiesNDN() {
   };
 
   const SavevalidateFarmerCallingMaserIDFail = async (pformdata) => {
-    
     try {
       const result = await krphFarmerCallingHistorydata(pformdata);
       if (result.response.responseCode === 1) {
@@ -480,13 +481,12 @@ function KrphAllActivitiesNDN() {
   };
 
   const OnClickBtnAction = (pType) => {
-    
     if (!handleKRPHInfoValidation()) {
       return;
     }
 
     if (pType === "BTNNXT") {
-      if(formValuesGI && formValuesGI.txtCallPurpose && formValuesGI.txtCallPurpose.ID && formValuesGI.txtCallPurpose.ID === 7) {
+      if (formValuesGI && formValuesGI.txtCallPurpose && formValuesGI.txtCallPurpose.ID && formValuesGI.txtCallPurpose.ID === 7) {
         setOpenFeedback(!openFeedback);
         return;
       }
@@ -526,7 +526,6 @@ function KrphAllActivitiesNDN() {
     } else {
       handleStepClick(0);
     }
-    
   };
 
   const [toggleChange, setToggleChange] = useState(false);
@@ -539,11 +538,9 @@ function KrphAllActivitiesNDN() {
     else OnClickTab("TCKT");
   };
 
-
   const [stateKRPHDropdownDataList, setStateKRPHDropdownDataList] = useState([]);
   const [isLoadingStateDKRPHropdownDataList, setIsLoadingStateKRPHDropdownDataList] = useState(false);
   const getStateKRPHListData = async () => {
-    
     try {
       setIsLoadingStateKRPHDropdownDataList(true);
       const formdata = {
@@ -641,7 +638,6 @@ function KrphAllActivitiesNDN() {
 
   const [valisRegistered, setvalisRegistered] = useState("U");
   const validateFarmerByMobileNumberKRPH = async () => {
-    
     try {
       let result = "";
       let formData = "";
@@ -805,9 +801,9 @@ function KrphAllActivitiesNDN() {
   const [stateCategoryLoad, setstateCategoryLoad] = useState(false);
   const onCellDoubleClickedDetailsGreivence = (event) => {
     debugger;
-   // A setSelectedOption("1");
-  // A setSelectedClaimOrGrievence("GR");
-  // A setClaimOrGrievenceDisabled(true);
+    // A setSelectedOption("1");
+    // A setSelectedClaimOrGrievence("GR");
+    // A setClaimOrGrievenceDisabled(true);
     setSelectedInsuranceDetails(event.data);
     if (event.data && event.data.scheme) {
       setFormValuesForFarmerInfo({
@@ -834,8 +830,8 @@ function KrphAllActivitiesNDN() {
     // A  txtCropName: "",
     // A});
     setstateYearAndSeason("YRSSNNO");
-    if(stateCategoryLoad === false) {
-        getTicketCategoryTypeListData("1", 0, "TCKTYP");
+    if (stateCategoryLoad === false) {
+      getTicketCategoryTypeListData("1", 0, "TCKTYP");
     }
     toggleInsuranceCompanyModalGreivence();
     handleStepClick(3);
@@ -874,7 +870,6 @@ function KrphAllActivitiesNDN() {
   const [selectedData, setSelectedData] = useState();
   const [openMyTicketModal, setOpenMyTicketModal] = useState(false);
   const openMyTicketPage = (data) => {
-    
     if (data !== null) {
       setSelectedData(data);
     } else {
@@ -1313,7 +1308,6 @@ function KrphAllActivitiesNDN() {
   const [stateDropdownDataList, setStateDropdownDataList] = useState([]);
   const [isLoadingStateDropdownDataList, setIsLoadingStateDropdownDataList] = useState(false);
   const getStateListData = async () => {
-    
     try {
       setIsLoadingStateDropdownDataList(true);
       const formdata = {
@@ -1818,7 +1812,7 @@ function KrphAllActivitiesNDN() {
     }
   };
 
-  const clearInsuranceFields = () => { };
+  const clearInsuranceFields = () => {};
   const [btnLoaderActive, setBtnLoaderActive] = useState(false);
 
   const validateFarmerByAadharNumber = async () => {
@@ -2085,7 +2079,7 @@ function KrphAllActivitiesNDN() {
   const updateStateForFarmerInfo = (name, value) => {
     setFormValuesForFarmerInfo({ ...formValuesForFarmerInfo, [name]: value });
     formValidationFarmersInfoError[name] = validateFarmersInfoField(name, value);
-    
+
     //  Aif (name === "txtYearForFarmerInfo") {
     //  A if (value) {
     //  A   if (value.Value < runningCurrentYear) {
@@ -2635,7 +2629,6 @@ function KrphAllActivitiesNDN() {
   // A const [farmersTicketSummaryData, setFarmersTicketSummaryData] = useState([]);
   const [btnLoaderActiveTicketSummary, setBtnLoaderActiveTicketSummary] = useState(false);
   const getfarmersTicketSummaryData = async (pticketRequestorID) => {
-    
     try {
       let result = "";
       let formData = "";
@@ -2754,7 +2747,6 @@ function KrphAllActivitiesNDN() {
   const [btnLoaderFarmerGreivenceInfoActive, setBtnLoaderFarmerGreivenceInfoActive] = useState(false);
   const [isLoadingApplicationNoDataGreivence, setIsLoadingApplicationNodatGreivence] = useState(false);
   const getPolicyOfFarmerGreivenceOnClick = async () => {
-    
     if (!handleFarmersInfoValidation()) {
       return;
     }
@@ -2902,7 +2894,6 @@ function KrphAllActivitiesNDN() {
   const [btnLoaderClaimStatusActive, setBtnLoaderClaimStatusActive] = useState(false);
   const [isLoadingClaimStatusData, setIsLoadingClaimStatusData] = useState(false);
   const getClaimStatusOnClick = async (pApplicationNo) => {
-    
     try {
       setBtnLoaderClaimStatusActive(true);
       setIsLoadingClaimStatusData(true);
@@ -3190,7 +3181,6 @@ function KrphAllActivitiesNDN() {
   const [formValidationCounter, setFormValidationCounter] = useState({});
   // A const [stateCropLossIntimation, setStateCropLossIntimation] = useState("NA");
   const updateStateTicketCreation = (name, value) => {
-    
     setFormValuesTicketCreation({ ...formValuesTicketCreation, [name]: value });
     if (name === "txtTicketCategoryType") {
       setFormValuesTicketCreation({
@@ -3293,7 +3283,6 @@ function KrphAllActivitiesNDN() {
   const [isBtndisabled, setisBtndisabled] = useState(0);
   const [btnLoaderSupportTicketActive, setBtnLoaderSupportTicketActive] = useState(false);
   const supportTicketOnClick = async () => {
-    
     try {
       if (selectedValidateOption !== "6" && selectedValidateOption !== "7") {
         if (selectedFarmer.length === 0 && selectedFarmer.length !== undefined) {
@@ -3655,17 +3644,17 @@ function KrphAllActivitiesNDN() {
         ticketRequestorID: "",
         stateCodeAlpha:
           formValuesForByNonRegFarmerOrOffline.txtStateForByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtStateForByNonRegFarmerOrOffline.StateCodeAlpha
+          formValuesForByNonRegFarmerOrOffline.txtStateForByNonRegFarmerOrOffline.StateCodeAlpha
             ? formValuesForByNonRegFarmerOrOffline.txtStateForByNonRegFarmerOrOffline.StateCodeAlpha
             : "",
         districtRequestorID:
           formValuesForByNonRegFarmerOrOffline.txtStateForByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtDistrictForByNonRegFarmerOrOffline.level3ID
+          formValuesForByNonRegFarmerOrOffline.txtDistrictForByNonRegFarmerOrOffline.level3ID
             ? formValuesForByNonRegFarmerOrOffline.txtDistrictForByNonRegFarmerOrOffline.level3ID
             : "",
         villageRequestorID:
           formValuesForByNonRegFarmerOrOffline.txtVillageForByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtVillageForByNonRegFarmerOrOffline.level7ID
+          formValuesForByNonRegFarmerOrOffline.txtVillageForByNonRegFarmerOrOffline.level7ID
             ? formValuesForByNonRegFarmerOrOffline.txtVillageForByNonRegFarmerOrOffline.level7ID
             : "",
         farmerSupportTicketNo: "0",
@@ -3703,7 +3692,7 @@ function KrphAllActivitiesNDN() {
             : 0,
         requestSeason:
           formValuesForByNonRegFarmerOrOffline.txtSeasonForNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtSeasonForNonRegFarmerOrOffline.CropSeasonID
+          formValuesForByNonRegFarmerOrOffline.txtSeasonForNonRegFarmerOrOffline.CropSeasonID
             ? formValuesForByNonRegFarmerOrOffline.txtSeasonForNonRegFarmerOrOffline.CropSeasonID
             : 0,
 
@@ -3732,7 +3721,7 @@ function KrphAllActivitiesNDN() {
             : 0,
         cropSeasonName:
           formValuesForByNonRegFarmerOrOffline.txtSeasonForNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtSeasonForNonRegFarmerOrOffline.CropSeasonName
+          formValuesForByNonRegFarmerOrOffline.txtSeasonForNonRegFarmerOrOffline.CropSeasonName
             ? formValuesForByNonRegFarmerOrOffline.txtSeasonForNonRegFarmerOrOffline.CropSeasonName
             : "",
         ticketCategoryName:
@@ -3750,32 +3739,32 @@ function KrphAllActivitiesNDN() {
         ticketHeadName: pticketHeaderName,
         nyayPanchayatID:
           formValuesForByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtlevel5ByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtlevel5ByNonRegFarmerOrOffline.level5ID
+          formValuesForByNonRegFarmerOrOffline.txtlevel5ByNonRegFarmerOrOffline &&
+          formValuesForByNonRegFarmerOrOffline.txtlevel5ByNonRegFarmerOrOffline.level5ID
             ? formValuesForByNonRegFarmerOrOffline.txtlevel5ByNonRegFarmerOrOffline.level5ID
             : "",
         nyayPanchayat:
           formValuesForByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtlevel5ByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtlevel5ByNonRegFarmerOrOffline.level5Name
+          formValuesForByNonRegFarmerOrOffline.txtlevel5ByNonRegFarmerOrOffline &&
+          formValuesForByNonRegFarmerOrOffline.txtlevel5ByNonRegFarmerOrOffline.level5Name
             ? formValuesForByNonRegFarmerOrOffline.txtlevel5ByNonRegFarmerOrOffline.level5Name
             : "",
         gramPanchayatID:
           formValuesForByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtlevel6ByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtlevel6ByNonRegFarmerOrOffline.level6ID
+          formValuesForByNonRegFarmerOrOffline.txtlevel6ByNonRegFarmerOrOffline &&
+          formValuesForByNonRegFarmerOrOffline.txtlevel6ByNonRegFarmerOrOffline.level6ID
             ? formValuesForByNonRegFarmerOrOffline.txtlevel6ByNonRegFarmerOrOffline.level6ID
             : "",
         gramPanchayat:
           formValuesForByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtlevel6ByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtlevel6ByNonRegFarmerOrOffline.level6Name
+          formValuesForByNonRegFarmerOrOffline.txtlevel6ByNonRegFarmerOrOffline &&
+          formValuesForByNonRegFarmerOrOffline.txtlevel6ByNonRegFarmerOrOffline.level6Name
             ? formValuesForByNonRegFarmerOrOffline.txtlevel6ByNonRegFarmerOrOffline.level6Name
             : "",
         businessRelationName: user && user.UserCompanyType ? user.UserCompanyType : "",
         schemeName:
           formValuesForByNonRegFarmerOrOffline.txtSchemeForNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtSchemeForNonRegFarmerOrOffline.SchemeName
+          formValuesForByNonRegFarmerOrOffline.txtSchemeForNonRegFarmerOrOffline.SchemeName
             ? formValuesForByNonRegFarmerOrOffline.txtSchemeForNonRegFarmerOrOffline.SchemeName
             : "",
         agentName: user && user.UserDisplayName ? user.UserDisplayName : "",
@@ -3790,7 +3779,7 @@ function KrphAllActivitiesNDN() {
         bankMasterID: 0,
         schemeID:
           formValuesForByNonRegFarmerOrOffline.txtSchemeForNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtSchemeForNonRegFarmerOrOffline.SchemeID
+          formValuesForByNonRegFarmerOrOffline.txtSchemeForNonRegFarmerOrOffline.SchemeID
             ? formValuesForByNonRegFarmerOrOffline.txtSchemeForNonRegFarmerOrOffline.SchemeID
             : 0,
         onTimeIntimationFlag: stateCropLossIntimation,
@@ -3814,29 +3803,29 @@ function KrphAllActivitiesNDN() {
         calculatedPremium: formValuesForByNonRegFarmerOrOffline.CalculatedSumInsured ? Number(formValuesForByNonRegFarmerOrOffline.CalculatedSumInsured) : "0",
         villageName:
           formValuesForByNonRegFarmerOrOffline.txtVillageForByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtVillageForByNonRegFarmerOrOffline.level7Name
+          formValuesForByNonRegFarmerOrOffline.txtVillageForByNonRegFarmerOrOffline.level7Name
             ? formValuesForByNonRegFarmerOrOffline.txtVillageForByNonRegFarmerOrOffline.level7Name
             : "",
         relation: "",
         relativeName: "",
         stateMasterName:
           formValuesForByNonRegFarmerOrOffline.txtStateForByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtStateForByNonRegFarmerOrOffline.StateMasterName
+          formValuesForByNonRegFarmerOrOffline.txtStateForByNonRegFarmerOrOffline.StateMasterName
             ? formValuesForByNonRegFarmerOrOffline.txtStateForByNonRegFarmerOrOffline.StateMasterName
             : "",
         districtMasterName:
           formValuesForByNonRegFarmerOrOffline.txtDistrictForByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtDistrictForByNonRegFarmerOrOffline.level3Name
+          formValuesForByNonRegFarmerOrOffline.txtDistrictForByNonRegFarmerOrOffline.level3Name
             ? formValuesForByNonRegFarmerOrOffline.txtDistrictForByNonRegFarmerOrOffline.level3Name
             : "",
         subDistrictID:
           formValuesForByNonRegFarmerOrOffline.txtSubDistrictForByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtSubDistrictForByNonRegFarmerOrOffline.level4ID
+          formValuesForByNonRegFarmerOrOffline.txtSubDistrictForByNonRegFarmerOrOffline.level4ID
             ? formValuesForByNonRegFarmerOrOffline.txtSubDistrictForByNonRegFarmerOrOffline.level4ID
             : "",
         subDistrictName:
           formValuesForByNonRegFarmerOrOffline.txtSubDistrictForByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtSubDistrictForByNonRegFarmerOrOffline.level4Name
+          formValuesForByNonRegFarmerOrOffline.txtSubDistrictForByNonRegFarmerOrOffline.level4Name
             ? formValuesForByNonRegFarmerOrOffline.txtSubDistrictForByNonRegFarmerOrOffline.level4Name
             : "",
         policyPremium: "0",
@@ -3846,17 +3835,17 @@ function KrphAllActivitiesNDN() {
         landDivisionNumber: "",
         plotVillageName:
           formValuesForByNonRegFarmerOrOffline.txtVillageForByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtVillageForByNonRegFarmerOrOffline.level7Name
+          formValuesForByNonRegFarmerOrOffline.txtVillageForByNonRegFarmerOrOffline.level7Name
             ? formValuesForByNonRegFarmerOrOffline.txtVillageForByNonRegFarmerOrOffline.level7Name
             : "",
         plotDistrictName:
           formValuesForByNonRegFarmerOrOffline.txtDistrictForByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtDistrictForByNonRegFarmerOrOffline.level3Name
+          formValuesForByNonRegFarmerOrOffline.txtDistrictForByNonRegFarmerOrOffline.level3Name
             ? formValuesForByNonRegFarmerOrOffline.txtDistrictForByNonRegFarmerOrOffline.level3Name
             : "",
         plotStateName:
           formValuesForByNonRegFarmerOrOffline.txtStateForByNonRegFarmerOrOffline &&
-            formValuesForByNonRegFarmerOrOffline.txtStateForByNonRegFarmerOrOffline.StateMasterName
+          formValuesForByNonRegFarmerOrOffline.txtStateForByNonRegFarmerOrOffline.StateMasterName
             ? formValuesForByNonRegFarmerOrOffline.txtStateForByNonRegFarmerOrOffline.StateMasterName
             : "",
         applicationSource: "",
@@ -4077,8 +4066,8 @@ function KrphAllActivitiesNDN() {
       const pyearID =
         pYear === ""
           ? formValuesForByNonRegFarmerOrOffline.txtYearForNonRegFarmerOrOffline.Value.toString().substr(
-            formValuesForByNonRegFarmerOrOffline.txtYearForNonRegFarmerOrOffline.Value.length - 2,
-          )
+              formValuesForByNonRegFarmerOrOffline.txtYearForNonRegFarmerOrOffline.Value.length - 2,
+            )
           : pYear;
       const psssyID = `${pschemeID}${pseasonID}${pstateID}${pyearID}`;
 
@@ -4233,21 +4222,21 @@ function KrphAllActivitiesNDN() {
 
       const pschemeID =
         formValuesForByNonRegFarmerOrOffline.txtSchemeForNonRegFarmerOrOffline &&
-          formValuesForByNonRegFarmerOrOffline.txtSchemeForNonRegFarmerOrOffline.SchemeID === 2
+        formValuesForByNonRegFarmerOrOffline.txtSchemeForNonRegFarmerOrOffline.SchemeID === 2
           ? "02"
           : formValuesForByNonRegFarmerOrOffline.txtSchemeForNonRegFarmerOrOffline.SchemeID === 4
             ? "04"
             : "";
       const pseasonID =
         formValuesForByNonRegFarmerOrOffline.txtSeasonForNonRegFarmerOrOffline &&
-          formValuesForByNonRegFarmerOrOffline.txtSeasonForNonRegFarmerOrOffline.CropSeasonID === 1
+        formValuesForByNonRegFarmerOrOffline.txtSeasonForNonRegFarmerOrOffline.CropSeasonID === 1
           ? "01"
           : formValuesForByNonRegFarmerOrOffline.txtSeasonForNonRegFarmerOrOffline.CropSeasonID === 2
             ? "02"
             : "";
       const pstateID =
         formValuesForByNonRegFarmerOrOffline.txtStateForByNonRegFarmerOrOffline &&
-          formValuesForByNonRegFarmerOrOffline.txtStateForByNonRegFarmerOrOffline.StateMasterID.toString().length < 2
+        formValuesForByNonRegFarmerOrOffline.txtStateForByNonRegFarmerOrOffline.StateMasterID.toString().length < 2
           ? `0${formValuesForByNonRegFarmerOrOffline.txtStateForByNonRegFarmerOrOffline.StateMasterID}`
           : formValuesForByNonRegFarmerOrOffline.txtStateForByNonRegFarmerOrOffline.StateMasterID;
       const pyearID =
@@ -4282,7 +4271,6 @@ function KrphAllActivitiesNDN() {
   };
 
   const getCalculatorDataOnClick = (value, pCropForCalculate) => {
-    
     if (value || typeof value !== "undefined") {
       if (formValuesForByNonRegFarmerOrOffline.txtCropForCalculate && formValuesForByNonRegFarmerOrOffline.txtCropForCalculate.sumInsured) {
         const calculatedSumInsured = parseFloat(value) * parseFloat(formValuesForByNonRegFarmerOrOffline.txtCropForCalculate.sumInsured);
@@ -4463,14 +4451,8 @@ function KrphAllActivitiesNDN() {
         "txtSchemeForNonRegFarmerOrOffline",
         formValuesForByNonRegFarmerOrOffline.txtSchemeForNonRegFarmerOrOffline,
       );
-      errors["txtPinCode"] = validateFarmersFieldForNonRegFarmerOrOffline(
-        "txtPinCode",
-        formValuesForByNonRegFarmerOrOffline.txtPinCode,
-      );
-      errors["txtAddress"] = validateFarmersFieldForNonRegFarmerOrOffline(
-        "txtAddress",
-        formValuesForByNonRegFarmerOrOffline.txtAddress,
-      );
+      errors["txtPinCode"] = validateFarmersFieldForNonRegFarmerOrOffline("txtPinCode", formValuesForByNonRegFarmerOrOffline.txtPinCode);
+      errors["txtAddress"] = validateFarmersFieldForNonRegFarmerOrOffline("txtAddress", formValuesForByNonRegFarmerOrOffline.txtAddress);
       if (Object.values(errors).join("").toString()) {
         formIsValid = false;
       }
@@ -4487,7 +4469,6 @@ function KrphAllActivitiesNDN() {
 
   const [formValidationFarmersErrorForNonRegFarmerOrOffline, setformValidationFarmersErrorForNonRegFarmerOrOffline] = useState({});
   const updateStateForByNonRegFarmerOrOffline = (name, value) => {
-    
     setFormValuesForByNonRegFarmerOrOffline({ ...formValuesForByNonRegFarmerOrOffline, [name]: value });
     formValidationFarmersErrorForNonRegFarmerOrOffline[name] = validateFarmersFieldForNonRegFarmerOrOffline(name, value);
 
@@ -4826,7 +4807,6 @@ function KrphAllActivitiesNDN() {
   const [ticketCategoryTypeList, setTicketCategoryTypeList] = useState([]);
   const [isLoadingTicketCategoryTypeList, setIsTicketCategoryTypeList] = useState(false);
   const getTicketCategoryTypeListData = async (pselectedOption, pCropLossDetailID, pMasterName) => {
-    
     if (ticketBindingData) {
       setIsTicketCategoryTypeList(true);
       if (pMasterName === "TCKTYP") {
@@ -5056,7 +5036,6 @@ function KrphAllActivitiesNDN() {
   const servicesuccessData = getSessionStorage("servicesuccess");
 
   const CreateMoreBtnOnClick = () => {
-    
     setServiceSuccessState("UNSUCCESS");
     handleStepClick(2);
     setshowHideSos(false);
@@ -5093,390 +5072,392 @@ function KrphAllActivitiesNDN() {
 
   return (
     <>
-      
-        <Box
+      <Box
+        sx={{
+          width: "100%",
+          padding: "20px 50px 5px 50px",
+          background: "linear-gradient(to bottom, #21862d, #c3eb68)",
+          minHeight: "100vh",
+          height: "fit-content", // Expands if content exceeds 100vh
+        }}
+      >
+        {/* Stepper Section */}
+        <Card
           sx={{
+            p: 1,
+            borderRadius: "8px",
+            boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.1)",
             width: "100%",
-            padding: "20px 50px 5px 50px",
-            background: "linear-gradient(to bottom, #21862d, #c3eb68)",
-            minHeight: "100vh",
-            height: "fit-content", // Expands if content exceeds 100vh
           }}
         >
-          {/* Stepper Section */}
-          <Card
-            sx={{
-              p: 1,
-              borderRadius: "8px",
-              boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.1)",
-              width: "100%",
-            }}
-          >
-            <Stepper alternativeLabel activeStep={activeStep} connector={<CustomStepConnector />}>
-              {steps.map((step, index) => {
-                let stepColor = "#6c757d";
-                let stepBackground = "grey";
-                let statusText = "Pending";
+          <Stepper alternativeLabel activeStep={activeStep} connector={<CustomStepConnector />}>
+            {steps.map((step, index) => {
+              let stepColor = "#6c757d";
+              let stepBackground = "grey";
+              let statusText = "Pending";
 
-                if (index < activeStep) {
-                  stepColor = "#28a745";
-                  stepBackground = "#28a745";
-                  statusText = "Completed";
-                } else if (index === activeStep) {
-                  stepColor = "#FFB10D";
-                  stepBackground = "#FFB10D";
-                  statusText = "In Progress";
-                }
+              if (index < activeStep) {
+                stepColor = "#28a745";
+                stepBackground = "#28a745";
+                statusText = "Completed";
+              } else if (index === activeStep) {
+                stepColor = "#FFB10D";
+                stepBackground = "#FFB10D";
+                statusText = "In Progress";
+              }
 
-                const IconComponent = step.icon;
+              const IconComponent = step.icon;
 
-                return (
-                  <Step key={index} completed={index < activeStep}>
-                    <StepLabel
-                      icon={
-                        <IconButton
-                          sx={{
-                            backgroundColor: stepBackground,
-                            borderRadius: "50%",
-                            p: 1,
-                            width: 40,
-                            height: 40,
-                            color: stepColor,
-                          }}
-                          disableRipple
-                          disableFocusRipple
-                        >
-                          <IconComponent width={24} height={24} />
-                        </IconButton>
-                      }
-                    >
-                      <Typography
-                        variant="body2"
+              return (
+                <Step key={index} completed={index < activeStep}>
+                  <StepLabel
+                    icon={
+                      <IconButton
                         sx={{
-                          fontWeight: "bold",
+                          backgroundColor: stepBackground,
+                          borderRadius: "50%",
+                          p: 1,
+                          width: 40,
+                          height: 40,
                           color: stepColor,
-                          fontFamily: "Quicksand, sans-serif",
                         }}
+                        disableRipple
+                        disableFocusRipple
                       >
-                        {step.label}
-                      </Typography>
-                      <Typography
-                        variant="caption"
-                        sx={{
-                          color: stepColor,
-                          fontFamily: "Quicksand, sans-serif",
-                        }}
-                      >
-                        {statusText}
-                      </Typography>
-                    </StepLabel>
-                  </Step>
-                );
-              })}
-            </Stepper>
-             <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
-               <div style={{ display: "flex", alignItems: "flex-start",  padding: "0px 0px 0px 15px", }}>
-                 <KrphButton type="button" varient="lightsuccess" >
-                    Agent ID : {dcryptUID}
-                 </KrphButton>
-               </div>
-                <div style={{ display: "flex", alignItems: "flex-end" }}>
-                   {showHideSos === true ? null : <>
-              <Tooltip title="Use SOS button only for extremely urgent cases" arrow>
-                <IconButton color="primary">
-                  <InfoIcon />
-                </IconButton>
-              </Tooltip>
-
-              <Button
-                onClick={() => {
-                  handleSOSPopup();
-                }}
-                variant={showMessage ? "contained" : "outlined"}
-                color={showMessage ? "error" : "error"}
-              >
-                SOS
-              </Button>
-              <SOSEmergencyPopup
-                openSOS={openSOS}
-                showMessage={showMessage}
-                setOpenSOS={setOpenSOS}
-                setShowMessage={setShowMessage}
-                open={openSOS}
-                onClose={handleCloseSOSPopup}
-                formValuesTicketCreation={formValuesTicketCreation}
-                setFormValuesTicketCreation={setFormValuesTicketCreation}
-                updateStateTicketCreation={updateStateTicketCreation}
-                setAlertMessage={setAlertMessage}
-              />
-             </> }
-                </div>
-             </Box> 
-          </Card>
-          {serviceSuccessState === "UNSUCCESS" ? 
-          <AnimatePresence mode="wait">
-            <motion.div key="farmer" initial="hidden" animate="visible" exit="exit" variants={transitionVariants}>
-                <AnimatePresence mode="wait">
-                  <motion.div key="farmer" initial="hidden" animate="visible" exit="exit" variants={transitionVariants}>
-                    <Card
+                        <IconComponent width={24} height={24} />
+                      </IconButton>
+                    }
+                  >
+                    <Typography
+                      variant="body2"
                       sx={{
-                        mt: 1,
-                        padding: " 10px 25px 5px 25px",
-                        borderRadius: 3,
+                        fontWeight: "bold",
+                        color: stepColor,
+                        fontFamily: "Quicksand, sans-serif",
                       }}
                     >
-                      <Typography sx={{ fontFamily: "Quicksand, sans-serif", fontSize: "16px" }} fontWeight="bold">
-                        Caller Information
-                      </Typography>
-                      <Box
+                      {step.label}
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: stepColor,
+                        fontFamily: "Quicksand, sans-serif",
+                      }}
+                    >
+                      {statusText}
+                    </Typography>
+                  </StepLabel>
+                </Step>
+              );
+            })}
+          </Stepper>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+            <div style={{ display: "flex", alignItems: "flex-start", padding: "0px 0px 0px 15px" }}>
+              <KrphButton type="button" varient="lightsuccess">
+                Agent ID : {dcryptUID}
+              </KrphButton>
+            </div>
+            <div style={{ display: "flex", alignItems: "flex-end" }}>
+              {showHideSos === true ? null : (
+                <>
+                  <Tooltip title="Use SOS button only for extremely urgent cases" arrow>
+                    <IconButton color="primary">
+                      <InfoIcon />
+                    </IconButton>
+                  </Tooltip>
+
+                  <Button
+                    onClick={() => {
+                      handleSOSPopup();
+                    }}
+                    variant={showMessage ? "contained" : "outlined"}
+                    color={showMessage ? "error" : "error"}
+                  >
+                    SOS
+                  </Button>
+                  <SOSEmergencyPopup
+                    openSOS={openSOS}
+                    showMessage={showMessage}
+                    setOpenSOS={setOpenSOS}
+                    setShowMessage={setShowMessage}
+                    open={openSOS}
+                    onClose={handleCloseSOSPopup}
+                    formValuesTicketCreation={formValuesTicketCreation}
+                    setFormValuesTicketCreation={setFormValuesTicketCreation}
+                    updateStateTicketCreation={updateStateTicketCreation}
+                    setAlertMessage={setAlertMessage}
+                  />
+                </>
+              )}
+            </div>
+          </Box>
+        </Card>
+        {serviceSuccessState === "UNSUCCESS" ? (
+          <AnimatePresence mode="wait">
+            <motion.div key="farmer" initial="hidden" animate="visible" exit="exit" variants={transitionVariants}>
+              <AnimatePresence mode="wait">
+                <motion.div key="farmer" initial="hidden" animate="visible" exit="exit" variants={transitionVariants}>
+                  <Card
+                    sx={{
+                      mt: 1,
+                      padding: " 10px 25px 5px 25px",
+                      borderRadius: 3,
+                    }}
+                  >
+                    <Typography sx={{ fontFamily: "Quicksand, sans-serif", fontSize: "16px" }} fontWeight="bold">
+                      Caller Information
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(4, 1fr)",
+                        gap: 1,
+                        mt: 1,
+                      }}
+                    >
+                      <Typography
                         sx={{
-                          display: "grid",
-                          gridTemplateColumns: "repeat(4, 1fr)",
-                          gap: 1,
-                          mt: 1,
+                          fontFamily: "Quicksand, sans-serif",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "2px",
+                          fontSize: "14px",
                         }}
                       >
-                        <Typography
-                          sx={{
-                            fontFamily: "Quicksand, sans-serif",
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "2px",
-                            fontSize: "14px",
-                          }}
-                        >
-                          <span>Caller ID :</span>{" "}
-                          <InputGroup>
-                            <InputControl
-                              Input_type="input"
-                              name="txtCallerID"
-                              value={formValuesGI.txtCallerID}
-                              onChange={(e) => updateStateGI("txtCallerID", e.target.value)}
-                              disabled={true}
-                            />
-                          </InputGroup>
-                        </Typography>
-                        <Typography
-                          sx={{
-                            fontFamily: "Quicksand, sans-serif",
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "2px",
-                            fontSize: "14px",
-                          }}
-                        >
-                          <span>Caller Mobile Number :</span>{" "}
-                          <InputGroup>
-                            <InputControl
-                              Input_type="input"
-                              name="txtMobileCallerNumber"
-                              value={formValuesGI.txtMobileCallerNumber}
-                              onChange={(e) => updateStateGI("txtMobileCallerNumber", e.target.value.replace(/\D/g, ""))}
-                              disabled={true}
-                            />
-                          </InputGroup>
-                        </Typography>
+                        <span>Caller ID :</span>{" "}
+                        <InputGroup>
+                          <InputControl
+                            Input_type="input"
+                            name="txtCallerID"
+                            value={formValuesGI.txtCallerID}
+                            onChange={(e) => updateStateGI("txtCallerID", e.target.value)}
+                            disabled={true}
+                          />
+                        </InputGroup>
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: "Quicksand, sans-serif",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "2px",
+                          fontSize: "14px",
+                        }}
+                      >
+                        <span>Caller Mobile Number :</span>{" "}
+                        <InputGroup>
+                          <InputControl
+                            Input_type="input"
+                            name="txtMobileCallerNumber"
+                            value={formValuesGI.txtMobileCallerNumber}
+                            onChange={(e) => updateStateGI("txtMobileCallerNumber", e.target.value.replace(/\D/g, ""))}
+                            disabled={true}
+                          />
+                        </InputGroup>
+                      </Typography>
 
-                        <Typography
-                          sx={{
-                            fontFamily: "Quicksand, sans-serif",
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "2px",
-                            fontSize: "14px",
-                          }}
-                        >
-                          <span>
-                            State{" "}
-                            {formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 1 ? (
-                              <span className="asteriskCss">&#42;</span>
-                            ) : null}
-                            :
-                          </span>{" "}
-                          <InputGroup>
-                            <InputControl
-                              Input_type="select"
-                              name="txtState"
-                              isLoading={isLoadingStateDKRPHropdownDataList}
-                              getOptionLabel={(option) => `${option.StateMasterName}`}
-                              value={formValuesGI.txtState}
-                              getOptionValue={(option) => `${option}`}
-                              options={stateKRPHDropdownDataList}
-                              ControlTxt="State"
-                              onChange={(e) => updateStateGI("txtState", e)}
-                              isDisabled={farmerAuthenticateByMobile}
-                            />
-                          </InputGroup>
-                          <span className="login_ErrorTxt">{formValidationKRPHError["txtState"]}</span>
-                        </Typography>
-                        <Typography
-                          sx={{
-                            fontFamily: "Quicksand, sans-serif",
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "2px",
-                            fontSize: "14px",
-                          }}
-                        >
-                          <span>
-                            District{" "}
-                            {formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 1 ? (
-                              <span className="asteriskCss">&#42;</span>
-                            ) : null}
-                            :
-                          </span>{" "}
-                          <InputGroup>
-                            <InputControl
-                              Input_type="select"
-                              name="txtDistrict"
-                              isLoading={isLoadingDistrictKRPHDropdownDataList}
-                              getOptionLabel={(option) => `${option.level3Name}`}
-                              value={formValuesGI.txtDistrict}
-                              getOptionValue={(option) => `${option}`}
-                              options={districtKRPHDropdownDataList}
-                              ControlTxt="District"
-                              onChange={(e) => updateStateGI("txtDistrict", e)}
-                              isDisabled={farmerAuthenticateByMobile}
-                            />
-                          </InputGroup>
-                          <span className="login_ErrorTxt">{formValidationKRPHError["txtDistrict"]}</span>
-                        </Typography>
-                        <Typography
-                          sx={{
-                            fontFamily: "Quicksand, sans-serif",
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "2px",
-                            fontSize: "14px",
-                          }}
-                        >
-                          <span>
-                            Farmer Name{" "}
-                            {formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 1 ? (
-                              <span className="asteriskCss">&#42;</span>
-                            ) : null}
-                            :
-                          </span>
-                          <InputGroup>
-                            <InputControl
-                              Input_type="input"
-                              name="txtFarmerName"
-                              value={formValuesGI.txtFarmerName}
-                              onChange={(e) => updateStateGI("txtFarmerName", e.target.value.replace(/[^a-zA-Z ]+/g, ""))}
-                              autoComplete="off"
-                              disabled={farmerAuthenticateByMobile}
-                            />
-                          </InputGroup>
-                          <span className="login_ErrorTxt">{formValidationKRPHError["txtFarmerName"]}</span>
-                        </Typography>
-                        <Typography
-                          sx={{
-                            fontFamily: "Quicksand, sans-serif",
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "2px",
-                            fontSize: "14px",
-                          }}
-                        >
-                          <span>
-                            Call Status <span className="asteriskCss">&#42;</span> :
-                          </span>{" "}
-                          <InputGroup>
-                            <InputControl
-                              Input_type="select"
-                              name="txtCallStatus"
-                              getOptionLabel={(option) => `${option.Value}`}
-                              value={formValuesGI.txtCallStatus}
-                              getOptionValue={(option) => `${option}`}
-                              options={callConnectedDropdownDataList}
-                              ControlTxt="Call Status"
-                              onChange={(e) => updateStateGI("txtCallStatus", e)}
-                            />
-                          </InputGroup>
-                          <span className="login_ErrorTxt">{formValidationKRPHError["txtCallStatus"]}</span>
-                        </Typography>
-                        {formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 1 ? (
-                          <Typography
-                            sx={{
-                              fontFamily: "Quicksand, sans-serif",
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "2px",
-                              fontSize: "14px",
-                            }}
-                          >
-                            <span>
-                              {" "}
-                              Call Purpose <span className="asteriskCss">&#42;</span> :
-                            </span>{" "}
-                            <InputGroup>
-                              <InputControl
-                                Input_type="select"
-                                name="txtCallPurpose"
-                                value={formValuesGI.txtCallPurpose}
-                                options={reasonConnectedDropdownDataList}
-                                getOptionLabel={(option) => `${option.Value}`}
-                                getOptionValue={(option) => `${option}`}
-                                onChange={(e) => updateStateGI("txtCallPurpose", e)}
-                              />
-                            </InputGroup>
-                            <span className="login_ErrorTxt">{formValidationKRPHError["txtCallPurpose"]}</span>
-                          </Typography> ) : null }
-                        {formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 2 ? (
-                          <Typography
-                            sx={{
-                              fontFamily: "Quicksand, sans-serif",
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "2px",
-                              fontSize: "14px",
-                            }}
-                          >
-                            <span>
-                              {" "}
-                              Reason <span className="asteriskCss">&#42;</span> :
-                            </span>{" "}
-                            <InputGroup>
-                              <InputControl
-                                Input_type="select"
-                                name="txtReason"
-                                value={formValuesGI.txtReason}
-                                options={reasonDropdownDataList}
-                                getOptionLabel={(option) => `${option.Value}`}
-                                getOptionValue={(option) => `${option}`}
-                                onChange={(e) => updateStateGI("txtReason", e)}
-                              />
-                            </InputGroup>
-                            <span className="login_ErrorTxt">{formValidationKRPHError["txtReason"]}</span>
-                          </Typography>
-                        ) : null}
-                      </Box>
-                      <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
-                        <div style={{ display: "flex", alignItems: "flex-end" }}>
+                      <Typography
+                        sx={{
+                          fontFamily: "Quicksand, sans-serif",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "2px",
+                          fontSize: "14px",
+                        }}
+                      >
+                        <span>
+                          State{" "}
                           {formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 1 ? (
-                            <KrphButton type="button" varient="secondary" onClick={() => OnClickBtnAction("BTNNXT")}>
-                              Next
-                            </KrphButton>
-                          ) : formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 2 ? (
-                            <KrphButton type="button" varient="secondary" onClick={() => OnClickBtnAction("BTNSBMT")}>
-                              Submit
-                            </KrphButton>
+                            <span className="asteriskCss">&#42;</span>
                           ) : null}
-                        </div>
-                        <div style={{ display: "flex", alignItems: "flex-end" }}>
-                          <KrphButton type="button" varient="title" onClick={() => OnClickBtnReset()}>
-                            Reset
+                          :
+                        </span>{" "}
+                        <InputGroup>
+                          <InputControl
+                            Input_type="select"
+                            name="txtState"
+                            isLoading={isLoadingStateDKRPHropdownDataList}
+                            getOptionLabel={(option) => `${option.StateMasterName}`}
+                            value={formValuesGI.txtState}
+                            getOptionValue={(option) => `${option}`}
+                            options={stateKRPHDropdownDataList}
+                            ControlTxt="State"
+                            onChange={(e) => updateStateGI("txtState", e)}
+                            isDisabled={farmerAuthenticateByMobile}
+                          />
+                        </InputGroup>
+                        <span className="login_ErrorTxt">{formValidationKRPHError["txtState"]}</span>
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: "Quicksand, sans-serif",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "2px",
+                          fontSize: "14px",
+                        }}
+                      >
+                        <span>
+                          District{" "}
+                          {formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 1 ? (
+                            <span className="asteriskCss">&#42;</span>
+                          ) : null}
+                          :
+                        </span>{" "}
+                        <InputGroup>
+                          <InputControl
+                            Input_type="select"
+                            name="txtDistrict"
+                            isLoading={isLoadingDistrictKRPHDropdownDataList}
+                            getOptionLabel={(option) => `${option.level3Name}`}
+                            value={formValuesGI.txtDistrict}
+                            getOptionValue={(option) => `${option}`}
+                            options={districtKRPHDropdownDataList}
+                            ControlTxt="District"
+                            onChange={(e) => updateStateGI("txtDistrict", e)}
+                            isDisabled={farmerAuthenticateByMobile}
+                          />
+                        </InputGroup>
+                        <span className="login_ErrorTxt">{formValidationKRPHError["txtDistrict"]}</span>
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: "Quicksand, sans-serif",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "2px",
+                          fontSize: "14px",
+                        }}
+                      >
+                        <span>
+                          Farmer Name{" "}
+                          {formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 1 ? (
+                            <span className="asteriskCss">&#42;</span>
+                          ) : null}
+                          :
+                        </span>
+                        <InputGroup>
+                          <InputControl
+                            Input_type="input"
+                            name="txtFarmerName"
+                            value={formValuesGI.txtFarmerName}
+                            onChange={(e) => updateStateGI("txtFarmerName", e.target.value.replace(/[^a-zA-Z ]+/g, ""))}
+                            autoComplete="off"
+                            disabled={farmerAuthenticateByMobile}
+                          />
+                        </InputGroup>
+                        <span className="login_ErrorTxt">{formValidationKRPHError["txtFarmerName"]}</span>
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: "Quicksand, sans-serif",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "2px",
+                          fontSize: "14px",
+                        }}
+                      >
+                        <span>
+                          Call Status <span className="asteriskCss">&#42;</span> :
+                        </span>{" "}
+                        <InputGroup>
+                          <InputControl
+                            Input_type="select"
+                            name="txtCallStatus"
+                            getOptionLabel={(option) => `${option.Value}`}
+                            value={formValuesGI.txtCallStatus}
+                            getOptionValue={(option) => `${option}`}
+                            options={callConnectedDropdownDataList}
+                            ControlTxt="Call Status"
+                            onChange={(e) => updateStateGI("txtCallStatus", e)}
+                          />
+                        </InputGroup>
+                        <span className="login_ErrorTxt">{formValidationKRPHError["txtCallStatus"]}</span>
+                      </Typography>
+                      {formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 1 ? (
+                        <Typography
+                          sx={{
+                            fontFamily: "Quicksand, sans-serif",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "2px",
+                            fontSize: "14px",
+                          }}
+                        >
+                          <span>
+                            {" "}
+                            Call Purpose <span className="asteriskCss">&#42;</span> :
+                          </span>{" "}
+                          <InputGroup>
+                            <InputControl
+                              Input_type="select"
+                              name="txtCallPurpose"
+                              value={formValuesGI.txtCallPurpose}
+                              options={reasonConnectedDropdownDataList}
+                              getOptionLabel={(option) => `${option.Value}`}
+                              getOptionValue={(option) => `${option}`}
+                              onChange={(e) => updateStateGI("txtCallPurpose", e)}
+                            />
+                          </InputGroup>
+                          <span className="login_ErrorTxt">{formValidationKRPHError["txtCallPurpose"]}</span>
+                        </Typography>
+                      ) : null}
+                      {formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 2 ? (
+                        <Typography
+                          sx={{
+                            fontFamily: "Quicksand, sans-serif",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "2px",
+                            fontSize: "14px",
+                          }}
+                        >
+                          <span>
+                            {" "}
+                            Reason <span className="asteriskCss">&#42;</span> :
+                          </span>{" "}
+                          <InputGroup>
+                            <InputControl
+                              Input_type="select"
+                              name="txtReason"
+                              value={formValuesGI.txtReason}
+                              options={reasonDropdownDataList}
+                              getOptionLabel={(option) => `${option.Value}`}
+                              getOptionValue={(option) => `${option}`}
+                              onChange={(e) => updateStateGI("txtReason", e)}
+                            />
+                          </InputGroup>
+                          <span className="login_ErrorTxt">{formValidationKRPHError["txtReason"]}</span>
+                        </Typography>
+                      ) : null}
+                    </Box>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+                      <div style={{ display: "flex", alignItems: "flex-end" }}>
+                        {formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 1 ? (
+                          <KrphButton type="button" varient="secondary" onClick={() => OnClickBtnAction("BTNNXT")}>
+                            Next
                           </KrphButton>
-                        </div>
-                        <div style={{ display: "flex", alignItems: "flex-end" }}>
-                          <KrphButton type="button" varient="primary" onClick={onToggleChange}>
-                            Premium Calculator
+                        ) : formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 2 ? (
+                          <KrphButton type="button" varient="secondary" onClick={() => OnClickBtnAction("BTNSBMT")}>
+                            Submit
                           </KrphButton>
-                        </div>
-                      </Box>
-                    </Card>
-                  </motion.div>
-                </AnimatePresence>
+                        ) : null}
+                      </div>
+                      <div style={{ display: "flex", alignItems: "flex-end" }}>
+                        <KrphButton type="button" varient="title" onClick={() => OnClickBtnReset()}>
+                          Reset
+                        </KrphButton>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "flex-end" }}>
+                        <KrphButton type="button" varient="primary" onClick={onToggleChange}>
+                          Premium Calculator
+                        </KrphButton>
+                      </div>
+                    </Box>
+                  </Card>
+                </motion.div>
+              </AnimatePresence>
 
               {formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 1 ? (
                 <>
@@ -5516,9 +5497,12 @@ function KrphAllActivitiesNDN() {
                   ) : null}
                 </>
               ) : null}
-              
-               {formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 1 ? <> {openFeedback && (
-                   <AnimatePresence mode="wait">
+
+              {formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 1 ? (
+                <>
+                  {" "}
+                  {openFeedback && (
+                    <AnimatePresence mode="wait">
                       <motion.div key="farmer" initial="hidden" animate="visible" exit="exit" variants={transitionVariants}>
                         <Box
                           sx={{
@@ -5532,20 +5516,29 @@ function KrphAllActivitiesNDN() {
                           }}
                           layout
                         >
-                          {formValuesGI && formValuesGI.txtCallPurpose && formValuesGI.txtCallPurpose.ID === 7 ?
-                          <div className="container my-3">
-                            <div className="row">
-                              <div className="col-md-12">
-                                <div className="csc-form-cards">
-                                  <Feedback dcryptUNQEID={dcryptUNQEID} farmerName={formValuesGI.txtFarmerName ? formValuesGI.txtFarmerName : ""} farmerMobileNumber={formValuesGI.txtMobileCallerNumber ? formValuesGI.txtMobileCallerNumber : ""} dcryptUID={dcryptUID} />
+                          {formValuesGI && formValuesGI.txtCallPurpose && formValuesGI.txtCallPurpose.ID === 7 ? (
+                            <div className="container my-3">
+                              <div className="row">
+                                <div className="col-md-12">
+                                  <div className="csc-form-cards">
+                                    <Feedback
+                                      dcryptUNQEID={dcryptUNQEID}
+                                      farmerName={formValuesGI.txtFarmerName ? formValuesGI.txtFarmerName : ""}
+                                      farmerMobileNumber={formValuesGI.txtMobileCallerNumber ? formValuesGI.txtMobileCallerNumber : ""}
+                                      dcryptUID={dcryptUID}
+                                    />
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div> : null }
+                          ) : null}
                         </Box>
                       </motion.div>
-                    </AnimatePresence> )}</> : null }
-                
+                    </AnimatePresence>
+                  )}
+                </>
+              ) : null}
+
               {formValuesGI && formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.ID === 1 && activeKey === "TCKT" && activeBtnKey === "BTNNXT" ? (
                 <>
                   {openModal && (
@@ -6539,7 +6532,6 @@ function KrphAllActivitiesNDN() {
                                     maxHeight: "180px",
                                     marginBottom: "10px",
                                     display: "block",
-
                                   }}
                                 />
                                 <Typography
@@ -6551,7 +6543,7 @@ function KrphAllActivitiesNDN() {
                                   }}
                                 >
                                   {" "}
-                                  <span style={{ color: "#6B7280", fontSize: "14px" }}>Insurance Company</span>  {InsuranceC ? InsuranceC : "................."}
+                                  <span style={{ color: "#6B7280", fontSize: "14px" }}>Insurance Company</span> {InsuranceC ? InsuranceC : "................."}
                                 </Typography>
                               </Box>
 
@@ -6749,7 +6741,9 @@ function KrphAllActivitiesNDN() {
                                       onChange={(e) => updateStateForByNonRegFarmerOrOffline("txtSeasonForNonRegFarmerOrOffline", e)}
                                     />
                                   </InputGroup>
-                                  <span className="login_ErrorTxt">{formValidationFarmersErrorForNonRegFarmerOrOffline["txtSeasonForNonRegFarmerOrOffline"]}</span>
+                                  <span className="login_ErrorTxt">
+                                    {formValidationFarmersErrorForNonRegFarmerOrOffline["txtSeasonForNonRegFarmerOrOffline"]}
+                                  </span>
                                 </div>
                                 <div style={{ display: "flex", flexDirection: "column", width: "220px" }}>
                                   <label
@@ -6777,7 +6771,9 @@ function KrphAllActivitiesNDN() {
                                       onChange={(e) => updateStateForByNonRegFarmerOrOffline("txtYearForNonRegFarmerOrOffline", e)}
                                     />
                                   </InputGroup>
-                                  <span className="login_ErrorTxt">{formValidationFarmersErrorForNonRegFarmerOrOffline["txtYearForNonRegFarmerOrOffline"]}</span>
+                                  <span className="login_ErrorTxt">
+                                    {formValidationFarmersErrorForNonRegFarmerOrOffline["txtYearForNonRegFarmerOrOffline"]}
+                                  </span>
                                 </div>
                                 <div style={{ display: "flex", flexDirection: "column", width: "220px" }}>
                                   <label
@@ -6804,7 +6800,9 @@ function KrphAllActivitiesNDN() {
                                       onChange={(e) => updateStateForByNonRegFarmerOrOffline("txtSchemeForNonRegFarmerOrOffline", e)}
                                     />
                                   </InputGroup>
-                                  <span className="login_ErrorTxt">{formValidationFarmersErrorForNonRegFarmerOrOffline["txtSchemeForNonRegFarmerOrOffline"]}</span>
+                                  <span className="login_ErrorTxt">
+                                    {formValidationFarmersErrorForNonRegFarmerOrOffline["txtSchemeForNonRegFarmerOrOffline"]}
+                                  </span>
                                 </div>
                                 <div style={{ display: "flex", flexDirection: "column", width: "220px" }}>
                                   <label
@@ -6832,7 +6830,9 @@ function KrphAllActivitiesNDN() {
                                       onChange={(e) => updateStateForByNonRegFarmerOrOffline("txtStateForByNonRegFarmerOrOffline", e)}
                                     />
                                   </InputGroup>
-                                  <span className="login_ErrorTxt">{formValidationFarmersErrorForNonRegFarmerOrOffline["txtStateForByNonRegFarmerOrOffline"]}</span>
+                                  <span className="login_ErrorTxt">
+                                    {formValidationFarmersErrorForNonRegFarmerOrOffline["txtStateForByNonRegFarmerOrOffline"]}
+                                  </span>
                                 </div>
                                 <div style={{ display: "flex", flexDirection: "column", width: "220px" }}>
                                   <label
@@ -6860,7 +6860,9 @@ function KrphAllActivitiesNDN() {
                                       onChange={(e) => updateStateForByNonRegFarmerOrOffline("txtDistrictForByNonRegFarmerOrOffline", e)}
                                     />
                                   </InputGroup>
-                                  <span className="login_ErrorTxt">{formValidationFarmersErrorForNonRegFarmerOrOffline["txtDistrictForByNonRegFarmerOrOffline"]}</span>
+                                  <span className="login_ErrorTxt">
+                                    {formValidationFarmersErrorForNonRegFarmerOrOffline["txtDistrictForByNonRegFarmerOrOffline"]}
+                                  </span>
                                 </div>
                                 <div style={{ display: "flex", flexDirection: "column", width: "220px" }}>
                                   <label
@@ -6888,7 +6890,9 @@ function KrphAllActivitiesNDN() {
                                       onChange={(e) => updateStateForByNonRegFarmerOrOffline("txtSubDistrictForByNonRegFarmerOrOffline", e)}
                                     />
                                   </InputGroup>
-                                  <span className="login_ErrorTxt">{formValidationFarmersErrorForNonRegFarmerOrOffline["txtSubDistrictForByNonRegFarmerOrOffline"]}</span>
+                                  <span className="login_ErrorTxt">
+                                    {formValidationFarmersErrorForNonRegFarmerOrOffline["txtSubDistrictForByNonRegFarmerOrOffline"]}
+                                  </span>
                                 </div>
                                 <div style={{ display: "flex", flexDirection: "column", width: "220px" }}>
                                   <label
@@ -6916,7 +6920,9 @@ function KrphAllActivitiesNDN() {
                                       onChange={(e) => updateStateForByNonRegFarmerOrOffline("txtlevel5ByNonRegFarmerOrOffline", e)}
                                     />
                                   </InputGroup>
-                                  <span className="login_ErrorTxt">{formValidationFarmersErrorForNonRegFarmerOrOffline["txtlevel5ByNonRegFarmerOrOffline"]}</span>
+                                  <span className="login_ErrorTxt">
+                                    {formValidationFarmersErrorForNonRegFarmerOrOffline["txtlevel5ByNonRegFarmerOrOffline"]}
+                                  </span>
                                 </div>
                                 {lablelevel6NonRegFarmerOrOffline === null ? null : (
                                   <div style={{ display: "flex", flexDirection: "column", width: "220px" }}>
@@ -6945,7 +6951,9 @@ function KrphAllActivitiesNDN() {
                                         onChange={(e) => updateStateForByNonRegFarmerOrOffline("txtlevel6ByNonRegFarmerOrOffline", e)}
                                       />
                                     </InputGroup>
-                                    <span className="login_ErrorTxt">{formValidationFarmersErrorForNonRegFarmerOrOffline["txtlevel6ByNonRegFarmerOrOffline"]}</span>
+                                    <span className="login_ErrorTxt">
+                                      {formValidationFarmersErrorForNonRegFarmerOrOffline["txtlevel6ByNonRegFarmerOrOffline"]}
+                                    </span>
                                   </div>
                                 )}
                                 <div style={{ display: "flex", flexDirection: "column", width: "220px" }}>
@@ -6973,163 +6981,173 @@ function KrphAllActivitiesNDN() {
                                       onChange={(e) => updateStateForByNonRegFarmerOrOffline("txtVillageForByNonRegFarmerOrOffline", e)}
                                     />
                                   </InputGroup>
-                                  <span className="login_ErrorTxt">{formValidationFarmersErrorForNonRegFarmerOrOffline["txtVillageForByNonRegFarmerOrOffline"]}</span>
+                                  <span className="login_ErrorTxt">
+                                    {formValidationFarmersErrorForNonRegFarmerOrOffline["txtVillageForByNonRegFarmerOrOffline"]}
+                                  </span>
                                 </div>
-                                {selectedValidateOption === "6" ? <> <div style={{ display: "flex", flexDirection: "column", width: "220px" }}>
-                                  <label
-                                    style={{
-                                      display: "block",
-                                      fontSize: "14px",
-                                      marginBottom: "5px",
-                                      fontWeight: "400",
-                                      color: "#6B7280",
-                                      fontFamily: "Quicksand, sans-serif",
-                                    }}
-                                  >
-                                    Pincode <span className="asteriskCss">&#42;</span>
-                                  </label>
-                                  <InputGroup>
-                                    <InputControl
-                                      Input_type="input"
-                                      name="txtPinCode"
-                                      value={formValuesForByNonRegFarmerOrOffline.txtPinCode}
-                                      maxLength={6}
-                                      minLength={6}
-                                      onChange={(e) => updateStateForByNonRegFarmerOrOffline("txtPinCode", e.target.value.replace(/\D/g, ""))}
-                                      autoComplete="off"
-                                   />
-                                  </InputGroup>
-                                  <span className="login_ErrorTxt">{formValidationFarmersErrorForNonRegFarmerOrOffline["txtPinCode"]}</span>
-                                </div>
-                                  <div style={{ display: "flex", flexDirection: "column", width: "460px" }}>
-                                    <label
-                                      style={{
-                                        display: "block",
-                                        fontSize: "14px",
-                                        marginBottom: "5px",
-                                        fontWeight: "400",
-                                        color: "#6B7280",
-                                        fontFamily: "Quicksand, sans-serif",
-                                      }}
-                                    >
-                                      Address <span className="asteriskCss">&#42;</span>
-                                    </label>
-                                    <InputGroup Row="2">
-                                      <InputControl
-                                        Input_type="textarea"
-                                        name="txtAddress"
-                                        value={formValuesForByNonRegFarmerOrOffline.txtAddress}
-                                        maxLength="500"
-                                        rows="2"
-                                        onChange={(e) => updateStateForByNonRegFarmerOrOffline("txtAddress", e.target.value)}
-                                      />
-                                    </InputGroup>
-                                    <span className="login_ErrorTxt">{formValidationFarmersErrorForNonRegFarmerOrOffline["txtAddress"]}</span>
-                                  </div>
-                                  <div style={{ display: "flex", flexDirection: "column", width: "220px" }}>
-                                    <label
-                                      style={{
-                                        display: "block",
-                                        fontSize: "14px",
-                                        marginBottom: "5px",
-                                        fontWeight: "400",
-                                        color: "#6B7280",
-                                        fontFamily: "Quicksand, sans-serif",
-                                      }}
-                                    >
-                                      Crop <span className="asteriskCss">&#42;</span>
-                                    </label>
-                                    <InputGroup>
-                                      <InputControl
-                                        Input_type="select"
-                                        name="txtCropForCalculate"
-                                        value={formValuesForByNonRegFarmerOrOffline.txtCropForCalculate}
-                                        options={cropForNonRegFarmerOrOfflineDropdownDataList}
-                                        isLoading={isLoadingCropForNonRegFarmerOrOfflineDropdownDataList}
-                                        getOptionLabel={(option) => `${option.cropName}`}
-                                        getOptionValue={(option) => `${option}`}
-                                        onChange={(e) => updateStateForByNonRegFarmerOrOffline("txtCropForCalculate", e)}
-                                      />
-                                    </InputGroup>
-                                    <span className="login_ErrorTxt">{formValidationFarmersErrorForNonRegFarmerOrOffline["txtCropForCalculate"]}</span>
-                                  </div>
-                                  <div style={{ display: "flex", flexDirection: "column", width: "460px" }}>
-                                    <label
-                                      style={{
-                                        display: "block",
-                                        fontSize: "14px",
-                                        marginBottom: "5px",
-                                        fontWeight: "400",
-                                        color: "#6B7280",
-                                        fontFamily: "Quicksand, sans-serif",
-                                      }}
-                                    >
-                                      Insurance Company
-                                    </label>
-                                    <InputGroup>
-                                      <InputControl
-                                        Input_type="input"
-                                        value={formValuesForByNonRegFarmerOrOffline.txtCropForCalculate &&
-                                          formValuesForByNonRegFarmerOrOffline.txtCropForCalculate.insuranceCompanyName
-                                          ? formValuesForByNonRegFarmerOrOffline.txtCropForCalculate.insuranceCompanyName
-                                          : ""}
-                                        disabled={true}
-                                      />
-                                    </InputGroup>
-                                  </div>
-                                  <div style={{ display: "flex", flexDirection: "column", width: "200px" }}>
-                                    <label
-                                      style={{
-                                        display: "block",
-                                        fontSize: "14px",
-                                        marginBottom: "5px",
-                                        fontWeight: "400",
-                                        color: "#6B7280",
-                                        fontFamily: "Quicksand, sans-serif",
-                                      }}
-                                    >
-                                      Area In Hectare <span className="asteriskCss">&#42;</span>
-                                    </label>
-                                    <InputGroup>
-                                      <InputControl
-                                        Input_type="input"
-                                        maxlength="6"
-                                        minlength="3"
-                                        name="txtAreaInHectareForCalculator"
-                                        value={formValuesForByNonRegFarmerOrOffline.txtAreaInHectareForCalculator}
-                                        onChange={(e) => updateStateForByNonRegFarmerOrOffline("txtAreaInHectareForCalculator", e.target.value)}
-                                        autoComplete="off"
-                                      />
-                                    </InputGroup>
-                                    <span className="login_ErrorTxt">{formValidationFarmersErrorForNonRegFarmerOrOffline["txtAreaInHectareForCalculator"]}</span>
-                                  </div>
-                                  <div style={{ display: "flex", flexDirection: "column", width: "200px" }}>
-                                    <label
-                                      style={{
-                                        display: "block",
-                                        fontSize: "14px",
-                                        marginBottom: "5px",
-                                        fontWeight: "400",
-                                        color: "#6B7280",
-                                        fontFamily: "Quicksand, sans-serif",
-                                      }}
-                                    >
-                                      Premiums
-                                    </label>
-                                    <InputGroup>
-                                      <InputControl
-                                        Input_type="input"
-                                        value={formValuesForByNonRegFarmerOrOffline.CalculatedSumInsured &&
-                                          formValuesForByNonRegFarmerOrOffline.CalculatedSumInsured
-                                          ? formValuesForByNonRegFarmerOrOffline.CalculatedSumInsured
-                                          : ""}
-                                        disabled={true}
-                                      />
-                                    </InputGroup>
-                                  </div>
-                                </>
-                                  :
-                                  null}
+                                {selectedValidateOption === "6" ? (
+                                  <>
+                                    {" "}
+                                    <div style={{ display: "flex", flexDirection: "column", width: "220px" }}>
+                                      <label
+                                        style={{
+                                          display: "block",
+                                          fontSize: "14px",
+                                          marginBottom: "5px",
+                                          fontWeight: "400",
+                                          color: "#6B7280",
+                                          fontFamily: "Quicksand, sans-serif",
+                                        }}
+                                      >
+                                        Pincode <span className="asteriskCss">&#42;</span>
+                                      </label>
+                                      <InputGroup>
+                                        <InputControl
+                                          Input_type="input"
+                                          name="txtPinCode"
+                                          value={formValuesForByNonRegFarmerOrOffline.txtPinCode}
+                                          maxLength={6}
+                                          minLength={6}
+                                          onChange={(e) => updateStateForByNonRegFarmerOrOffline("txtPinCode", e.target.value.replace(/\D/g, ""))}
+                                          autoComplete="off"
+                                        />
+                                      </InputGroup>
+                                      <span className="login_ErrorTxt">{formValidationFarmersErrorForNonRegFarmerOrOffline["txtPinCode"]}</span>
+                                    </div>
+                                    <div style={{ display: "flex", flexDirection: "column", width: "460px" }}>
+                                      <label
+                                        style={{
+                                          display: "block",
+                                          fontSize: "14px",
+                                          marginBottom: "5px",
+                                          fontWeight: "400",
+                                          color: "#6B7280",
+                                          fontFamily: "Quicksand, sans-serif",
+                                        }}
+                                      >
+                                        Address <span className="asteriskCss">&#42;</span>
+                                      </label>
+                                      <InputGroup Row="2">
+                                        <InputControl
+                                          Input_type="textarea"
+                                          name="txtAddress"
+                                          value={formValuesForByNonRegFarmerOrOffline.txtAddress}
+                                          maxLength="500"
+                                          rows="2"
+                                          onChange={(e) => updateStateForByNonRegFarmerOrOffline("txtAddress", e.target.value)}
+                                        />
+                                      </InputGroup>
+                                      <span className="login_ErrorTxt">{formValidationFarmersErrorForNonRegFarmerOrOffline["txtAddress"]}</span>
+                                    </div>
+                                    <div style={{ display: "flex", flexDirection: "column", width: "220px" }}>
+                                      <label
+                                        style={{
+                                          display: "block",
+                                          fontSize: "14px",
+                                          marginBottom: "5px",
+                                          fontWeight: "400",
+                                          color: "#6B7280",
+                                          fontFamily: "Quicksand, sans-serif",
+                                        }}
+                                      >
+                                        Crop <span className="asteriskCss">&#42;</span>
+                                      </label>
+                                      <InputGroup>
+                                        <InputControl
+                                          Input_type="select"
+                                          name="txtCropForCalculate"
+                                          value={formValuesForByNonRegFarmerOrOffline.txtCropForCalculate}
+                                          options={cropForNonRegFarmerOrOfflineDropdownDataList}
+                                          isLoading={isLoadingCropForNonRegFarmerOrOfflineDropdownDataList}
+                                          getOptionLabel={(option) => `${option.cropName}`}
+                                          getOptionValue={(option) => `${option}`}
+                                          onChange={(e) => updateStateForByNonRegFarmerOrOffline("txtCropForCalculate", e)}
+                                        />
+                                      </InputGroup>
+                                      <span className="login_ErrorTxt">{formValidationFarmersErrorForNonRegFarmerOrOffline["txtCropForCalculate"]}</span>
+                                    </div>
+                                    <div style={{ display: "flex", flexDirection: "column", width: "460px" }}>
+                                      <label
+                                        style={{
+                                          display: "block",
+                                          fontSize: "14px",
+                                          marginBottom: "5px",
+                                          fontWeight: "400",
+                                          color: "#6B7280",
+                                          fontFamily: "Quicksand, sans-serif",
+                                        }}
+                                      >
+                                        Insurance Company
+                                      </label>
+                                      <InputGroup>
+                                        <InputControl
+                                          Input_type="input"
+                                          value={
+                                            formValuesForByNonRegFarmerOrOffline.txtCropForCalculate &&
+                                            formValuesForByNonRegFarmerOrOffline.txtCropForCalculate.insuranceCompanyName
+                                              ? formValuesForByNonRegFarmerOrOffline.txtCropForCalculate.insuranceCompanyName
+                                              : ""
+                                          }
+                                          disabled={true}
+                                        />
+                                      </InputGroup>
+                                    </div>
+                                    <div style={{ display: "flex", flexDirection: "column", width: "200px" }}>
+                                      <label
+                                        style={{
+                                          display: "block",
+                                          fontSize: "14px",
+                                          marginBottom: "5px",
+                                          fontWeight: "400",
+                                          color: "#6B7280",
+                                          fontFamily: "Quicksand, sans-serif",
+                                        }}
+                                      >
+                                        Area In Hectare <span className="asteriskCss">&#42;</span>
+                                      </label>
+                                      <InputGroup>
+                                        <InputControl
+                                          Input_type="input"
+                                          maxlength="6"
+                                          minlength="3"
+                                          name="txtAreaInHectareForCalculator"
+                                          value={formValuesForByNonRegFarmerOrOffline.txtAreaInHectareForCalculator}
+                                          onChange={(e) => updateStateForByNonRegFarmerOrOffline("txtAreaInHectareForCalculator", e.target.value)}
+                                          autoComplete="off"
+                                        />
+                                      </InputGroup>
+                                      <span className="login_ErrorTxt">
+                                        {formValidationFarmersErrorForNonRegFarmerOrOffline["txtAreaInHectareForCalculator"]}
+                                      </span>
+                                    </div>
+                                    <div style={{ display: "flex", flexDirection: "column", width: "200px" }}>
+                                      <label
+                                        style={{
+                                          display: "block",
+                                          fontSize: "14px",
+                                          marginBottom: "5px",
+                                          fontWeight: "400",
+                                          color: "#6B7280",
+                                          fontFamily: "Quicksand, sans-serif",
+                                        }}
+                                      >
+                                        Premiums
+                                      </label>
+                                      <InputGroup>
+                                        <InputControl
+                                          Input_type="input"
+                                          value={
+                                            formValuesForByNonRegFarmerOrOffline.CalculatedSumInsured &&
+                                            formValuesForByNonRegFarmerOrOffline.CalculatedSumInsured
+                                              ? formValuesForByNonRegFarmerOrOffline.CalculatedSumInsured
+                                              : ""
+                                          }
+                                          disabled={true}
+                                        />
+                                      </InputGroup>
+                                    </div>
+                                  </>
+                                ) : null}
                               </form>
                             </motion.div>
                           </Box>
@@ -7156,39 +7174,46 @@ function KrphAllActivitiesNDN() {
                           <Box sx={{ display: "flex", gap: 1, my: 1 }}>
                             {farmersTicketSummaryData && farmersTicketSummaryData.length > 0
                               ? farmersTicketSummaryData.map((item, index) => (
-                                <Card key={index} sx={{ flex: 1, backgroundColor: index === 0 ? "#EEF8EB" : index === 1 ? "#FFF6E5" : index === 2 ? "#E5F8E8" : "", height: "125px" }}>
-                                  <CardContent sx={{ textAlign: "center" }}>
-                                    <Typography variant="h6" fontWeight="bold">
-                                      {item.Total}
-                                    </Typography>
-                                    <Typography>{item.TicketStatus + " Tickets"}</Typography>
-                                    <Button
-                                      variant="text"
-                                      sx={{ color: "#26a69a", fontWeight: "bold", textTransform: "none" }}
-                                      onClick={() => getTicketHistoryOnClick(item.TicketStatusID)}
-                                    >
-                                      VIEW TICKET
-                                    </Button>
-                                  </CardContent>
-                                </Card>
-                              ))
+                                  <Card
+                                    key={index}
+                                    sx={{
+                                      flex: 1,
+                                      backgroundColor: index === 0 ? "#EEF8EB" : index === 1 ? "#FFF6E5" : index === 2 ? "#E5F8E8" : "",
+                                      height: "125px",
+                                    }}
+                                  >
+                                    <CardContent sx={{ textAlign: "center" }}>
+                                      <Typography variant="h6" fontWeight="bold">
+                                        {item.Total}
+                                      </Typography>
+                                      <Typography>{item.TicketStatus + " Tickets"}</Typography>
+                                      <Button
+                                        variant="text"
+                                        sx={{ color: "#26a69a", fontWeight: "bold", textTransform: "none" }}
+                                        onClick={() => getTicketHistoryOnClick(item.TicketStatusID)}
+                                      >
+                                        VIEW TICKET
+                                      </Button>
+                                    </CardContent>
+                                  </Card>
+                                ))
                               : [
-                                { count: 0, label: "Total Tickets", color: "#EEF8EB" },
-                                { count: 0, label: "Open Tickets", color: "#FFF6E5" },
-                                { count: 0, label: "Resolved Tickets", color: "#E5F8E8" },
-                              ].map((item, index) => (
-                                <Card key={index} sx={{ flex: 1, backgroundColor: item.color, height: "125px" }}>
-                                  <CardContent sx={{ textAlign: "center" }}>
-                                    <Typography variant="h6" fontWeight="bold">
-                                      {item.count}
-                                    </Typography>
-                                    <Typography>{item.label}</Typography>
-                                    <Button variant="text" sx={{ color: "#26a69a", fontWeight: "bold", textTransform: "none" }}>
-                                      VIEW TICKET
-                                    </Button>
-                                  </CardContent>
-                                </Card>
-                              ))}
+                                  { count: 0, label: "Total Tickets", color: "#EEF8EB" },
+                                  { count: 0, label: "Open Tickets", color: "#FFF6E5" },
+                                  { count: 0, label: "Resolved Tickets", color: "#E5F8E8" },
+                                ].map((item, index) => (
+                                  <Card key={index} sx={{ flex: 1, backgroundColor: item.color, height: "125px" }}>
+                                    <CardContent sx={{ textAlign: "center" }}>
+                                      <Typography variant="h6" fontWeight="bold">
+                                        {item.count}
+                                      </Typography>
+                                      <Typography>{item.label}</Typography>
+                                      <Button variant="text" sx={{ color: "#26a69a", fontWeight: "bold", textTransform: "none" }}>
+                                        VIEW TICKET
+                                      </Button>
+                                    </CardContent>
+                                  </Card>
+                                ))}
                           </Box>
                           {fetchfarmersummary !== "" ? (
                             <KrphButton
@@ -7241,8 +7266,8 @@ function KrphAllActivitiesNDN() {
                                 Information
                               </Button>
                               {formValuesForFarmerInfo.txtYearForFarmerInfo &&
-                                formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
-                                formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2023 ? null : (
+                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
+                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2023 ? null : (
                                 <Button
                                   variant={selectedOption === "4" ? "contained" : "outlined"}
                                   onClick={() => selectedOptionOnClick("LO")}
@@ -7336,15 +7361,15 @@ function KrphAllActivitiesNDN() {
                           {(formValuesTicketCreation.txtTicketCategory && formValuesTicketCreation.txtTicketCategory.TicketCategoryID
                             ? formValuesTicketCreation.txtTicketCategory.TicketCategoryID === 51
                             : 0) ||
-                            (formValuesTicketCreation.txtTicketCategory && formValuesTicketCreation.txtTicketCategory.TicketCategoryID
-                              ? formValuesTicketCreation.txtTicketCategory.TicketCategoryID === 52
-                              : 0) ||
-                            (formValuesTicketCreation.txtTicketCategory && formValuesTicketCreation.txtTicketCategory.TicketCategoryID
-                              ? formValuesTicketCreation.txtTicketCategory.TicketCategoryID === 53
-                              : 0) ||
-                            (formValuesTicketCreation.txtTicketCategory && formValuesTicketCreation.txtTicketCategory.TicketCategoryID
-                              ? formValuesTicketCreation.txtTicketCategory.TicketCategoryID === 58
-                              : 0) ? (
+                          (formValuesTicketCreation.txtTicketCategory && formValuesTicketCreation.txtTicketCategory.TicketCategoryID
+                            ? formValuesTicketCreation.txtTicketCategory.TicketCategoryID === 52
+                            : 0) ||
+                          (formValuesTicketCreation.txtTicketCategory && formValuesTicketCreation.txtTicketCategory.TicketCategoryID
+                            ? formValuesTicketCreation.txtTicketCategory.TicketCategoryID === 53
+                            : 0) ||
+                          (formValuesTicketCreation.txtTicketCategory && formValuesTicketCreation.txtTicketCategory.TicketCategoryID
+                            ? formValuesTicketCreation.txtTicketCategory.TicketCategoryID === 58
+                            : 0) ? (
                             <div className="form-group_agent">
                               <label className="ticket-label_agent">
                                 Other Sub Category <span className="asteriskCss">&#42;</span>
@@ -7510,45 +7535,51 @@ function KrphAllActivitiesNDN() {
                 ""
               )}
             </motion.div>
-          </AnimatePresence> :   <Box className="ticket-content_agent"> <Card
-          sx={{
-            p: 2,
-            borderRadius: "8px",
-            boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.1)",
-            width: "100%",
-          }}
-        >
-          {servicesuccessData && servicesuccessData === "TC" ? (
-            <>
-              <div className="success_container_img_agent">
-                <img src={successtick} className="success-icon_agent" alt="Success" />
-                <div className="success-ticket-info_agent">
-                  <p className="success-ticket-number_agent">{getSupportTicketNo}</p>
-                  <p className="success-ticket-text_agent">Ticket Created Successfully</p>
-                </div>
-              </div>
-              <p className="success-message_agent">
-                Congratulations! A ticket with a reference number above has been generated. Click the "Create More" button if you wish to create more tickets, or
-                else please close the tab, you can ask for the farmer’s feedback.
-              </p>
-              <div className="success-button-group_agent">
-                <button onClick={CreateMoreBtnOnClick} className="success-create-more_agent">
-                  Create More
-                </button>
-              </div>
-            </>
-          ) : servicesuccessData === "CD" ? (<>
-            <div className="success_container_img_agent">
-              <img src={callDisconnected} className="success-icon_agent" alt="Call-Disconnected" />
-            </div>
-            <p className="success-message_agent">Call is disconnected, Please close the tab</p> </>
-          ) : (
-            ""
-          )}
-        </Card></Box> }
-        </Box>
-      
-
+          </AnimatePresence>
+        ) : (
+          <Box className="ticket-content_agent">
+            {" "}
+            <Card
+              sx={{
+                p: 2,
+                borderRadius: "8px",
+                boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.1)",
+                width: "100%",
+              }}
+            >
+              {servicesuccessData && servicesuccessData === "TC" ? (
+                <>
+                  <div className="success_container_img_agent">
+                    <img src={successtick} className="success-icon_agent" alt="Success" />
+                    <div className="success-ticket-info_agent">
+                      <p className="success-ticket-number_agent">{getSupportTicketNo}</p>
+                      <p className="success-ticket-text_agent">Ticket Created Successfully</p>
+                    </div>
+                  </div>
+                  <p className="success-message_agent">
+                    Congratulations! A ticket with a reference number above has been generated. Click the "Create More" button if you wish to create more
+                    tickets, or else please close the tab, you can ask for the farmer’s feedback.
+                  </p>
+                  <div className="success-button-group_agent">
+                    <button onClick={CreateMoreBtnOnClick} className="success-create-more_agent">
+                      Create More
+                    </button>
+                  </div>
+                </>
+              ) : servicesuccessData === "CD" ? (
+                <>
+                  <div className="success_container_img_agent">
+                    <img src={callDisconnected} className="success-icon_agent" alt="Call-Disconnected" />
+                  </div>
+                  <p className="success-message_agent">Call is disconnected, Please close the tab</p>{" "}
+                </>
+              ) : (
+                ""
+              )}
+            </Card>
+          </Box>
+        )}
+      </Box>
     </>
   );
 }
@@ -7693,9 +7724,9 @@ function InsuranceCompanyModalGreivence({
               headerName="Policy Number"
               width="180"
               headerTooltip="Policy no.: <scheme code><season code><state code><YY><Insurance policy>"
-            // A cellRenderer={(node) => {
-            // A  return node.data.applicationList.length > 0 ? node.data.applicationList[0].policyID : null;
-            // A }}
+              // A cellRenderer={(node) => {
+              // A  return node.data.applicationList.length > 0 ? node.data.applicationList[0].policyID : null;
+              // A }}
             />
             <DataGrid.Column
               field="policyPremium"
@@ -7714,9 +7745,9 @@ function InsuranceCompanyModalGreivence({
               headerName="Application Number"
               width="170"
               headerTooltip="Application number against respective land and crop. It may be multiple against the same policy ID for different land"
-            // A cellRenderer={(node) => {
-            // A  return node.data.applicationList.length > 0 ? node.data.applicationList[0].applicationNo : null;
-            // A  }}
+              // A cellRenderer={(node) => {
+              // A  return node.data.applicationList.length > 0 ? node.data.applicationList[0].applicationNo : null;
+              // A  }}
             />
             <DataGrid.Column
               field="#"
@@ -7736,45 +7767,45 @@ function InsuranceCompanyModalGreivence({
               headerName="Crop Name"
               width="140"
               headerTooltip="Crop Covered for the particular application against the policy"
-            // A cellRenderer={(node) => {
-            // A  return node.data.applicationList.length > 0 ? node.data.applicationList[0].cropName : null;
-            // A }}
+              // A cellRenderer={(node) => {
+              // A  return node.data.applicationList.length > 0 ? node.data.applicationList[0].cropName : null;
+              // A }}
             />
             <DataGrid.Column
               field="farmerShare"
               headerName="Premium Share"
               width="140"
               headerTooltip="Premium Share of particular Application"
-            // A cellRenderer={(node) => {
-            // A  return node.data.applicationList.length > 0 ? node.data.applicationList[0].farmerShare : null;
-            // A }}
+              // A cellRenderer={(node) => {
+              // A  return node.data.applicationList.length > 0 ? node.data.applicationList[0].farmerShare : null;
+              // A }}
             />
             <DataGrid.Column
               field="cropShare"
               headerName="Area covered under Application"
               width="235"
               headerTooltip="sowing crop area in land"
-            // A cellRenderer={(node) => {
-            // A  return node.data.applicationList.length > 0 ? node.data.applicationList[0].cropShare : null;
-            // A }}
+              // A cellRenderer={(node) => {
+              // A  return node.data.applicationList.length > 0 ? node.data.applicationList[0].cropShare : null;
+              // A }}
             />
             <DataGrid.Column
               field="landSurveyNumber"
               headerName="Land Number"
               width="125"
               headerTooltip="Registered Number of Total Land (Khata Number)"
-            // A cellRenderer={(node) => {
-            // A  return node.data.applicationList.length > 0 ? node.data.applicationList[0].landSurveyNumber : null;
-            // A }}
+              // A cellRenderer={(node) => {
+              // A  return node.data.applicationList.length > 0 ? node.data.applicationList[0].landSurveyNumber : null;
+              // A }}
             />
             <DataGrid.Column
               field="landDivisionNumber"
               headerName="Division Number"
               width="140"
               headerTooltip="Division number against of that particular Land"
-            // A cellRenderer={(node) => {
-            // A  return node.data.applicationList.length > 0 ? node.data.applicationList[0].landDivisionNumber : null;
-            // A }}
+              // A cellRenderer={(node) => {
+              // A  return node.data.applicationList.length > 0 ? node.data.applicationList[0].landDivisionNumber : null;
+              // A }}
             />
 
             <DataGrid.Column
@@ -7782,18 +7813,18 @@ function InsuranceCompanyModalGreivence({
               headerName="Source"
               width="90"
               headerTooltip="Source of the application submitted by Farmer"
-            // A cellRenderer={(node) => {
-            // A  return node.data.applicationList.length > 0 ? node.data.applicationList[0].applicationSource : null;
-            // A  }}
+              // A cellRenderer={(node) => {
+              // A  return node.data.applicationList.length > 0 ? node.data.applicationList[0].applicationSource : null;
+              // A  }}
             />
             <DataGrid.Column
               field="applicationStatus"
               headerName="Application Status"
               width="190"
               headerTooltip="Status of the application submitted by farmer"
-            // A cellRenderer={(node) => {
-            // A  return node.data.applicationList.length > 0 ? node.data.applicationList[0].applicationStatus : null;
-            // A }}
+              // A cellRenderer={(node) => {
+              // A  return node.data.applicationList.length > 0 ? node.data.applicationList[0].applicationStatus : null;
+              // A }}
             />
           </DataGrid>
         </div>
@@ -7942,9 +7973,9 @@ function TicketHistoryModal({
                 // A return node.data.CreatedAt ? `${dateFormat(node.data.CreatedAt.split("T")[0])} ${tConvert(node.data.CreatedAt.split("T")[1])}` : null;
                 return node.data.CreatedAt
                   ? dateToSpecificFormat(
-                    `${node.data.CreatedAt.split("T")[0]} ${Convert24FourHourAndMinute(node.data.CreatedAt.split("T")[1])}`,
-                    "DD-MM-YYYY HH:mm",
-                  )
+                      `${node.data.CreatedAt.split("T")[0]} ${Convert24FourHourAndMinute(node.data.CreatedAt.split("T")[1])}`,
+                      "DD-MM-YYYY HH:mm",
+                    )
                   : null;
               }}
             />

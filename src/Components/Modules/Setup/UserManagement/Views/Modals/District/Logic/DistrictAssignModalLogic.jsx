@@ -31,7 +31,7 @@ function DistrictAssignModalLogic() {
     try {
       console.log("pselectedUserData", pselectedUserData);
       setSelectedUser(pselectedUserData);
-      
+
       setIsLoadingDistrictList(true);
       const userData = getSessionStorage("user");
       const formdata = {
@@ -45,7 +45,6 @@ function DistrictAssignModalLogic() {
       console.log(result, "District");
       setIsLoadingDistrictList(false);
       if (result.response.responseCode === 1) {
-        
         if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
           setDistrictList(result.response.responseData.masterdatabinding);
           console.log("result.response.responseData.masterdatabinding", result.response.responseData.masterdatabinding);
@@ -69,7 +68,6 @@ function DistrictAssignModalLogic() {
 
   const [gridApi, setGridApi] = useState();
   const onAssinGridReady = (params) => {
-    
     setGridApi(params.api);
     console.log("params.api)", params.api);
   };
@@ -87,7 +85,6 @@ function DistrictAssignModalLogic() {
       console.log(result, "result");
       setBtnLoaderActive(false);
       if (result.response.responseCode === 1) {
-        
         if (formdata.viewMode === "GETASSIGNED") {
           if (
             result.response.responseData &&
@@ -112,7 +109,6 @@ function DistrictAssignModalLogic() {
           }
         } else if (formdata.viewMode !== "GETASSIGNED" && formdata.viewMode !== "ASSIGNALL" && formdata.viewMode !== "UNASSIGNALL") {
           if (gridApi) {
-            
             console.log("districtGridApi", gridApi);
             let count = 0;
             gridApi.forEachNode(function (rowNode) {
@@ -124,7 +120,7 @@ function DistrictAssignModalLogic() {
                   rowNode.data.UserDistrictID = null;
                   rowNode.data.AssignmentFlag = 0;
                 }
-                
+
                 if (rowNode.data.AssignmentFlag === 0) {
                   count += 1;
                 } else {
@@ -151,7 +147,7 @@ function DistrictAssignModalLogic() {
             stateMasterID: Number(selectedDistrict.StateMasterID),
             districtMasterCode: "",
           };
-          
+
           userDistrictAssignManageList(formdata);
         }
       } else {
@@ -172,8 +168,6 @@ function DistrictAssignModalLogic() {
   };
 
   const onAssignDistrict = (district) => {
-    
-
     if (district && district.DistrictMasterCode) {
       setSelectedAssign(district);
       console.log("Subdistrict", district, selectedassign);
@@ -186,13 +180,12 @@ function DistrictAssignModalLogic() {
         stateMasterID: Number(district.StateMasterID),
         districtMasterCode: "",
       };
-      
+
       userDistrictAssignManageList(formdata);
     }
   };
 
   const OnAssignAll = (action) => {
-    
     if (selectedDistrict && selectedDistrict.StateMasterID) {
       console.log("selectedDistrict", selectedDistrict);
       const formdata = {
@@ -204,13 +197,12 @@ function DistrictAssignModalLogic() {
         stateMasterID: Number(selectedDistrict.StateMasterID),
         districtMasterCode: "",
       };
-      
+
       userDistrictAssignManageList(formdata);
     }
   };
 
   const onUnAssignDistrict = (district) => {
-    
     console.log("onUnAssignDistrict", district);
     const formdata = {
       viewMode: "UNASSIGN",
@@ -221,11 +213,10 @@ function DistrictAssignModalLogic() {
       stateMasterID: Number(selectedDistrict.StateMasterID),
       districtMasterCode: "",
     };
-    
+
     userDistrictAssignManageList(formdata);
   };
   const onGetAssignDistrict = (moduleData) => {
-    
     console.log("setSelectedDistrict", moduleData);
 
     setSelectedDistrict(moduleData);
@@ -239,7 +230,7 @@ function DistrictAssignModalLogic() {
         stateMasterID: Number(moduleData.StateMasterID),
         districtMasterCode: "",
       };
-      
+
       userDistrictAssignManageList(formdata);
     } else {
       setAlertMessage({

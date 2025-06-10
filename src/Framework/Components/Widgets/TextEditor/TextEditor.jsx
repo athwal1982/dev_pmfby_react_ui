@@ -27,7 +27,6 @@ const TextEditor = ({ value, onChange, setWordcount, sizeLimit }) => {
   };
 
   const handleKeyDown = (e) => {
-    
     if (isLimitExceeded && e.key !== "Backspace" && e.key !== "Delete") {
       e.preventDefault();
     }

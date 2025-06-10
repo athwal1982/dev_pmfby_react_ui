@@ -64,7 +64,6 @@ function BlockAssignModal({ showfunc, selectedUserData }) {
   } = BlockAssignModalLogic();
 
   useEffect(() => {
-    
     setSelectedUser(selectedUserData);
     getStateListData(selectedUserData);
   }, [selectedUserData]);

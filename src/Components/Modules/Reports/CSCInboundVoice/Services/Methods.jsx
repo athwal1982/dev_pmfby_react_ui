@@ -2,7 +2,6 @@ import { ClientApiCalling } from "Services/Utilities/ApiCalling/ApiCalling";
 import APIEndpoints from "./EndPoints";
 
 export const cSCInboundVoiceSelectApi = async (formData) => {
-  
   try {
     const requestData = {
       main: {

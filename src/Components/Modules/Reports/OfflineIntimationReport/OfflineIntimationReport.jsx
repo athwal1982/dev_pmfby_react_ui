@@ -1,8 +1,8 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { DataGrid, PageBar } from "Framework/Components/Layout";
 import { Loader } from "Framework/Components/Widgets";
-import { dateToCompanyFormat, dateToSpecificFormat, dateFormatDefault, daysdifference,Convert24FourHourAndMinute } from "Configration/Utilities/dateformat";
+import { dateToCompanyFormat, dateToSpecificFormat, dateFormatDefault, daysdifference, Convert24FourHourAndMinute } from "Configration/Utilities/dateformat";
 import moment from "moment";
 import * as XLSX from "xlsx";
 import { getSessionStorage } from "Components/Common/Login/Auth/auth";
@@ -10,294 +10,287 @@ import BizClass from "./OfflineIntimationReport.module.scss";
 import { getOfflineSupportTicket } from "./Service/Methods";
 import { getMasterDataBinding } from "../../Support/ManageTicket/Services/Methods";
 function OfflineIntimationReport() {
+  const [formValues, setFormValues] = useState({
+    txtFromDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
+    txtToDate: dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD"),
+    txtInsuranceCompany: null,
+    txtState: null,
+  });
 
-    const [formValues, setFormValues] = useState({
-        txtFromDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
-        txtToDate: dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD"),
-        txtInsuranceCompany:null,
-        txtState:null,
-      });
-    
-      const [ticketHistoryDataList, setTicketHistoryDataList] = useState(false);
-      const [filteredTicketHistoryDataList, setFilteredTicketHistoryDataList] = useState([]);
-      const [isLoadingTicketHistoryDataList, setLoadingTicketHistoryDataList] = useState(false);
-      const setAlertMessage = AlertMessage();
-    
-      const [gridApi, setGridApi] = useState();
-      const onGridReady = (params) => {
-        console.log(params.api);
-        setGridApi(params.api);
-      };
-    
-      const [ticketHistoryListItemSearch, setTicketHistoryListItemSearch] = useState("");
-      const onChangeTicketHistoryList = (val) => {
-        
-        setTicketHistoryListItemSearch(val);
-        gridApi.setQuickFilter(val);
-      };
+  const [ticketHistoryDataList, setTicketHistoryDataList] = useState(false);
+  const [filteredTicketHistoryDataList, setFilteredTicketHistoryDataList] = useState([]);
+  const [isLoadingTicketHistoryDataList, setLoadingTicketHistoryDataList] = useState(false);
+  const setAlertMessage = AlertMessage();
 
-      const [insuranceCompanyList, setInsuranceCompanyList] = useState([]);
-      const [isLoadingInsuranceCompanyList, setIsLoadingInsuranceCompanyList] = useState(false);
-      const getInsuranceCompanyListData = async () => {
-        try {
+  const [gridApi, setGridApi] = useState();
+  const onGridReady = (params) => {
+    console.log(params.api);
+    setGridApi(params.api);
+  };
+
+  const [ticketHistoryListItemSearch, setTicketHistoryListItemSearch] = useState("");
+  const onChangeTicketHistoryList = (val) => {
+    setTicketHistoryListItemSearch(val);
+    gridApi.setQuickFilter(val);
+  };
+
+  const [insuranceCompanyList, setInsuranceCompanyList] = useState([]);
+  const [isLoadingInsuranceCompanyList, setIsLoadingInsuranceCompanyList] = useState(false);
+  const getInsuranceCompanyListData = async () => {
+    try {
+      setInsuranceCompanyList([]);
+      setIsLoadingInsuranceCompanyList(true);
+      const userData = getSessionStorage("user");
+      const formdata = {
+        filterID: userData && userData.LoginID ? userData.LoginID : 0,
+        filterID1: 0,
+        masterName: "INSURASIGN",
+        searchText: "#ALL",
+        searchCriteria: "",
+      };
+      const result = await getMasterDataBinding(formdata);
+      console.log(result, "Insurance Company");
+      setIsLoadingInsuranceCompanyList(false);
+      if (result.response.responseCode === 1) {
+        if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
+          setInsuranceCompanyList(result.response.responseData.masterdatabinding);
+        } else {
           setInsuranceCompanyList([]);
-          setIsLoadingInsuranceCompanyList(true);
-          const userData = getSessionStorage("user");
-          const formdata = {
-            filterID: userData && userData.LoginID ? userData.LoginID : 0,
-            filterID1: 0,
-            masterName: "INSURASIGN",
-            searchText: "#ALL",
-            searchCriteria: "",
-          };
-          const result = await getMasterDataBinding(formdata);
-          console.log(result, "Insurance Company");
-          setIsLoadingInsuranceCompanyList(false);
-          if (result.response.responseCode === 1) {
-            if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
-              setInsuranceCompanyList(result.response.responseData.masterdatabinding);
-            } else {
-              setInsuranceCompanyList([]);
-            }
-          } else {
-            setAlertMessage({
-              type: "error",
-              message: result.response.responseMessage,
-            });
-          }
-        } catch (error) {
-          console.log(error);
-          setAlertMessage({
-            type: "error",
-            message: error,
-          });
         }
-      };
-    
-      const [stateList, setStateList] = useState([]);
-      const [isLoadingStateList, setIsLoadingStateList] = useState(false);
-      const getStateListData = async () => {
-        try {
-          setStateList([]);
-          setIsLoadingStateList(true);
-          const userData = getSessionStorage("user");
-          const formdata = {
-            filterID: userData && userData.LoginID ? userData.LoginID : 0,
-            filterID1: 0,
-            masterName: "STATASIGN",
-            searchText: "#ALL",
-            searchCriteria: "AW",
-          };
-          const result = await getMasterDataBinding(formdata);
-          console.log(result, "State Data");
-          setIsLoadingStateList(false);
-          if (result.response.responseCode === 1) {
-            if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
-              setStateList(result.response.responseData.masterdatabinding);
-            } else {
-              setStateList([]);
-            }
-          } else {
-            setAlertMessage({
-              type: "error",
-              message: result.response.responseMessage,
-            });
-          }
-        } catch (error) {
-          console.log(error);
-          setAlertMessage({
-            type: "error",
-            message: error,
-          });
-        }
-      };
-    
-    
-      const downloadExcel = (data) => {
-        const worksheet = XLSX.utils.json_to_sheet(data);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-        // A let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
-        // A XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
-        worksheet["!cols"] = [
-          { width: 20 },
-          { width: 20 },
-          { width: 20 },
-          { width: 20 },
-          { width: 20 },
-          { width: 25 },
-          { width: 25 },
-          { width: 20 },
-          { width: 25 },
-          { width: 30 },
-          { width: 30 },
-          { width: 20 },
-          { width: 20 },
-          { width: 35 },
-          { width: 25 },
-          { width: 25 },
-          { width: 30 },
-          { width: 30 },
-          { width: 30 },
-          { width: 30 },
-        ];
-        XLSX.writeFile(workbook, "Offline_Intimation_Report.xlsx");
-      };
-    
-      const rearrangeAndRenameColumns = (originalData, columnMapping) => {
-        return originalData.map((item) => {
-          const rearrangedItem = Object.fromEntries(Object.entries(columnMapping).map(([oldColumnName, newColumnName]) => [newColumnName, item[oldColumnName]]));
-          return rearrangedItem;
+      } else {
+        setAlertMessage({
+          type: "error",
+          message: result.response.responseMessage,
         });
+      }
+    } catch (error) {
+      console.log(error);
+      setAlertMessage({
+        type: "error",
+        message: error,
+      });
+    }
+  };
+
+  const [stateList, setStateList] = useState([]);
+  const [isLoadingStateList, setIsLoadingStateList] = useState(false);
+  const getStateListData = async () => {
+    try {
+      setStateList([]);
+      setIsLoadingStateList(true);
+      const userData = getSessionStorage("user");
+      const formdata = {
+        filterID: userData && userData.LoginID ? userData.LoginID : 0,
+        filterID1: 0,
+        masterName: "STATASIGN",
+        searchText: "#ALL",
+        searchCriteria: "AW",
       };
-    
-      const getTicketHistoryData = async () => {
-        
-        try {
-          const dateDiffrence = daysdifference(dateFormatDefault(formValues.txtFromDate), dateFormatDefault(formValues.txtToDate));
-          if (dateDiffrence > 31) {
-            setAlertMessage({
-              type: "error",
-              message: "1 month date range is allowed only",
-            });
-            return;
-          }
-          setLoadingTicketHistoryDataList(true);
-    
-          const formData = {
-            insuranceCompanyID:
-            formValues.txtInsuranceCompany && formValues.txtInsuranceCompany.CompanyID ? formValues.txtInsuranceCompany.CompanyID.toString() : "#ALL",
-           stateID: formValues.txtState && formValues.txtState.StateMasterID ? formValues.txtState.StateMasterID.toString() : "#ALL",
-            fromdate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
-            toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
-            pageIndex: 1,
-            pageSize: 100,
-          };
-          const result = await getOfflineSupportTicket(formData);
-          setLoadingTicketHistoryDataList(false);
-          if (result.responseCode === 1) {
-            if (ticketHistoryListItemSearch && ticketHistoryListItemSearch.toLowerCase().includes("#")) {
-              onChangeTicketHistoryList("");
-            }
-            setTicketHistoryDataList(result.responseData.supportTicket);
-            setFilteredTicketHistoryDataList(result.responseData.supportTicket);
-          } else {
-            setAlertMessage({
-              type: "error",
-              message: result.responseMessage,
-            });
-          }
-        } catch (error) {
-          console.log(error);
-          setAlertMessage({
-            type: "error",
-            message: error,
-          });
+      const result = await getMasterDataBinding(formdata);
+      console.log(result, "State Data");
+      setIsLoadingStateList(false);
+      if (result.response.responseCode === 1) {
+        if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
+          setStateList(result.response.responseData.masterdatabinding);
+        } else {
+          setStateList([]);
         }
+      } else {
+        setAlertMessage({
+          type: "error",
+          message: result.response.responseMessage,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      setAlertMessage({
+        type: "error",
+        message: error,
+      });
+    }
+  };
+
+  const downloadExcel = (data) => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    // A let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+    // A XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+    worksheet["!cols"] = [
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 20 },
+      { width: 25 },
+      { width: 25 },
+      { width: 20 },
+      { width: 25 },
+      { width: 30 },
+      { width: 30 },
+      { width: 20 },
+      { width: 20 },
+      { width: 35 },
+      { width: 25 },
+      { width: 25 },
+      { width: 30 },
+      { width: 30 },
+      { width: 30 },
+      { width: 30 },
+    ];
+    XLSX.writeFile(workbook, "Offline_Intimation_Report.xlsx");
+  };
+
+  const rearrangeAndRenameColumns = (originalData, columnMapping) => {
+    return originalData.map((item) => {
+      const rearrangedItem = Object.fromEntries(Object.entries(columnMapping).map(([oldColumnName, newColumnName]) => [newColumnName, item[oldColumnName]]));
+      return rearrangedItem;
+    });
+  };
+
+  const getTicketHistoryData = async () => {
+    try {
+      const dateDiffrence = daysdifference(dateFormatDefault(formValues.txtFromDate), dateFormatDefault(formValues.txtToDate));
+      if (dateDiffrence > 31) {
+        setAlertMessage({
+          type: "error",
+          message: "1 month date range is allowed only",
+        });
+        return;
+      }
+      setLoadingTicketHistoryDataList(true);
+
+      const formData = {
+        insuranceCompanyID:
+          formValues.txtInsuranceCompany && formValues.txtInsuranceCompany.CompanyID ? formValues.txtInsuranceCompany.CompanyID.toString() : "#ALL",
+        stateID: formValues.txtState && formValues.txtState.StateMasterID ? formValues.txtState.StateMasterID.toString() : "#ALL",
+        fromdate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
+        toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
+        pageIndex: 1,
+        pageSize: 100,
       };
-    
-      const updateState = (name, value) => {
-        
-        setFormValues({ ...formValues, [name]: value });
-      };
-    
-      const getTicketHistoryList = () => {
-        if (formValues.txtFromDate) {
-          if (formValues.txtToDate) {
-            if (formValues.txtFromDate > formValues.txtToDate) {
-              setAlertMessage({
-                type: "warning",
-                message: "From date must be less than To Date",
-              });
-              return;
-            }
-          } else {
-            setAlertMessage({
-              type: "warning",
-              message: "Please select To Date",
-            });
-            return;
-          }
+      const result = await getOfflineSupportTicket(formData);
+      setLoadingTicketHistoryDataList(false);
+      if (result.responseCode === 1) {
+        if (ticketHistoryListItemSearch && ticketHistoryListItemSearch.toLowerCase().includes("#")) {
+          onChangeTicketHistoryList("");
         }
-        getTicketHistoryData();
-      };
-    
-      const exportClick = () => {
-        
-        // A const excelParams = {
-        // A  fileName: "Ticket History",
-        // A };
-        // A gridApi.exportDataAsExcel(excelParams);
-        if (ticketHistoryDataList.length === 0) {
+        setTicketHistoryDataList(result.responseData.supportTicket);
+        setFilteredTicketHistoryDataList(result.responseData.supportTicket);
+      } else {
+        setAlertMessage({
+          type: "error",
+          message: result.responseMessage,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      setAlertMessage({
+        type: "error",
+        message: error,
+      });
+    }
+  };
+
+  const updateState = (name, value) => {
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  const getTicketHistoryList = () => {
+    if (formValues.txtFromDate) {
+      if (formValues.txtToDate) {
+        if (formValues.txtFromDate > formValues.txtToDate) {
           setAlertMessage({
-            type: "error",
-            message: "Data not found to download.",
+            type: "warning",
+            message: "From date must be less than To Date",
           });
           return;
         }
-        const columnOrder = {
-          ApplicationNo: "Application No",
-          CropStage: "Crop Stage Type",
-          CropStageSelection: "Loss at ",
-          CropStageMaster: "Growth",
-          CropCategoryOthers: "Other Crop Category",
-          LossDate: "Loss Date",
-          RequestorName: "Farmer Name",
-          RequestorMobileNo: "Mobile No",
-          CreatedBY: "Created By",
-          TicketDescription: "Description",
-          TicketCategoryName: "Sub Category",
-          TicketStatus: "Ticket Status",
-          DistrictMasterName: "District",
-          PostHarvestDate: "Post Harvest Date",
-          OnTimeIntimationFlag: "On Time Intimation",
-          InsuranceCompany: "Insurance Company",
-          InsurancePolicyNo: "Policy No",
-          CreatedAt: "Created At",
-          TicketTypeName: "Ticket Type",
-          StateMasterName: "State",
-          TicketHeadName: "Ticket Head",
-          CropName: "Crop Name",
-        };
-        
-        const mappedData = ticketHistoryDataList.map((value) => {
-          return {
-            ApplicationNo: value.ApplicationNo,
-            CropStage: value.CropStage,
-            CropStageSelection: value.CropStageSelection.trim(),
-            CropStageMaster: value.CropStageMaster,
-            CropCategoryOthers: value.CropCategoryOthers,
-            LossDate: value.LossDate ? dateToSpecificFormat(value.LossDate.split("T")[0], "DD-MM-YYYY") : "",
-            RequestorName: value.RequestorName,
-            RequestorMobileNo: value.RequestorMobileNo,
-            CreatedBY: value.CreatedBY,
-            TicketDescription: value.TicketDescription,
-            TicketCategoryName: value.TicketCategoryName,
-            TicketStatus: value.TicketStatus,
-            DistrictMasterName: value.DistrictMasterName,
-            PostHarvestDate: value.PostHarvestDate ? dateToSpecificFormat(value.PostHarvestDate, "DD-MM-YYYY") : "",
-            OnTimeIntimationFlag:
-            value.OnTimeIntimationFlag && value.OnTimeIntimationFlag === "NO" ? "Late" : value.OnTimeIntimationFlag === "YES" ? "On-time" : null, 
-            InsurancePolicyNo: value.InsurancePolicyNo,
-            CreatedAt: value.CreatedAt ? dateToSpecificFormat(value.CreatedAt.split("T")[0], "DD-MM-YYYY") : "",
-            InsuranceCompany:value.InsuranceCompany,
-            TicketTypeName: value.TicketTypeName,
-            StateMasterName: value.StateMasterName,
-            TicketHeadName: value.TicketHeadName,
-            CropName: value.CropName,
-          };
+      } else {
+        setAlertMessage({
+          type: "warning",
+          message: "Please select To Date",
         });
-                
-        const rearrangedData = rearrangeAndRenameColumns(mappedData, columnOrder);
-        downloadExcel(rearrangedData);
-      };
+        return;
+      }
+    }
+    getTicketHistoryData();
+  };
 
-      useEffect(() => {
-        
-        getInsuranceCompanyListData();
-        getStateListData();
-      }, []);
-    
+  const exportClick = () => {
+    // A const excelParams = {
+    // A  fileName: "Ticket History",
+    // A };
+    // A gridApi.exportDataAsExcel(excelParams);
+    if (ticketHistoryDataList.length === 0) {
+      setAlertMessage({
+        type: "error",
+        message: "Data not found to download.",
+      });
+      return;
+    }
+    const columnOrder = {
+      ApplicationNo: "Application No",
+      CropStage: "Crop Stage Type",
+      CropStageSelection: "Loss at ",
+      CropStageMaster: "Growth",
+      CropCategoryOthers: "Other Crop Category",
+      LossDate: "Loss Date",
+      RequestorName: "Farmer Name",
+      RequestorMobileNo: "Mobile No",
+      CreatedBY: "Created By",
+      TicketDescription: "Description",
+      TicketCategoryName: "Sub Category",
+      TicketStatus: "Ticket Status",
+      DistrictMasterName: "District",
+      PostHarvestDate: "Post Harvest Date",
+      OnTimeIntimationFlag: "On Time Intimation",
+      InsuranceCompany: "Insurance Company",
+      InsurancePolicyNo: "Policy No",
+      CreatedAt: "Created At",
+      TicketTypeName: "Ticket Type",
+      StateMasterName: "State",
+      TicketHeadName: "Ticket Head",
+      CropName: "Crop Name",
+    };
+
+    const mappedData = ticketHistoryDataList.map((value) => {
+      return {
+        ApplicationNo: value.ApplicationNo,
+        CropStage: value.CropStage,
+        CropStageSelection: value.CropStageSelection.trim(),
+        CropStageMaster: value.CropStageMaster,
+        CropCategoryOthers: value.CropCategoryOthers,
+        LossDate: value.LossDate ? dateToSpecificFormat(value.LossDate.split("T")[0], "DD-MM-YYYY") : "",
+        RequestorName: value.RequestorName,
+        RequestorMobileNo: value.RequestorMobileNo,
+        CreatedBY: value.CreatedBY,
+        TicketDescription: value.TicketDescription,
+        TicketCategoryName: value.TicketCategoryName,
+        TicketStatus: value.TicketStatus,
+        DistrictMasterName: value.DistrictMasterName,
+        PostHarvestDate: value.PostHarvestDate ? dateToSpecificFormat(value.PostHarvestDate, "DD-MM-YYYY") : "",
+        OnTimeIntimationFlag:
+          value.OnTimeIntimationFlag && value.OnTimeIntimationFlag === "NO" ? "Late" : value.OnTimeIntimationFlag === "YES" ? "On-time" : null,
+        InsurancePolicyNo: value.InsurancePolicyNo,
+        CreatedAt: value.CreatedAt ? dateToSpecificFormat(value.CreatedAt.split("T")[0], "DD-MM-YYYY") : "",
+        InsuranceCompany: value.InsuranceCompany,
+        TicketTypeName: value.TicketTypeName,
+        StateMasterName: value.StateMasterName,
+        TicketHeadName: value.TicketHeadName,
+        CropName: value.CropName,
+      };
+    });
+
+    const rearrangedData = rearrangeAndRenameColumns(mappedData, columnOrder);
+    downloadExcel(rearrangedData);
+  };
+
+  useEffect(() => {
+    getInsuranceCompanyListData();
+    getStateListData();
+  }, []);
+
   return (
     <div className={BizClass.PageStart}>
       <PageBar>
@@ -378,8 +371,8 @@ function OfflineIntimationReport() {
             return node.data.OnTimeIntimationFlag && node.data.OnTimeIntimationFlag === "NO"
               ? "Late"
               : node.data.OnTimeIntimationFlag === "YES"
-              ? "On-time"
-              : null;
+                ? "On-time"
+                : null;
           }}
         />
         <DataGrid.Column

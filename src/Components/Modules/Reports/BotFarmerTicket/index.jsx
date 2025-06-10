@@ -13,7 +13,7 @@ function BotFarmerTicketPage() {
     filteredBotFarmerTicketDataList,
     isLoadingBotFarmerTicketDataList,
     onChangeBotFarmerTicketDataList,
-    yearList
+    yearList,
   } = BotFarmerTicketLogic();
 
   return (

@@ -18,7 +18,6 @@ function DashboardTicketCount({
   monthList,
   yearList,
 }) {
-
   const calculateTotalRow = () => {
     const totalRow = {
       InsuranceMasterName: "Total",
@@ -32,7 +31,7 @@ function DashboardTicketCount({
   };
 
   const pinnedBottomRowData = useMemo(() => calculateTotalRow(), [filteredDashboardTicketCountDataList]);
-  
+
   return (
     <div className={BizClass.PageStart}>
       <PageBar>
@@ -69,7 +68,12 @@ function DashboardTicketCount({
           Export
         </PageBar.ExcelButton>
       </PageBar>
-      <DataGrid rowData={filteredDashboardTicketCountDataList} loader={isLoadingDashboardTicketCountDataList ? <Loader /> : false} onGridReady={onGridReady} pinnedBottomRowData={pinnedBottomRowData} >
+      <DataGrid
+        rowData={filteredDashboardTicketCountDataList}
+        loader={isLoadingDashboardTicketCountDataList ? <Loader /> : false}
+        onGridReady={onGridReady}
+        pinnedBottomRowData={pinnedBottomRowData}
+      >
         {/* <DataGrid.Column valueGetter="node.rowIndex + 1" field="#" headerName="Sr No." width={80} pinned="left"  /> */}
         <DataGrid.Column field="InsuranceMasterName" headerName="Insurance Company" width="390px" />
         <DataGrid.Column
@@ -117,13 +121,19 @@ function DashboardTicketCount({
             return node.data.ReOpen ? node.data.ReOpen : 0;
           }}
         />
-         <DataGrid.Column
+        <DataGrid.Column
           field="total"
           headerName="Total"
           width="110px"
           cellStyle={{ "text-align": "right" }}
           valueGetter={(node) => {
-            return Number(node.data.OPEN) + Number(node.data.InProgress) + Number(node.data.Resolved) + Number(node.data.ReOpen) + Number(node.data.ResolvedInformation);
+            return (
+              Number(node.data.OPEN) +
+              Number(node.data.InProgress) +
+              Number(node.data.Resolved) +
+              Number(node.data.ReOpen) +
+              Number(node.data.ResolvedInformation)
+            );
           }}
         />
       </DataGrid>

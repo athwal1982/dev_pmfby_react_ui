@@ -4,7 +4,6 @@ import { Box, Typography, Button, Paper } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 const TicketSuccess = () => {
-  
   const location = useLocation();
   const navigate = useNavigate();
 

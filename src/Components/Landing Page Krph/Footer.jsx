@@ -71,7 +71,8 @@ const Footer = ({ handleWhatsAppClick, language }) => {
             >
               <Box width="80%">
                 <a href="https://pmfby.gov.in/" target="_blank">
-                              <LogoPMFBY style={{ height: "50px" }} /></a>
+                  <LogoPMFBY style={{ height: "50px" }} />
+                </a>
                 <Typography
                   variant="body2"
                   sx={{

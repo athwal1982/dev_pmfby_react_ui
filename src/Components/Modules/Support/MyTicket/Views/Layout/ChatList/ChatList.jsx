@@ -57,7 +57,6 @@ function ChatList({
   const [selectedFileForFileViewerURL, setSelectedFileForFileViewerURL] = useState("");
 
   const toggleFileViewerModal = (pAttahmentURL) => {
-    
     setFileViewerIsLoading(true);
     setIsFileViewerModalOpen(!isFileViewerModalOpen);
     setSelectedFileForFileViewerURL(pAttahmentURL);
@@ -65,7 +64,6 @@ function ChatList({
   };
   const [isEditTicketCommentModalOpen, setIsEditTicketCommentModalOpen] = useState(false);
   const toggleEditTicketCommentModal = (data) => {
-    
     if (data) {
       setSelectedHistoryData(data);
       setValueEditTicketComment(data.TicketDescription);

@@ -39,7 +39,6 @@ export const addNewUser = async (formData) => {
 };
 
 export const getReferenceTypeData = async (formData) => {
-  
   try {
     const requestData = {
       main: {
@@ -55,7 +54,6 @@ export const getReferenceTypeData = async (formData) => {
 };
 
 export const getMasterDataBinding = async (formData) => {
-  
   try {
     const requestData = {
       main: {

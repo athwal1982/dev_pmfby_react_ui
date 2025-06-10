@@ -2,7 +2,6 @@ import { ApiCalling } from "Services/Utilities/ApiCalling/ApiCalling";
 import APIEndpoints from "./Endpoints";
 
 export const addUserProfile = async (formData) => {
-  
   try {
     const requestData = {
       main: {

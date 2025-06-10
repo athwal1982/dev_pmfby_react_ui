@@ -21,16 +21,16 @@ function BotFarmerTicket({
   return (
     <div className={BizClass.PageStart}>
       <PageBar>
-       <PageBar.Select
-                 control={"select"}
-                 label="Year"
-                 name="txtYearFilter"
-                 getOptionLabel={(option) => `${option.label}`}
-                 value={formValues.txtYearFilter}
-                 getOptionValue={(option) => `${option}`}
-                 options={yearList}
-                 onChange={(e) => updateState("txtYearFilter", e)}
-               />
+        <PageBar.Select
+          control={"select"}
+          label="Year"
+          name="txtYearFilter"
+          getOptionLabel={(option) => `${option.label}`}
+          value={formValues.txtYearFilter}
+          getOptionValue={(option) => `${option}`}
+          options={yearList}
+          onChange={(e) => updateState("txtYearFilter", e)}
+        />
         <PageBar.Search onChange={(e) => onChangeBotFarmerTicketDataList(e.target.value)} onClick={() => getBotFarmerTicketDataList()} />
         <PageBar.Button onClick={() => onClickClearSearchFilter()} title="Clear">
           Clear
@@ -42,12 +42,12 @@ function BotFarmerTicket({
 
       <DataGrid rowData={filteredBotFarmerTicketDataList} loader={isLoadingBotFarmerTicketDataList ? <Loader /> : false} onGridReady={onGridReady}>
         <DataGrid.Column valueGetter="node.rowIndex + 1" field="#" headerName="Sr No." width={80} pinned="left" />
-         <DataGrid.Column field="MONTH" headerName="Month" width="170px"  />
-         <DataGrid.Column field="YEAR" headerName="Year" width="170px" cellStyle={{ "text-align": "right" }} />
-         <DataGrid.Column field="TotalTicketCreated" headerName="Total Ticket" width="175px" cellStyle={{ "text-align": "right" }} />
-         <DataGrid.Column field="CreatedByAgent" headerName="Created By Agent" width="170px" cellStyle={{ "text-align": "right" }}  />
-         <DataGrid.Column field="CreatedByBOT" headerName="Created By BOT" width="170px" cellStyle={{ "text-align": "right" }}  />
-         <DataGrid.Column field="CreatedByFarmer" headerName="Created By Farmer" width="170px" cellStyle={{ "text-align": "right" }}  />
+        <DataGrid.Column field="MONTH" headerName="Month" width="170px" />
+        <DataGrid.Column field="YEAR" headerName="Year" width="170px" cellStyle={{ "text-align": "right" }} />
+        <DataGrid.Column field="TotalTicketCreated" headerName="Total Ticket" width="175px" cellStyle={{ "text-align": "right" }} />
+        <DataGrid.Column field="CreatedByAgent" headerName="Created By Agent" width="170px" cellStyle={{ "text-align": "right" }} />
+        <DataGrid.Column field="CreatedByBOT" headerName="Created By BOT" width="170px" cellStyle={{ "text-align": "right" }} />
+        <DataGrid.Column field="CreatedByFarmer" headerName="Created By Farmer" width="170px" cellStyle={{ "text-align": "right" }} />
       </DataGrid>
     </div>
   );

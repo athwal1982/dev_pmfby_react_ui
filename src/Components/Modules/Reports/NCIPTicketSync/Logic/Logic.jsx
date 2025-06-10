@@ -1,6 +1,6 @@
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
-import { useEffect , useState } from "react";
-import { getCurrentDateTimeTick} from "Configration/Utilities/dateformat";
+import { useEffect, useState } from "react";
+import { getCurrentDateTimeTick } from "Configration/Utilities/dateformat";
 import * as XLSX from "xlsx";
 import { convert } from "html-to-text";
 import { getNCIPTicketSyncReport } from "../Services/Methods";
@@ -9,7 +9,7 @@ function NCIPTicketSyncLogic() {
   const setAlertMessage = AlertMessage();
 
   const [formValues, setFormValues] = useState({
-     txtYearFilter: null,
+    txtYearFilter: null,
   });
 
   const [yearList, setYearList] = useState([]);
@@ -45,13 +45,7 @@ function NCIPTicketSyncLogic() {
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    worksheet["!cols"] = [
-      { width: 22 },
-      { width: 22 },
-      { width: 22 },
-      { width: 22 },
-      { width: 22 },
-    ];
+    worksheet["!cols"] = [{ width: 22 }, { width: 22 }, { width: 22 }, { width: 22 }, { width: 22 }];
     const uniqueDateTimeTick = getCurrentDateTimeTick();
     XLSX.writeFile(workbook, `NCIPTicketSync_${uniqueDateTimeTick}.xlsx`);
   };
@@ -66,13 +60,12 @@ function NCIPTicketSyncLogic() {
   const [isLoadingNCIPTicketSyncDataList, setNCIPTicketSyncDataListLoading] = useState(false);
   const [filteredNCIPTicketSyncDataList, setFilteredNCIPTicketSyncDataList] = useState([]);
 
-
-  const getNCIPTicketSyncDataList = async() => {
-   try {
+  const getNCIPTicketSyncDataList = async () => {
+    try {
       setNCIPTicketSyncDataListLoading(true);
 
       const formData = {
-       year: formValues.txtYearFilter && formValues.txtYearFilter.value ? formValues.txtYearFilter.value : "",
+        year: formValues.txtYearFilter && formValues.txtYearFilter.value ? formValues.txtYearFilter.value : "",
       };
       const result = await getNCIPTicketSyncReport(formData);
       setNCIPTicketSyncDataListLoading(false);

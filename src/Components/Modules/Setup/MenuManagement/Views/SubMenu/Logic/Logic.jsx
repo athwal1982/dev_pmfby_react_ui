@@ -33,7 +33,6 @@ function SubMenuPopUpLogics() {
   };
 
   const updateState = (name, value) => {
-    
     if (name === "radioHasChild") {
       if (value === true) {
         formValues.txtWebUrl = "";
@@ -48,7 +47,6 @@ function SubMenuPopUpLogics() {
   };
 
   useEffect(() => {
-    
     if (modalData.isEditMode === true) {
       if (modalData.menuData.HasChild === "1") {
         modalData.menuData.HasChild = true;
@@ -103,8 +101,6 @@ function SubMenuPopUpLogics() {
       if (!handleValidation()) {
         return;
       }
-
-      
 
       setBtnloaderActive(true);
       const formData = {

@@ -3,7 +3,13 @@ import { DataGrid, Modal, PageBar } from "Framework/Components/Layout";
 import { Loader } from "Framework/Components/Widgets";
 import { dateFormatDDMMYY } from "Configration/Utilities/dateformat";
 import BizClass from "./SosAgeingTicketList.module.scss";
-function SosAgeingTicketList({ selectedRowData, openSosAgeingTicketListClick, SosAgeingTicketCountList, isLoadingSosAgeingTicketCountList, exportSosAgeingTicketListClick }) {
+function SosAgeingTicketList({
+  selectedRowData,
+  openSosAgeingTicketListClick,
+  SosAgeingTicketCountList,
+  isLoadingSosAgeingTicketCountList,
+  exportSosAgeingTicketListClick,
+}) {
   console.log(selectedRowData);
   return (
     <Modal varient="half" title="SosAgeing Ticket Details" show={openSosAgeingTicketListClick} right="0" width="75vw">

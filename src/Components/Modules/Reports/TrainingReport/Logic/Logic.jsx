@@ -38,7 +38,7 @@ function TrainingReportLogic() {
       const response = await getTrainerList({ SPMODE: "CENTER", SPCenterID: 0 });
       let data = response.response.responseData;
       if (response.response.responseCode === 1) {
-        setCenterMasterID(response.response.responseData.map(center => center.CenterMasterID));
+        setCenterMasterID(response.response.responseData.map((center) => center.CenterMasterID));
         /*   A setCenters(
              data.map((center) => ({
                value: center.CenterMasterID,
@@ -46,7 +46,6 @@ function TrainingReportLogic() {
              }))
            ); */
         setCenters(data);
-
       } else {
         setCenters([]);
       }
@@ -55,16 +54,10 @@ function TrainingReportLogic() {
     }
   };
 
-
-
-
   useEffect(() => {
     debugger;
     fetchAllTrainer();
   }, []);
- 
-
-
 
   return {
     gridApi,
@@ -79,7 +72,8 @@ function TrainingReportLogic() {
     months,
     years,
     reportData,
-    centerMasterID, setCenterMasterID,
+    centerMasterID,
+    setCenterMasterID,
   };
 }
 

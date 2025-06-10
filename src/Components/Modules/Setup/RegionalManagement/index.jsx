@@ -44,33 +44,41 @@ function RegionalManagementPage() {
   return (
     <>
       {addRegionalMasterModal ? (
-         <Suspense fallback={<Loader />}><AddRegionalOfficeMaster showfunc={toggleAddRegionalMasterModal} updateUserData={updateUserData} bankInsuranceTypeOptions={bankInsuranceTypeOptions} /></Suspense>
+        <Suspense fallback={<Loader />}>
+          <AddRegionalOfficeMaster
+            showfunc={toggleAddRegionalMasterModal}
+            updateUserData={updateUserData}
+            bankInsuranceTypeOptions={bankInsuranceTypeOptions}
+          />
+        </Suspense>
       ) : null}
       {unAssignRegionalStateModal ? (
-         <Suspense fallback={<Loader />}><UnAssignedRegionalStateModal
-          showfunc={toggleUnAssignedRegionalStateModal}
-          updateAssignedStateList={updateAssignedStateList}
-          selectedRowData={selectedRowData}
-        />
+        <Suspense fallback={<Loader />}>
+          <UnAssignedRegionalStateModal
+            showfunc={toggleUnAssignedRegionalStateModal}
+            updateAssignedStateList={updateAssignedStateList}
+            selectedRowData={selectedRowData}
+          />
         </Suspense>
       ) : null}
 
-       <Suspense fallback={<Loader />}><RegionalManagement
-        isLoadingRegionalDataList={isLoadingRegionalDataList}
-        regionalDataList={regionalDataList}
-        onGridReady={onGridReady}
-        toggleAddRegionalMasterModal={toggleAddRegionalMasterModal}
-        onChangeRegionList={onChangeRegionList}
-        regionalListItemSearch={regionalListItemSearch}
-        getRegionalList={getRegionalList}
-        onGetMenuClick={onGetMenuClick}
-        isLoadingAssignDataList={isLoadingAssignDataList}
-        assignStateList={assignStateList}
-        onGridAssignReady={onGridAssignReady}
-        onClickDeleteAssignedRegionalState={onClickDeleteAssignedRegionalState}
-        onSearchAssignedRegionalState={onSearchAssignedRegionalState}
-        toggleUnAssignedRegionalStateModal={toggleUnAssignedRegionalStateModal}
-      />
+      <Suspense fallback={<Loader />}>
+        <RegionalManagement
+          isLoadingRegionalDataList={isLoadingRegionalDataList}
+          regionalDataList={regionalDataList}
+          onGridReady={onGridReady}
+          toggleAddRegionalMasterModal={toggleAddRegionalMasterModal}
+          onChangeRegionList={onChangeRegionList}
+          regionalListItemSearch={regionalListItemSearch}
+          getRegionalList={getRegionalList}
+          onGetMenuClick={onGetMenuClick}
+          isLoadingAssignDataList={isLoadingAssignDataList}
+          assignStateList={assignStateList}
+          onGridAssignReady={onGridAssignReady}
+          onClickDeleteAssignedRegionalState={onClickDeleteAssignedRegionalState}
+          onSearchAssignedRegionalState={onSearchAssignedRegionalState}
+          toggleUnAssignedRegionalStateModal={toggleUnAssignedRegionalStateModal}
+        />
       </Suspense>
     </>
   );

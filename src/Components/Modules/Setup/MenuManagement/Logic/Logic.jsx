@@ -69,7 +69,6 @@ function MenuManagementLogics() {
 
   const setAlertMessage = AlertMessage();
   const getMenuData = async () => {
-    
     try {
       setIsLoadingMenuList(true);
       const result = await getMenuListData();
@@ -113,7 +112,6 @@ function MenuManagementLogics() {
   }, []);
 
   const updateMenuList = (subMenu, isEditMode) => {
-    
     if (isEditMode) {
       const index = menuListData.findIndex((x) => x.MenuMasterID === subMenu.MenuMasterID);
       menuListData[index].MenuName = subMenu.MenuName;
@@ -149,7 +147,6 @@ function MenuManagementLogics() {
   }, [menuListData]);
 
   useEffect(() => {
-    
     if (gridApi && treeMenuListData.length > 0 && recentAddedMenuId) {
       gridApi.setRowData(treeMenuListData);
       setRecentAddedMenuId(null);

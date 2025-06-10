@@ -36,7 +36,6 @@ function TicketHistory({
   ];
 
   useEffect(() => {
-    
     getInsuranceCompanyListData();
     getStateListData();
   }, []);

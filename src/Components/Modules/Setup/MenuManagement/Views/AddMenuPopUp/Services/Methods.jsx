@@ -2,7 +2,6 @@ import { ApiCalling } from "Services/Utilities/ApiCalling/ApiCalling";
 import APIEndpoints from "./Endpoints";
 
 export const addMenuInfo = async (formData) => {
-  
   try {
     const requestData = {
       main: {
