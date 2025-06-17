@@ -12,7 +12,7 @@ import ministry_logo from "../../../assets/img/ministry_logo.png";
 import { Headphones } from "@mui/icons-material";
 import CSC from "../../../assets/img/CSC_Logo.svg";
 import img_quote from "../../../assets/img/quote_img.png";
-import ImportantInstructionsImage from "assets/Important_Instructions_Banner.jpeg";
+import ImportantInstructionsImage from "assets/Important_Instructions_Banner.jpg";
 import { IconButton } from "@mui/material";
 
 function Welcome() {
@@ -76,7 +76,7 @@ function Welcome() {
               </IconButton>
 
               {/* <div className="ContainerPnlInstructions"> */}
-              <a href="https://drive.google.com/file/d/11OeQEMPEe9FLlqJ-vNEbCJnRsO7QWmUu/view?usp=sharing" title="Click to View" target="_blank">
+              <a href="https://docs.google.com/spreadsheets/d/16VFtCi8BkNHoUWkErfHr0HgXuCHR79DF/edit?usp=sharing&ouid=110802551208315636984&rtpof=true&sd=true" title="Click to View" target="_blank">
                 <img src={ImportantInstructionsImage} style={{ width: "734px", height: "530px" }} />
               </a>
               {/* </div> */}

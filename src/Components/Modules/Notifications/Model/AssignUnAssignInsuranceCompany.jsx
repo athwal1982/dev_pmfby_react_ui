@@ -4,44 +4,44 @@ import Modal from "Framework/Components/Layout/Modal/Modal";
 import { DataGrid, PageBar } from "Framework/Components/Layout";
 import { Button } from "Framework/Components/Widgets";
 import { FiTrash2 } from "react-icons/fi";
-import { getCenterNotificationAssignManage } from "../Services/Methods";
+import { getInsuranceNotificationAssignManage } from "../Services/Methods";
 import "../Notifications.module.scss";
 
-function AssignUnAssignResourcePartner({ toggleAssignUnAssignResourcePartnerModal, assignUnAssignResourcePartnerModal }) {
+function AssignUnAssignInsuranceCompany({ toggleAssignUnAssignInsuranceCompanyModal, assignUnAssignInsuranceCompanyModal }) {
   const setAlertMessage = AlertMessage();
 
-  const [assignedResourcePartnerGridApi, setAssignedResourcePartnerGridApi] = useState();
-  const onAssignedResourcePartnerGridReady = (params) => {
-    setAssignedResourcePartnerGridApi(params.api);
+  const [assignedInsuranceCompanyGridApi, setAssignedInsuranceCompanyGridApi] = useState();
+  const onAssignedInsuranceCompanyGridReady = (params) => {
+    setAssignedInsuranceCompanyGridApi(params.api);
   };
 
-  const [searchTextAssigendResourcePartner, setSearchTextAssigendResourcePartner] = useState("");
-  const onSearchAssignedResourcePartner = (val) => {
+  const [searchTextAssigendInsuranceCompany, setSearchTextAssigendInsuranceCompany] = useState("");
+  const onSearchAssignedInsuranceCompany = (val) => {
     debugger;
-    setSearchTextAssigendResourcePartner(val);
-    assignedResourcePartnerGridApi.setQuickFilter(val);
-    assignedResourcePartnerGridApi.refreshCells();
+    setSearchTextAssigendInsuranceCompany(val);
+    assignedInsuranceCompanyGridApi.setQuickFilter(val);
+    assignedInsuranceCompanyGridApi.refreshCells();
   };
 
-  const [ResourcePartnerList, setResourcePartnerList] = useState([]);
-  const [isLoadingResourcePartnerList, setIsLoadingResourcePartnerList] = useState(false);
-  const getAssignedResourcePartnerListData = async (data) => {
+  const [InsuranceCompanyList, setInsuranceCompanyList] = useState([]);
+  const [isLoadingInsuranceCompanyList, setIsLoadingInsuranceCompanyList] = useState(false);
+  const getAssignedInsuranceCompanyListData = async (data) => {
     debugger;
     try {
-      setIsLoadingResourcePartnerList(true);
+      setIsLoadingInsuranceCompanyList(true);
       const formdata = {
-        viewMode: "GETRESASSIGNED",
-        notificationCenterID: "0",
+        viewMode: "GETASSIGNED",
+        notificationInsuranceID: "0",
         notificationMasterID: data && data.NotificationMasterID ? data.NotificationMasterID : 0,
-        centerID: "0",
+        insuranceCompanyID: "0",
       };
-      const result = await getCenterNotificationAssignManage(formdata);
-      setIsLoadingResourcePartnerList(false);
+      const result = await getInsuranceNotificationAssignManage(formdata);
+      setIsLoadingInsuranceCompanyList(false);
       if (result.response.responseCode === 1) {
-        if (result.response.responseData && result.response.responseData.data  && result.response.responseData.data.NotificationCenter && result.response.responseData.data.NotificationCenter.length > 0) {
-          setResourcePartnerList(result.response.responseData.data.NotificationCenter);
+        if (result.response.responseData && result.response.responseData.data  && result.response.responseData.data.NotificationInsurance && result.response.responseData.data.NotificationInsurance.length > 0) {
+          setInsuranceCompanyList(result.response.responseData.data.NotificationInsurance);
         } else {
-          setResourcePartnerList([]);
+          setInsuranceCompanyList([]);
         }
       } else {
         setAlertMessage({
@@ -58,31 +58,31 @@ function AssignUnAssignResourcePartner({ toggleAssignUnAssignResourcePartnerModa
     }
   };
 
-  const onClickDeleteAssignedResourcePartner = async (data) => {
+  const onClickDeleteAssignedInsuranceCompany = async (data) => {
     debugger;
     try {
       const formdata = {
         viewMode: "UNASSIGN",
-        notificationCenterID: data.NotificationCenterID,
-        notificationMasterID: assignUnAssignResourcePartnerModal && assignUnAssignResourcePartnerModal.NotificationMasterID ? assignUnAssignResourcePartnerModal.NotificationMasterID : 0,
-        centerID: data.ResourcePartnerID,
+        notificationInsuranceID: data.InsuranceMasterID,
+        notificationMasterID: assignUnAssignInsuranceCompanyModal && assignUnAssignInsuranceCompanyModal.NotificationMasterID ? assignUnAssignInsuranceCompanyModal.NotificationMasterID : 0,
+        insuranceCompanyID: data.InsuranceMasterID,
       };
-      const result = await getCenterNotificationAssignManage(formdata);
+      const result = await getInsuranceNotificationAssignManage(formdata);
       if (result.response.responseCode === 1) {
         setAlertMessage({
           type: "success",
           message: result.response.responseMessage,
         });
         data.AssignmentFlag = 0;
-        if (assignedResourcePartnerGridApi) {
+        if (assignedInsuranceCompanyGridApi) {
           const itemsToUpdate = [];
-          assignedResourcePartnerGridApi.forEachNode(function (rowNode) {
-            if (rowNode.data.ResourcePartnerID === data.ResourcePartnerID) {
+          assignedInsuranceCompanyGridApi.forEachNode(function (rowNode) {
+            if (rowNode.data.InsuranceMasterID === data.InsuranceMasterID) {
               itemsToUpdate.push(data);
               rowNode.setData(data);
             }
           });
-          assignedResourcePartnerGridApi.updateRowData({
+          assignedInsuranceCompanyGridApi.updateRowData({
             update: itemsToUpdate,
           });
         }
@@ -99,7 +99,7 @@ function AssignUnAssignResourcePartner({ toggleAssignUnAssignResourcePartnerModa
   };
 
   const getSelectedRowData = () => {
-    const selectedNodes = assignedResourcePartnerGridApi.getSelectedNodes();
+    const selectedNodes = assignedInsuranceCompanyGridApi.getSelectedNodes();
     const selectedData = selectedNodes.map((node) => node.data);
     return selectedData;
   };
@@ -118,22 +118,22 @@ function AssignUnAssignResourcePartner({ toggleAssignUnAssignResourcePartnerModa
         });
         return;
       }
-      const ResourcePartnerIds = checkedItem
+      const InsuranceCompanyIds = checkedItem
         .map((data) => {
-          return data.ResourcePartnerID;
+          return data.InsuranceMasterID;
         })
         .join(",");
 
       setBtnLoaderActive(true);
 
       const formdata = {
-        viewMode: "RESASSIGN",
-        notificationCenterID: "0",
-        notificationMasterID: assignUnAssignResourcePartnerModal && assignUnAssignResourcePartnerModal.NotificationMasterID ? assignUnAssignResourcePartnerModal.NotificationMasterID : 0,
-        centerID: ResourcePartnerIds,
+        viewMode: "ASSIGN",
+        notificationInsuranceID: "0",
+        notificationMasterID: assignUnAssignInsuranceCompanyModal && assignUnAssignInsuranceCompanyModal.NotificationMasterID ? assignUnAssignInsuranceCompanyModal.NotificationMasterID : 0,
+        insuranceCompanyID: InsuranceCompanyIds,
       };
 
-      const result = await getCenterNotificationAssignManage(formdata);
+      const result = await getInsuranceNotificationAssignManage(formdata);
       setBtnLoaderActive(false);
       if (result.response.responseCode === 1) {
         setAlertMessage({
@@ -142,7 +142,7 @@ function AssignUnAssignResourcePartner({ toggleAssignUnAssignResourcePartnerModa
         });
 
         if (result.response.responseData) {
-          const responseAssignedIds = result.response.responseData && result.response.responseData.data && result.response.responseData.data.NotificationCenterID ? result.response.responseData.data.NotificationCenterID.split(",") : [];
+          const responseAssignedIds = result.response.responseData && result.response.responseData.data && result.response.responseData.data.NotificationInsuranceID ? result.response.responseData.data.NotificationInsuranceID.split(",") : [];
           console.log(responseAssignedIds);
           let assignedIds = [];
           if (responseAssignedIds.length > 0) {
@@ -150,8 +150,8 @@ function AssignUnAssignResourcePartner({ toggleAssignUnAssignResourcePartnerModa
               const splitData = data.split("|");
               if (splitData.length > 0 && splitData[0] && splitData[1]) {
                 assignmentIdList.push({
-                  ResourcePartnerID: splitData[0],
-                  NotificationCenterID: splitData[1],
+                  InsuranceMasterID: splitData[0],
+                  NotificationInsuranceID: splitData[1],
                 });
               }
               return assignmentIdList;
@@ -160,27 +160,27 @@ function AssignUnAssignResourcePartner({ toggleAssignUnAssignResourcePartnerModa
 
           if (assignedIds.length > 0) {
             assignedIds.forEach((data) => {
-              ResourcePartnerList.forEach((x) => {
-                let pResourcePartnerID = "0";
+              InsuranceCompanyList.forEach((x) => {
+                let pInsuranceCompanyID = "0";
                 if (!Array.isArray(x)) {
-                  pResourcePartnerID = x.ResourcePartnerID.toString();
+                  pInsuranceCompanyID = x.InsuranceMasterID.toString();
                 } else {
-                  pResourcePartnerID = x[0].ResourcePartnerID.toString();
+                  pInsuranceCompanyID = x[0].InsuranceMasterID.toString();
                 }
-                if (pResourcePartnerID === data.ResourcePartnerID.toString()) {
+                if (pInsuranceCompanyID === data.InsuranceMasterID.toString()) {
                   x.AssignmentFlag = 1;
-                  x.ResourcePartnerID = data.ResourcePartnerID;
-                  x.NotificationCenterID = data.NotificationCenterID;
+                  x.InsuranceMasterID = data.InsuranceMasterID;
+                  x.NotificationInsuranceID = data.NotificationInsuranceID;
                 }
               });
             });
           }
         }
 
-        setResourcePartnerList([]);
-        setResourcePartnerList(ResourcePartnerList);
-        if (assignedResourcePartnerGridApi) {
-          assignedResourcePartnerGridApi.setRowData(ResourcePartnerList);
+        setInsuranceCompanyList([]);
+        setInsuranceCompanyList(InsuranceCompanyList);
+        if (assignedInsuranceCompanyGridApi) {
+          assignedInsuranceCompanyGridApi.setRowData(InsuranceCompanyList);
         }
       } else {
         setAlertMessage({
@@ -215,39 +215,39 @@ function AssignUnAssignResourcePartner({ toggleAssignUnAssignResourcePartnerModa
     return { background: "white" };
   };
   useEffect(() => {
-    getAssignedResourcePartnerListData(assignUnAssignResourcePartnerModal);
+    getAssignedInsuranceCompanyListData(assignUnAssignInsuranceCompanyModal);
   }, []);
 
   return (
     <>
       <Modal
         varient="half"
-        title="Resource Partner Allocation"
+        title="Insurance Company Allocation"
         right={0}
         width="50vw"
         height="100vh"
-        show={toggleAssignUnAssignResourcePartnerModal}
+        show={toggleAssignUnAssignInsuranceCompanyModal}
       >
         <Modal.Body>
           <div className="PageStart">
             <div className="custom-search-container">
               <input
                 type="text"
-                value={searchTextAssigendResourcePartner}
-                onChange={(e) => onSearchAssignedResourcePartner(e.target.value)}
+                value={searchTextAssigendInsuranceCompany}
+                onChange={(e) => onSearchAssignedInsuranceCompany(e.target.value)}
                 className="custom-search-input"
-                placeholder="Search Resource Partner..."
+                placeholder="Search Insurance Company..."
               />
             </div>
             <DataGrid
-              rowData={ResourcePartnerList}
-              loader={isLoadingResourcePartnerList ? <Loader /> : null}
+              rowData={InsuranceCompanyList}
+              loader={isLoadingInsuranceCompanyList ? <Loader /> : null}
               suppressRowClickSelection={true}
               rowSelection={"multiple"}
               getRowStyle={getRowStyle}
-              onGridReady={onAssignedResourcePartnerGridReady}
+              onGridReady={onAssignedInsuranceCompanyGridReady}
               frameworkComponents={{
-                assignedResourcePartnerActionTemplate,
+                assignedInsuranceCompanyActionTemplate,
               }}
               domLayout="autoHeight"
               className="custom-data-grid"
@@ -263,9 +263,9 @@ function AssignUnAssignResourcePartner({ toggleAssignUnAssignResourcePartnerModa
                 headerCheckboxSelectionFilteredOnly
                 checkboxSelection={checkboxSelection}
                 tooltipField="Assign The Resource Partner"
-                cellRenderer="assignedResourcePartnerActionTemplate"
+                cellRenderer="assignedInsuranceCompanyActionTemplate"
                 cellRendererParams={{
-                  onClickDeleteAssignedResourcePartner,
+                  onClickDeleteAssignedInsuranceCompany,
                 }}
                 headerComponentParams={{
                   style: { backgroundColor: "#004d00", color: "white", fontSize: "14px", textAlign: "center" },
@@ -293,8 +293,8 @@ function AssignUnAssignResourcePartner({ toggleAssignUnAssignResourcePartnerModa
                 }}
               />
               <DataGrid.Column
-                field="ResourcePartnerName"
-                headerName="Resource Partner"
+                field="InsuranceMasterName"
+                headerName="Insurance Company"
                 width={150}
                 flex={1}
                 headerComponentParams={{
@@ -320,14 +320,14 @@ function AssignUnAssignResourcePartner({ toggleAssignUnAssignResourcePartnerModa
   );
 }
 
-export default AssignUnAssignResourcePartner;
+export default AssignUnAssignInsuranceCompany;
 
-const assignedResourcePartnerActionTemplate = (props) => {
+const assignedInsuranceCompanyActionTemplate = (props) => {
   return (
     <div style={{ display: "flex" }}>
       {props.data && props.data.AssignmentFlag === 1 ? (
         <span
-          title="Unassign The Resource Partner"
+          title="Unassign The Insurance Company"
           style={{
             cursor: "pointer",
             display: "grid",
@@ -335,7 +335,7 @@ const assignedResourcePartnerActionTemplate = (props) => {
             marginRight: "3px",
           }}
         >
-          <FiTrash2 style={{ fontSize: "15px", color: "#5d6d7e" }} onClick={() => props.onClickDeleteAssignedResourcePartner(props.data)} />
+          <FiTrash2 style={{ fontSize: "15px", color: "#5d6d7e" }} onClick={() => props.onClickDeleteAssignedInsuranceCompany(props.data)} />
         </span>
       ) : null}
     </div>

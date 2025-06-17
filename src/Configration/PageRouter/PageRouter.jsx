@@ -117,7 +117,7 @@ const PageRouter = () => {
         <Route exact path="/AcessRights" element={<Page component={<AccessRightsPage />} title="Access Rights" />} />
         <Route exact path="/MenuToUserManagment" element={<Page component={<MenuToUser />} title="Menu To User" />} />
         <Route exact path="/Faq" element={<Page component={<Faq />} title="Faq" />} />
-        <Route exact path="/Notification" element={<Page component={<Notification />} title="Notification" />} />
+        <Route exact path="/Notification" element={<Page component={<Notification />} title="Crop Notification" />} />
         <Route exact path="/Notifications" element={<Page component={<Notifications />} title="Notification" />} />
         <Route exact path="/Calculator" element={<Page component={<Calculator />} title="Calculator" />} />
         <Route exact path="/GrievanceReport" element={<Page component={<GrievanceReportPage />} title="Grievance Report" />} />

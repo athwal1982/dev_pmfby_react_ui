@@ -6,11 +6,13 @@ import { dateToSpecificFormat, dateToCompanyFormat, Convert24FourHourAndMinute }
 import moment from "moment";
 import { FaTasks } from "react-icons/fa";
 import { MdAssignment } from "react-icons/md";
+import { MdOutlineAssignment } from "react-icons/md";
 import { getMasterDataBinding, getNotificationMasterData } from "./Services/Methods";
 import BizClass from "./Notifications.module.scss";
 import AddNotificationsModal from "./Model/AddNotifications";
 import AssignUnAssignCenters from "./Model/AssignUnassignCenters";
 import AssignUnAssignResourcePartner from "./Model/AssignUnAssignResourcePartner";
+import AssignUnAssignInsuranceCompany from "./Model/AssignUnAssignInsuranceCompany";
 
 const cellActionTemplate = (props) => {
   return (
@@ -23,9 +25,15 @@ const cellActionTemplate = (props) => {
       /> : null }
       {props && props.data && props.data.NotificationFor && props.data.NotificationFor === 131304 ?
       <MdAssignment
-        style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }}
+        style={{ fontSize: "20px", color: "#000000", cursor: "pointer" }}
         onClick={() => props.toggleAssignUnAssignResourcePartnerModal(props.data)}
         title="Assign/Unassign Resource Partner"
+      /> : null }
+      {props && props.data && props.data.NotificationFor && props.data.NotificationFor === 131302 ?
+      <MdOutlineAssignment
+        style={{ fontSize: "20px", color: "#000000", cursor: "pointer" }}
+        onClick={() => props.toggleAssignUnAssignInsuranceCompanyModal(props.data)}
+        title="Assign/Unassign Insurance Company"
       /> : null }
     </div>
   );
@@ -62,6 +70,13 @@ function Notifications() {
   const toggleAssignUnAssignResourcePartnerModal = (data) => {
       setOpenAssignUnAssignResourcePartnerModal(!openAssignUnAssignResourcePartnerModal);
       setAssignUnAssignResourcePartnerModal(data);
+  };
+
+  const [assignUnAssignInsuranceCompanyModal, setAssignUnAssignInsuranceCompanyModal] = useState(false);
+  const [openAssignUnAssignInsuranceCompanyModal, setOpenAssignUnAssignInsuranceCompanyModal] = useState(false);
+  const toggleAssignUnAssignInsuranceCompanyModal = (data) => {
+      setOpenAssignUnAssignInsuranceCompanyModal(!openAssignUnAssignInsuranceCompanyModal);
+      setAssignUnAssignInsuranceCompanyModal(data);
   };
 
   const [gridApi, setGridApi] = useState();
@@ -178,7 +193,11 @@ function Notifications() {
       setIsLoadingNotificationTypeList(false);
       if (result.response.responseCode === 1) {
         if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
-          setNotificationTypeList(result.response.responseData.masterdatabinding);
+          const filterData = result.response.responseData.masterdatabinding.filter((x) => {
+              return x.CommonMasterValueID === 130301;
+            });
+          setNotificationTypeList(filterData);   
+          // A setNotificationTypeList(result.response.responseData.masterdatabinding);
         } else {
           setNotificationTypeList([]);
         }
@@ -235,6 +254,9 @@ function Notifications() {
       )}
       {openAssignUnAssignResourcePartnerModal && (
         <AssignUnAssignResourcePartner toggleAssignUnAssignResourcePartnerModal={toggleAssignUnAssignResourcePartnerModal} assignUnAssignResourcePartnerModal={assignUnAssignResourcePartnerModal} />
+      )}
+      {openAssignUnAssignInsuranceCompanyModal && (
+        <AssignUnAssignInsuranceCompany toggleAssignUnAssignInsuranceCompanyModal={toggleAssignUnAssignInsuranceCompanyModal} assignUnAssignInsuranceCompanyModal={assignUnAssignInsuranceCompanyModal} />
       )}
       <div className={BizClass.PageStart}>
         <PageBar>
@@ -302,6 +324,7 @@ function Notifications() {
           cellRendererParams={{
             toggleAssignUnAssignCentersModal,
             toggleAssignUnAssignResourcePartnerModal,
+            toggleAssignUnAssignInsuranceCompanyModal,
           }} />
           <DataGrid.Column valueGetter="node.rowIndex + 1" field="#" headerName="Sr No." width={80} pinned="left" />
           <DataGrid.Column headerName="Notification For" field="NotificationValueFor" width={150} />

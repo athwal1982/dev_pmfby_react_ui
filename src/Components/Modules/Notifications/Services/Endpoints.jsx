@@ -4,6 +4,7 @@ const APIEndpoints = {
     AddNotificationMaster: "FGMS/AddNotificationMaster",
     GetNotificationMaster: "FGMS/GetNotificationMaster",
     GetCenterNotificationAssignManage: "FGMS/GetCenterNotificationAssignManage",
+    GetInsuranceNotificationAssignManage:"FGMS/GetInsuranceNotificationAssignManage",
   },
 };
 
