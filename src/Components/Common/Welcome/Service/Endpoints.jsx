@@ -3,6 +3,7 @@ const APIEndpoints = {
     TicketDataBinding: "FGMS/TicketDataBinding",
     GetFarmerPolicyDetail: "FGMS/GetFarmerPolicyDetail",
     FarmergenerateSupportTicket: "FGMS/FarmergenerateSupportTicket",
+    GetCSCCallCenterImage: "FGMS/farmer-feedback/GetCSCCallCenterImage",
   },
 };
 

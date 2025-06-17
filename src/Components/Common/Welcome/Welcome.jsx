@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { getSessionStorage, setSessionStorage } from "../../Common/Login/Auth/auth";
-import { ticketDataBindingData } from "./Service/Methods";
+import { ticketDataBindingData, getCSCCallCenterImage } from "./Service/Methods";
 import CropLossintimationTickets from "./Modal/CropLossintimationTickets";
 import { motion } from "framer-motion";
 import "./Welcome.scss";
@@ -12,7 +12,7 @@ import ministry_logo from "../../../assets/img/ministry_logo.png";
 import { Headphones } from "@mui/icons-material";
 import CSC from "../../../assets/img/CSC_Logo.svg";
 import img_quote from "../../../assets/img/quote_img.png";
-import ImportantInstructionsImage from "assets/Important_Instructions_Banner.jpg";
+// A import ImportantInstructionsImage from "assets/Important_Instructions_Banner.jpg";
 import { IconButton } from "@mui/material";
 
 function Welcome() {
@@ -20,6 +20,7 @@ function Welcome() {
   const [ad, setAd] = useState(true);
   const userData = getSessionStorage("user");
   const [cropLossintimationTicketsModal] = useState(true);
+  const [addImage, setaddImage] = useState([]);
   const getticketDataBindingData = async () => {
     try {
       if (getSessionStorage("ticketDataBindingSsnStrg") === null) {
@@ -46,7 +47,34 @@ function Welcome() {
       });
     }
   };
+    const getImportantInstrauctionData = async () => {
+    try {
+      
+        const result = await getCSCCallCenterImage({});
+        if (result.response.responseCode === 1) {
+          if (result.response.responseData) {
+            setaddImage(result.response.responseData);
+
+          } else {
+            setaddImage([]);
+          }
+        } else {
+          setAlertMessage({
+            type: "error",
+            message: result.response.responseMessage,
+          });
+        }
+
+    } catch (error) {
+      console.log(error);
+      setAlertMessage({
+        type: "error",
+        message: error,
+      });
+    }
+  };
   useEffect(() => {
+    getImportantInstrauctionData();
     getticketDataBindingData();
   }, []);
 
@@ -76,9 +104,31 @@ function Welcome() {
               </IconButton>
 
               {/* <div className="ContainerPnlInstructions"> */}
-              <a href="https://docs.google.com/spreadsheets/d/16VFtCi8BkNHoUWkErfHr0HgXuCHR79DF/edit?usp=sharing&ouid=110802551208315636984&rtpof=true&sd=true" title="Click to View" target="_blank">
-                <img src={ImportantInstructionsImage} style={{ width: "734px", height: "530px" }} />
-              </a>
+              {/* <a href="https://docs.google.com/spreadsheets/d/16VFtCi8BkNHoUWkErfHr0HgXuCHR79DF/edit?usp=sharing&ouid=110802551208315636984&rtpof=true&sd=true" title="Click to View" target="_blank">
+                <img src={ImportantInstructionsImage} style={{width: "734px", height: "530px" }} />
+              </a> */}
+               {addImage && addImage.length > 0 && addImage[0].imagePath ? (
+    addImage[0].documentURL && addImage[0].documentURL.trim() !== "" ? (
+      <a
+        href={addImage[0].documentURL}
+        title="Click to View"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          src={addImage[0].imagePath}
+          style={{ width: "734px", height: "530px" }}
+          alt="Important Instructions"
+        />
+      </a>
+    ) : (
+      <img
+        src={addImage[0].imagePath}
+        style={{ width: "734px", height: "530px" }}
+        alt="Important Instructions"
+      />
+    )
+  ) : null}
               {/* </div> */}
             </motion.div>
           )}

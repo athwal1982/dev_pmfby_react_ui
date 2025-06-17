@@ -162,6 +162,7 @@ function CropLossintimationTickets() {
 
   const [isLoadingTicketCategoryTypeList, setIsTicketCategoryTypeList] = useState(false);
   const getTicketCategoryTypeListData = async (pselectedOption, pCropLossDetailID, pMasterName) => {
+    
     if (ticketBindingData) {
       setIsTicketCategoryTypeList(true);
       if (pMasterName === "TCKTYP") {
@@ -226,6 +227,7 @@ function CropLossintimationTickets() {
   const { mobileNum } = location.state || {};
 
   const handleNavigateComplaintStatus = () => {
+    
     navigate("/complaint-status", { state: { mobileNum } });
   };
 
@@ -454,6 +456,7 @@ function CropLossintimationTickets() {
   };
 
   const updateStateTicketCreation = (name, value) => {
+    
     setFormValuesTicketCreation({ ...formValuesTicketCreation, [name]: value });
     formValidationSupportTicketError[name] = validateFieldSupportTicket(name, value);
     if (name === "txtTicketCategoryType") {
@@ -674,7 +677,7 @@ function CropLossintimationTickets() {
     try {
       const errors = {};
       let formIsValid = true;
-
+      
       // A errors["txtDocumentUpload"] = validateFieldSupportTicket("txtDocumentUpload", formValuesTicketCreation.txtDocumentUpload);
       errors["txtCallerMobileNumber"] = validateFieldSupportTicket("txtCallerMobileNumber", formValuesCallerInformation.txtCallerMobileNumber);
       errors["txtSchemeForFarmerInfo"] = validateFieldSupportTicket("txtSchemeForFarmerInfo", formValuesForFarmerInfo.txtSchemeForFarmerInfo);
@@ -727,6 +730,8 @@ function CropLossintimationTickets() {
   const [isLoadingApplicationNoDatGreivence, setIsLoadingApplicationNodatGreivence] = useState(false);
   const [insuranceCompanyDataGreivence, setInsuranceCompanyDataGreivence] = useState([]);
   const getPolicyOfFarmerGreivenceOnClick = async () => {
+    
+
     setValue("");
 
     if (!handleFarmersInfoValidation()) {
@@ -853,6 +858,7 @@ function CropLossintimationTickets() {
     }
   };
   const updateStateForFarmerInfo = (name, value) => {
+    
     setFormValuesForFarmerInfo({ ...formValuesForFarmerInfo, [name]: value });
     formValidationFarmersInfoError[name] = validateFarmersInfoField(name, value);
   };
@@ -928,6 +934,7 @@ function CropLossintimationTickets() {
   };
 
   const supportTicketOnClick = async () => {
+    
     // Snavigate("/ticketSuccess", { state: { pSupportTicketNo } });
 
     setIsLoading(true);
@@ -1015,6 +1022,7 @@ function CropLossintimationTickets() {
   };
 
   const CreateTicketBAuthOptions = async () => {
+    
     try {
       let pticketStatusID = 0;
       // A let pticketStatusNoneBMCG = 0;
@@ -1218,6 +1226,7 @@ function CropLossintimationTickets() {
   };
 
   const getticketDataBindingData = async () => {
+    
     try {
       if (getSessionStorage("ticketDataBindingSsnStrg") === null) {
         const result = await ticketDataBindingData({});
@@ -1487,7 +1496,7 @@ function CropLossintimationTickets() {
                     }}
                   />
                 </Box>
-                <Form.Group column="4">
+                <Form.Group column="4" >
                   <Form.CustomGroup column={4} columntemplate="140px 140px auto">
                     <Form.InputGroup label="" errorMsg={formValidationFarmersInfoError["txtYearForFarmerInfo"]}>
                       <Form.InputControl
