@@ -1,6 +1,6 @@
 const APIEndpoints = {
-  Reports: {
-    GetFeedbackReport: "FGMS/farmer-feedback/GetFeedbackReport",
+  OfflineGrievance: {
+    GetGrievenceTicketsList: "FGMS/GetGrievenceTicketsList",
   },
 };
 

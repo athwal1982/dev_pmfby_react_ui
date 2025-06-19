@@ -25,34 +25,33 @@ const AddOfflineGrievance = ({showfunc}) => {
      ]);
     
      const [yearList, setYearList] = useState([]);
-     const [seasonPolicyNumber, setSeasonPolicyNumber] = useState("");
 
     const [socialMediaList] = useState([
-    { ID: 1, Value: "Facebook" },
-    { ID: 2, Value: "Twitter" },
-    { ID: 3, Value: "LinkedIn" },
-    { ID: 4, Value: "WhatsApp" },
-    { ID: 5, Value: "Any Other Source" },
+    { CommonMasterValueID: 1, CommonMasterValue: "Facebook" },
+    { CommonMasterValueID: 2, CommonMasterValue: "Twitter" },
+    { CommonMasterValueID: 3, CommonMasterValue: "LinkedIn" },
+    { CommonMasterValueID: 4, CommonMasterValue: "WhatsApp" },
+    { CommonMasterValueID: 5, CommonMasterValue: "Other" },
   ]);
    
      const [sourceofgrievenceList] = useState([
-       { ID: 1, Value: "Social Media" },
-       { ID: 2, Value: "Physical Letter" },
-       { ID: 3, Value: "Email" },
-       { ID: 4, Value: "Other" },
+       { CommonMasterValueID: 132301, CommonMasterValue: "Social Media" },
+       { CommonMasterValueID: 132302, CommonMasterValue: "Physical Letter" },
+       { CommonMasterValueID: 132303, CommonMasterValue: "Email" },
+       { CommonMasterValueID: 132304, CommonMasterValue: "Other" },
      ]);
 
-      const [isIdentified] = useState([
+  const [isIdentified] = useState([
     { ID: 1, Value: "Yes" },
     { ID: 2, Value: "No" },
   ]);
 
   const [sourceOfReceiptList] = useState([
-    { ID: 1, Value: "CPGRAMS" },
-    { ID: 2, Value: "HAM Office" },
-    { ID: 3, Value: "Secretary Office" },
-    { ID: 4, Value: "Joint Secretary Office" },
-    { ID: 5, Value: "Directly to Department/Section" },
+    { CommonMasterValueID: 1, Value: "CPGRAMS" },
+    { CommonMasterValueID: 2, Value: "HAM Office" },
+    { CommonMasterValueID: 3, Value: "Secretary Office" },
+    { CommonMasterValueID: 4, Value: "Joint Secretary Office" },
+    { CommonMasterValueID: 5, Value: "Directly to Department/Section" },
   ]);
 
      const [formValuesGI, setFormValuesGI] = useState({
@@ -680,7 +679,7 @@ const AddOfflineGrievance = ({showfunc}) => {
                       <InputControl
                         Input_type="select"
                         name="txtSourceOfGrievance"
-                        getOptionLabel={(option) => `${option.Value}`}
+                        getOptionLabel={(option) => `${option.CommonMasterValue}`}
                         value={formValuesGI.txtSourceOfGrievance}
                         getOptionValue={(option) => `${option}`}
                         options={sourceofgrievenceList}
@@ -690,7 +689,7 @@ const AddOfflineGrievance = ({showfunc}) => {
                     </InputGroup>
                     <span className="login_ErrorTxt">{formValidationKRPHError["txtSourceOfGrievance"]}</span>
                   </Typography>
-                  { formValuesGI && formValuesGI.txtSourceOfGrievance && formValuesGI.txtSourceOfGrievance.ID && formValuesGI.txtSourceOfGrievance.ID === 1 ?
+                  { formValuesGI && formValuesGI.txtSourceOfGrievance && formValuesGI.txtSourceOfGrievance.CommonMasterValueID && formValuesGI.txtSourceOfGrievance.CommonMasterValueID === 132301 ?
                  <>
                  <Typography
                     sx={{
@@ -708,7 +707,7 @@ const AddOfflineGrievance = ({showfunc}) => {
                       <InputControl
                         Input_type="select"
                         name="txtSocialMedia"
-                        getOptionLabel={(option) => `${option.Value}`}
+                        getOptionLabel={(option) => `${option.CommonMasterValue}`}
                         value={formValuesGI.txtSocialMedia}
                         getOptionValue={(option) => `${option}`}
                         options={socialMediaList}
@@ -718,7 +717,7 @@ const AddOfflineGrievance = ({showfunc}) => {
                     </InputGroup>
                     <span className="login_ErrorTxt">{formValidationKRPHError["txtSocialMedia"]}</span>
                   </Typography>
-              {formValuesGI && formValuesGI.txtSocialMedia && formValuesGI.txtSocialMedia.ID &&  formValuesGI.txtSocialMedia.ID === 5 ?
+              {formValuesGI && formValuesGI.txtSocialMedia && formValuesGI.txtSocialMedia.CommonMasterValueID &&  formValuesGI.txtSocialMedia.CommonMasterValueID === 5 ?
                <Typography
                 sx={{
                   fontFamily: "Quicksand, sans-serif",
@@ -762,7 +761,7 @@ const AddOfflineGrievance = ({showfunc}) => {
                                     />
                                   </InputGroup>
                                 </Typography> </> : null }
-             {formValuesGI && formValuesGI.txtSourceOfGrievance && formValuesGI.txtSourceOfGrievance.ID &&  (formValuesGI.txtSourceOfGrievance.ID === 2 || formValuesGI.txtSourceOfGrievance.ID === 3 ) ?                   
+             {formValuesGI && formValuesGI.txtSourceOfGrievance && formValuesGI.txtSourceOfGrievance.CommonMasterValueID &&  (formValuesGI.txtSourceOfGrievance.CommonMasterValueID === 132302 || formValuesGI.txtSourceOfGrievance.CommonMasterValueID === 1323013 ) ?                   
               <Typography
                 sx={{
                   fontFamily: "Quicksand, sans-serif",
@@ -789,7 +788,7 @@ const AddOfflineGrievance = ({showfunc}) => {
                 </InputGroup>
 
               </Typography> : null }  
-               {formValuesGI && formValuesGI.txtSourceOfGrievance && formValuesGI.txtSourceOfGrievance.ID &&  formValuesGI.txtSourceOfGrievance.ID === 4 ?
+               {formValuesGI && formValuesGI.txtSourceOfGrievance && formValuesGI.txtSourceOfGrievance.CommonMasterValueID &&  formValuesGI.txtSourceOfGrievance.CommonMasterValueID === 132304 ?
                <Typography
                 sx={{
                   fontFamily: "Quicksand, sans-serif",
@@ -911,7 +910,7 @@ const AddOfflineGrievance = ({showfunc}) => {
                  
                  
                                </Typography>
-                               {formValuesGI && formValuesGI.txtisIdentified && formValuesGI.txtisIdentified.ID && formValuesGI.txtisIdentified.ID === 1 ? <Typography
+                               {formValuesGI && formValuesGI.txtisIdentified && formValuesGI.txtisIdentified.CommonMasterValueID && formValuesGI.txtisIdentified.CommonMasterValueID === 1 ? <Typography
                                  sx={{
                                    fontFamily: "Quicksand, sans-serif",
                                    display: "flex",

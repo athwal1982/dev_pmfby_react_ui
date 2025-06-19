@@ -1,7 +1,7 @@
 import { ApiCalling } from "Services/Utilities/ApiCalling/ApiCalling";
 import APIEndpoints from "./EndPoints";
 
-export const getFeedbackReportData = async (formData) => {
+export const getGrievenceTicketsListData = async (formData) => {
   
   try {
     const requestData = {
@@ -9,7 +9,7 @@ export const getFeedbackReportData = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(requestData, APIEndpoints.Reports.GetFeedbackReport);
+    const result = await ApiCalling(requestData, APIEndpoints.OfflineGrievance.GetGrievenceTicketsList);
     return result;
   } catch (error) {
     console.log(error);

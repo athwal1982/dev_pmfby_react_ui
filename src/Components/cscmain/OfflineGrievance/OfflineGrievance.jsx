@@ -1,11 +1,12 @@
 import React,{ useState, useEffect } from "react";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
-import { DataGrid, PageBar } from "Framework/Components/Layout";
+import { DataGrid,PageBar, Form } from "Framework/Components/Layout";
 import { Loader } from "Framework/Components/Widgets";
 import { dateToSpecificFormat, dateToCompanyFormat, Convert24FourHourAndMinute, daysdifference, dateFormatDefault } from "Configration/Utilities/dateformat";
 import moment from "moment";
 import { getMasterDataBindingDataList } from "../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
-import { getFeedbackReportData } from "./Services/Methods";
+import { getGrievenceTicketsListData } from "./Services/Methods";
+import { getMasterDataBinding } from "../../Modules/Support/ManageTicket/Services/Methods";
 import BizClass from "./OfflineGrievance.module.scss";
 import AddOfflineGrievance from "./AddOfflineGrievance";
 
@@ -16,6 +17,11 @@ const OfflineGrievance = () => {
     const [formValues, setFormValues] = useState({
         txtFromDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
         txtToDate: dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD"),
+        txtState:  null,
+        txtgrievenceTicketSourceType: null,
+        txtSocialMedia: null,
+        txtSourceOfReceipt: null,
+        txtStatus: null,
     });
 
     const updateState = (name, value) => {
@@ -27,7 +33,7 @@ const OfflineGrievance = () => {
     setGridApi(params.api);
    const gridColumnApi = params.columnApi;
 
-  // Wait for the data to load before autosizing
+  // A Wait for the data to load before autosizing
   setTimeout(() => {
     const allColumnIds = [];
     gridColumnApi.getAllColumns().forEach((column) => {
@@ -44,11 +50,16 @@ const OfflineGrievance = () => {
     gridApi.refreshCells();
   };
 
-    const onClickClearSearchFilter = () => {
+    const ClearTicketFilters = () => {
     setFormValues({
       ...formValues,
-     txtFromDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
-     txtToDate: dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD"),
+        txtFromDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
+        txtToDate: dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD"),
+        txtState:  null,
+        txtgrievenceTicketSourceType: null,
+        txtSocialMedia: null,
+        txtSourceOfReceipt: null,
+        txtStatus: null,
     });
     setRowData([]);
   };
@@ -85,7 +96,7 @@ Object.entries(data[0]).forEach(([key]) => {
     return columnDefinitions;
   };
 
-    const getFeedbackReportDataList = async () => {
+    const getGrievenceTicketsDataList = async () => {
     try {
        if (formValues.txtFromDate) {
             if (formValues.txtToDate) {
@@ -117,8 +128,13 @@ Object.entries(data[0]).forEach(([key]) => {
       const requestData = {
          fromDate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
          toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
+         stateCodeAlpha: "",
+         grievenceTicketSourceTypeID: 0,
+         socialMediaTypeID: 0,
+         receiptSourceID: 0,
+         ticketStatusID: 0,
       };
-      const result = await getFeedbackReportData(requestData);
+      const result = await getGrievenceTicketsListData(requestData);
       setIsLoadingMaster(false);
       if (result.responseCode === 1) {
         if (result.responseData && result.responseData.length > 0) {
@@ -181,6 +197,65 @@ Object.entries(data[0]).forEach(([key]) => {
         }
       };
 
+        const [ticketStatusList, setTicketStatusList] = useState([]);
+        const [isLoadingTicketStatusList, setIsTicketStatusList] = useState(false);
+        const getTicketStatusListData = async () => {
+          try {
+            setTicketStatusList([]);
+            setIsTicketStatusList(true);
+            const formdata = {
+              filterID: 109,
+              filterID1: 0,
+              masterName: "COMMVAL",
+              searchText: "#ALL",
+              searchCriteria: "AW",
+            };
+            const result = await getMasterDataBinding(formdata);
+            setIsTicketStatusList(false);
+            if (result.response.responseCode === 1) {
+              if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
+                setTicketStatusList(result.response.responseData.masterdatabinding);
+              } else {
+                setTicketStatusList([]);
+              }
+            } else {
+              setAlertMessage({
+                type: "error",
+                message: result.response.responseMessage,
+              });
+            }
+          } catch (error) {
+            console.log(error);
+            setAlertMessage({
+              type: "error",
+              message: error,
+            });
+          }
+        };
+
+      const [grievenceTicketSourceTypeList] = useState([
+       { CommonMasterValueID: 132301, CommonMasterValue: "Social Media" },
+       { CommonMasterValueID: 132302, CommonMasterValue: "Physical Letter" },
+       { CommonMasterValueID: 132303, CommonMasterValue: "Email" },
+       { CommonMasterValueID: 132304, CommonMasterValue: "Other" },
+     ]);
+
+     const [socialMediaList] = useState([
+         { CommonMasterValueID: 1, CommonMasterValue: "Facebook" },
+         { CommonMasterValueID: 2, CommonMasterValue: "Twitter" },
+         { CommonMasterValueID: 3, CommonMasterValue: "LinkedIn" },
+         { CommonMasterValueID: 4, CommonMasterValue: "WhatsApp" },
+         { CommonMasterValueID: 5, CommonMasterValue: "Other" },
+       ]);
+
+       const [sourceOfReceiptList] = useState([
+         { CommonMasterValueID: 1, CommonMasterValue: "CPGRAMS" },
+         { CommonMasterValueID: 2, CommonMasterValue: "HAM Office" },
+         { CommonMasterValueID: 3, CommonMasterValue: "Secretary Office" },
+         { CommonMasterValueID: 4, CommonMasterValue: "Joint Secretary Office" },
+         { CommonMasterValueID: 5, CommonMasterValue: "Directly to Department/Section" },
+       ]);  
+
   const exportClick = () => {
     if (rowData.length === 0) {
       setAlertMessage({
@@ -214,6 +289,7 @@ const [openAddOfflineGrievanceMdal, setOpenAddOfflineGrievanceMdal] = useState(f
 
     useEffect(() => {
     getStateListData();
+    getTicketStatusListData();
   }, []);  
 
     return (
@@ -223,41 +299,132 @@ const [openAddOfflineGrievanceMdal, setOpenAddOfflineGrievanceMdal] = useState(f
                 showfunc={openAddOfflineGrievancePage}
               />
             )}
-      <div className={BizClass.PageStart}>
-      <PageBar>
-        <PageBar.Input
-          ControlTxt="From Date"
-          control="input"
-          type="date"
-          name="txtFromDate"
-          value={formValues.txtFromDate}
-          onChange={(e) => updateState("txtFromDate", e.target.value)}
-        />
-        <PageBar.Input
-          ControlTxt="To Date"
-          control="input"
-          type="date"
-          name="txtToDate"
-          value={formValues.txtToDate}
-          onChange={(e) => updateState("txtToDate", e.target.value)}
-          max={dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD")}
-        />
-        <PageBar.Search focus={true} onClick={() => getFeedbackReportDataList()} value={searchTextCodeMaster} name="txtCodeName" onChange={(e) => onSearchCodeMaster(e.target.value)} />
-        <PageBar.Button onClick={() => openAddOfflineGrievancePage()} title="Add">
+     <div className={BizClass.Box}>
+       <div className={BizClass.PageBar}>
+         <PageBar.Button onClick={() => openAddOfflineGrievancePage()} title="Add Offline Grievance">
           Add Offline Grievance
         </PageBar.Button>
-        <PageBar.ExcelButton onClick={() => exportClick()}>
+           <PageBar.ExcelButton onClick={() => exportClick()}>
           Export
         </PageBar.ExcelButton>
-      </PageBar>
-     <DataGrid
+       </div>
+        <div className={BizClass.MainBox}>
+                <>
+                  <div className={BizClass.divGridPagination}>
+                    <DataGrid
             rowData={rowData}
             loader= {isLoadingMaster ? <Loader /> : null}
             columnDefs={columnDefs}
             onGridReady={onGridReady}
             >
     </DataGrid>
-    </div>
+                  </div>
+                  <div className={BizClass.FilterBox}>
+                    <div className={BizClass.Header}>
+                      {/* <h4>Filters Tickets </h4> */}
+                      <button type="button" className={BizClass.FilterTicketButton} onClick={() => getFilterTicketsClick()}>
+                        {" "}
+                        Filters Tickets
+                      </button>
+                      <span />
+                    </div>
+                    <div className={BizClass.Content}>
+                      <Form>
+                        <div className={BizClass.FormContent}>
+                          <Form.InputGroup label="From Date" req="false" errorMsg="">
+                            <Form.InputControl
+                              control="input"
+                              type="date"
+                              name="txtFromDate"
+                              value={formValues.txtFromDate}
+                              onChange={(e) => updateState("txtFromDate", e.target.value)}
+                            />
+                          </Form.InputGroup>
+                          <Form.InputGroup label="To Date" req="false" errorMsg="">
+                            <Form.InputControl
+                              control="input"
+                              type="date"
+                              name="txtToDate"
+                              value={formValues.txtToDate}
+                              onChange={(e) => updateState("txtToDate", e.target.value)}
+                            />
+                          </Form.InputGroup>
+                          <Form.InputGroup label="Source Of Grievance" req="false" errorMsg="">
+                            <Form.InputControl
+                              control="select"
+                              name="txtgrievenceTicketSourceType"
+                              options={grievenceTicketSourceTypeList}
+                              value={formValues.txtgrievenceTicketSourceType}
+                              getOptionLabel={(option) => `${option.CommonMasterValue}`}
+                              getOptionValue={(option) => `${option}`}
+                              onChange={(e) => updateState("txtgrievenceTicketSourceType", e)}
+                            />
+                          </Form.InputGroup>
+                          {formValues && formValues.txtgrievenceTicketSourceType && formValues.txtgrievenceTicketSourceType.CommonMasterValueID && formValues.txtgrievenceTicketSourceType.CommonMasterValueID === 132301 ?
+                          <Form.InputGroup label="Social Media" req="false" errorMsg="">
+                            <Form.InputControl
+                              control="select"
+                              name="txtSocialMedia"
+                              options={socialMediaList}
+                              value={formValues.txtSocialMedia}
+                              getOptionLabel={(option) => `${option.CommonMasterValue}`}
+                              getOptionValue={(option) => `${option}`}
+                              onChange={(e) => updateState("txtSocialMedia", e)}
+                            />
+                          </Form.InputGroup> : null }
+                           {formValues && formValues.txtgrievenceTicketSourceType && formValues.txtgrievenceTicketSourceType.CommonMasterValueID && (formValues.txtgrievenceTicketSourceType.CommonMasterValueID === 132302 || formValues.txtgrievenceTicketSourceType.CommonMasterValueID === 132303) ?
+                          <Form.InputGroup label="Source Of Reciept" req="false" errorMsg="">
+                            <Form.InputControl
+                           control="select"
+                          name="txtSourceOfReceipt"
+                          value={formValues.txtSourceOfReceipt}
+                          options={sourceOfReceiptList}
+                          getOptionLabel={(option) => `${option.CommonMasterValue}`}
+                          getOptionValue={(option) => `${option}`}
+                          onChange={(e) => updateState("txtSourceOfReceipt", e)}
+                          />
+                          </Form.InputGroup> : null }
+                          <Form.InputGroup label="Status" req="false" errorMsg="">
+                           <Form.InputControl
+                           control="select"
+                          name="txtStatus"
+                          value={formValues.txtStatus}
+                          options={ticketStatusList}
+                          isLoading={isLoadingTicketStatusList}
+                          getOptionLabel={(option) => `${option.CommonMasterValue}`}
+                          getOptionValue={(option) => `${option}`}
+                          onChange={(e) => updateState("txtStatus", e)}
+                          />
+                          </Form.InputGroup>
+                           <Form.InputGroup label="State" req="false" errorMsg="">
+                            <Form.InputControl
+                              control="select"
+                              name="txtState"
+                              options={stateList}
+                              isLoading={isLoadingStateList}
+                              value={formValues.txtState}
+                              getOptionLabel={(option) => `${option.StateMasterName}`}
+                              getOptionValue={(option) => `${option}`}
+                              onChange={(e) => updateState("txtState", e)}
+                            />
+                          </Form.InputGroup>
+                        </div>
+                      </Form>
+                    </div>
+                    <div className={BizClass.Footer}>
+                      <button type="button" onClick={() => refereshFarmerTicket()}>
+                        Apply
+                      </button>
+                      &nbsp;
+                      <button type="button" onClick={() => ClearTicketFilters()}>
+                          Clear
+                        </button>
+                    </div>
+                  </div>{" "}
+
+            </>
+        </div>
+      </div>
     </>
     );
 };
