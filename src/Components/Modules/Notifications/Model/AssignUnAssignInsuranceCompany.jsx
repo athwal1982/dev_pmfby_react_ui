@@ -38,7 +38,12 @@ function AssignUnAssignInsuranceCompany({ toggleAssignUnAssignInsuranceCompanyMo
       const result = await getInsuranceNotificationAssignManage(formdata);
       setIsLoadingInsuranceCompanyList(false);
       if (result.response.responseCode === 1) {
-        if (result.response.responseData && result.response.responseData.data  && result.response.responseData.data.NotificationInsurance && result.response.responseData.data.NotificationInsurance.length > 0) {
+        if (
+          result.response.responseData &&
+          result.response.responseData.data &&
+          result.response.responseData.data.NotificationInsurance &&
+          result.response.responseData.data.NotificationInsurance.length > 0
+        ) {
           setInsuranceCompanyList(result.response.responseData.data.NotificationInsurance);
         } else {
           setInsuranceCompanyList([]);
@@ -64,7 +69,10 @@ function AssignUnAssignInsuranceCompany({ toggleAssignUnAssignInsuranceCompanyMo
       const formdata = {
         viewMode: "UNASSIGN",
         notificationInsuranceID: data.InsuranceMasterID,
-        notificationMasterID: assignUnAssignInsuranceCompanyModal && assignUnAssignInsuranceCompanyModal.NotificationMasterID ? assignUnAssignInsuranceCompanyModal.NotificationMasterID : 0,
+        notificationMasterID:
+          assignUnAssignInsuranceCompanyModal && assignUnAssignInsuranceCompanyModal.NotificationMasterID
+            ? assignUnAssignInsuranceCompanyModal.NotificationMasterID
+            : 0,
         insuranceCompanyID: data.InsuranceMasterID,
       };
       const result = await getInsuranceNotificationAssignManage(formdata);
@@ -129,7 +137,10 @@ function AssignUnAssignInsuranceCompany({ toggleAssignUnAssignInsuranceCompanyMo
       const formdata = {
         viewMode: "ASSIGN",
         notificationInsuranceID: "0",
-        notificationMasterID: assignUnAssignInsuranceCompanyModal && assignUnAssignInsuranceCompanyModal.NotificationMasterID ? assignUnAssignInsuranceCompanyModal.NotificationMasterID : 0,
+        notificationMasterID:
+          assignUnAssignInsuranceCompanyModal && assignUnAssignInsuranceCompanyModal.NotificationMasterID
+            ? assignUnAssignInsuranceCompanyModal.NotificationMasterID
+            : 0,
         insuranceCompanyID: InsuranceCompanyIds,
       };
 
@@ -142,7 +153,10 @@ function AssignUnAssignInsuranceCompany({ toggleAssignUnAssignInsuranceCompanyMo
         });
 
         if (result.response.responseData) {
-          const responseAssignedIds = result.response.responseData && result.response.responseData.data && result.response.responseData.data.NotificationInsuranceID ? result.response.responseData.data.NotificationInsuranceID.split(",") : [];
+          const responseAssignedIds =
+            result.response.responseData && result.response.responseData.data && result.response.responseData.data.NotificationInsuranceID
+              ? result.response.responseData.data.NotificationInsuranceID.split(",")
+              : [];
           console.log(responseAssignedIds);
           let assignedIds = [];
           if (responseAssignedIds.length > 0) {
@@ -220,14 +234,7 @@ function AssignUnAssignInsuranceCompany({ toggleAssignUnAssignInsuranceCompanyMo
 
   return (
     <>
-      <Modal
-        varient="half"
-        title="Insurance Company Allocation"
-        right={0}
-        width="50vw"
-        height="100vh"
-        show={toggleAssignUnAssignInsuranceCompanyModal}
-      >
+      <Modal varient="half" title="Insurance Company Allocation" right={0} width="50vw" height="100vh" show={toggleAssignUnAssignInsuranceCompanyModal}>
         <Modal.Body>
           <div className="PageStart">
             <div className="custom-search-container">

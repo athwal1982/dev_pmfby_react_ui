@@ -14,22 +14,14 @@ const BIDashboard = () => {
   }, []);
   return (
     <>
-      <div className="csc_main_BI">
+       <div className="csc_main_BI">
         {isLoadingBIDashboard ? <Loader /> : null}
-        <Box style={{ padding: "15px" }}>
-          <Box className="navbar-container-landing-BI">
-            <Box className="logo-container-landing-BI">
-              <a href="https://pmfby.gov.in/" target="_blank">
-                <LogoPMFBY style={{ width: "85%" }} />
-              </a>
-            </Box>
-          </Box>
-          <Box style={{ padding: "5px 0px 0px 0px" }}>
-            <iframe src="https://demo_iframe.htm" width="100%" height="560px" allowFullScreen="true" frameBorder="0"></iframe>
-          </Box>
-        </Box>
-        <Box style={{ padding: "0px 15px 0px 15px" }}>
-          <Box sx={{ bgcolor: "#075307", padding: "10px 0 10px 0px" }}>
+         <Box style={{padding: "15px 15px 0px 15px"}}>
+            <iframe src="https://demo_iframe.htm"  width="100%" height="620px"  allowFullScreen="true" frameBorder="1">
+            </iframe> 
+         </Box>
+          <Box style={{padding: "0px 15px 0px 15px"}}>
+            <Box sx={{ bgcolor: "#075307", padding: "10px 0 10px 0px" }}>
             <Typography
               fontSize="14px"
               sx={{
@@ -42,8 +34,9 @@ const BIDashboard = () => {
               Reserved.
             </Typography>
           </Box>
-        </Box>
-      </div>
+          </Box>
+         
+        </div>
     </>
   );
 };

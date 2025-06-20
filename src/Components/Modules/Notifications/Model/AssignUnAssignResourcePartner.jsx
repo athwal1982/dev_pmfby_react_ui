@@ -38,7 +38,12 @@ function AssignUnAssignResourcePartner({ toggleAssignUnAssignResourcePartnerModa
       const result = await getCenterNotificationAssignManage(formdata);
       setIsLoadingResourcePartnerList(false);
       if (result.response.responseCode === 1) {
-        if (result.response.responseData && result.response.responseData.data  && result.response.responseData.data.NotificationCenter && result.response.responseData.data.NotificationCenter.length > 0) {
+        if (
+          result.response.responseData &&
+          result.response.responseData.data &&
+          result.response.responseData.data.NotificationCenter &&
+          result.response.responseData.data.NotificationCenter.length > 0
+        ) {
           setResourcePartnerList(result.response.responseData.data.NotificationCenter);
         } else {
           setResourcePartnerList([]);
@@ -64,7 +69,10 @@ function AssignUnAssignResourcePartner({ toggleAssignUnAssignResourcePartnerModa
       const formdata = {
         viewMode: "UNASSIGN",
         notificationCenterID: data.NotificationCenterID,
-        notificationMasterID: assignUnAssignResourcePartnerModal && assignUnAssignResourcePartnerModal.NotificationMasterID ? assignUnAssignResourcePartnerModal.NotificationMasterID : 0,
+        notificationMasterID:
+          assignUnAssignResourcePartnerModal && assignUnAssignResourcePartnerModal.NotificationMasterID
+            ? assignUnAssignResourcePartnerModal.NotificationMasterID
+            : 0,
         centerID: data.ResourcePartnerID,
       };
       const result = await getCenterNotificationAssignManage(formdata);
@@ -129,7 +137,10 @@ function AssignUnAssignResourcePartner({ toggleAssignUnAssignResourcePartnerModa
       const formdata = {
         viewMode: "RESASSIGN",
         notificationCenterID: "0",
-        notificationMasterID: assignUnAssignResourcePartnerModal && assignUnAssignResourcePartnerModal.NotificationMasterID ? assignUnAssignResourcePartnerModal.NotificationMasterID : 0,
+        notificationMasterID:
+          assignUnAssignResourcePartnerModal && assignUnAssignResourcePartnerModal.NotificationMasterID
+            ? assignUnAssignResourcePartnerModal.NotificationMasterID
+            : 0,
         centerID: ResourcePartnerIds,
       };
 
@@ -142,7 +153,10 @@ function AssignUnAssignResourcePartner({ toggleAssignUnAssignResourcePartnerModa
         });
 
         if (result.response.responseData) {
-          const responseAssignedIds = result.response.responseData && result.response.responseData.data && result.response.responseData.data.NotificationCenterID ? result.response.responseData.data.NotificationCenterID.split(",") : [];
+          const responseAssignedIds =
+            result.response.responseData && result.response.responseData.data && result.response.responseData.data.NotificationCenterID
+              ? result.response.responseData.data.NotificationCenterID.split(",")
+              : [];
           console.log(responseAssignedIds);
           let assignedIds = [];
           if (responseAssignedIds.length > 0) {
@@ -220,14 +234,7 @@ function AssignUnAssignResourcePartner({ toggleAssignUnAssignResourcePartnerModa
 
   return (
     <>
-      <Modal
-        varient="half"
-        title="Resource Partner Allocation"
-        right={0}
-        width="50vw"
-        height="100vh"
-        show={toggleAssignUnAssignResourcePartnerModal}
-      >
+      <Modal varient="half" title="Resource Partner Allocation" right={0} width="50vw" height="100vh" show={toggleAssignUnAssignResourcePartnerModal}>
         <Modal.Body>
           <div className="PageStart">
             <div className="custom-search-container">

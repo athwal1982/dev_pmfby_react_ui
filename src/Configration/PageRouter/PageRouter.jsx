@@ -74,6 +74,7 @@ import SosAgeing from "Components/Modules/Reports/SosAgeing";
 import NCIPTicketSync from "Components/Modules/Reports/NCIPTicketSync";
 import BotFarmerTicket from "Components/Modules/Reports/BotFarmerTicket";
 import BIDashboard from "Components/Common/BIDashboard/BIDashboard";
+import BIDashboard1 from "Components/Common/BIDashboard/BIDashboard1";
 
 const PageRouter = () => {
   return (
@@ -161,6 +162,7 @@ const PageRouter = () => {
         <Route exact path="/NCIPTicketSync" element={<Page component={<NCIPTicketSync />} title="NCIP Ticket Sync" />} />
         <Route exact path="/BotFarmerTicket" element={<Page component={<BotFarmerTicket />} title="Bot Farmer Tickets" />} />
         <Route exact path="/BIDashboard" element={<BIDashboard />} />
+        <Route exact path="/BIDashboard1" element={<Page component={<BIDashboard1 />} title="BI Dashboard" />} />
       </Routes>
     </Router>
     // </BrowserRouter>

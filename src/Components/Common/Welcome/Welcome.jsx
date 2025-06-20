@@ -47,24 +47,21 @@ function Welcome() {
       });
     }
   };
-    const getImportantInstrauctionData = async () => {
+  const getImportantInstrauctionData = async () => {
     try {
-      
-        const result = await getCSCCallCenterImage({});
-        if (result.response.responseCode === 1) {
-          if (result.response.responseData) {
-            setaddImage(result.response.responseData);
-
-          } else {
-            setaddImage([]);
-          }
+      const result = await getCSCCallCenterImage({});
+      if (result.response.responseCode === 1) {
+        if (result.response.responseData) {
+          setaddImage(result.response.responseData);
         } else {
-          setAlertMessage({
-            type: "error",
-            message: result.response.responseMessage,
-          });
+          setaddImage([]);
         }
-
+      } else {
+        setAlertMessage({
+          type: "error",
+          message: result.response.responseMessage,
+        });
+      }
     } catch (error) {
       console.log(error);
       setAlertMessage({
@@ -107,28 +104,15 @@ function Welcome() {
               {/* <a href="https://docs.google.com/spreadsheets/d/16VFtCi8BkNHoUWkErfHr0HgXuCHR79DF/edit?usp=sharing&ouid=110802551208315636984&rtpof=true&sd=true" title="Click to View" target="_blank">
                 <img src={ImportantInstructionsImage} style={{width: "734px", height: "530px" }} />
               </a> */}
-               {addImage && addImage.length > 0 && addImage[0].imagePath ? (
-    addImage[0].documentURL && addImage[0].documentURL.trim() !== "" ? (
-      <a
-        href={addImage[0].documentURL}
-        title="Click to View"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img
-          src={addImage[0].imagePath}
-          style={{ width: "734px", height: "530px" }}
-          alt="Important Instructions"
-        />
-      </a>
-    ) : (
-      <img
-        src={addImage[0].imagePath}
-        style={{ width: "734px", height: "530px" }}
-        alt="Important Instructions"
-      />
-    )
-  ) : null}
+              {addImage && addImage.length > 0 && addImage[0].imagePath ? (
+                addImage[0].documentURL && addImage[0].documentURL.trim() !== "" ? (
+                  <a href={addImage[0].documentURL} title="Click to View" target="_blank" rel="noopener noreferrer">
+                    <img src={addImage[0].imagePath} style={{ width: "734px", height: "530px" }} alt="Important Instructions" />
+                  </a>
+                ) : (
+                  <img src={addImage[0].imagePath} style={{ width: "734px", height: "530px" }} alt="Important Instructions" />
+                )
+              ) : null}
               {/* </div> */}
             </motion.div>
           )}

@@ -86,10 +86,10 @@ function AddNotificationsModal({ openAddNotificationsModalClick, updateNotificat
       setIsLoadingNotificationTypeList(false);
       if (result.response.responseCode === 1) {
         if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
-           const filterData = result.response.responseData.masterdatabinding.filter((x) => {
-              return x.CommonMasterValueID === 130301;
-            });
-           setNotificationTypeList(filterData);  
+          const filterData = result.response.responseData.masterdatabinding.filter((x) => {
+            return x.CommonMasterValueID === 130301;
+          });
+          setNotificationTypeList(filterData);
           // A setNotificationTypeList(result.response.responseData.masterdatabinding);
         } else {
           setNotificationTypeList([]);

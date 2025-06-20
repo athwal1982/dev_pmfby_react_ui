@@ -1,13 +1,15 @@
 .csc_main_BI {
   background: linear-gradient(to bottom, #21862d, #c3eb68);
-  /* min-height: -moz-fit-content;
-  min-height: fit-content; */
-  display: grid;
-  grid-template-rows: 100%;
   height: 100vh;
   width: 100%;
-  position: relative;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.csc_main_BI_1 {
+  background: linear-gradient(to bottom, #21862d, #c3eb68);
+   height: 100vh;
+  width: 100%;
 }
 
 .navbar-container-landing-BI {

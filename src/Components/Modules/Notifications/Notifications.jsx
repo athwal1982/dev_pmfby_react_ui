@@ -17,24 +17,27 @@ import AssignUnAssignInsuranceCompany from "./Model/AssignUnAssignInsuranceCompa
 const cellActionTemplate = (props) => {
   return (
     <div style={{ display: "flex", gap: "4px", marginTop: "2px" }}>
-      {props && props.data && props.data.NotificationFor && props.data.NotificationFor === 131303 ?
-      <FaTasks
-        style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }}
-        onClick={() => props.toggleAssignUnAssignCentersModal(props.data)}
-        title="Assign/Unassign Center"
-      /> : null }
-      {props && props.data && props.data.NotificationFor && props.data.NotificationFor === 131304 ?
-      <MdAssignment
-        style={{ fontSize: "20px", color: "#000000", cursor: "pointer" }}
-        onClick={() => props.toggleAssignUnAssignResourcePartnerModal(props.data)}
-        title="Assign/Unassign Resource Partner"
-      /> : null }
-      {props && props.data && props.data.NotificationFor && props.data.NotificationFor === 131302 ?
-      <MdOutlineAssignment
-        style={{ fontSize: "20px", color: "#000000", cursor: "pointer" }}
-        onClick={() => props.toggleAssignUnAssignInsuranceCompanyModal(props.data)}
-        title="Assign/Unassign Insurance Company"
-      /> : null }
+      {props && props.data && props.data.NotificationFor && props.data.NotificationFor === 131303 ? (
+        <FaTasks
+          style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }}
+          onClick={() => props.toggleAssignUnAssignCentersModal(props.data)}
+          title="Assign/Unassign Center"
+        />
+      ) : null}
+      {props && props.data && props.data.NotificationFor && props.data.NotificationFor === 131304 ? (
+        <MdAssignment
+          style={{ fontSize: "20px", color: "#000000", cursor: "pointer" }}
+          onClick={() => props.toggleAssignUnAssignResourcePartnerModal(props.data)}
+          title="Assign/Unassign Resource Partner"
+        />
+      ) : null}
+      {props && props.data && props.data.NotificationFor && props.data.NotificationFor === 131302 ? (
+        <MdOutlineAssignment
+          style={{ fontSize: "20px", color: "#000000", cursor: "pointer" }}
+          onClick={() => props.toggleAssignUnAssignInsuranceCompanyModal(props.data)}
+          title="Assign/Unassign Insurance Company"
+        />
+      ) : null}
     </div>
   );
 };
@@ -61,22 +64,22 @@ function Notifications() {
   const [assignUnAssignCentersModal, setAssignUnAssignCentersModal] = useState(false);
   const [openAssignUnAssignCentersModal, setOpenAssignUnAssignCentersModal] = useState(false);
   const toggleAssignUnAssignCentersModal = (data) => {
-      setOpenAssignUnAssignCentersModal(!openAssignUnAssignCentersModal);
-      setAssignUnAssignCentersModal(data);
+    setOpenAssignUnAssignCentersModal(!openAssignUnAssignCentersModal);
+    setAssignUnAssignCentersModal(data);
   };
-  
+
   const [assignUnAssignResourcePartnerModal, setAssignUnAssignResourcePartnerModal] = useState(false);
   const [openAssignUnAssignResourcePartnerModal, setOpenAssignUnAssignResourcePartnerModal] = useState(false);
   const toggleAssignUnAssignResourcePartnerModal = (data) => {
-      setOpenAssignUnAssignResourcePartnerModal(!openAssignUnAssignResourcePartnerModal);
-      setAssignUnAssignResourcePartnerModal(data);
+    setOpenAssignUnAssignResourcePartnerModal(!openAssignUnAssignResourcePartnerModal);
+    setAssignUnAssignResourcePartnerModal(data);
   };
 
   const [assignUnAssignInsuranceCompanyModal, setAssignUnAssignInsuranceCompanyModal] = useState(false);
   const [openAssignUnAssignInsuranceCompanyModal, setOpenAssignUnAssignInsuranceCompanyModal] = useState(false);
   const toggleAssignUnAssignInsuranceCompanyModal = (data) => {
-      setOpenAssignUnAssignInsuranceCompanyModal(!openAssignUnAssignInsuranceCompanyModal);
-      setAssignUnAssignInsuranceCompanyModal(data);
+    setOpenAssignUnAssignInsuranceCompanyModal(!openAssignUnAssignInsuranceCompanyModal);
+    setAssignUnAssignInsuranceCompanyModal(data);
   };
 
   const [gridApi, setGridApi] = useState();
@@ -194,9 +197,9 @@ function Notifications() {
       if (result.response.responseCode === 1) {
         if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
           const filterData = result.response.responseData.masterdatabinding.filter((x) => {
-              return x.CommonMasterValueID === 130301;
-            });
-          setNotificationTypeList(filterData);   
+            return x.CommonMasterValueID === 130301;
+          });
+          setNotificationTypeList(filterData);
           // A setNotificationTypeList(result.response.responseData.masterdatabinding);
         } else {
           setNotificationTypeList([]);
@@ -253,10 +256,16 @@ function Notifications() {
         <AssignUnAssignCenters toggleAssignUnAssignCentersModal={toggleAssignUnAssignCentersModal} assignUnAssignCentersModal={assignUnAssignCentersModal} />
       )}
       {openAssignUnAssignResourcePartnerModal && (
-        <AssignUnAssignResourcePartner toggleAssignUnAssignResourcePartnerModal={toggleAssignUnAssignResourcePartnerModal} assignUnAssignResourcePartnerModal={assignUnAssignResourcePartnerModal} />
+        <AssignUnAssignResourcePartner
+          toggleAssignUnAssignResourcePartnerModal={toggleAssignUnAssignResourcePartnerModal}
+          assignUnAssignResourcePartnerModal={assignUnAssignResourcePartnerModal}
+        />
       )}
       {openAssignUnAssignInsuranceCompanyModal && (
-        <AssignUnAssignInsuranceCompany toggleAssignUnAssignInsuranceCompanyModal={toggleAssignUnAssignInsuranceCompanyModal} assignUnAssignInsuranceCompanyModal={assignUnAssignInsuranceCompanyModal} />
+        <AssignUnAssignInsuranceCompany
+          toggleAssignUnAssignInsuranceCompanyModal={toggleAssignUnAssignInsuranceCompanyModal}
+          assignUnAssignInsuranceCompanyModal={assignUnAssignInsuranceCompanyModal}
+        />
       )}
       <div className={BizClass.PageStart}>
         <PageBar>
@@ -317,15 +326,21 @@ function Notifications() {
           rowData={notificationDataList}
           loader={isLoadingNotificationDataList ? <Loader /> : false}
           components={{
-          actionTemplate: cellActionTemplate,
-        }}
+            actionTemplate: cellActionTemplate,
+          }}
         >
-          <DataGrid.Column headerName="Action" lockPosition="1" pinned="left" width={80}  cellRenderer="actionTemplate"
-          cellRendererParams={{
-            toggleAssignUnAssignCentersModal,
-            toggleAssignUnAssignResourcePartnerModal,
-            toggleAssignUnAssignInsuranceCompanyModal,
-          }} />
+          <DataGrid.Column
+            headerName="Action"
+            lockPosition="1"
+            pinned="left"
+            width={80}
+            cellRenderer="actionTemplate"
+            cellRendererParams={{
+              toggleAssignUnAssignCentersModal,
+              toggleAssignUnAssignResourcePartnerModal,
+              toggleAssignUnAssignInsuranceCompanyModal,
+            }}
+          />
           <DataGrid.Column valueGetter="node.rowIndex + 1" field="#" headerName="Sr No." width={80} pinned="left" />
           <DataGrid.Column headerName="Notification For" field="NotificationValueFor" width={150} />
           <DataGrid.Column headerName="Notification Type" field="NotificationValueType" width={140} />

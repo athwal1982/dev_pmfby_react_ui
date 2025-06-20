@@ -37,7 +37,12 @@ function AssignUnAssignCenters({ toggleAssignUnAssignCentersModal, assignUnAssig
       const result = await getCenterNotificationAssignManage(formdata);
       setIsLoadingCenterList(false);
       if (result.response.responseCode === 1) {
-        if (result.response.responseData && result.response.responseData.data  && result.response.responseData.data.NotificationCenter && result.response.responseData.data.NotificationCenter.length > 0) {
+        if (
+          result.response.responseData &&
+          result.response.responseData.data &&
+          result.response.responseData.data.NotificationCenter &&
+          result.response.responseData.data.NotificationCenter.length > 0
+        ) {
           setCenterList(result.response.responseData.data.NotificationCenter);
         } else {
           setCenterList([]);
@@ -63,7 +68,8 @@ function AssignUnAssignCenters({ toggleAssignUnAssignCentersModal, assignUnAssig
       const formdata = {
         viewMode: "UNASSIGN",
         notificationCenterID: data.NotificationCenterID,
-        notificationMasterID: assignUnAssignCentersModal && assignUnAssignCentersModal.NotificationMasterID ? assignUnAssignCentersModal.NotificationMasterID : 0,
+        notificationMasterID:
+          assignUnAssignCentersModal && assignUnAssignCentersModal.NotificationMasterID ? assignUnAssignCentersModal.NotificationMasterID : 0,
         centerID: data.CenterMasterID,
       };
       const result = await getCenterNotificationAssignManage(formdata);
@@ -128,7 +134,8 @@ function AssignUnAssignCenters({ toggleAssignUnAssignCentersModal, assignUnAssig
       const formdata = {
         viewMode: "ASSIGN",
         notificationCenterID: "0",
-        notificationMasterID: assignUnAssignCentersModal && assignUnAssignCentersModal.NotificationMasterID ? assignUnAssignCentersModal.NotificationMasterID : 0,
+        notificationMasterID:
+          assignUnAssignCentersModal && assignUnAssignCentersModal.NotificationMasterID ? assignUnAssignCentersModal.NotificationMasterID : 0,
         centerID: CenterIds,
       };
 
@@ -141,7 +148,10 @@ function AssignUnAssignCenters({ toggleAssignUnAssignCentersModal, assignUnAssig
         });
 
         if (result.response.responseData) {
-          const responseAssignedIds = result.response.responseData && result.response.responseData.data && result.response.responseData.data.NotificationCenterID ? result.response.responseData.data.NotificationCenterID.split(",") : [];
+          const responseAssignedIds =
+            result.response.responseData && result.response.responseData.data && result.response.responseData.data.NotificationCenterID
+              ? result.response.responseData.data.NotificationCenterID.split(",")
+              : [];
           console.log(responseAssignedIds);
           let assignedIds = [];
           if (responseAssignedIds.length > 0) {
@@ -220,14 +230,7 @@ function AssignUnAssignCenters({ toggleAssignUnAssignCentersModal, assignUnAssig
 
   return (
     <>
-      <Modal
-        varient="half"
-        title="Center Allocation"
-        right={0}
-        width="50vw"
-        height="100vh"
-        show={toggleAssignUnAssignCentersModal}
-      >
+      <Modal varient="half" title="Center Allocation" right={0} width="50vw" height="100vh" show={toggleAssignUnAssignCentersModal}>
         <Modal.Body>
           <div className="PageStart">
             <div className="custom-search-container">
