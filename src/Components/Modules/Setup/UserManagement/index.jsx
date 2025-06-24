@@ -128,7 +128,11 @@ function UserManagementPage() {
           />
         </Suspense>
       ) : null}
-      {profileListModal && <ProfileListModal showfunc={toggleProfileListModal} selectedUserData={selectedUserData} updateUserDataList={updateUserDataList} />}
+      {profileListModal && (
+        <Suspense fallback={<Loader />}>
+          <ProfileListModal showfunc={toggleProfileListModal} selectedUserData={selectedUserData} updateUserDataList={updateUserDataList} />
+        </Suspense>
+      )}
       {assignStateListModal ? (
         <Suspense fallback={<Loader />}>
           <AssignStateListModal showfunc={toggleAssignStateListModal} selectedUserData={selectedUserData} updateUserDataList={updateUserDataList} />

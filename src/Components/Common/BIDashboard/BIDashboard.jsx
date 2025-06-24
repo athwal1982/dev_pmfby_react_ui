@@ -14,14 +14,13 @@ const BIDashboard = () => {
   }, []);
   return (
     <>
-       <div className="csc_main_BI">
+      <div className="csc_main_BI">
         {isLoadingBIDashboard ? <Loader /> : null}
-         <Box style={{padding: "15px 15px 0px 15px"}}>
-            <iframe src="https://demo_iframe.htm"  width="100%" height="620px"  allowFullScreen="true" frameBorder="1">
-            </iframe> 
-         </Box>
-          <Box style={{padding: "0px 15px 0px 15px"}}>
-            <Box sx={{ bgcolor: "#075307", padding: "10px 0 10px 0px" }}>
+        <Box style={{ padding: "15px 15px 0px 15px" }}>
+          <iframe src="https://demo_iframe.htm" width="100%" height="620px" allowFullScreen="true" frameBorder="1"></iframe>
+        </Box>
+        <Box style={{ padding: "0px 15px 0px 15px" }}>
+          <Box sx={{ bgcolor: "#075307", padding: "10px 0 10px 0px" }}>
             <Typography
               fontSize="14px"
               sx={{
@@ -34,9 +33,8 @@ const BIDashboard = () => {
               Reserved.
             </Typography>
           </Box>
-          </Box>
-         
-        </div>
+        </Box>
+      </div>
     </>
   );
 };

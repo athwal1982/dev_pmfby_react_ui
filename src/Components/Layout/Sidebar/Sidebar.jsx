@@ -198,6 +198,8 @@ function Sidebar({ isCollapsed }) {
         return <AiFillSetting style={{ color: "white" }} />;
       case "Offline Intimation":
         return <FaTicketAlt style={{ color: "white" }} />;
+      case "Offline Grievance":
+        return <FaTicketAlt style={{ color: "white" }} />;
       default:
         return null;
     }
@@ -404,30 +406,6 @@ function Sidebar({ isCollapsed }) {
                 </div>
               ))}
             </List>
-            <ListItem
-              button
-              onClick={() => navigate("/OfflineGrievance")}
-              sx={{
-                color: "white",
-                borderRadius: "30px",
-                fontSize: "0.5rem",
-                transition: "0.4s",
-                "&:hover": { backgroundColor: "#E3F7B6", color: "#065C06" },
-                "&:hover .MuiListItemButton-root": { color: "#065C06" },
-                "&:hover .MuiListItemIcon-root": { color: "#065C06" },
-                "&:hover .MuiListItemText-primary": { color: "#065C06" },
-              }}
-            >
-              <ListItemIcon sx={{ minWidth: "40px", color: "white" }}>
-                <FaTicketAlt
-                  style={{
-                    fontSize: collapsed ? "2.5rem" : "1.5rem",
-                    transition: "font-size 0.3s ease",
-                  }}
-                />
-              </ListItemIcon>
-              {!isCollapsed && <ListItemText primary="Offline Grievance" />}
-            </ListItem>
 
             {/*      A  <ListItem
               button

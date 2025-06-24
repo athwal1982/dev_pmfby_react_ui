@@ -3,15 +3,44 @@ import { AlertMessage } from "Framework/Components/Widgets/Notification/Notifica
 import { DataGrid, PageBar, Form } from "Framework/Components/Layout";
 import { Loader } from "Framework/Components/Widgets";
 import { dateToSpecificFormat, dateToCompanyFormat, Convert24FourHourAndMinute, daysdifference, dateFormatDefault } from "Configration/Utilities/dateformat";
+import { FcViewDetails } from "react-icons/fc";
+import { FaEdit } from "react-icons/fa";
 import moment from "moment";
+import * as XLSX from "xlsx";
+import { getUserRightCodeAccess } from "Components/Common/Login/Auth/auth";
 import { getMasterDataBindingDataList } from "../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
 import { getGrievenceTicketsListData } from "./Services/Methods";
 import { getMasterDataBinding } from "../../Modules/Support/ManageTicket/Services/Methods";
 import BizClass from "./OfflineGrievance.module.scss";
 import AddOfflineGrievance from "./AddOfflineGrievance";
+import EditInsuranceCompany from "./EditInsuranceCompany";
+import MyTicketPage from "./MyTicket/index";
+
+const cellActionTemplate = (props) => {
+  const editTicketRight = getUserRightCodeAccess("ofg3");
+  return (
+    <div style={{ display: "flex", gap: "4px", marginTop: "2px" }}>
+      <FcViewDetails
+        style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }}
+        onClick={() => props.toggleSupportTicketDetailsModal(props.data)}
+        title="Ticket Details"
+      />
+      {props.data &&  props.data.InsuranceCompanyID === 0 && editTicketRight === true ?
+      <FaEdit
+        style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }}
+        onClick={() => props.toggleEditInsuranceCompanyModal(props.data)}
+        title="Update Insurance Copany"
+      /> : null}
+    </div>
+  );
+};
 
 const OfflineGrievance = () => {
   const setAlertMessage = AlertMessage();
+  const viewTicketRight = getUserRightCodeAccess("ofg2");
+  const addTicketRight = getUserRightCodeAccess("ofg1");
+
+  const [openMyTicketModal, setOpenMyTicketModal] = useState(false);
 
   const [formValues, setFormValues] = useState({
     txtFromDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
@@ -30,16 +59,6 @@ const OfflineGrievance = () => {
   const [gridApi, setGridApi] = useState();
   const onGridReady = (params) => {
     setGridApi(params.api);
-    const gridColumnApi = params.columnApi;
-
-    // A Wait for the data to load before autosizing
-    setTimeout(() => {
-      const allColumnIds = [];
-      gridColumnApi.getAllColumns().forEach((column) => {
-        allColumnIds.push(column.getId());
-      });
-      gridColumnApi.autoSizeColumns(allColumnIds, false);
-    }, 100);
   };
 
   const [searchTextCodeMaster, setSearchTextCodeMaster] = useState("");
@@ -64,33 +83,7 @@ const OfflineGrievance = () => {
   };
 
   const [isLoadingMaster, setIsLoadingMaster] = useState(false);
-  const [columnDefs, setColumnDefs] = useState([]);
   const [rowData, setRowData] = useState([]);
-
-  const generateColumns = (data) => {
-    const columnDefinitions = [];
-    if (data.length > 0) {
-      columnDefinitions.push({
-        headerName: "Sr.No.",
-        field: "",
-        valueGetter: "node.rowIndex + 1",
-        width: 80,
-        pinned: "left",
-        lockPosition: true,
-      });
-      Object.entries(data[0]).forEach(([key]) => {
-        let mappedColumn;
-
-        mappedColumn = {
-          headerName: key,
-          field: key,
-        };
-
-        if (mappedColumn) columnDefinitions.push(mappedColumn);
-      });
-    }
-    return columnDefinitions;
-  };
 
   const getGrievenceTicketsDataList = async () => {
     try {
@@ -124,27 +117,24 @@ const OfflineGrievance = () => {
       const requestData = {
         fromDate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
         toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
-        stateCodeAlpha: "",
-        grievenceTicketSourceTypeID: 0,
-        socialMediaTypeID: 0,
-        receiptSourceID: 0,
-        ticketStatusID: 0,
+        stateCodeAlpha: formValues.txtState && formValues.txtState.StateCodeAlpha ? formValues.txtState.StateCodeAlpha : "",
+        grievenceTicketSourceTypeID: formValues.txtgrievenceTicketSourceType && formValues.txtgrievenceTicketSourceType.CommonMasterValueID ? formValues.txtgrievenceTicketSourceType.CommonMasterValueID : 0,
+        socialMediaTypeID: formValues.txtSocialMedia && formValues.txtSocialMedia.CommonMasterValueID ? formValues.txtSocialMedia.CommonMasterValueID : 0,
+        receiptSourceID: formValues.txtSourceOfReceipt && formValues.txtSourceOfReceipt.CommonMasterValueID ? formValues.txtSourceOfReceipt.CommonMasterValueID : 0,
+        ticketStatusID: formValues.txtStatus && formValues.txtStatus.CommonMasterValueID ? formValues.txtStatus.CommonMasterValueID : 0,
       };
       const result = await getGrievenceTicketsListData(requestData);
       setIsLoadingMaster(false);
+      debugger;
       if (result.responseCode === 1) {
-        if (result.responseData && result.responseData.length > 0) {
+        if (result.responseData && result.responseData.grievenceTicket && result.responseData.grievenceTicket.length > 0) {
           if (searchTextCodeMaster && searchTextCodeMaster.toLowerCase().includes("#")) {
             onSearchCodeMaster("");
           }
           setRowData([]);
-          setColumnDefs([]);
-
-          setRowData(result.responseData);
-          setColumnDefs(generateColumns(result.responseData));
+          setRowData(result.responseData.grievenceTicket);
         } else {
           setRowData([]);
-          setColumnDefs([]);
         }
       } else {
         setAlertMessage({ open: true, type: "error", message: result.responseMessage });
@@ -251,6 +241,51 @@ const OfflineGrievance = () => {
     { CommonMasterValueID: 134305, CommonMasterValue: "Directly to Department/Section" },
   ]);
 
+    const downloadExcel = (data) => {
+      const worksheet = XLSX.utils.json_to_sheet(data);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+      // A let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+      // A XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+      worksheet["!cols"] = [
+        { width: 20 },
+        { width: 15 },
+        { width: 22 },
+        { width: 22 },
+        { width: 15 },
+        { width: 20 },
+        { width: 30 },
+        { width: 15 },
+        { width: 30 },
+        { width: 30 },
+        { width: 20 },
+        { width: 25 },
+        { width: 18 },
+        { width: 22 },
+        { width: 22 },
+        { width: 40 },
+        { width: 22 },
+        { width: 22 },
+        { width: 15 },
+        { width: 15 },
+        { width: 20 },
+        { width: 50 },
+        { width: 20 },
+      ];
+      XLSX.writeFile(
+        workbook,
+        `Offline_Grievance_Data_${dateToSpecificFormat(formValues.txtFromDate, "DD-MM-YYYY")}_To_${dateToSpecificFormat(formValues.txtToDate, "DD-MM-YYYY")}.xlsx`,
+      );
+    };
+  
+    const rearrangeAndRenameColumns = (originalData, columnMapping) => {
+      return originalData.map((item) => {
+        const rearrangedItem = Object.fromEntries(Object.entries(columnMapping).map(([oldColumnName, newColumnName]) => [newColumnName, item[oldColumnName]]));
+        return rearrangedItem;
+      });
+    };
+  
+
   const exportClick = () => {
     if (rowData.length === 0) {
       setAlertMessage({
@@ -259,22 +294,67 @@ const OfflineGrievance = () => {
       });
       return;
     }
-    gridApi.exportDataAsExcel({
-      fileName: "Feedback_Report.xlsx",
-      processCellCallback: (params) => {
-        const colId = params.column.getColId();
-
-        if (colId === "FeedBack Date") {
-          const value = params.value;
-          if (!value) return "";
-
-          const [date, time] = value.split("T");
-          return dateToSpecificFormat(`${date} ${Convert24FourHourAndMinute(time)}`, "DD-MM-YYYY HH:mm");
-        }
-
-        return params.value;
-      },
-    });
+    const columnOrder = {
+                  GrievenceSupportTicketNo: "Ticket No",
+                  ComplaintDate: "Complaint Date",
+                  ApplicationNo: "Application No",
+                  InsurancePolicyNo: "Policy No",
+                  TicketStatus: "Ticket Status",
+                  GrievenceSourceType: "Source Of Grievance",
+                  GrievenceSourceOtherType: "Other Source of Grievance",
+                  SocialMediaType: "Social Media",
+                  SocialMediaURL: "Social Media URL/Link",
+                  OtherSocialMedia: "Other Social Media",
+                  ReceiptSource: "Source Of Receipt",
+                  FarmerName: "Farmer Name",
+                  RequestorMobileNo: "Mobile No",
+                  Email: "Email ID",
+                  StateMasterName: "State",
+                  DistrictMasterName: "District",
+                  InsuranceCompany: "Insurance Company",
+                  TicketCategoryName: "Category",
+                  TicketSubCategoryName: "Sub Category",
+                  RequestSeason: "Season",
+                  RequestYear: "Year",
+                  CropName: "Crop Name",
+                  GrievenceDescription: "Description",
+                  InsertDateTime: "Created At",
+                };
+                const mappedData = rowData.map((value) => {
+                  return {
+                    SupportTicketNo: value.SupportTicketNo,
+                     ComplaintDate: value.ComplaintDate ? dateToSpecificFormat(value.ComplaintDate.split("T")[0], "DD-MM-YYYY") : "",
+                    ApplicationNo: value.ApplicationNo,
+                    InsurancePolicyNo: value.InsurancePolicyNo,
+                    TicketStatus: value.TicketStatus,
+                    GrievenceSourceType: value.GrievenceSourceType,
+                    GrievenceSourceOtherType: value.GrievenceSourceOtherType,
+                    SocialMediaType: value.SocialMediaType,
+                    SocialMediaURL: value.SocialMediaURL,
+                    OtherSocialMedia: value.OtherSocialMedia,
+                    ReceiptSource: value.ReceiptSource,
+                    FarmerName: value.FarmerName,
+                    RequestorMobileNo: value.RequestorMobileNo,
+                    Email: value.Email,
+                    StateMasterName: value.StateMasterName,
+                    DistrictMasterName: value.DistrictMasterName,
+                    InsuranceCompany: value.InsuranceCompany,
+                    TicketCategoryName: value.TicketCategoryName,
+                    TicketSubCategoryName: value.TicketSubCategoryName,
+                    RequestSeason: value.RequestSeason && value.RequestSeason === 1 ? "Kharif" : value.RequestSeason === 2 ? "Rabi" : "",
+                    RequestYear: value.RequestYear && value.RequestYear > 0 ? value.RequestYear : "",
+                    CropName: value.CropName,
+                    GrievenceDescription: value.GrievenceDescription,
+                    InsertDateTime: value.InsertDateTime
+                      ? dateToSpecificFormat(
+                          `${value.InsertDateTime.split("T")[0]} ${Convert24FourHourAndMinute(value.InsertDateTime.split("T")[1])}`,
+                          "DD-MM-YYYY HH:mm",
+                        )
+                      : "",
+                  };
+                });
+                const rearrangedData = rearrangeAndRenameColumns(mappedData, columnOrder);
+                downloadExcel(rearrangedData);
   };
 
   const [openAddOfflineGrievanceMdal, setOpenAddOfflineGrievanceMdal] = useState(false);
@@ -282,6 +362,70 @@ const OfflineGrievance = () => {
     setOpenAddOfflineGrievanceMdal(!openAddOfflineGrievanceMdal);
   };
 
+  const [openEditInsuranceCompanyMdal, setOpenEditInsuranceCompanyMdal] = useState(false);
+  const openEditInsuranceCompanyPage = (data) => {
+    if (data !== null) {
+        setSelectedData(data);
+      } else {
+        setSelectedData(null);
+      }
+    setOpenEditInsuranceCompanyMdal(!openEditInsuranceCompanyMdal);
+  };
+
+    const updateFarmersTickets = (newlyAddedTicket) => {
+    if (gridApi) {
+      const rowData = [];
+      if (newlyAddedTicket && newlyAddedTicket.length > 0) {
+        newlyAddedTicket.forEach((data) => {
+          rowData.push(data);
+        });
+      }
+      gridApi.forEachNode((node) => rowData.push(node.data));
+      gridApi.setRowData(rowData);
+    }
+  };
+
+    const updateInsuranceCompany = (selecteddata) => {
+    debugger;
+    const mappedData = rowData.map((data) => {
+      if (data.GrievenceSupportTicketID === selecteddata.GrievenceSupportTicketID) {
+        data.InsuranceCompanyID = selecteddata.InsuranceCompanyID;
+        data.InsuranceCompany = selecteddata.InsuranceCompany;
+      }
+      return data;
+    });
+    setRowData(mappedData);
+  };
+
+  const getRowStyle = (params) => {
+    if (params.data.IsNewlyAdded) {
+      return { background: "#d5a10e" };
+    }
+    if (params.node.rowIndex % 2 === 0) {
+      return { background: "#fff" };
+    }
+    return { background: "#f3f6f9" };
+  };
+
+  const [selectedData, setSelectedData] = useState();
+  const openMyTicketPage = (data) => {
+      if (data !== null) {
+        setSelectedData(data);
+      } else {
+        setSelectedData(null);
+      }
+      setOpenMyTicketModal(!openMyTicketModal);
+  };
+
+  const toggleSupportTicketDetailsModal = (data) => {
+    console.log(data);
+    openMyTicketPage(data);
+  };
+
+  const toggleEditInsuranceCompanyModal = (data) => {
+    openEditInsuranceCompanyPage(data);
+  };
+  
   useEffect(() => {
     getStateListData();
     getTicketStatusListData();
@@ -289,18 +433,87 @@ const OfflineGrievance = () => {
 
   return (
     <>
-      {openAddOfflineGrievanceMdal && <AddOfflineGrievance showfunc={openAddOfflineGrievancePage} />}
+      {openAddOfflineGrievanceMdal && <AddOfflineGrievance showfunc={openAddOfflineGrievancePage} updateFarmersTickets={updateFarmersTickets} />}
+      {openEditInsuranceCompanyMdal && <EditInsuranceCompany showfunc={openEditInsuranceCompanyPage} selectedData={selectedData} updateInsuranceCompany={updateInsuranceCompany} />}
+      {openMyTicketModal && <MyTicketPage showfunc={openMyTicketPage} selectedData={selectedData} />}
       <div className={BizClass.Box}>
         <div className={BizClass.PageBar}>
-          <PageBar.Button onClick={() => openAddOfflineGrievancePage()} title="Add Offline Grievance">
+          {addTicketRight ?  <PageBar.Button onClick={() => openAddOfflineGrievancePage()} title="Add Offline Grievance">
             Add Offline Grievance
-          </PageBar.Button>
+          </PageBar.Button> : null}
           <PageBar.ExcelButton onClick={() => exportClick()}>Export</PageBar.ExcelButton>
         </div>
         <div className={BizClass.MainBox}>
-          <>
+          {viewTicketRight ?
+            <>
             <div className={BizClass.divGridPagination}>
-              <DataGrid rowData={rowData} loader={isLoadingMaster ? <Loader /> : null} columnDefs={columnDefs} onGridReady={onGridReady}></DataGrid>
+              <DataGrid rowData={rowData} loader={isLoadingMaster ? <Loader /> : null}  components={{
+                        actionTemplate: cellActionTemplate,
+                      }} onGridReady={onGridReady}  getRowStyle={getRowStyle}>
+               <DataGrid.Column
+                                      headerName="Action"
+                                      lockPosition="1"
+                                      pinned="left"
+                                      width={80}
+                                      cellRenderer="actionTemplate"
+                                      cellRendererParams={{
+                                        toggleSupportTicketDetailsModal,
+                                        toggleEditInsuranceCompanyModal,
+                                      }}
+                                    />
+               <DataGrid.Column valueGetter="node.rowIndex + 1" field="#" headerName="Sr No." width={80} pinned="left" />
+                                    <DataGrid.Column field="GrievenceSupportTicketNo" headerName="Ticket No" width="150px" />
+                                    <DataGrid.Column
+             field="ComplaintDate"
+             headerName="Complaint Date"
+             width="140px"
+             valueFormatter={(param) => (param.value ? moment(param.value).format("DD-MM-YYYY") : "")}
+           />
+                                    <DataGrid.Column field="ApplicationNo" headerName="Application No" width="180px" useValueFormatterForExport={true} />
+                                    <DataGrid.Column field="InsurancePolicyNo" headerName="Policy No" width="170px" />
+                                    <DataGrid.Column field="TicketStatus" headerName="Ticket Status" width="120px" />
+                                    <DataGrid.Column field="GrievenceSourceType" headerName="Source of Grievance" width="200px" />
+                                    <DataGrid.Column field="GrievenceSourceOtherType" headerName="Other Source of Grievance" width="200px" />
+                                    <DataGrid.Column field="SocialMediaType" headerName="Social Media" width="200px" />
+                                    <DataGrid.Column field="SocialMediaURL" headerName="Social Media URL/Link" width="200px" />
+                                    <DataGrid.Column field="OtherSocialMedia" headerName="Other Social Media" width="200px" />
+                                    <DataGrid.Column field="ReceiptSource" headerName="Source Of Receipt" width="200px" />
+                                    <DataGrid.Column field="FarmerName" headerName="Farmer Name" width="210px" />
+                                    <DataGrid.Column field="RequestorMobileNo" headerName="Mobile No" width="110px" />
+                                    <DataGrid.Column field="Email" headerName="Email ID" width="170px" />
+                                    <DataGrid.Column field="StateMasterName" headerName="State" width="160px" />
+                                    <DataGrid.Column field="DistrictMasterName" headerName="District" width="160px" />
+                                    <DataGrid.Column field="InsuranceCompany" headerName="Insurance Company" width="290px" />
+                                    <DataGrid.Column field="TicketCategoryName" headerName="Category" width="200px" />
+                                    <DataGrid.Column field="TicketSubCategoryName" headerName="Sub Category" width="200px" />
+                                    <DataGrid.Column
+                                      field="RequestSeason"
+                                      headerName="Season"
+                                      width="100px"
+                                      valueFormatter={(param) => (param.value && param.value === 1 ? "Kharif" : param.value === 2 ? "Rabi" : "")}
+                                    />
+                                    <DataGrid.Column
+                                      field="RequestYear"
+                                      headerName="Yesr"
+                                      width="100px"
+                                      valueFormatter={(param) => (param.value && param.value > 0  ? param.value  : "")}
+                                    />
+                                    <DataGrid.Column field="CropName" headerName="Crop Name" width="150px" />
+                                    <DataGrid.Column field="GrievenceDescription" headerName="Description" width="290px" />
+                                    <DataGrid.Column
+                                      field="#"
+                                      headerName="Created At"
+                                      width="145px"
+                                      valueGetter={(node) => {
+                                        return node.data.InsertDateTime
+                                          ? dateToSpecificFormat(
+                                              `${node.data.InsertDateTime.split("T")[0]} ${Convert24FourHourAndMinute(node.data.InsertDateTime.split("T")[1])}`,
+                                              "DD-MM-YYYY HH:mm",
+                                            )
+                                          : null;
+                                      }}
+                                    />
+              </DataGrid>
             </div>
             <div className={BizClass.FilterBox}>
               <div className={BizClass.Header}>
@@ -408,8 +621,7 @@ const OfflineGrievance = () => {
                   Clear
                 </button>
               </div>
-            </div>{" "}
-          </>
+            </div> </> : <div style={{ "text-align": "center" }}>You are not authorized to view ticket list</div> }
         </div>
       </div>
     </>
