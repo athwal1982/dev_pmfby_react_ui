@@ -31,6 +31,7 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
   const { formValues, updateState, createNewPasswordForGotPassword, verifyOTPForForGotPassword, checkUserNameForForGotPassword } = ForgotPasswordLogics();
 
   useEffect(() => {
+    
     generateCaptcha();
     setCaptchaCode(generateCaptcha());
   }, []);
@@ -39,14 +40,17 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
     setRevealNewPassword(!revealNewPassword);
   };
   const handleGetOTP1 = async () => {
+    
     setOtpVisible(true);
   };
   const handleSubmitOtp1 = async () => {
+    
     setInvisible(false);
     setPasswordField(true);
     setSelectedOption("");
   };
   const handleConfirm1 = async () => {
+    
     setIsProcessing(true);
     setSelectedOption("CHPass");
     setConfirmationMessage(true);
@@ -65,6 +69,7 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
   };
 
   const handleGetOTP = async () => {
+    
     setLoading(true);
 
     try {
@@ -100,6 +105,7 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
   };
 
   const handleSubmitOtp = async () => {
+    
     setLoading(true);
 
     if (!/^\d{6}$/.test(formValues?.txtOTP)) {
@@ -135,6 +141,7 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
   };
 
   const handleConfirm = async () => {
+    
     try {
       if (!formValues.txtNewPassword.trim() || !formValues.txtConfirmPassword.trim()) {
         setAlertMessage({
@@ -198,8 +205,9 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
     <>
       {isFormVisible && (
         <>
-          <motion.div className="mobile-input" initial={{ opacity: 0, y: 80 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 2, ease: "easeOut" }}>
+          {/* <motion.div className="mobile-input" initial={{ opacity: 0, y: 80 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 2, ease: "easeOut" }}> */}
             <>
+            <div className="mobile-input">
               <div style={{ display: "flex", flexDirection: "row" }}>
                 <img src={resetPass} alt="logo" />
                 <h2 className="title">Forgot your password?</h2>
@@ -274,9 +282,8 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
               <>
                 {passwordField && (
                   <div>
-                    <div>
+                    <div className="password-input">
                       <label>Enter Password</label>
-
                       <div className="input-container">
                         <input
                           type={revealNewPassword ? "text" : "password"}
@@ -294,8 +301,8 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
                         )}
                       </div>
                     </div>
+                    <div className="password-input">
                     <label>Confirm Password</label>
-
                     <div className="input-container">
                       <input
                         type={revealConfirmPassword ? "text" : "password"}
@@ -312,7 +319,7 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
                         <VscEye className="password-icon" onClick={() => toggleConfirmPassword()} />
                       )}
                     </div>
-
+                    </div>
                     <button type="button" className="get-otp" onClick={handleConfirm} disabled={isProcessing}>
                       {" "}
                       Submit{" "}
@@ -320,8 +327,9 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
                   </div>
                 )}
               </>
+               </div>
             </>
-          </motion.div>
+          {/* </motion.div> */}
         </>
       )}
       {confirmationMessage && (
