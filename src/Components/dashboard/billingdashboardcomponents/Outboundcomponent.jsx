@@ -23,6 +23,7 @@ const Outboundcomponent = ({
   totalICOBGSTAmount,
   totalICOBTotalBillableAmount,
   downloadpdfdata,
+  userLoggedInData
 }) => {
   const detailscards = [
     {
@@ -34,7 +35,7 @@ const Outboundcomponent = ({
           : "0",
     },
     {
-      show: true,
+      show: userLoggedInData && userLoggedInData.UserCompanyType === "Insurance Company" ? false : true,
       name: "No. Of Outbound Calls",
       value:
         billingDashBoardList && billingDashBoardList.length > 0 && billingDashBoardList[0].totalCalls
@@ -42,7 +43,7 @@ const Outboundcomponent = ({
           : "0",
     },
     {
-      show: true,
+      show: userLoggedInData && userLoggedInData.UserCompanyType === "Insurance Company" ? false : true,
       name: "Total OB Billable Pulses",
       value: obBillableData ? numberWithCommas(obBillableData) : "0",
     },

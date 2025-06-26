@@ -19,10 +19,11 @@ const Inboundcomponent = ({
   totalICGSTAmount,
   totalICTotalBillableAmount,
   downloadpdfdata,
+  userLoggedInData
 }) => {
   const detailscards = [
     {
-      show: true,
+      show: userLoggedInData && userLoggedInData.UserCompanyType === "Insurance Company" ? false : true,
       name: "Tagging With Tickets",
       value:
         billingDashBoardList.length > 0 && billingDashBoardList[0].total_matched_with_ticket
@@ -30,7 +31,7 @@ const Inboundcomponent = ({
           : "0",
     },
     {
-      show: true,
+      show: userLoggedInData && userLoggedInData.UserCompanyType === "Insurance Company" ? false : true,
       name: "Tagging Without Tickets",
       value:
         billingDashBoardList.length > 0 && billingDashBoardList[0].total_matched_without_ticket

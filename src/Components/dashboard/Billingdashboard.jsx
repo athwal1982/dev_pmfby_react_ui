@@ -38,6 +38,7 @@ import Textmessagecomponent from "./billingdashboardcomponents/Textmessagecompon
 import WhatsappComponent from "./billingdashboardcomponents/WhatsappComponent";
 
 const Billingdashboard = () => {
+  const userLoggedInData = getSessionStorage("user");
   const { cards, yearlist, monthlist, columns } = billinginfo();
   const [currentdaterange, setCurrentdaterange] = useState({
     from: "",
@@ -2117,6 +2118,7 @@ const Billingdashboard = () => {
                       downloadpdfdata={() => {
                         OnClickExcelDataDownlaod(currentmenu);
                       }}
+                      userLoggedInData={userLoggedInData}
                     />
                   </>
                 )}
@@ -2164,6 +2166,7 @@ const Billingdashboard = () => {
                       downloadpdfdata={() => {
                         OnClickExcelDataDownlaod(currentmenu);
                       }}
+                      userLoggedInData={userLoggedInData}
                     />
                   </>
                 )}
