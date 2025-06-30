@@ -19,7 +19,7 @@ const Inboundcomponent = ({
   totalICGSTAmount,
   totalICTotalBillableAmount,
   downloadpdfdata,
-  userLoggedInData
+  userLoggedInData,
 }) => {
   const detailscards = [
     {

@@ -1,134 +1,139 @@
 .ICTABLE-table-container {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 600px;
-  text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 600px;
+    text-align: center;
 }
 
 .ICTABLE-txt {
-  font-size: 20px;
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 15px;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 15px;
 }
 
 .ICTABLE-table {
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 15px;
-  overflow: hidden;
-  border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    overflow: hidden;
+    border-collapse: collapse;
+
 }
 
 .ICTABLE-th,
 .ICTABLE-td {
-  padding: 5px 5px 5px 5px;
-  border: 1px solid #ccc;
-  text-align: center;
+    padding: 5px 5px 5px 5px;
+    border: 1px solid #ccc;
+    text-align: center;
 }
 
 .ICTABLE-td-logo {
-  border: none !important;
+    border: none !important;
 }
 
 .ICTABLE-th {
-  background-color: green;
-  color: whitesmoke;
+    background-color: green;
+    color: whitesmoke;
+
 }
 
 .ICTABLE-input-email {
-  width: 90%;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+    width: 90%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 .ICTABLE-input-checkbox {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .ICTABLE-button-group {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0 0 0;
-  gap: 30px;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 0 0;
+    gap: 30px;
 }
 
 .ICTABLE-button {
-  width: 48%;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+    width: 48%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .ICTABLE-tr {
-  border: 2px solid #cccccc;
+    border: 2px solid #cccccc;
+
+
 }
 
 .ICTABLE_input_container_agent {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .ICTABLE_input_field_agent {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .ICTABLE_input_field_agent label {
-  display: block;
-  font-size: 14px;
-  margin-bottom: 5px;
-  font-weight: 400;
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: 400;
 }
 
 .ICTABLE_input_field_agent input {
-  width: 100%;
-  padding: 10px;
-  border: 2px solid #cccccc;
-  border-radius: 5px;
-  font-size: 14px;
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #cccccc;
+    border-radius: 5px;
+    font-size: 14px;
 }
 
 .ICTABLE_input_field_agent input:focus {
-  border-color: #004d00;
+    border-color: #004d00;
 }
+
 
 /* ICTABLE overlay-style.css */
 .ICTABLE-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
 }
 
 .ICTABLE-modal {
-  height: 80%;
-  overflow-y: scroll;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  min-width: 800px;
-  z-index: 1001;
+    height: 80%;
+    overflow-y: scroll;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    min-width: 800px;
+    z-index: 1001;
 }
 
 .ICTABLE-close-button {
-  position: absolute !important;
-  top: 10px !important;
-  right: 10px !important;
-  background: transparent;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
 }

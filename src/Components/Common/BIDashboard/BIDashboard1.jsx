@@ -13,12 +13,13 @@ const BIDashboard1 = () => {
   }, []);
   return (
     <>
-      <div className="csc_main_BI_1">
-        {isLoadingBIDashboard ? <Loader /> : null}
-        <Box style={{ padding: "15px 15px 0px 15px" }}>
-          <iframe src="https://demo_iframe.htm" width="100%" height="620px" allowFullScreen="true" frameBorder="1"></iframe>
-        </Box>
-      </div>
+    <div className="csc_main_BI_1">
+            {isLoadingBIDashboard ? <Loader /> : null}
+             <Box style={{padding: "15px 15px 0px 15px"}}>
+                <iframe src="https://app.powerbi.com/reportEmbed?reportId=a361b084-2108-4b91-a4e9-b2848098b23d&autoAuth=true&ctid=af290cc2-0568-4c81-a06b-044771f5ceb1&navContentPaneEnabled=false&filterPaneEnabled=false"  width="100%" height="620px"  allowFullScreen="true" frameBorder="1">
+                </iframe> 
+             </Box>
+            </div>
     </>
   );
 };

@@ -23,6 +23,7 @@ import {
   totalReportSummaryAPI,
   icAgentOvertimeDetailsAPI,
   icAgentWorkingDetailsAPI,
+  billingAICompanyDetailsData,
 } from "./../../Components/Common/BillingDashboard/Services/Services";
 import Breadcrumb from "./Partials/Breadcrumb";
 import Secondsection from "./Partials/Secondsection";
@@ -36,6 +37,7 @@ import Outboundcomponent from "./billingdashboardcomponents/Outboundcomponent";
 import Agentovertimecomponent from "./billingdashboardcomponents/Agentovertimecomponent";
 import Textmessagecomponent from "./billingdashboardcomponents/Textmessagecomponent";
 import WhatsappComponent from "./billingdashboardcomponents/WhatsappComponent";
+import AibotComponent from "./billingdashboardcomponents/AibotComponent";
 
 const Billingdashboard = () => {
   const userLoggedInData = getSessionStorage("user");
@@ -76,6 +78,7 @@ const Billingdashboard = () => {
     txtMonthFilter: null,
   });
   const updateSearchFormState = (name, value) => {
+    
     setSearchFormValues({ ...searchFormValues, [name]: value });
   };
 
@@ -230,6 +233,13 @@ const Billingdashboard = () => {
   const [grandTotalWhatsappPercntShare, setgrandTotalWhatsappPercntShare] = useState(0);
   const [totalbillingsummary, setTotalbillingsummary] = useState({});
 
+  const [grandTotalAi, setgrandTotalAi] = useState(0);
+  const [grandTotalAiPercntShare, setgrandTotalAiPercntShare] = useState(0);
+
+  const [totalICAiTotalAmount, settotalICAiTotalAmount] = useState(0);
+  const [totalICAiGSTAmount, settotalICAiGSTAmount] = useState(0);
+  const [totalICAiTotalBillableAmount, settotalICAiTotalBillableAmount] = useState(0);
+
   const [total, setTotal] = useState("0.00");
   const [inboundCall, setInboundCall] = useState("0.00");
   const [outboundCall, setOutboundCall] = useState("0.00");
@@ -237,6 +247,7 @@ const Billingdashboard = () => {
   const [agentOvertime, setAgentOvertime] = useState("0.00");
   const [textMessage, setTextMessage] = useState("0.00");
   const [whatsapp, setWhatsapp] = useState("0.00");
+  const [aibot, setAibot] = useState("0.00");
 
   const [icLogo, setIcLogo] = useState("");
   const [insuranceCompanyReport, setInsuranceCompanyReport] = useState("");
@@ -250,6 +261,7 @@ const Billingdashboard = () => {
 
   const getbillingAgentDashboardList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
+      
       setIsLoadingBillingDashBoardList(true);
       const formData = {
         from: formattedStartDate,
@@ -291,6 +303,7 @@ const Billingdashboard = () => {
 
   const getbillingAgentOverTimeDashboardList = async (formattedStartDate, formattedEndDate) => {
     try {
+      
       const formData = {
         from: formattedStartDate,
         to: formattedEndDate,
@@ -329,6 +342,7 @@ const Billingdashboard = () => {
 
   const getbillingObCallDetailsList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
+      
       setIsLoadingBillingDashBoardList(true);
       const formData = {
         from: formattedStartDate,
@@ -368,6 +382,7 @@ const Billingdashboard = () => {
 
   const getbillingSmsCompanyDetailsList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
+      
       setIsLoadingBillingDashBoardList(true);
       const formData = {
         active_agent: "",
@@ -425,6 +440,7 @@ const Billingdashboard = () => {
   };
   const getbillingWhatsappCompanyDetailsList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
+      
       setIsLoadingBillingDashBoardList(true);
       const formData = {
         active_agent: "",
@@ -490,6 +506,7 @@ const Billingdashboard = () => {
   };
   const getbillingIbCompanyShareDetailsList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
+      
       setIsLoadingBillingDashBoardList(true);
       const formattedYearMonth = `${formattedStartDate.split("-")[0]}-${formattedStartDate.split("-")[1]}`;
       const formData = {
@@ -555,6 +572,7 @@ const Billingdashboard = () => {
 
   const getbillingAgentWorkingDayDetailsDataList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
+      
       setbillingDashBoardAgentWorkingDetailsList([]);
       // A setTotalno_of_working_hours(0);
       // A setTotalno_of_training_hours(0);
@@ -631,6 +649,7 @@ const Billingdashboard = () => {
 
   const getbillingAgentWorkingOverTimeDetailsDataList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
+      
       setbillingDashBoardAgentWorkingOverTimeDetailsList([]);
       setTotalworking_days_overtime(0);
       setTotalweekly_off__holidays_overtime(0);
@@ -702,6 +721,7 @@ const Billingdashboard = () => {
 
   const getbillingobcompanyShareDetailsDataList = async (formattedStartDate, formattedEndDate) => {
     try {
+      
       setbillingDashBoardObICDetailsList([]);
       setIsLoadingBillingDashBoardList(true);
       const formData = {
@@ -779,6 +799,7 @@ const Billingdashboard = () => {
 
   const getbillingDashBoardAgentICDataList = async (formattedStartDate, formattedEndDate, pnoOfWorkingDays) => {
     try {
+      
       const formData = {
         from: formattedStartDate,
         to: formattedEndDate,
@@ -838,6 +859,7 @@ const Billingdashboard = () => {
 
   const getbillingDashBoardAgentOverTimeICDataList = async (formattedStartDate, formattedEndDate, pnoOfWorkingOverTime) => {
     try {
+      
       const formData = {
         from: formattedStartDate,
         to: formattedEndDate,
@@ -1218,6 +1240,7 @@ const Billingdashboard = () => {
 
   const getbillingAgentWorkingOverTimeDetailsDataListForSummary = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
+      
       setIsLoadingBillingDashBoardList(true);
       const formData = {
         active_agent: "0",
@@ -1253,6 +1276,7 @@ const Billingdashboard = () => {
 
   const getbillingDashBoardAgentOverTimeICDataListForSummary = async (formattedStartDate, formattedEndDate, pnoOfWorkingOverTime) => {
     try {
+      
       const formData = {
         from: formattedStartDate,
         to: formattedEndDate,
@@ -1368,13 +1392,75 @@ const Billingdashboard = () => {
         setAgentOvertime(tempresult.responseData[0].agent_overtime_cost);
         setTextMessage(tempresult.responseData[0].sms_costing);
         setWhatsapp(tempresult.responseData[0].whatsapp_gupsup_cost); */
+      
       }
     } else {
       setTotalbillingsummary({});
+      
+    }
+  };
+
+  const getbillingAiBotCompanyDetailsList = async (formattedStartDate, formattedEndDate, companylist) => {
+    try {
+      
+      setIsLoadingBillingDashBoardList(true);
+      const formData = {
+        active_agent: "",
+        from: formattedStartDate,
+        to: formattedEndDate,
+        ic: companylist
+          ? companylist
+          : insuranceCompanyList && insuranceCompanyList.length > 0 && insuranceCompanyList.length == 1
+            ? insuranceCompanyList[0].CompanyName
+            : "",
+      };
+      const result = await billingAICompanyDetailsData(formData);
+      setIsLoadingBillingDashBoardList(false);
+      if (result.responseCode === 1) {
+        if (result.responseData && result.responseData.length > 0) {
+          setbillingDashBoardListList(result.responseData);
+          let pTotalAi = 0;
+          let pTotalAiPercntShare = 0;
+          let ptotalICAiTotalAmount = 0;
+          let ptotalICAiGSTAmount = 0;
+          let ptotalICAiTotalBillableAmount = 0;
+          if (result.responseData[0].length > 0) {
+            result.responseData[0].forEach((v) => {
+              pTotalAi += parseFloat(v.aiBot_submission);
+              pTotalAiPercntShare += parseFloat(v.perentage_pulses);
+              ptotalICAiTotalAmount += parseFloat(v.total_amount);
+              ptotalICAiGSTAmount += parseFloat((parseFloat(v.total_amount) * 18) / 100);
+            });
+          }
+          setgrandTotalAi(pTotalAi);
+          setgrandTotalAiPercntShare(pTotalAiPercntShare);
+          settotalICAiTotalAmount(ptotalICAiTotalAmount);
+          settotalICAiGSTAmount(ptotalICAiGSTAmount);
+          ptotalICAiTotalBillableAmount = parseFloat(ptotalICAiTotalAmount + ptotalICAiGSTAmount);
+          settotalICAiTotalBillableAmount(ptotalICAiTotalBillableAmount);
+        } else {
+          setbillingDashBoardListList([]);
+          setIsLoadingBillingDashBoardList(false);
+          setAlertMessage({
+            type: "error",
+            message: result.responseMessage,
+          });
+        }
+      } else {
+        setbillingDashBoardListList([]);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoadingBillingDashBoardList(false);
+      setAlertMessage({
+        type: "error",
+        message: error,
+      });
     }
   };
 
   const OnClickTabDashBoard = (pType) => {
+    debugger;
     setCurrentmenu(pType);
     if (pType === "SMDTLS") {
       setActiveKey(pType);
@@ -1393,6 +1479,9 @@ const Billingdashboard = () => {
       settotalICTxtMsgTotalAmount(0);
       settotalICTxtMsgGSTAmount(0);
       settotalICTxtMsgTotalBillableAmount(0);
+      settotalICAiTotalAmount(0);
+      settotalICAiGSTAmount(0);
+      settotalICAiTotalBillableAmount(0);
       getallreportsummary(currentdaterange?.from, currentdaterange?.to, currentdaterange?.ic);
 
       // A getbillingIbCompanyShareDetailsForSummary(currentdaterange?.from, currentdaterange?.to, currentdaterange?.ic);
@@ -1455,6 +1544,12 @@ const Billingdashboard = () => {
       getbillingWhatsappCompanyDetailsList(currentdaterange?.from, currentdaterange?.to, currentdaterange?.ic);
     } else if (pType === "AIBT") {
       setActiveKey(pType);
+      setgrandTotalAi(0);
+      settotalICAiTotalAmount(0);
+      settotalICAiGSTAmount(0);
+      settotalICAiTotalBillableAmount(0);
+      setbillingDashBoardListList([]);
+      getbillingAiBotCompanyDetailsList(currentdaterange?.from, currentdaterange?.to, currentdaterange?.ic);
     }
   };
 
@@ -1468,6 +1563,7 @@ const Billingdashboard = () => {
   const formattedYear_MonthName = formatYear_MonthName(yearMonth);
 
   const OnClickExcelDataDownlaod = (pType) => {
+    
     if (pType === "INBNDCL") {
       InBoundCallsDataArrangeAndDownload();
     } else if (pType === "OTBNDCL") {
@@ -1480,9 +1576,13 @@ const Billingdashboard = () => {
       AgentsOverTimeDataArrangeAndDownload();
     } else if (pType === "WHAPP") {
       whatsappdataDataArrangeAndDownload();
+    } else if (pType === "AIBT") {
+      AiBotCallsDataArrangeAndDownload();
     }
   };
   const InBoundCallsDataArrangeAndDownload = () => {
+    
+
     const columnOrderTaggedUntagged = {
       total_matched_with_ticket: "Tagging With Tickets",
       total_matched_without_ticket: "Tagging Without Tickets",
@@ -1543,6 +1643,8 @@ const Billingdashboard = () => {
   };
 
   const downloadExcelInbound = (dataTaggedUntagged, dataInboundICDetails) => {
+    
+
     const worksheetTaggedUntagged = XLSX.utils.json_to_sheet(dataTaggedUntagged);
     const worksheetInboundICDetails = XLSX.utils.json_to_sheet(dataInboundICDetails);
     const workbook = XLSX.utils.book_new();
@@ -1557,6 +1659,7 @@ const Billingdashboard = () => {
   };
 
   const OutBoundCallsDataArrangeAndDownload = () => {
+    
     const columnOrderCountAgentAndOutboundCalls = {
       // AtotalDistinctAgents: "No. Of Active Agents",
       totalCalls: "No. Of Outbound Calls",
@@ -1612,7 +1715,7 @@ const Billingdashboard = () => {
       gst: mappedDataOutboundICDetails.reduce((sum, row) => sum + parseFloat(row.gst || 0), 0).toFixed(2),
       grant_total: mappedDataOutboundICDetails.reduce((sum, row) => sum + parseFloat(row.grant_total || 0), 0).toFixed(2),
     };
-
+    
     mappedDataOutboundICDetails.push(grandTotalRow);
 
     const rearrangedDataOutboundICDetails = rearrangeAndRenameColumns(mappedDataOutboundICDetails, columnOrderOutboundICDetails);
@@ -1620,6 +1723,7 @@ const Billingdashboard = () => {
   };
 
   const downloadExcelOutbound = (dataCountAgentAndOutboundCalls, dataOutboundICDetails) => {
+    
     const worksheetAgentAndOutboundCalls = XLSX.utils.json_to_sheet(dataCountAgentAndOutboundCalls);
     const worksheetOutboundICDetails = XLSX.utils.json_to_sheet(dataOutboundICDetails);
     const workbook = XLSX.utils.book_new();
@@ -1685,6 +1789,62 @@ const Billingdashboard = () => {
       `Text_Message_Details_${formattedYear_MonthName ? formattedYear_MonthName : "year_month"}_${currentdaterange?.ic ? currentdaterange?.ic : "AllData"}.xlsx`,
     );
   };
+
+  const AiBotCallsDataArrangeAndDownload = () => {
+    const columnOrderaiBotICDetails = {
+      srn: "Sr. No.",
+      _id: "IC name",
+      sum_of_call_pulses: "Sum of call pulse",
+      perentage_pulses: "% of Call Pulse",
+      aiBot_submission: "Pulse Submission",
+      sms_rate: "Rate as per MOU 0.125/Pulse",
+      total_amount: "Total Amount",
+      gst: "GST (18%)",
+      grant_total: "Grand Total Amount(Rs)",
+    };
+    const mappedDataaiBotICDetails = billingDashBoardList[0].map((value, index) => {
+      return {
+        srn: index + 1,
+        _id: value._id,
+        sum_of_call_pulses: value.total_tagged_pulses ? parseFloat(value.total_tagged_pulses).toFixed(2) : 0.0,
+        perentage_pulses: value.perentage_pulses ? parseFloat(value.perentage_pulses).toFixed(2) : 0.0,
+        aiBot_submission: value.aiBot_submission ? parseFloat(value.aiBot_submission).toFixed(2) : 0.0,
+        sms_rate: 0.125,
+        total_amount: value.total_amount ? parseFloat(value.total_amount).toFixed(2) : 0.0,
+        gst: value.gst ? parseFloat(value.gst).toFixed(2) : 0.0,
+        grant_total: value.grant_total ? parseFloat(value.grant_total).toFixed(2) : 0.0,
+      };
+    });
+
+    const grandTotalRow = {
+      srn: "",
+      _id: "Grand Total",
+      sum_of_call_pulses: mappedDataaiBotICDetails.reduce((sum, row) => sum + parseFloat(row.sum_of_call_pulses || 0), 0).toFixed(2),
+      perentage_pulses: mappedDataaiBotICDetails.reduce((sum, row) => sum + parseFloat(row.perentage_pulses || 0), 0).toFixed(2),
+      aiBot_submission: mappedDataaiBotICDetails.reduce((sum, row) => sum + parseFloat(row.aiBot_submission || 0), 0).toFixed(2),
+      sms_rate: mappedDataaiBotICDetails.reduce((sum, row) => sum + parseFloat(row.sms_rate || 0), 0).toFixed(2),
+      total_amount: mappedDataaiBotICDetails.reduce((sum, row) => sum + parseFloat(row.total_amount || 0), 0).toFixed(2),
+      gst: mappedDataaiBotICDetails.reduce((sum, row) => sum + parseFloat(row.gst || 0), 0).toFixed(2),
+      grant_total: mappedDataaiBotICDetails.reduce((sum, row) => sum + parseFloat(row.grant_total || 0), 0).toFixed(2),
+    };
+    mappedDataaiBotICDetails.push(grandTotalRow);
+    const rearrangedDataaiBotICDetails = rearrangeAndRenameColumns(mappedDataaiBotICDetails, columnOrderaiBotICDetails);
+    downloadExcelaiBot(rearrangedDataaiBotICDetails);
+  };
+
+  
+  const downloadExcelaiBot = (dataaiBotICDetails) => {
+    const worksheetaiBotICDetails = XLSX.utils.json_to_sheet(dataaiBotICDetails);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheetaiBotICDetails, "Sheet1");
+    worksheetaiBotICDetails["!cols"] = [{ width: 50 }, { width: 30 }, { width: 30 }];
+    XLSX.writeFile(
+      workbook,
+      `AI_Bot_Details_${formattedYear_MonthName ? formattedYear_MonthName : "year_month"}_${currentdaterange?.ic ? currentdaterange?.ic : "AllData"}.xlsx`,
+    );
+  };
+
+  
   const whatsappdataDataArrangeAndDownload = () => {
     const columnOrderTextMessageICDetails = {
       _id: "Insurance Company",
@@ -1820,6 +1980,7 @@ const Billingdashboard = () => {
   };
 
   const downloadExcelAgent = (dataCountAgents, dataInboundICDetails, dataAgentDetails) => {
+    
     const worksheetCountAgents = XLSX.utils.json_to_sheet(dataCountAgents);
     const worksheetInboundICDetails = XLSX.utils.json_to_sheet(dataInboundICDetails);
     const worksheetAgentDetails = XLSX.utils.json_to_sheet(dataAgentDetails);
@@ -1915,6 +2076,7 @@ const Billingdashboard = () => {
   };
 
   useEffect(() => {
+    
     const now = new Date();
     const currentYear = now.getFullYear();
     const yearArray = [];
@@ -1983,6 +2145,7 @@ const Billingdashboard = () => {
 
   const initialrenderforcampanylist = async () => {
     try {
+      
       setIsLoadingBillingDashBoardList(true);
       const formData = {};
       const result = await getInsuranceCompanyListAPI(formData);
@@ -2023,6 +2186,7 @@ const Billingdashboard = () => {
   };
 
   useEffect(() => {
+    
     if (totalbillingsummary) {
       setTotal(
         `Rs. ${numberWithCommas(
@@ -2033,7 +2197,8 @@ const Billingdashboard = () => {
               (totalbillingsummary?.agent_working_cost || 0) +
               (totalbillingsummary?.agent_overtime_cost || 0) +
               (totalbillingsummary?.sms_costing || 0) +
-              (totalbillingsummary?.whatsapp_gupsup_cost || 0)
+              (totalbillingsummary?.whatsapp_gupsup_cost || 0) +
+               (totalbillingsummary?.aiBot_costing || 0)
             ).toFixed(2),
           ),
         )}`,
@@ -2052,6 +2217,7 @@ const Billingdashboard = () => {
       setTextMessage(totalbillingsummary?.sms_costing ? `${numberWithCommas(parseFloat(totalbillingsummary?.sms_costing).toFixed(2))}` : "0.00");
 
       setWhatsapp(totalbillingsummary?.whatsapp_gupsup_cost ? `${numberWithCommas(parseFloat(totalbillingsummary?.whatsapp_gupsup_cost).toFixed(2))}` : "0.00");
+      setAibot(totalbillingsummary?.aiBot_costing ? `${numberWithCommas(parseFloat(totalbillingsummary?.aiBot_costing).toFixed(2))}` : "0.00");
     }
   }, [totalbillingsummary]);
 
@@ -2094,6 +2260,7 @@ const Billingdashboard = () => {
                 agentovertime={agentOvertime}
                 textmessage={textMessage}
                 whatsapp={whatsapp}
+                aibot={aibot}
               />
             </>
             {currentmenu && (
@@ -2233,6 +2400,27 @@ const Billingdashboard = () => {
                     />
                   </>
                 )}
+                {currentmenu === "AIBT" && ( <>
+                    <AibotComponent
+                      toDate={toDate}
+                      fromDate={fromDate}
+                      aibot={aibot}
+                      activeKey={activeKey}
+                      currentcarddetails={currentcarddetails}
+                      numberWithCommas={numberWithCommas}
+                      billingDashBoardList={billingDashBoardList}
+                      totalICAiTotalAmount={totalICAiTotalAmount}
+                      totalICAiGSTAmount={totalICAiGSTAmount}
+                      totalICAiTotalBillableAmount={totalICAiTotalBillableAmount}
+                      grandTotalAiPercntShare={grandTotalAiPercntShare}
+                      grandTotalAi={grandTotalAi}
+                      downloadpdfdata={() => {
+                        OnClickExcelDataDownlaod(currentmenu);
+                      }}
+                      sumColumn={sumColumn}
+                    />
+                  </>
+                )} 
               </>
             )}
           </>

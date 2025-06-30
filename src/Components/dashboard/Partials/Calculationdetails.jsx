@@ -6,6 +6,7 @@ import { FaFileExcel } from "react-icons/fa";
 import { getSessionStorage } from "Components/Common/Login/Auth/auth";
 
 const Calculationdetails = ({ yearMonth, insuranceCompanyReport, activeKey, currentcarddetails, name, showcal, detailscards, total }) => {
+  debugger;
   const userData = getSessionStorage("user");
   const totalval = new Intl.NumberFormat("en-IN").format(
     detailscards
@@ -27,7 +28,7 @@ const Calculationdetails = ({ yearMonth, insuranceCompanyReport, activeKey, curr
       </div>
       <div className="row pt-3">
         <div className="col-md-12">
-          {userData?.UserCompanyType == "CSC" && (
+          {/* {userData?.UserCompanyType == "CSC" && ( */}
             <div className="calculation-area">
               {detailscards.map((card, index) =>
                 card.show ? (
@@ -57,7 +58,7 @@ const Calculationdetails = ({ yearMonth, insuranceCompanyReport, activeKey, curr
               )}
               {total && <Contentcardcenter name="Total" value={totalval} icon={currentcarddetails?.icon} color={currentcarddetails?.color} show={false} />}
             </div>
-          )}
+          {/* )} */}
         </div>
       </div>
     </div>

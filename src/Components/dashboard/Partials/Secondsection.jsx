@@ -19,9 +19,11 @@ const Secondsection = ({
   textmessage,
   outboundcall,
   whatsapp,
+  aibot,
 }) => {
   const [customdata, setcustomdata] = useState([]);
   useEffect(() => {
+    debugger;
     if (cards.length > 0) {
       const updatedCards = cards.map((card) => {
         const valueMap = {
@@ -31,6 +33,7 @@ const Secondsection = ({
           TXTMSG: textmessage,
           OTBNDCL: outboundcall,
           WHAPP: whatsapp,
+          AIBT: aibot,
         };
         const tempvalue = valueMap[card.key] || card.value;
         return {
@@ -40,7 +43,7 @@ const Secondsection = ({
       });
       setcustomdata(updatedCards);
     }
-  }, [cards, inbaundcall, agents, agentovertime, textmessage, outboundcall]);
+  }, [cards, inbaundcall, agents, agentovertime, textmessage, outboundcall, aibot]);
 
   return (
     <div className="billing-chart-container">

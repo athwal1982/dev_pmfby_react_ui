@@ -47,13 +47,13 @@ export const billinginfo = () => {
       color: "#9E5CF7",
       key: "WHAPP",
     },
-    //  A   {
-    //  A     name: "AI Bot",
-    //   A    value: "0.00",
-    //   A    icon: <SiProbot />,
-    //  A     color: "#D57616",
-    //  A     key: "AIBT",
-    //  A   },
+     {
+         name: "AI Bot",
+          value: "0.00",
+          icon: <SiProbot />,
+         color: "#D57616",
+         key: "AIBT",
+       },
   ];
 
   const startYear = 2025;

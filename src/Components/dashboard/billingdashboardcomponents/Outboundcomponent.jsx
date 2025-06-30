@@ -23,8 +23,9 @@ const Outboundcomponent = ({
   totalICOBGSTAmount,
   totalICOBTotalBillableAmount,
   downloadpdfdata,
-  userLoggedInData
+  userLoggedInData,
 }) => {
+
   const detailscards = [
     {
       show: false,

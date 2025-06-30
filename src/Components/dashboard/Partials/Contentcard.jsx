@@ -86,7 +86,7 @@ const Contentcard = ({ name, value, icon, color, currentmenu, keyvalue, handlech
             </a>
           </div>
 
-          {keyvalue === "TXTMSG" || keyvalue === "WHAPP" ? (
+          {keyvalue === "TXTMSG" || keyvalue === "WHAPP" ||  keyvalue === "AIBT" ? (
             <>
               {ImportReportBtnRight ? (
                 <>
@@ -223,6 +223,8 @@ const Contentcard = ({ name, value, icon, color, currentmenu, keyvalue, handlech
             </Typography>
             <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
               <input type="file" onChange={handleFileChange} accept=".xlsx, .xls" />
+
+           
             </Box>
             <Button
               onClick={handledemoImportReport}

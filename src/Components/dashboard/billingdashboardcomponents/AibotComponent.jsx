@@ -10,39 +10,39 @@ import Config from "Configration/Config.json";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import pako from "pako";
 
-const Textmessagecomponent = ({
+const AibotComponent = ({
   activeKey,
   fromDate,
   toDate,
-  textmessage,
+  aibot,
   currentcarddetails,
   numberWithCommas,
   billingDashBoardList,
-  totalICTxtMsgTotalAmount,
-  totalICTxtMsgGSTAmount,
-  totalICTxtMsgTotalBillableAmount,
-  grandTotalTextMsgPercntShare,
-  grandTotalTextMsg,
+  totalICAiTotalAmount,
+  totalICAiGSTAmount,
+  totalICAiTotalBillableAmount,
+  grandTotalAiPercntShare,
+  grandTotalAi,
   downloadpdfdata,
   sumColumn,
 }) => {
   const [detailscards, setDetailscards] = useState([]);
   const [show, setShow] = useState(false);
-  const columns = ["Sr. No", "Insurance Company", "% Share of IBTC Pulses (B1)", "SMS count to be Billed(U*= B1 * Total SMS sent)"];
+  const columns = ["Sr. No", "Insurance Company", "% Share of IBTC Pulses (B1)", "Pulse count to be Billed(U*= B1 * Total Pulse)"];
   const tabledata =
     billingDashBoardList && billingDashBoardList.length > 0 && billingDashBoardList[0]
       ? billingDashBoardList[0].map((item, index) => ({
           index: index + 1,
           id: item["_id"],
           tagedPulses: item.perentage_pulses ? `${numberWithCommas(parseFloat(item.perentage_pulses).toFixed(2))}%` : "0%",
-          percentagePulse: item.sms_submission ? numberWithCommas(parseFloat(item.sms_submission).toFixed(2)) : "0.00",
-          checkvalue: item.sms_submission,
+          percentagePulse: item.aiBot_submission ? numberWithCommas(parseFloat(item.aiBot_submission).toFixed(2)) : "0.00",
+          checkvalue: item.aiBot_submission,
         }))
       : [];
 
   const grandtotal = [
-    grandTotalTextMsgPercntShare ? `${numberWithCommas(parseFloat(grandTotalTextMsgPercntShare).toFixed(2))}%` : "0%",
-    grandTotalTextMsg ? numberWithCommas(parseFloat(grandTotalTextMsg).toFixed(2)) : "0",
+    grandTotalAiPercntShare ? `${numberWithCommas(parseFloat(grandTotalAiPercntShare).toFixed(2))}%` : "0%",
+    grandTotalAi ? numberWithCommas(parseFloat(grandTotalAi).toFixed(2)) : "0",
   ];
   let customStyle = [
     { textAlign: "left", textWrap: "nowrap" },
@@ -58,25 +58,25 @@ const Textmessagecomponent = ({
       setDetailscards([
         {
           show: true,
-          name: "Total Text Messages Count",
-          value: sumColumn(billingDashBoardList[0], "sms_submission") ? numberWithCommas(sumColumn(billingDashBoardList[0], "sms_submission")) : "0.00",
+          name: "Total Pulse Count",
+          value: sumColumn(billingDashBoardList[0], "aiBot_submission") ? numberWithCommas(sumColumn(billingDashBoardList[0], "aiBot_submission")) : "0.00",
         },
       ]);
     }
   }, [billingDashBoardList]);
 
-  const [smsData, setSmsData] = useState([]);
+  const [aiBotData, setAiBotData] = useState([]);
   const [loading, setLoading] = useState(true);
   const setAlertMessage = AlertMessage();
 
   const handleGetData = async () => {
-    
+    debugger;
 
     const user = getSessionStorage("user");
 
     const options = {
       method: "POST",
-      url: `${Config.BaseUrl}FGMS/smsDetailRawData`,
+      url: `${Config.BaseUrl}FGMS/aiBotDetailRawData`,
 
       headers: {
         cookie: "my_cookie=value",
@@ -93,7 +93,7 @@ const Textmessagecomponent = ({
         const compressedData = response.data.responseDynamic;
         const byteArray = Uint8Array.from(atob(compressedData), (c) => c.charCodeAt(0));
         const decompressedData = new TextDecoder("utf-8").decode(pako.inflate(byteArray));
-        setSmsData(JSON.parse(decompressedData));
+        setAiBotData(JSON.parse(decompressedData));
       } else {
         setAlertMessage({ type: "error", message: "No Data" });
         setLoading(false);
@@ -127,7 +127,7 @@ const Textmessagecomponent = ({
   };
   return (
     <>
-      {textmessage === "0.00" ? (
+      {aibot === "0.00" ? (
         <>
           <div>No Data Uploaded Yet</div>
         </>
@@ -138,7 +138,7 @@ const Textmessagecomponent = ({
             currentcarddetails={currentcarddetails}
             showcal={false}
             total={false}
-            name={"Text Messages Details"}
+            name={"Ai Bot Details"}
             detailscards={detailscards}
           />
           <div className="mt-4"></div>
@@ -153,7 +153,7 @@ const Textmessagecomponent = ({
           <div className="py-3 calculationdetails">
             <div className="d-flex align-items-center justify-content-between">
               <div className="d-flex align-items-center justify-content-start custom-gap">
-                <p className="title">SMS Data Details</p>
+                <p className="title">Ai Bot Data Details</p>
                 <div className="green-line"></div>
               </div>
               <button
@@ -178,12 +178,12 @@ const Textmessagecomponent = ({
                         <tr style={{ backgroundColor: "#075307", position: "sticky", top: "0" }}>
                           <th style={headerCellStyle}>S.No</th>
                           <th style={headerCellStyle}>Date</th>
-                          <th style={headerCellStyle}>SMS Count</th>
+                          <th style={headerCellStyle}>Pulse Count</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {smsData.length > 0 ? (
-                          smsData.map((row, index) => (
+                        {aiBotData.length > 0 ? (
+                          aiBotData.map((row, index) => (
                             <tr
                               key={index}
                               style={{
@@ -192,7 +192,7 @@ const Textmessagecomponent = ({
                             >
                               <td style={cellStyle}>{index + 1}</td>
                               <td style={cellStyle}>{row.Date}</td>
-                              <td style={cellStyle}>{row["SMS Count"]}</td>
+                              <td style={cellStyle}>{row["Pulse Count"]}</td>
                             </tr>
                           ))
                         ) : (
@@ -211,14 +211,14 @@ const Textmessagecomponent = ({
           )}
 
           <Calculationdetailsbootom
-            name={"SMS Billing Total of Insurance Company"}
+            name={"AI Bot Billing Total of Insurance Company"}
             currentcarddetails={currentcarddetails}
-            tabonename={["Amount for SMS Sent", "X4 = U1 * 0.125"]}
-            inboundpulse={totalICTxtMsgTotalAmount ? `Rs. ${numberWithCommas(parseFloat(totalICTxtMsgTotalAmount).toFixed(2))}` : 0}
+            tabonename={["Amount for Pulse", "X4 = U1 * 0.125"]}
+            inboundpulse={totalICAiTotalAmount ? `Rs. ${numberWithCommas(parseFloat(totalICAiTotalAmount).toFixed(2))}` : 0}
             tabtwoname={["Taxes (GST)", "Y4 = X4 * 18%"]}
-            taxes={totalICTxtMsgGSTAmount ? `Rs. ${numberWithCommas(parseFloat(totalICTxtMsgGSTAmount).toFixed(2))}` : 0}
-            tabthree={["Total Bill for SMS Sent", "Z4 = X4 + Y4"]}
-            total={totalICTxtMsgTotalBillableAmount ? `Rs. ${numberWithCommas(parseFloat(totalICTxtMsgTotalBillableAmount).toFixed(2))}` : 0}
+            taxes={totalICAiGSTAmount ? `Rs. ${numberWithCommas(parseFloat(totalICAiGSTAmount).toFixed(2))}` : 0}
+            tabthree={["Total Bill for Pulse", "Z4 = X4 + Y4"]}
+            total={totalICAiTotalBillableAmount ? `Rs. ${numberWithCommas(parseFloat(totalICAiTotalBillableAmount).toFixed(2))}` : 0}
           />
         </div>
       )}
@@ -226,4 +226,4 @@ const Textmessagecomponent = ({
   );
 };
 
-export default Textmessagecomponent;
+export default AibotComponent;
