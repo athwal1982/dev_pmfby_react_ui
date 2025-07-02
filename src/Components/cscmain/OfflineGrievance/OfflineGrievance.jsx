@@ -13,6 +13,7 @@ import { getGrievenceTicketsListData } from "./Services/Methods";
 import { getMasterDataBinding } from "../../Modules/Support/ManageTicket/Services/Methods";
 import BizClass from "./OfflineGrievance.module.scss";
 import AddOfflineGrievance from "./AddOfflineGrievance";
+// A import EditOfflineGrievance from "./EditOfflineGrievance";
 import EditInsuranceCompany from "./EditInsuranceCompany";
 import MyTicketPage from "./MyTicket/index";
 
@@ -25,11 +26,13 @@ const cellActionTemplate = (props) => {
         onClick={() => props.toggleSupportTicketDetailsModal(props.data)}
         title="Ticket Details"
       />
+      {/* {props.data &&  props.data.TicketStatusID !== 109303 && editTicketRight === true ? */}
       {props.data &&  props.data.InsuranceCompanyID === 0 && editTicketRight === true ?
       <FaEdit
         style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }}
-        onClick={() => props.toggleEditInsuranceCompanyModal(props.data)}
-        title="Update Insurance Copany"
+        // A onClick={() => props.toggleEditOfflineGrievanceModal(props.data)}
+         onClick={() => props.toggleEditInsuranceCompanyModal(props.data)}
+        title="Update Offline Grievance"
       /> : null}
     </div>
   );
@@ -323,7 +326,7 @@ const OfflineGrievance = () => {
                 const mappedData = rowData.map((value) => {
                   return {
                     SupportTicketNo: value.SupportTicketNo,
-                     ComplaintDate: value.ComplaintDate ? dateToSpecificFormat(value.ComplaintDate.split("T")[0], "DD-MM-YYYY") : "",
+                    ComplaintDate: value.ComplaintDate ? dateToSpecificFormat(value.ComplaintDate.split("T")[0], "DD-MM-YYYY") : "",
                     ApplicationNo: value.ApplicationNo,
                     InsurancePolicyNo: value.InsurancePolicyNo,
                     TicketStatus: value.TicketStatus,
@@ -362,14 +365,14 @@ const OfflineGrievance = () => {
     setOpenAddOfflineGrievanceMdal(!openAddOfflineGrievanceMdal);
   };
 
-  const [openEditInsuranceCompanyMdal, setOpenEditInsuranceCompanyMdal] = useState(false);
-  const openEditInsuranceCompanyPage = (data) => {
+  const [openEditOfflineGrievanceMdal, setOpenEditOfflineGrievanceMdal] = useState(false);
+  const openEditOfflineGrievancePage = (data) => {
     if (data !== null) {
         setSelectedData(data);
       } else {
         setSelectedData(null);
       }
-    setOpenEditInsuranceCompanyMdal(!openEditInsuranceCompanyMdal);
+    setOpenEditOfflineGrievanceMdal(!openEditOfflineGrievanceMdal);
   };
 
     const updateFarmersTickets = (newlyAddedTicket) => {
@@ -385,7 +388,7 @@ const OfflineGrievance = () => {
     }
   };
 
-    const updateInsuranceCompany = (selecteddata) => {
+    const updateOfflineGrievance = (selecteddata) => {
     debugger;
     const mappedData = rowData.map((data) => {
       if (data.GrievenceSupportTicketID === selecteddata.GrievenceSupportTicketID) {
@@ -396,6 +399,19 @@ const OfflineGrievance = () => {
     });
     setRowData(mappedData);
   };
+
+const updateInsuranceCompany = (selecteddata) => {
+    debugger;
+    const mappedData = rowData.map((data) => {
+      if (data.GrievenceSupportTicketID === selecteddata.GrievenceSupportTicketID) {
+        data.InsuranceCompanyID = selecteddata.InsuranceCompanyID;
+        data.InsuranceCompany = selecteddata.InsuranceCompany;
+      }
+      return data;
+    });
+    setRowData(mappedData);
+  };
+
 
   const getRowStyle = (params) => {
     if (params.data.IsNewlyAdded) {
@@ -422,6 +438,20 @@ const OfflineGrievance = () => {
     openMyTicketPage(data);
   };
 
+  const toggleEditOfflineGrievanceModal = (data) => {
+    openEditOfflineGrievancePage(data);
+  };
+
+  const [openEditInsuranceCompanyMdal, setOpenEditInsuranceCompanyMdal] = useState(false);
+  const openEditInsuranceCompanyPage = (data) => {
+    if (data !== null) {
+        setSelectedData(data);
+      } else {
+        setSelectedData(null);
+      }
+    setOpenEditInsuranceCompanyMdal(!openEditInsuranceCompanyMdal);
+  };
+
   const toggleEditInsuranceCompanyModal = (data) => {
     openEditInsuranceCompanyPage(data);
   };
@@ -434,6 +464,7 @@ const OfflineGrievance = () => {
   return (
     <>
       {openAddOfflineGrievanceMdal && <AddOfflineGrievance showfunc={openAddOfflineGrievancePage} updateFarmersTickets={updateFarmersTickets} />}
+      {/* {openEditOfflineGrievanceMdal && <EditOfflineGrievance showfunc={openEditOfflineGrievancePage} selectedData={selectedData} updateOfflineGrievance={updateOfflineGrievance} />} */}
       {openEditInsuranceCompanyMdal && <EditInsuranceCompany showfunc={openEditInsuranceCompanyPage} selectedData={selectedData} updateInsuranceCompany={updateInsuranceCompany} />}
       {openMyTicketModal && <MyTicketPage showfunc={openMyTicketPage} selectedData={selectedData} />}
       <div className={BizClass.Box}>
@@ -459,6 +490,7 @@ const OfflineGrievance = () => {
                                       cellRendererParams={{
                                         toggleSupportTicketDetailsModal,
                                         toggleEditInsuranceCompanyModal,
+                                        toggleEditOfflineGrievanceModal,
                                       }}
                                     />
                <DataGrid.Column valueGetter="node.rowIndex + 1" field="#" headerName="Sr No." width={80} pinned="left" />

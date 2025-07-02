@@ -3,6 +3,7 @@ const APIEndpoints = {
     GetGrievenceTicketsList: "FGMS/GetGrievenceTicketsList",
     AddKRPHGrievenceSupportTicket: "FGMS/AddKRPHGrievenceSupportTicket",
     EditGrievenceSupportTicket:"FGMS/EditGrievenceSupportTicket",
+    EditKRPHGrievenceSupportTicket:"FGMS/EditKRPHGrievenceSupportTicket",
   },
 };
 

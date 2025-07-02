@@ -2,7 +2,7 @@ import { React, useState, useEffect, useRef } from "react";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { Box, Card, Typography } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
-import { dateToCompanyFormat } from "Configration/Utilities/dateformat";
+import { dateToCompanyFormat, dateToSpecificFormat } from "Configration/Utilities/dateformat";
 import moment from "moment";
 import { InputControl, InputGroup } from "Framework/OldFramework/FormComponents/FormComponents";
 import { KrphButton } from "../../Common/KrphAllActivitiesND/Widgets/KrphButton";
@@ -11,10 +11,10 @@ import { getSessionStorage, setSessionStorage } from "Components/Common/Login/Au
 import { getMasterDataBindingDataList, getDistrictByState } from "../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
 import { getMasterDataBinding } from "../../Modules/Support/ManageTicket/Services/Methods";
 import { ticketDataBindingData } from "Components/Common/Welcome/Service/Methods";
-import { addKRPHGrievenceSupportTicketData } from "./Services/Methods";
+import { editKRPHGrievenceSupportTicket } from "./Services/Methods";
 import BizClass from "./OfflineGrievance.module.scss";
 
-const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
+const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance }) => {
   const setAlertMessage = AlertMessage();
 
   const ticketBindingData = getSessionStorage("ticketDataBindingSsnStrg");
@@ -54,28 +54,29 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
   ]);
 
   const [formValuesGI, setFormValuesGI] = useState({
-    txtState: null,
-    txtDistrict: null,
-    txtMobileNumber: "",
-    txtFarmerName: "",
-    txtComplaintDate: "",
-    txtFarmerEmailID: "",
-    txtYearForFarmerInfo: null,
-    txtSeasonForFarmerInfo: null,
-    txtSourceOfGrievance: null,
-    txtOtherSourceOfGrievance: "",
-    txtSocialMedia: null,
-    txturl: "",
-    txtOtherSocialMediaSource: "",
-    txtSourceOfReceipt: null,
-    txtInsuranceCompany: null,
-    txtApplicationNumber: "",
-    txtPolicyNumber: "",
-    txtCropName: "",
-    txtTicketCategoryType: null,
-    txtTicketCategory: null,
+    txtState: selectedData  && selectedData.StateMasterName && selectedData.StateCodeAlpha ? { StateCodeAlpha: selectedData.StateCodeAlpha, StateMasterName: selectedData.StateMasterName } : null,
+    txtDistrict: selectedData  && selectedData.DistrictMasterName && selectedData.DistrictRequestorID ? { level3ID: selectedData.DistrictRequestorID, level3Name: selectedData.DistrictMasterName } : null,
+    txtMobileNumber:  selectedData && selectedData.RequestorMobileNo ? selectedData.RequestorMobileNo : "",
+    txtFarmerName: selectedData && selectedData.FarmerName ? selectedData.FarmerName : "",
+    txtComplaintDate: selectedData  &&  selectedData.ComplaintDate ?  dateToSpecificFormat(selectedData.ComplaintDate,"YYYY-MM-DD") : "",
+    txtFarmerEmailID: selectedData && selectedData.EmailID ? selectedData.EmailID : "",
+    txtYearForFarmerInfo: selectedData  && selectedData.RequestYear  ? { Value: selectedData.RequestYear, Name: selectedData.RequestYear } : null,
+    txtSeasonForFarmerInfo: selectedData  && selectedData.RequestSeason ? { CropSeasonID: selectedData.RequestSeason, CropSeasonName: selectedData.RequestSeason && selectedData.RequestSeason === 1 ? "Kharif" : selectedData.RequestSeason === 2 ? "Rabi": "" } : null,
+    txtSourceOfGrievance: selectedData  && selectedData.GrievenceSourceType && selectedData.GrievenceTicketSourceTypeID ? { CommonMasterValueID: selectedData.GrievenceTicketSourceTypeID, CommonMasterValue: selectedData.GrievenceSourceType } : null,
+    txtOtherSourceOfGrievance: selectedData && selectedData.GrievenceSourceOtherType ? selectedData.GrievenceSourceOtherType : "",
+    txtSocialMedia: selectedData  && selectedData.SocialMediaType && selectedData.SocialMediaTypeID ? { CommonMasterValueID: selectedData.SocialMediaTypeID, CommonMasterValue: selectedData.SocialMediaType } : null,
+    txturl: selectedData && selectedData.SocialMediaURL ? selectedData.SocialMediaURL : "",
+    txtOtherSocialMediaSource: selectedData && selectedData.OtherSocialMedia ? selectedData.OtherSocialMedia : "",
+    txtSourceOfReceipt: selectedData  && selectedData.ReceiptSource && selectedData.ReceiptSourceID ? { CommonMasterValueID: selectedData.ReceiptSourceID, CommonMasterValue: selectedData.ReceiptSource } : null,
+    txtisIdentified: selectedData && selectedData.InsuranceCompanyID === 0 ? { ID: 2, Value: "No" } : selectedData.InsuranceCompanyID > 0 ? { ID: 2, Value: "Yes" }: null ,
+    txtInsuranceCompany: selectedData  && selectedData.InsuranceCompanyID && selectedData.InsuranceCompany ? { CompanyID: selectedData.InsuranceCompanyID, CompanyName: selectedData.InsuranceCompany } : null,
+    txtApplicationNumber: selectedData && selectedData.ApplicationNo ? selectedData.ApplicationNo : "",
+    txtPolicyNumber: selectedData && selectedData.InsurancePolicyNo ? selectedData.InsurancePolicyNo : "",
+    txtCropName: selectedData && selectedData.CropName ? selectedData.CropName : "",
+    txtTicketCategoryType: selectedData  && selectedData.TicketCategoryName && selectedData.TicketCategoryID ? { SupportTicketTypeID: selectedData.TicketCategoryID, SupportTicketTypeName: selectedData.TicketCategoryName } : null,
+    txtTicketCategory:  selectedData  && selectedData.TicketSubCategoryName && selectedData.TicketSubCategoryID ? { TicketCategoryID: selectedData.TicketSubCategoryID, TicketCategoryName: selectedData.TicketSubCategoryName } : null,
     txtDocumentUpload: "",
-    txtTicketDescription: "",
+    txtTicketDescription: selectedData && selectedData.GrievenceDescription ? selectedData.GrievenceDescription : "",
   });
 
   const [formValidationKRPHError, setFormValidationKRPHError] = useState({});
@@ -531,19 +532,14 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
     debugger;
     try {
       const formData = {
-        ticketRequestorID: "",
+        grievenceSupportTicketID: selectedData && selectedData.GrievenceSupportTicketID ? selectedData.GrievenceSupportTicketID : 0,
         farmerName: formValuesGI.txtFarmerName ? formValuesGI.txtFarmerName : "",
         email: formValuesGI.txtFarmerEmailID ? formValuesGI.txtFarmerEmailID : "",
         requestorMobileNo: formValuesGI.txtMobileNumber ? formValuesGI.txtMobileNumber : "",
         subCategoryName: "",
-        complaintDate: formValuesGI && formValuesGI.txtComplaintDate ? dateToCompanyFormat(formValuesGI.txtComplaintDate) : "",
+        // A complaintDate: formValuesGI && formValuesGI.txtComplaintDate ? dateToCompanyFormat(formValuesGI.txtComplaintDate) : "",
         stateCodeAlpha: formValuesGI.txtState && formValuesGI.txtState.StateCodeAlpha ? formValuesGI.txtState.StateCodeAlpha : "",
         districtRequestorID: formValuesGI.txtDistrict && formValuesGI.txtDistrict.level3ID ? formValuesGI.txtDistrict.level3ID : "",
-        villageRequestorID: "",
-        nyayPanchayatID: "",
-        nyayPanchayat: "",
-        gramPanchayatID: "",
-        gramPanchayat: "",
         grievenceSourceTypeID:
           formValuesGI.txtSourceOfGrievance && formValuesGI.txtSourceOfGrievance.CommonMasterValueID
             ? formValuesGI.txtSourceOfGrievance.CommonMasterValueID
@@ -563,7 +559,6 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
         requestYear: formValuesGI.txtYearForFarmerInfo && formValuesGI.txtYearForFarmerInfo.Value ? formValuesGI.txtYearForFarmerInfo.Value : 0,
         requestSeason:
           formValuesGI.txtSeasonForFarmerInfo && formValuesGI.txtSeasonForFarmerInfo.CropSeasonID ? formValuesGI.txtSeasonForFarmerInfo.CropSeasonID : 0,
-        villageName: "",
         cropName: formValuesGI && formValuesGI.txtCropName ? formValuesGI.txtCropName : "",
         applicationNo: formValuesGI && formValuesGI.txtApplicationNumber ? formValuesGI.txtApplicationNumber : "",
         insuranceCompanyID: formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyID ? formValuesGI.txtInsuranceCompany.CompanyID : 0,
@@ -585,90 +580,28 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
       };
       setisBtndisabled(1);
       setBtnLoaderSupportTicketActive(true);
-      const result = await addKRPHGrievenceSupportTicketData(formData);
+      const result = await editKRPHGrievenceSupportTicket(formData);
       setBtnLoaderSupportTicketActive(false);
       setisBtndisabled(0);
-      if (result.responseCode === 1) {
-        if (result && result.responseData) {
-          setAlertMessage({
-            type: "success",
-            message: result.responseMessage,
-          });
-          const user = getSessionStorage("user");
-          const newlyAddedTicket = [
-            {
-              ApplicationNo: formValuesGI.txtApplicationNumber ? formValuesGI.txtApplicationNumber : "",
-              InsertDateTime: moment().utcOffset("+05:30").format("YYYY-MM-DDTHH:mm:ss"),
-              CreatedBY: user && user.UserDisplayName ? user.UserDisplayName : "",
-              InsuranceCompany:
-                formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyName ? formValuesGI.txtInsuranceCompany.CompanyName : "",
-              InsuranceCompanyID:
-                formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyID ? formValuesGI.txtInsuranceCompany.CompanyID : 0,
-              InsurancePolicyNo: formValuesGI.txtPolicyNumber ? formValuesGI.txtPolicyNumber : "",
-              RequestorMobileNo: formValuesGI.txtMobileNumber ? formValuesGI.txtMobileNumber : "",
-              FarmerName: formValuesGI.txtFarmerName ? formValuesGI.txtFarmerName : "",
-              Email: formValuesGI.txtFarmerEmailID ? formValuesGI.txtFarmerEmailID : "",
-              GrievenceSupportTicketID: result.responseData.GrievenceSupportTicketID,
-              TicketCategoryID:
-                formValuesGI.txtTicketCategory && formValuesGI.txtTicketCategory.TicketCategoryID ? formValuesGI.txtTicketCategory.TicketCategoryID : 0,
-              TicketCategoryName: formValuesGI.txtTicketCategory ? formValuesGI.txtTicketCategory.TicketCategoryName : "",
-              GrievenceDescription: formValuesGI.txtTicketDescription ? formValuesGI.txtTicketDescription : "",
-              ComplaintDate: formValuesGI.txtComplaintDate ? dateToCompanyFormat(formValuesGI.txtComplaintDate) : "",
-              TicketRequestorID: "",
-              StateMasterName: formValuesGI.txtState && formValuesGI.txtState.StateMasterName ? formValuesGI.txtState.StateMasterName : "",
-              GrievenceSupportTicketNo: result.responseData.GrievenceSupportTicketNo ? result.responseData.GrievenceSupportTicketNo : "",
-              TicketStatus: "Open",
-              TicketStatusID: 109301,
-              BMCGCode: 109019,
-              TicketCategoryName:
-                formValuesGI.txtTicketCategoryType && formValuesGI.txtTicketCategoryType.SupportTicketTypeName
-                  ? formValuesGI.txtTicketCategoryType.SupportTicketTypeName
-                  : "",
-              RequestYear: formValuesGI.txtYearForFarmerInfo && formValuesGI.txtYearForFarmerInfo.Value ? formValuesGI.txtYearForFarmerInfo.Value : 0,
-              RequestSeason:
-                formValuesGI.txtSeasonForFarmerInfo && formValuesGI.txtSeasonForFarmerInfo.CropSeasonID ? formValuesGI.txtSeasonForFarmerInfo.CropSeasonID : 0,
-              HasDocument: 0,
-              AttachmentPath: "",
-              CropName: formValuesGI.txtCropName ? formValuesGI.txtCropName : "",
-              VillageName: "",
-              DistrictMasterName: formValuesGI.txtDistrict && formValuesGI.txtDistrict.level3Name ? formValuesGI.txtDistrict.level3Name : "",
-              SubDistrictID: "",
-              SubDistrictName: "",
-              GrievenceTicketSourceTypeID:
-                formValuesGI.txtSourceOfGrievance && formValuesGI.txtSourceOfGrievance.CommonMasterValueID
-                  ? formValuesGI.txtSourceOfGrievance.CommonMasterValueID
-                  : 0,
-              GrievenceSourceType:
-                formValuesGI.txtSourceOfGrievance && formValuesGI.txtSourceOfGrievance.CommonMasterValue
-                  ? formValuesGI.txtSourceOfGrievance.CommonMasterValue
-                  : "",
-              SocialMediaType:
-                formValuesGI.txtSocialMedia && formValuesGI.txtSourceOfGrievance.CommonMasterValue ? formValuesGI.txtSourceOfGrievance.CommonMasterValue : "",
-              GrievenceSourceOtherType: formValuesGI && formValuesGI.txtOtherSourceOfGrievance ? formValuesGI.txtOtherSourceOfGrievance : "",
-              SocialMediaTypeID:
-                formValuesGI.txtSocialMedia && formValuesGI.txtSocialMedia.CommonMasterValueID ? formValuesGI.txtSocialMedia.CommonMasterValueID : 0,
-              SocialMediaType:
-                formValuesGI.txtSocialMedia && formValuesGI.txtSocialMedia.CommonMasterValue ? formValuesGI.txtSocialMedia.CommonMasterValue : "",
-              OtherSocialMedia: formValuesGI && formValuesGI.txtOtherSocialMediaSource ? formValuesGI.txtOtherSocialMediaSource : "",
-              SocialMediaURL: formValuesGI && formValuesGI.txturl ? formValuesGI.txturl : "",
-              ReceiptSourceID:
-                formValuesGI.txtSourceOfReceipt && formValuesGI.txtSourceOfReceipt.CommonMasterValueID
-                  ? formValuesGI.txtSourceOfReceipt.CommonMasterValueID
-                  : 0,
-              ReceiptSource:
-                formValuesGI.txtSourceOfReceipt && formValuesGI.txtSourceOfReceipt.CommonMasterValue ? formValuesGI.txtSourceOfReceipt.CommonMasterValue : "",
-              IsNewlyAdded: true,
-            },
-          ];
-          updateFarmersTickets(newlyAddedTicket);
-          ClearFormFields();
-        }
-      } else {
-        setAlertMessage({
-          type: "error",
-          message: result.responseMessage,
-        });
-      }
+     if (result.responseCode === 1) {
+                  if (result && result.responseData) {
+                    selectedData.InsuranceCompanyID = formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyID ? formValuesGI.txtInsuranceCompany.CompanyID : 0;
+                    selectedData.InsuranceCompany =  formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyName ? formValuesGI.txtInsuranceCompany.CompanyName : "",
+                    updateOfflineGrievance(selectedData);
+                    showfunc();
+                  }
+                  setBtnLoaderSupportTicketActive(false);
+                  setAlertMessage({
+                    type: "success",
+                    message: result.responseMessage,
+                  });
+                } else {
+                  setBtnLoaderSupportTicketActive(false);
+                  setAlertMessage({
+                    type: "error",
+                    message: result.responseMessage,
+                  });
+                }
     } catch (error) {
       console.log(error);
       setAlertMessage({
@@ -711,7 +644,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
 
   return (
     <>
-      <Modal varient="half" title="Add Offline Grievance" right="0" width="90.5vw" show={showfunc}>
+      <Modal varient="half" title="Edit Offline Grievance" right="0" width="90.5vw" show={showfunc}>
         <Modal.Body>
           <Box
             sx={{
@@ -867,7 +800,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                         }}
                       >
                         <span>
-                          State <span className="asteriskCss">&#42;</span>
+                          State 
                         </span>{" "}
                         <InputGroup ErrorMsg={formValidationKRPHError["txtState"]}>
                           <InputControl
@@ -894,7 +827,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                         }}
                       >
                         <span>
-                          District <span className="asteriskCss">&#42;</span>
+                          District 
                         </span>
                         <InputGroup ErrorMsg={formValidationKRPHError["txtDistrict"]}>
                           <InputControl
@@ -1167,7 +1100,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                         </InputGroup>
                         <span className="login_ErrorTxt">{formValidationKRPHError["txtisIdentified"]}</span>
                       </Typography>
-                      {formValuesGI && formValuesGI.txtisIdentified && formValuesGI.txtisIdentified.ID && formValuesGI.txtisIdentified.ID === 1 ? (
+                      {selectedData && selectedData.InsuranceCompanyID > 0 ? (
                         <Typography
                           sx={{
                             fontFamily: "Quicksand, sans-serif",
@@ -1318,7 +1251,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                         trigger={btnLoaderSupportTicketActive && "true"}
                         onClick={() => supportTicketOnClick()}
                       >
-                        Submit
+                        Update
                       </KrphButton>
                     </div>
                   </Box>
@@ -1332,4 +1265,4 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
   );
 };
 
-export default AddOfflineGrievance;
+export default EditOfflineGrievance;

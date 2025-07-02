@@ -45,3 +45,17 @@ export const editGrievenceSupportTicketData = async (formData) => {
     return { response: { responseCode: 0, responseData: null, responseMessage: error } };
   }
 };
+export const editKRPHGrievenceSupportTicket = async (formData) => {
+  try {
+    const requestData = {
+      main: {
+        ...formData,
+      },
+    };
+    const result = await ApiCalling(requestData, APIEndpoints.OfflineGrievance.EditKRPHGrievenceSupportTicket);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return { response: { responseCode: 0, responseData: null, responseMessage: error } };
+  }
+};
