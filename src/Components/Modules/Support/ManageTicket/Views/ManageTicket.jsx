@@ -102,6 +102,7 @@ function ManageTicket({
     { value: "1", label: "Mobile No" },
     { value: "2", label: "Ticket No" },
     { value: "3", label: "Application No" },
+    { value: "4", label: "Docket No" },
   ];
 
   const toggleSupportTicketDetailsModal = (data) => {
@@ -296,6 +297,7 @@ function ManageTicket({
                         }}
                       />
                       <DataGrid.Column valueGetter="node.rowIndex + 1" field="#" headerName="Sr No." width={80} pinned="left" />
+                      <DataGrid.Column field="TicketNCIPDocketNo" headerName="NCIP Docket No" width="160px" />
                       <DataGrid.Column field="SupportTicketNo" headerName="Ticket No" width="150px" />
                       <DataGrid.Column field="ApplicationNo" headerName="Application No" width="180px" useValueFormatterForExport={true} />
                       <DataGrid.Column field="InsurancePolicyNo" headerName="Policy No" width="170px" />

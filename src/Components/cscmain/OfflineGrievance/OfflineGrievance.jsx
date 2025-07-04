@@ -494,7 +494,7 @@ const updateInsuranceCompany = (selecteddata) => {
       <div className={BizClass.Box}>
         <div className={BizClass.PageBar}>
           {addTicketRight ?  <PageBar.Button onClick={() => openAddOfflineGrievancePage()} title="Add Offline Grievance">
-            Add Other Media Grievances
+            Add Other Media Grievance
           </PageBar.Button> : null}
           <PageBar.ExcelButton onClick={() => exportClick()}>Export</PageBar.ExcelButton>
         </div>
