@@ -691,7 +691,7 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
 
   return (
     <>
-      <Modal varient="half" title="Edit Social Media Grievance" right="0" width="90.5vw" show={showfunc}>
+      <Modal varient="half" title="Edit Other Media Grievance" right="0" width="90.5vw" show={showfunc}>
         <Modal.Body>
           <Box
             sx={{

@@ -198,7 +198,7 @@ function Sidebar({ isCollapsed }) {
         return <AiFillSetting style={{ color: "white" }} />;
       case "Offline Intimation":
         return <FaTicketAlt style={{ color: "white" }} />;
-      case "Social Media Grievances":
+      case "Other Media Grievances":
         return <FaTicketAlt style={{ color: "white" }} />;
       default:
         return null;

@@ -32,7 +32,7 @@ const cellActionTemplate = (props) => {
         style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }}
         onClick={() => props.toggleEditOfflineGrievanceModal(props.data)}
         // A onClick={() => props.toggleEditInsuranceCompanyModal(props.data)}
-        title="Update Social Media Grievance"
+        title="Update Other Media Grievance"
       /> : null}
     </div>
   );
@@ -494,7 +494,7 @@ const updateInsuranceCompany = (selecteddata) => {
       <div className={BizClass.Box}>
         <div className={BizClass.PageBar}>
           {addTicketRight ?  <PageBar.Button onClick={() => openAddOfflineGrievancePage()} title="Add Offline Grievance">
-            Add Social Media Grievances
+            Add Other Media Grievances
           </PageBar.Button> : null}
           <PageBar.ExcelButton onClick={() => exportClick()}>Export</PageBar.ExcelButton>
         </div>
