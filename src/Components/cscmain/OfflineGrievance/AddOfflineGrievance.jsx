@@ -68,6 +68,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
     txturl: "",
     txtOtherSocialMediaSource: "",
     txtSourceOfReceipt: null,
+    txtisIdentified: null,
     txtInsuranceCompany: null,
     txtApplicationNumber: "",
     txtPolicyNumber: "",
@@ -229,6 +230,14 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
         (formValuesGI.txtSourceOfGrievance.CommonMasterValueID === 132302 || formValuesGI.txtSourceOfGrievance.CommonMasterValueID === 132303)
       ) {
         errors["txtSourceOfReceipt"] = validateKRPHInfoField("txtSourceOfReceipt", formValuesGI.txtSourceOfReceipt);
+      }
+      if (
+        formValuesGI &&
+        formValuesGI.txtisIdentified &&
+        formValuesGI.txtisIdentified.ID &&
+        formValuesGI.txtisIdentified.ID === 1
+      ) {
+      errors["txtInsuranceCompany"] = validateKRPHInfoField("txtInsuranceCompany", formValuesGI.txtInsuranceCompany);
       }
      // A errors["txtTicketCategoryType"] = validateKRPHInfoField("txtTicketCategoryType", formValuesGI.txtTicketCategoryType);
      // A errors["txtTicketCategory"] = validateKRPHInfoField("txtTicketCategory", formValuesGI.txtTicketCategory);
@@ -510,6 +519,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
       txtSocialMedia: null,
       txturl: "",
       txtOtherSocialMediaSource: "",
+      txtisIdentified: null,
       txtInsuranceCompany: null,
       txtApplicationNumber: "",
       txtPolicyNumber: "",
@@ -609,9 +619,9 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
               FarmerName: formValuesGI.txtFarmerName ? formValuesGI.txtFarmerName : "",
               Email: formValuesGI.txtFarmerEmailID ? formValuesGI.txtFarmerEmailID : "",
               GrievenceSupportTicketID: result.responseData.GrievenceSupportTicketID,
-              TicketCategoryID:
+              TicketSubCategoryID:
                 formValuesGI.txtTicketCategory && formValuesGI.txtTicketCategory.TicketCategoryID ? formValuesGI.txtTicketCategory.TicketCategoryID : 0,
-              TicketCategoryName: formValuesGI.txtTicketCategory ? formValuesGI.txtTicketCategory.TicketCategoryName : "",
+              TicketSubCategoryName: formValuesGI.txtTicketCategory ? formValuesGI.txtTicketCategory.TicketCategoryName : "",
               GrievenceDescription: formValuesGI.txtTicketDescription ? formValuesGI.txtTicketDescription : "",
               ComplaintDate: formValuesGI.txtComplaintDate ? dateToCompanyFormat(formValuesGI.txtComplaintDate) : "",
               TicketRequestorID: "",
@@ -620,6 +630,8 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
               TicketStatus: "Open",
               TicketStatusID: 109301,
               BMCGCode: 109019,
+              TicketCategoryID:
+                formValuesGI.txtTicketCategoryType && formValuesGI.txtTicketCategoryType.SupportTicketTypeID ? formValuesGI.txtTicketCategoryType.SupportTicketTypeID : 0,
               TicketCategoryName:
                 formValuesGI.txtTicketCategoryType && formValuesGI.txtTicketCategoryType.SupportTicketTypeName
                   ? formValuesGI.txtTicketCategoryType.SupportTicketTypeName
@@ -711,7 +723,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
 
   return (
     <>
-      <Modal varient="half" title="Add Offline Grievance" right="0" width="90.5vw" show={showfunc}>
+      <Modal varient="half" title="Add Social Media Grievance" right="0" width="90.5vw" show={showfunc}>
         <Modal.Body>
           <Box
             sx={{

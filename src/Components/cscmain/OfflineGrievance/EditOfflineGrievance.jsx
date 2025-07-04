@@ -59,7 +59,7 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
     txtMobileNumber:  selectedData && selectedData.RequestorMobileNo ? selectedData.RequestorMobileNo : "",
     txtFarmerName: selectedData && selectedData.FarmerName ? selectedData.FarmerName : "",
     txtComplaintDate: selectedData  &&  selectedData.ComplaintDate ?  dateToSpecificFormat(selectedData.ComplaintDate,"YYYY-MM-DD") : "",
-    txtFarmerEmailID: selectedData && selectedData.EmailID ? selectedData.EmailID : "",
+    txtFarmerEmailID: selectedData && selectedData.Email ? selectedData.Email : "",
     txtYearForFarmerInfo: selectedData  && selectedData.RequestYear  ? { Value: selectedData.RequestYear, Name: selectedData.RequestYear } : null,
     txtSeasonForFarmerInfo: selectedData  && selectedData.RequestSeason ? { CropSeasonID: selectedData.RequestSeason, CropSeasonName: selectedData.RequestSeason && selectedData.RequestSeason === 1 ? "Kharif" : selectedData.RequestSeason === 2 ? "Rabi": "" } : null,
     txtSourceOfGrievance: selectedData  && selectedData.GrievenceSourceType && selectedData.GrievenceTicketSourceTypeID ? { CommonMasterValueID: selectedData.GrievenceTicketSourceTypeID, CommonMasterValue: selectedData.GrievenceSourceType } : null,
@@ -231,6 +231,14 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
       ) {
         errors["txtSourceOfReceipt"] = validateKRPHInfoField("txtSourceOfReceipt", formValuesGI.txtSourceOfReceipt);
       }
+      if (
+        formValuesGI &&
+        formValuesGI.txtisIdentified &&
+        formValuesGI.txtisIdentified.ID &&
+        formValuesGI.txtisIdentified.ID === 1
+      ) {
+      errors["txtInsuranceCompany"] = validateKRPHInfoField("txtInsuranceCompany", formValuesGI.txtInsuranceCompany);
+      }
      // A errors["txtTicketCategoryType"] = validateKRPHInfoField("txtTicketCategoryType", formValuesGI.txtTicketCategoryType);
      // A errors["txtTicketCategory"] = validateKRPHInfoField("txtTicketCategory", formValuesGI.txtTicketCategory);
       errors["txtTicketDescription"] = validateKRPHInfoField("txtTicketDescription", formValuesGI.txtTicketDescription);
@@ -251,6 +259,7 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
 
   const [formValidationCounter, setFormValidationCounter] = useState({});
   const updateStateGI = (name, value) => {
+    debugger;
     setFormValuesGI({ ...formValuesGI, [name]: value });
     setFormValidationKRPHError[name] = validateKRPHInfoField(name, value);
 
@@ -537,7 +546,7 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
         email: formValuesGI.txtFarmerEmailID ? formValuesGI.txtFarmerEmailID : "",
         requestorMobileNo: formValuesGI.txtMobileNumber ? formValuesGI.txtMobileNumber : "",
         subCategoryName: "",
-        // A complaintDate: formValuesGI && formValuesGI.txtComplaintDate ? dateToCompanyFormat(formValuesGI.txtComplaintDate) : "",
+        complaintDate: formValuesGI && formValuesGI.txtComplaintDate ? dateToCompanyFormat(formValuesGI.txtComplaintDate) : "",
         stateCodeAlpha: formValuesGI.txtState && formValuesGI.txtState.StateCodeAlpha ? formValuesGI.txtState.StateCodeAlpha : "",
         districtRequestorID: formValuesGI.txtDistrict && formValuesGI.txtDistrict.level3ID ? formValuesGI.txtDistrict.level3ID : "",
         grievenceSourceTypeID:
@@ -586,7 +595,44 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
      if (result.responseCode === 1) {
                   if (result && result.responseData) {
                     selectedData.InsuranceCompanyID = formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyID ? formValuesGI.txtInsuranceCompany.CompanyID : 0;
-                    selectedData.InsuranceCompany =  formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyName ? formValuesGI.txtInsuranceCompany.CompanyName : "",
+                    selectedData.InsuranceCompany =  formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyName ? formValuesGI.txtInsuranceCompany.CompanyName : "";
+                     selectedData.FarmerName= formValuesGI.txtFarmerName ? formValuesGI.txtFarmerName : "";
+        selectedData.Email= formValuesGI.txtFarmerEmailID ? formValuesGI.txtFarmerEmailID : "";
+        selectedData.RequestorMobileNo= formValuesGI.txtMobileNumber ? formValuesGI.txtMobileNumber : "";
+        selectedData.ComplaintDate= formValuesGI && formValuesGI.txtComplaintDate ? dateToCompanyFormat(formValuesGI.txtComplaintDate) : "";
+        selectedData.StateCodeAlpha= formValuesGI.txtState && formValuesGI.txtState.StateCodeAlpha ? formValuesGI.txtState.StateCodeAlpha : "";
+        selectedData.DistrictRequestorID= formValuesGI.txtDistrict && formValuesGI.txtDistrict.level3ID ? formValuesGI.txtDistrict.level3ID : "";
+        selectedData.GrievenceSourceTypeID=
+          formValuesGI.txtSourceOfGrievance && formValuesGI.txtSourceOfGrievance.CommonMasterValueID
+            ? formValuesGI.txtSourceOfGrievance.CommonMasterValueID
+            : 0;
+        selectedData.GrievenceSourceOtherType= formValuesGI && formValuesGI.txtOtherSourceOfGrievance ? formValuesGI.txtOtherSourceOfGrievance : "";
+        selectedData.SocialMediaTypeID= formValuesGI.txtSocialMedia && formValuesGI.txtSocialMedia.CommonMasterValueID ? formValuesGI.txtSocialMedia.CommonMasterValueID : 0;
+        selectedData.OtherSocialMedia= formValuesGI && formValuesGI.txtOtherSocialMediaSource ? formValuesGI.txtOtherSocialMediaSource : "";
+        selectedData.SocialMediaURL= formValuesGI && formValuesGI.txturl ? formValuesGI.txturl : "";
+        selectedData.ReceiptSourceID=
+          formValuesGI.txtSourceOfReceipt && formValuesGI.txtSourceOfReceipt.CommonMasterValueID ? formValuesGI.txtSourceOfReceipt.CommonMasterValueID : 0;
+        selectedData.TicketCategoryID=
+          formValuesGI.txtTicketCategoryType && formValuesGI.txtTicketCategoryType.SupportTicketTypeID
+            ? formValuesGI.txtTicketCategoryType.SupportTicketTypeID
+            : 0;
+        selectedData.TicketSubCategoryID=
+          formValuesGI.txtTicketCategory && formValuesGI.txtTicketCategory.TicketCategoryID ? formValuesGI.txtTicketCategory.TicketCategoryID : 0;
+        selectedData.RequestYear= formValuesGI.txtYearForFarmerInfo && formValuesGI.txtYearForFarmerInfo.Value ? formValuesGI.txtYearForFarmerInfo.Value : 0;
+        selectedData.RequestSeason=
+          formValuesGI.txtSeasonForFarmerInfo && formValuesGI.txtSeasonForFarmerInfo.CropSeasonID ? formValuesGI.txtSeasonForFarmerInfo.CropSeasonID : 0;
+        selectedData.CropName= formValuesGI && formValuesGI.txtCropName ? formValuesGI.txtCropName : "";
+        selectedData.ApplicationNo= formValuesGI && formValuesGI.txtApplicationNumber ? formValuesGI.txtApplicationNumber : "";
+        selectedData.InsurancePolicyNo= formValuesGI && formValuesGI.txtPolicyNumber ? formValuesGI.txtPolicyNumber : "";
+        selectedData.DistrictMasterName= formValuesGI.txtDistrict && formValuesGI.txtDistrict.level3Name ? formValuesGI.txtDistrict.level3Name : "";
+        selectedData.ticketSubCategoryName=
+          formValuesGI.txtTicketCategory && formValuesGI.txtTicketCategory.TicketCategoryName ? formValuesGI.txtTicketCategory.TicketCategoryName : "";
+        selectedData.ticketCategoryName=
+          formValuesGI.txtTicketCategoryType && formValuesGI.txtTicketCategoryType.SupportTicketTypeName
+            ? formValuesGI.txtTicketCategoryType.SupportTicketTypeName
+            : "";
+        selectedData.StateMasterName= formValuesGI.txtState && formValuesGI.txtState.StateMasterName ? formValuesGI.txtState.StateMasterName : "";
+        selectedData.GrievenceDescription= formValuesGI && formValuesGI.txtTicketDescription ? formValuesGI.txtTicketDescription : "";
                     updateOfflineGrievance(selectedData);
                     showfunc();
                   }
@@ -630,6 +676,7 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
     getStateKRPHListData();
     getInsuranceCompanyListData();
     getTicketCategoryTypeListData("1", 0, "TCKTYP");
+    getTicketCategoryListData(selectedData.TicketCategoryID, {SupportTicketTypeID: selectedData.TicketCategoryID, SupportTicketTypeName: selectedData.TicketCategoryName});
     document.body.style.height = "100vh";
     document.body.style.width = "100vw";
     document.body.style.overflowY = "scroll";
@@ -644,7 +691,7 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
 
   return (
     <>
-      <Modal varient="half" title="Edit Offline Grievance" right="0" width="90.5vw" show={showfunc}>
+      <Modal varient="half" title="Edit Social Media Grievance" right="0" width="90.5vw" show={showfunc}>
         <Modal.Body>
           <Box
             sx={{

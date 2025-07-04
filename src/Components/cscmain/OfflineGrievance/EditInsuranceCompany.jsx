@@ -85,7 +85,7 @@ const handleValidation = () => {
   };
 
         const [btnLoaderActive, setBtnLoaderActive] = useState(false);
-        const handleSave = async (e, updateUserData) => {
+        const handleSave = async (e) => {
           if (e) e.preventDefault();
           debugger;
           if (!handleValidation()) {

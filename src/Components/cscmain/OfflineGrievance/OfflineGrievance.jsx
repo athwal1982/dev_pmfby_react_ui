@@ -13,8 +13,8 @@ import { getGrievenceTicketsListData } from "./Services/Methods";
 import { getMasterDataBinding } from "../../Modules/Support/ManageTicket/Services/Methods";
 import BizClass from "./OfflineGrievance.module.scss";
 import AddOfflineGrievance from "./AddOfflineGrievance";
-// A import EditOfflineGrievance from "./EditOfflineGrievance";
-import EditInsuranceCompany from "./EditInsuranceCompany";
+import EditOfflineGrievance from "./EditOfflineGrievance";
+// A import EditInsuranceCompany from "./EditInsuranceCompany";
 import MyTicketPage from "./MyTicket/index";
 
 const cellActionTemplate = (props) => {
@@ -26,13 +26,13 @@ const cellActionTemplate = (props) => {
         onClick={() => props.toggleSupportTicketDetailsModal(props.data)}
         title="Ticket Details"
       />
-      {/* {props.data &&  props.data.TicketStatusID !== 109303 && editTicketRight === true ? */}
-      {props.data &&  props.data.InsuranceCompanyID === 0 && editTicketRight === true ?
+      {props.data &&  props.data.TicketStatusID !== 109303 && editTicketRight === true ?
+      // { {props.data &&  props.data.InsuranceCompanyID === 0 && editTicketRight === true ?}
       <FaEdit
         style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }}
-        // A onClick={() => props.toggleEditOfflineGrievanceModal(props.data)}
-         onClick={() => props.toggleEditInsuranceCompanyModal(props.data)}
-        title="Update Offline Grievance"
+        onClick={() => props.toggleEditOfflineGrievanceModal(props.data)}
+        // A onClick={() => props.toggleEditInsuranceCompanyModal(props.data)}
+        title="Update Social Media Grievance"
       /> : null}
     </div>
   );
@@ -394,6 +394,30 @@ const OfflineGrievance = () => {
       if (data.GrievenceSupportTicketID === selecteddata.GrievenceSupportTicketID) {
         data.InsuranceCompanyID = selecteddata.InsuranceCompanyID;
         data.InsuranceCompany = selecteddata.InsuranceCompany;
+        data.FarmerName= selecteddata.FarmerName;
+        data.Email= selecteddata.Email ;
+        data.RequestorMobileNo= selecteddata.RequestorMobileNo;
+        data.ComplaintDate= selecteddata.ComplaintDate;
+        data.StateCodeAlpha=  selecteddata.StateCodeAlpha;
+        data.DistrictRequestorID= selecteddata.DistrictRequestorID;
+        data.GrievenceSourceTypeID=selecteddata.GrievenceSourceTypeID;
+        data.GrievenceSourceOtherType= selecteddata.GrievenceSourceOtherType;
+        data.SocialMediaTypeID=  selecteddata.SocialMediaTypeID;
+        data.OtherSocialMedia= selecteddata.OtherSocialMedia;
+        data.SocialMediaURL=selecteddata.SocialMediaURL;
+        data.ReceiptSourceID=selecteddata.ReceiptSourceID;
+        data.TicketCategoryID=selecteddata.TicketCategoryID;
+        data.TicketSubCategoryID=selecteddata.TicketSubCategoryID;
+        data.RequestYear= selecteddata.RequestYear;
+        data.RequestSeason=selecteddata.RequestSeason;
+        data.CropName= selecteddata.CropName;
+        data.ApplicationNo= selecteddata.ApplicationNo;
+        data.InsurancePolicyNo=  selecteddata.InsurancePolicyNo;
+        data.DistrictMasterName=  selecteddata.DistrictMasterName;
+        data.ticketSubCategoryName=selecteddata.ticketSubCategoryName;
+        data.ticketCategoryName=selecteddata.ticketCategoryName;
+        data.StateMasterName=  selecteddata.StateMasterName;
+        data.GrievenceDescription= selecteddata.GrievenceDescription;
       }
       return data;
     });
@@ -464,13 +488,13 @@ const updateInsuranceCompany = (selecteddata) => {
   return (
     <>
       {openAddOfflineGrievanceMdal && <AddOfflineGrievance showfunc={openAddOfflineGrievancePage} updateFarmersTickets={updateFarmersTickets} />}
-      {/* {openEditOfflineGrievanceMdal && <EditOfflineGrievance showfunc={openEditOfflineGrievancePage} selectedData={selectedData} updateOfflineGrievance={updateOfflineGrievance} />} */}
-      {openEditInsuranceCompanyMdal && <EditInsuranceCompany showfunc={openEditInsuranceCompanyPage} selectedData={selectedData} updateInsuranceCompany={updateInsuranceCompany} />}
+      {openEditOfflineGrievanceMdal && <EditOfflineGrievance showfunc={openEditOfflineGrievancePage} selectedData={selectedData} updateOfflineGrievance={updateOfflineGrievance} />}
+      {/* {openEditInsuranceCompanyMdal && <EditInsuranceCompany showfunc={openEditInsuranceCompanyPage} selectedData={selectedData} updateInsuranceCompany={updateInsuranceCompany} />} */}
       {openMyTicketModal && <MyTicketPage showfunc={openMyTicketPage} selectedData={selectedData} />}
       <div className={BizClass.Box}>
         <div className={BizClass.PageBar}>
           {addTicketRight ?  <PageBar.Button onClick={() => openAddOfflineGrievancePage()} title="Add Offline Grievance">
-            Add Offline Grievance
+            Add Social Media Grievances
           </PageBar.Button> : null}
           <PageBar.ExcelButton onClick={() => exportClick()}>Export</PageBar.ExcelButton>
         </div>
