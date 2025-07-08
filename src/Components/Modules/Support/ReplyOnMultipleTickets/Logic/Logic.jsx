@@ -185,6 +185,7 @@ function ReplyOnMultipleTicketsLogics() {
             : 0,
         supportTicketNo: "",
         applicationNo: "",
+        docketNo:"",
         statusID: filterValues.txtStatus && filterValues.txtStatus.CommonMasterValueID ? filterValues.txtStatus.CommonMasterValueID : 0,
         fromdate: "",
         toDate: "",
