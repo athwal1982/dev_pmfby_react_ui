@@ -5,6 +5,7 @@ import { Loader } from "Framework/Components/Widgets";
 import { dateToSpecificFormat, dateToCompanyFormat, Convert24FourHourAndMinute, daysdifference, dateFormatDefault } from "Configration/Utilities/dateformat";
 import { FcViewDetails } from "react-icons/fc";
 import { FaEdit } from "react-icons/fa";
+import { MdOutlineAttachment } from "react-icons/md";
 import moment from "moment";
 import * as XLSX from "xlsx";
 import { getUserRightCodeAccess } from "Components/Common/Login/Auth/auth";
@@ -34,6 +35,10 @@ const cellActionTemplate = (props) => {
         // A onClick={() => props.toggleEditInsuranceCompanyModal(props.data)}
         title="Update Other Media Grievance"
       /> : null}
+      {props.data && props.data.HasDocument && props.data.HasDocument === 1 ? (
+          <a href={props.data.AttachmentPath} target="_blank">
+            <MdOutlineAttachment  style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }} /></a>
+          ) : null}
     </div>
   );
 };
@@ -493,8 +498,8 @@ const updateInsuranceCompany = (selecteddata) => {
       {openMyTicketModal && <MyTicketPage showfunc={openMyTicketPage} selectedData={selectedData} />}
       <div className={BizClass.Box}>
         <div className={BizClass.PageBar}>
-          {addTicketRight ?  <PageBar.Button onClick={() => openAddOfflineGrievancePage()} title="Add Offline Grievance">
-            Add Other Media Grievance
+          {addTicketRight ?  <PageBar.Button onClick={() => openAddOfflineGrievancePage()} title="Add Other Media Grievance">
+            Add Other Media Grievances
           </PageBar.Button> : null}
           <PageBar.ExcelButton onClick={() => exportClick()}>Export</PageBar.ExcelButton>
         </div>

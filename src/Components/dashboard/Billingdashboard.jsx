@@ -19,7 +19,7 @@ import {
   billingobcompanyShareDetailsData,
   agentOvertimeDetailsData,
   whatsappdetailsDataAPI,
-  getInsuranceCompanyListAPI,
+  getInsuranceCompanyListUpdatedAPI,
   totalReportSummaryAPI,
   icAgentOvertimeDetailsAPI,
   icAgentWorkingDetailsAPI,
@@ -84,6 +84,7 @@ const Billingdashboard = () => {
 
   const [insuranceCompanyList, setInsuranceCompanyList] = useState([]);
   const [insuranceCompanyoptions, setInsuranceCompanyoption] = useState([]);
+
   const getInsuranceCompanyListData = async () => {
     try {
       setInsuranceCompanyList([]);
@@ -1844,18 +1845,18 @@ const Billingdashboard = () => {
     );
   };
 
-  
   const whatsappdataDataArrangeAndDownload = () => {
     const columnOrderTextMessageICDetails = {
       _id: "Insurance Company",
       perentage_pulses: "% Share of IBTC Pulses",
-      mkt_conv_qty: "Marketing Conv.",
-      mkt_conv_costing: "Marketing Conv. Amount",
-      srv_conv_qty: "Service Conv.",
-      srv_conv_costing: "Service Conv. Amount",
-      util_conv_qty: "Conversation Utility Conv.",
-      util_conv_costing: "Conversation Utility Conv. Amount",
-      total: "Total Amount",
+      // AA mkt_conv_qty: "Marketing Conv.",
+      // AA mkt_conv_costing: "Marketing Conv. Amount",
+      // AA srv_conv_qty: "Service Conv.",
+      // AA srv_conv_costing: "Service Conv. Amount",
+      // AA util_conv_qty: "Conversation Utility Conv.",
+      // AA util_conv_costing: "Conversation Utility Conv. Amount",
+          total_conv_qty  :"WhatsApp Submission",
+         total: "Total Amount",
       gst: "GST (18%)",
       grand_total: "Grand Total Amount",
     };
@@ -1869,12 +1870,12 @@ const Billingdashboard = () => {
           tempmessagelist[0].length > 0 && tempmessagelist[0][index]?.perentage_pulses !== undefined
             ? `${numberWithCommas(parseFloat(tempmessagelist[0][index]?.perentage_pulses).toFixed(2))}%`
             : "0%",
-        mkt_conv_qty: value.mkt_conv_qty ? parseFloat(value.mkt_conv_qty).toFixed(2) : 0.0,
-        mkt_conv_costing: value.mkt_conv_costing ? parseFloat(value.mkt_conv_costing).toFixed(2) : 0.0,
-        srv_conv_qty: value.srv_conv_qty ? parseFloat(value.srv_conv_qty).toFixed(2) : 0.0,
-        srv_conv_costing: value.srv_conv_costing ? parseFloat(value.srv_conv_costing).toFixed(2) : 0.0,
-        util_conv_qty: value.util_conv_qty ? parseFloat(value.util_conv_qty).toFixed(2) : 0.0,
-        util_conv_costing: value.util_conv_costing ? parseFloat(value.util_conv_costing).toFixed(2) : 0.0,
+        total_conv_qty: value.total_conv_qty ? parseFloat(value.total_conv_qty).toFixed(2) : 0.0,
+        // AA mkt_conv_costing: value.mkt_conv_costing ? parseFloat(value.mkt_conv_costing).toFixed(2) : 0.0,
+        // AA srv_conv_qty: value.srv_conv_qty ? parseFloat(value.srv_conv_qty).toFixed(2) : 0.0,
+        // AA srv_conv_costing: value.srv_conv_costing ? parseFloat(value.srv_conv_costing).toFixed(2) : 0.0,
+        // AA util_conv_qty: value.util_conv_qty ? parseFloat(value.util_conv_qty).toFixed(2) : 0.0,
+        // AA util_conv_costing: value.util_conv_costing ? parseFloat(value.util_conv_costing).toFixed(2) : 0.0,
         total: parseFloat(total).toFixed(2),
         gst: parseFloat(gst).toFixed(2),
         grand_total: parseFloat(grand_total).toFixed(2),
@@ -2142,24 +2143,28 @@ const Billingdashboard = () => {
   }, [activeKey]);
 
   //  A get Companylist options
-
-  const initialrenderforcampanylist = async () => {
+    const getallinsurancecampanylist = async () => {
+      debugger;
     try {
       
       setIsLoadingBillingDashBoardList(true);
       const formData = {};
-      const result = await getInsuranceCompanyListAPI(formData);
+      const result = await getInsuranceCompanyListUpdatedAPI(formData);
 
-      if (result.responseCode === 1) {
-        setIsLoadingBillingDashBoardList(false);
-        if (result.responseData.length > 0) {
-          let tempcompanylist = result.responseData.map((item) => item?.InsuranceMasterName);
-          const uniqueCompanies = [...new Set(tempcompanylist)];
-          setInsuranceCompanyoption(uniqueCompanies);
-        } else {
-          setInsuranceCompanyoption([]);
-        }
-      } else {
+      
+
+          if (result.responseCode === 1) {
+  setIsLoadingBillingDashBoardList(false);
+  if (result.responseData.length > 0) {
+    let allcompanywithNamelist = [];
+    for (let i = 0; i < result.responseData.length; i++) {
+      allcompanywithNamelist.push(result.responseData[i]?.InsuranceMasterName);
+    }
+    setInsuranceCompanyoption(allcompanywithNamelist);
+  } else {
+    setInsuranceCompanyoption([]);
+  }
+}  else {
         setIsLoadingBillingDashBoardList(false);
         setInsuranceCompanyoption([]);
         setAlertMessage({
@@ -2176,7 +2181,7 @@ const Billingdashboard = () => {
     }
   };
   useEffect(() => {
-    initialrenderforcampanylist();
+    getallinsurancecampanylist();
   }, []);
 
   const sumColumn = (data, columnName) => {

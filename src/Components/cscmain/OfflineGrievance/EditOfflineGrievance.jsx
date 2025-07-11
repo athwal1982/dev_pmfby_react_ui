@@ -122,6 +122,12 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
       }
     }
 
+    if (name === "txtComplaintDate") {
+      if (!value || typeof value === "undefined") {
+        errorsMsg = "Complaint Date is required!";
+      }
+    }
+
     if (name === "txtSourceOfGrievance") {
       if (!value || typeof value === "undefined") {
         errorsMsg = "Source Of Grievance is required!";

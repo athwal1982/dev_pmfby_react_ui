@@ -4,6 +4,7 @@ const APIEndpoints = {
     AddKRPHGrievenceSupportTicket: "FGMS/AddKRPHGrievenceSupportTicket",
     EditGrievenceSupportTicket:"FGMS/EditGrievenceSupportTicket",
     EditKRPHGrievenceSupportTicket:"FGMS/EditKRPHGrievenceSupportTicket",
+    GCPFileUpload: "FGMS/GCPFileUpload",
   },
 };
 

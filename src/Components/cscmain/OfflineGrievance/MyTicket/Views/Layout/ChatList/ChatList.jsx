@@ -1,6 +1,7 @@
-import { React } from "react";
+import { React, useState } from "react";
 import { MdOutlineEmail, MdOutlineDisabledByDefault } from "react-icons/md";
 import { FaShareAltSquare, FaPalette } from "react-icons/fa";
+import {MdOutlineAttachment} from "react-icons/md";
 import { Loader, Button } from "Framework/Components/Widgets";
 import classNames from "classnames";
 import { PropTypes } from "prop-types";
@@ -24,13 +25,17 @@ function TicketSourceIconWithSwitch(parameter) {
 
 function ChatList({ children, chatListDetails, isLoadingchatListDetails, selectedData, showMoreChatListOnClick }) {
   const user = getSessionStorage("user");
-debugger;
   return (
     <div className={BizClass.ChatBox}>
       <div className={classNames(BizClass.Heading, BizClass.urgent)}>
         <div className={BizClass.TickIcon}>{TicketSourceIconWithSwitch(selectedData.GrievenceTicketSourceTypeID)}</div>
         <div className={BizClass.TicketDetail}>
-          <h4>{`${selectedData.GrievenceSupportTicketNo} || ${selectedData.TicketCategoryName}`}</h4>
+          <h4>{`${selectedData.GrievenceSupportTicketNo} || ${selectedData.TicketCategoryName}`}{" "}
+            {selectedData.HasDocument && selectedData.HasDocument === 1 ? (
+              <a href={selectedData.AttachmentPath} target="_blank">
+                <MdOutlineAttachment  style={{ cursor: "pointer", color: "#000000" }} /></a>
+              ) : null}{" "} 
+          </h4>
           <p>
             Created By {selectedData.CreatedBY} || {`${selectedData.TicketStatus}`}
           </p>

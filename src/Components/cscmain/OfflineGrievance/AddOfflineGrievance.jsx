@@ -11,8 +11,9 @@ import { getSessionStorage, setSessionStorage } from "Components/Common/Login/Au
 import { getMasterDataBindingDataList, getDistrictByState } from "../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
 import { getMasterDataBinding } from "../../Modules/Support/ManageTicket/Services/Methods";
 import { ticketDataBindingData } from "Components/Common/Welcome/Service/Methods";
-import { addKRPHGrievenceSupportTicketData } from "./Services/Methods";
+import { addKRPHGrievenceSupportTicketData, gCPFileUploadData } from "./Services/Methods";
 import BizClass from "./OfflineGrievance.module.scss";
+import Config from  "../../../Configration/Config.json";
 
 const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
   const setAlertMessage = AlertMessage();
@@ -119,6 +120,12 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
         } else if (value.length < 10) {
           errorsMsg = "Enter Valid 10 digit Mobile Number!";
         }
+      }
+    }
+
+     if (name === "txtComplaintDate") {
+      if (!value || typeof value === "undefined") {
+        errorsMsg = "Complaint Date is required!";
       }
     }
 
@@ -540,6 +547,42 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
     }
     debugger;
     try {
+            const pAttachment =
+              formValuesGI.txtDocumentUpload && formValuesGI.txtDocumentUpload ? formValuesGI.txtDocumentUpload : "";
+            let pAttachmentName = "";
+            let pdbAttachmentPath = "";
+            let phasDocument = 0;
+            let pAttachmentPath = "";
+            if (pAttachment !== "") {
+              phasDocument = 1;
+              const val = pAttachment.name;
+              const valExtension = val.substring(val.lastIndexOf(".")).toLowerCase().slice(1);
+              const valSpilt = val.split(".");
+              const ValOrgName = valSpilt[0].toString();
+              pAttachmentName = `${ValOrgName}.${valExtension}`;
+              pAttachmentPath = "pmfby/public/krph/documents";
+              pdbAttachmentPath = `https://pmfby.amnex.co.in/pmfby/public/krph/documents/${pAttachmentName}`;
+              switch (valExtension) {
+                case "jpeg":
+                case "jpg":
+                case "png":
+                case "pdf":
+                  break;
+                default:
+                  setAlertMessage({
+                    type: "error",
+                    message: "Please select only jpeg,jpg,png,pdf extension attachment.",
+                  });
+                  return;
+              }
+              if (pAttachment.size > 10485760) {
+                setAlertMessage({
+                  type: "error",
+                  message: "Please upload less than 10MB or 10MB attachment!",
+                });
+                return;
+              }
+            }
       const formData = {
         ticketRequestorID: "",
         farmerName: formValuesGI.txtFarmerName ? formValuesGI.txtFarmerName : "",
@@ -578,8 +621,8 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
         applicationNo: formValuesGI && formValuesGI.txtApplicationNumber ? formValuesGI.txtApplicationNumber : "",
         insuranceCompanyID: formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyID ? formValuesGI.txtInsuranceCompany.CompanyID : 0,
         insurancePolicyNo: formValuesGI && formValuesGI.txtPolicyNumber ? formValuesGI.txtPolicyNumber : "",
-        attachmentPath: "",
-        hasDocument: 0,
+        attachmentPath: pdbAttachmentPath,
+        hasDocument: phasDocument,
         subDistrictID: "",
         subDistrictName: "",
         districtMasterName: formValuesGI.txtDistrict && formValuesGI.txtDistrict.level3Name ? formValuesGI.txtDistrict.level3Name : "",
@@ -639,8 +682,8 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
               RequestYear: formValuesGI.txtYearForFarmerInfo && formValuesGI.txtYearForFarmerInfo.Value ? formValuesGI.txtYearForFarmerInfo.Value : 0,
               RequestSeason:
                 formValuesGI.txtSeasonForFarmerInfo && formValuesGI.txtSeasonForFarmerInfo.CropSeasonID ? formValuesGI.txtSeasonForFarmerInfo.CropSeasonID : 0,
-              HasDocument: 0,
-              AttachmentPath: "",
+              HasDocument: phasDocument,
+              AttachmentPath: pdbAttachmentPath,
               CropName: formValuesGI.txtCropName ? formValuesGI.txtCropName : "",
               VillageName: "",
               DistrictMasterName: formValuesGI.txtDistrict && formValuesGI.txtDistrict.level3Name ? formValuesGI.txtDistrict.level3Name : "",
@@ -674,6 +717,20 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
           ];
           updateFarmersTickets(newlyAddedTicket);
           ClearFormFields();
+          if (pAttachment !== "") {
+                      const formDataDoc = new FormData();
+                      formDataDoc.append("filePath", pAttachmentPath);
+                      formDataDoc.append("documents", pAttachment);
+                      formDataDoc.append("uploadedBy", "KRPH");
+          
+                      try {
+                        const resultDoc = await gCPFileUploadData(formDataDoc);
+                        console.log(resultDoc);
+                        handleResetFile();
+                      } catch (error) {
+                        console.log(error);
+                      }
+                    }
         }
       } else {
         setAlertMessage({
@@ -694,7 +751,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
 
   const handleResetFile = async () => {
     fileRef.current.value = null;
-    setFormValidationSupportTicketReviewError({});
+    setFormValidationKRPHError({});
   };
 
   useEffect(() => {
@@ -879,7 +936,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                         }}
                       >
                         <span>
-                          State <span className="asteriskCss">&#42;</span>
+                          State 
                         </span>{" "}
                         <InputGroup ErrorMsg={formValidationKRPHError["txtState"]}>
                           <InputControl
@@ -906,7 +963,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                         }}
                       >
                         <span>
-                          District <span className="asteriskCss">&#42;</span>
+                          District 
                         </span>
                         <InputGroup ErrorMsg={formValidationKRPHError["txtDistrict"]}>
                           <InputControl
@@ -1280,10 +1337,10 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                           />
                         </InputGroup>
                       </div>
-                      <div className="form-group_agent" style={{display: "none"}}>
+                      <div className="form-group_agent" >
                         <label className="ticket-label_agent">
                           {" "}
-                          Attachment <b>(File Size : 500 kb , File Type: .pdf, .jpg, .jpeg, .png)</b>
+                          Attachment <b>(File Size : 10MB , File Type: .pdf, .jpg, .jpeg, .png)</b>
                         </label>
                         <InputGroup>
                           <InputControl
@@ -1292,8 +1349,8 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                             type="file"
                             accept="image/*,.pdf"
                             name="txtDocumentUpload"
-                            value={formValuesGI.txtDocumentUpload}
                             onChange={(e) => updateStateGI(e.target.name, e.target.files[0])}
+                            ref={fileRef}
                           />
                           <KrphButton type="button" varient="primary" onClick={() => handleResetFile()}>
                             {" "}

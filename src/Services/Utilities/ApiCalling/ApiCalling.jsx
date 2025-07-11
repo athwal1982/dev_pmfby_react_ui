@@ -259,3 +259,50 @@ export const ClientApiCalling2 = async (requestApiData, apiPath, header) => {
     };
   }
 };
+
+export const apiCallingFormData = async (requestApiData, apiPath) => {
+  try {
+    const response = await axios({
+      method: "post",
+      url: "https://pmfbydemo.amnex.co.in/krphapi/" + apiPath,
+      data: requestApiData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
+
+    if (response && response.status === 200) {
+      const result = await response.data;
+      if (result.responseCode.toString() === "1") {
+        const buff = Buffer.from(result.responseDynamic ? result.responseDynamic : "", "base64");
+        if (buff.length !== 0) {
+          const data = JSON.parse(pako.inflate(buff, { to: "string" }));
+          return {
+            responseCode: 1,
+            responseData: data,
+            responseMessage: result.responseMessage,
+          };
+        }
+        return {
+          responseCode: 1,
+          responseData: [],
+          responseMessage: result.responseMessage,
+        };
+      }
+      return {
+        responseCode: Number(result.responseCode),
+        responseData: null,
+        responseMessage: result.responseMessage,
+      };
+    }
+    return { responseCode: 0, responseData: null, responseMessage: "" };
+  } catch (error) {
+    return {
+      responseCode: 0,
+      responseData: null,
+      // A responseMessage: error && error.response && error.response.data && error.response.statusText ? error.response.statusText : "Something went wrong",
+      responseMessage: error.message,
+    };
+  }
+};

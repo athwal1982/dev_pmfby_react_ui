@@ -16,6 +16,7 @@ const APIEndpoints = {
     icAgentOvertimeDetailsURL: "FGMS/icAgentOvertimeDetails",
     icAgentWorkingDetailsURL: "FGMS/icAgentWorkingDetails",
     billingAICompanyDetails: "FGMS//billingAICompanyDetails",
+    getInsuranceCompanyListUpdated: "FGMS/getInsuranceCompanyListUpdated",
   },
 };
 

@@ -151,6 +151,20 @@ export const getInsuranceCompanyListAPI = async (formData) => {
     return { response: { responseCode: 0, responseData: null, responseMessage: error } };
   }
 };
+export const getInsuranceCompanyListUpdatedAPI = async (formData) => {
+  try {
+    const requestData = {
+      main: {
+        ...formData,
+      },
+    };
+    const result = await ClientApiCalling2(requestData, APIEndpoints.Reports.getInsuranceCompanyListUpdated);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return { response: { responseCode: 0, responseData: null, responseMessage: error } };
+  }
+};
 export const getfeedbackformquestionsAPI = async (formData) => {
   try {
     const requestData = {

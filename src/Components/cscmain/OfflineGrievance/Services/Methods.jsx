@@ -1,4 +1,4 @@
-import { ApiCalling } from "Services/Utilities/ApiCalling/ApiCalling";
+import { ApiCalling,apiCallingFormData } from "Services/Utilities/ApiCalling/ApiCalling";
 import APIEndpoints from "./EndPoints";
 
 export const getGrievenceTicketsListData = async (formData) => {
@@ -57,5 +57,17 @@ export const editKRPHGrievenceSupportTicket = async (formData) => {
   } catch (error) {
     console.log(error);
     return { response: { responseCode: 0, responseData: null, responseMessage: error } };
+  }
+};
+
+export const gCPFileUploadData = async (formData) => {
+  try {
+    const result = await apiCallingFormData(formData, APIEndpoints.OfflineGrievance.GCPFileUpload);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return {
+      response: { responseCode: 0, responseData: null, responseMessage: error },
+    };
   }
 };
