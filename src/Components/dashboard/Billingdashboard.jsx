@@ -78,7 +78,6 @@ const Billingdashboard = () => {
     txtMonthFilter: null,
   });
   const updateSearchFormState = (name, value) => {
-    
     setSearchFormValues({ ...searchFormValues, [name]: value });
   };
 
@@ -262,7 +261,6 @@ const Billingdashboard = () => {
 
   const getbillingAgentDashboardList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
-      
       setIsLoadingBillingDashBoardList(true);
       const formData = {
         from: formattedStartDate,
@@ -304,7 +302,6 @@ const Billingdashboard = () => {
 
   const getbillingAgentOverTimeDashboardList = async (formattedStartDate, formattedEndDate) => {
     try {
-      
       const formData = {
         from: formattedStartDate,
         to: formattedEndDate,
@@ -343,7 +340,6 @@ const Billingdashboard = () => {
 
   const getbillingObCallDetailsList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
-      
       setIsLoadingBillingDashBoardList(true);
       const formData = {
         from: formattedStartDate,
@@ -383,7 +379,6 @@ const Billingdashboard = () => {
 
   const getbillingSmsCompanyDetailsList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
-      
       setIsLoadingBillingDashBoardList(true);
       const formData = {
         active_agent: "",
@@ -441,7 +436,6 @@ const Billingdashboard = () => {
   };
   const getbillingWhatsappCompanyDetailsList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
-      
       setIsLoadingBillingDashBoardList(true);
       const formData = {
         active_agent: "",
@@ -507,7 +501,6 @@ const Billingdashboard = () => {
   };
   const getbillingIbCompanyShareDetailsList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
-      
       setIsLoadingBillingDashBoardList(true);
       const formattedYearMonth = `${formattedStartDate.split("-")[0]}-${formattedStartDate.split("-")[1]}`;
       const formData = {
@@ -573,7 +566,6 @@ const Billingdashboard = () => {
 
   const getbillingAgentWorkingDayDetailsDataList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
-      
       setbillingDashBoardAgentWorkingDetailsList([]);
       // A setTotalno_of_working_hours(0);
       // A setTotalno_of_training_hours(0);
@@ -650,7 +642,6 @@ const Billingdashboard = () => {
 
   const getbillingAgentWorkingOverTimeDetailsDataList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
-      
       setbillingDashBoardAgentWorkingOverTimeDetailsList([]);
       setTotalworking_days_overtime(0);
       setTotalweekly_off__holidays_overtime(0);
@@ -722,7 +713,6 @@ const Billingdashboard = () => {
 
   const getbillingobcompanyShareDetailsDataList = async (formattedStartDate, formattedEndDate) => {
     try {
-      
       setbillingDashBoardObICDetailsList([]);
       setIsLoadingBillingDashBoardList(true);
       const formData = {
@@ -800,7 +790,6 @@ const Billingdashboard = () => {
 
   const getbillingDashBoardAgentICDataList = async (formattedStartDate, formattedEndDate, pnoOfWorkingDays) => {
     try {
-      
       const formData = {
         from: formattedStartDate,
         to: formattedEndDate,
@@ -860,7 +849,6 @@ const Billingdashboard = () => {
 
   const getbillingDashBoardAgentOverTimeICDataList = async (formattedStartDate, formattedEndDate, pnoOfWorkingOverTime) => {
     try {
-      
       const formData = {
         from: formattedStartDate,
         to: formattedEndDate,
@@ -1241,7 +1229,6 @@ const Billingdashboard = () => {
 
   const getbillingAgentWorkingOverTimeDetailsDataListForSummary = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
-      
       setIsLoadingBillingDashBoardList(true);
       const formData = {
         active_agent: "0",
@@ -1277,7 +1264,6 @@ const Billingdashboard = () => {
 
   const getbillingDashBoardAgentOverTimeICDataListForSummary = async (formattedStartDate, formattedEndDate, pnoOfWorkingOverTime) => {
     try {
-      
       const formData = {
         from: formattedStartDate,
         to: formattedEndDate,
@@ -1393,17 +1379,14 @@ const Billingdashboard = () => {
         setAgentOvertime(tempresult.responseData[0].agent_overtime_cost);
         setTextMessage(tempresult.responseData[0].sms_costing);
         setWhatsapp(tempresult.responseData[0].whatsapp_gupsup_cost); */
-      
       }
     } else {
       setTotalbillingsummary({});
-      
     }
   };
 
   const getbillingAiBotCompanyDetailsList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
-      
       setIsLoadingBillingDashBoardList(true);
       const formData = {
         active_agent: "",
@@ -1564,7 +1547,6 @@ const Billingdashboard = () => {
   const formattedYear_MonthName = formatYear_MonthName(yearMonth);
 
   const OnClickExcelDataDownlaod = (pType) => {
-    
     if (pType === "INBNDCL") {
       InBoundCallsDataArrangeAndDownload();
     } else if (pType === "OTBNDCL") {
@@ -1582,8 +1564,6 @@ const Billingdashboard = () => {
     }
   };
   const InBoundCallsDataArrangeAndDownload = () => {
-    
-
     const columnOrderTaggedUntagged = {
       total_matched_with_ticket: "Tagging With Tickets",
       total_matched_without_ticket: "Tagging Without Tickets",
@@ -1644,8 +1624,6 @@ const Billingdashboard = () => {
   };
 
   const downloadExcelInbound = (dataTaggedUntagged, dataInboundICDetails) => {
-    
-
     const worksheetTaggedUntagged = XLSX.utils.json_to_sheet(dataTaggedUntagged);
     const worksheetInboundICDetails = XLSX.utils.json_to_sheet(dataInboundICDetails);
     const workbook = XLSX.utils.book_new();
@@ -1660,7 +1638,6 @@ const Billingdashboard = () => {
   };
 
   const OutBoundCallsDataArrangeAndDownload = () => {
-    
     const columnOrderCountAgentAndOutboundCalls = {
       // AtotalDistinctAgents: "No. Of Active Agents",
       totalCalls: "No. Of Outbound Calls",
@@ -1716,7 +1693,7 @@ const Billingdashboard = () => {
       gst: mappedDataOutboundICDetails.reduce((sum, row) => sum + parseFloat(row.gst || 0), 0).toFixed(2),
       grant_total: mappedDataOutboundICDetails.reduce((sum, row) => sum + parseFloat(row.grant_total || 0), 0).toFixed(2),
     };
-    
+
     mappedDataOutboundICDetails.push(grandTotalRow);
 
     const rearrangedDataOutboundICDetails = rearrangeAndRenameColumns(mappedDataOutboundICDetails, columnOrderOutboundICDetails);
@@ -1724,7 +1701,6 @@ const Billingdashboard = () => {
   };
 
   const downloadExcelOutbound = (dataCountAgentAndOutboundCalls, dataOutboundICDetails) => {
-    
     const worksheetAgentAndOutboundCalls = XLSX.utils.json_to_sheet(dataCountAgentAndOutboundCalls);
     const worksheetOutboundICDetails = XLSX.utils.json_to_sheet(dataOutboundICDetails);
     const workbook = XLSX.utils.book_new();
@@ -1833,7 +1809,6 @@ const Billingdashboard = () => {
     downloadExcelaiBot(rearrangedDataaiBotICDetails);
   };
 
-  
   const downloadExcelaiBot = (dataaiBotICDetails) => {
     const worksheetaiBotICDetails = XLSX.utils.json_to_sheet(dataaiBotICDetails);
     const workbook = XLSX.utils.book_new();
@@ -1855,8 +1830,8 @@ const Billingdashboard = () => {
       // AA srv_conv_costing: "Service Conv. Amount",
       // AA util_conv_qty: "Conversation Utility Conv.",
       // AA util_conv_costing: "Conversation Utility Conv. Amount",
-          total_conv_qty  :"WhatsApp Submission",
-         total: "Total Amount",
+      total_conv_qty: "WhatsApp Submission",
+      total: "Total Amount",
       gst: "GST (18%)",
       grand_total: "Grand Total Amount",
     };
@@ -1981,7 +1956,6 @@ const Billingdashboard = () => {
   };
 
   const downloadExcelAgent = (dataCountAgents, dataInboundICDetails, dataAgentDetails) => {
-    
     const worksheetCountAgents = XLSX.utils.json_to_sheet(dataCountAgents);
     const worksheetInboundICDetails = XLSX.utils.json_to_sheet(dataInboundICDetails);
     const worksheetAgentDetails = XLSX.utils.json_to_sheet(dataAgentDetails);
@@ -2077,7 +2051,6 @@ const Billingdashboard = () => {
   };
 
   useEffect(() => {
-    
     const now = new Date();
     const currentYear = now.getFullYear();
     const yearArray = [];
@@ -2143,28 +2116,25 @@ const Billingdashboard = () => {
   }, [activeKey]);
 
   //  A get Companylist options
-    const getallinsurancecampanylist = async () => {
-      debugger;
+  const getallinsurancecampanylist = async () => {
+    debugger;
     try {
-      
       setIsLoadingBillingDashBoardList(true);
       const formData = {};
       const result = await getInsuranceCompanyListUpdatedAPI(formData);
 
-      
-
-          if (result.responseCode === 1) {
-  setIsLoadingBillingDashBoardList(false);
-  if (result.responseData.length > 0) {
-    let allcompanywithNamelist = [];
-    for (let i = 0; i < result.responseData.length; i++) {
-      allcompanywithNamelist.push(result.responseData[i]?.InsuranceMasterName);
-    }
-    setInsuranceCompanyoption(allcompanywithNamelist);
-  } else {
-    setInsuranceCompanyoption([]);
-  }
-}  else {
+      if (result.responseCode === 1) {
+        setIsLoadingBillingDashBoardList(false);
+        if (result.responseData.length > 0) {
+          let allcompanywithNamelist = [];
+          for (let i = 0; i < result.responseData.length; i++) {
+            allcompanywithNamelist.push(result.responseData[i]?.InsuranceMasterName);
+          }
+          setInsuranceCompanyoption(allcompanywithNamelist);
+        } else {
+          setInsuranceCompanyoption([]);
+        }
+      } else {
         setIsLoadingBillingDashBoardList(false);
         setInsuranceCompanyoption([]);
         setAlertMessage({
@@ -2191,7 +2161,6 @@ const Billingdashboard = () => {
   };
 
   useEffect(() => {
-    
     if (totalbillingsummary) {
       setTotal(
         `Rs. ${numberWithCommas(
@@ -2203,7 +2172,7 @@ const Billingdashboard = () => {
               (totalbillingsummary?.agent_overtime_cost || 0) +
               (totalbillingsummary?.sms_costing || 0) +
               (totalbillingsummary?.whatsapp_gupsup_cost || 0) +
-               (totalbillingsummary?.aiBot_costing || 0)
+              (totalbillingsummary?.aiBot_costing || 0)
             ).toFixed(2),
           ),
         )}`,
@@ -2405,7 +2374,8 @@ const Billingdashboard = () => {
                     />
                   </>
                 )}
-                {currentmenu === "AIBT" && ( <>
+                {currentmenu === "AIBT" && (
+                  <>
                     <AibotComponent
                       toDate={toDate}
                       fromDate={fromDate}
@@ -2425,7 +2395,7 @@ const Billingdashboard = () => {
                       sumColumn={sumColumn}
                     />
                   </>
-                )} 
+                )}
               </>
             )}
           </>

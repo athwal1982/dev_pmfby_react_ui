@@ -17,6 +17,7 @@ import AddOfflineGrievance from "./AddOfflineGrievance";
 import EditOfflineGrievance from "./EditOfflineGrievance";
 // A import EditInsuranceCompany from "./EditInsuranceCompany";
 import MyTicketPage from "./MyTicket/index";
+import FileViewer from  "../../Common/FileViewer/FileViewer";
 
 const cellActionTemplate = (props) => {
   const editTicketRight = getUserRightCodeAccess("ofg3");
@@ -36,8 +37,10 @@ const cellActionTemplate = (props) => {
         title="Update Other Media Grievance"
       /> : null}
       {props.data && props.data.HasDocument && props.data.HasDocument === 1 ? (
-          <a href={props.data.AttachmentPath} target="_blank">
-            <MdOutlineAttachment  style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }} /></a>
+            <MdOutlineAttachment  style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }}
+             onClick={() => props.toggleFileViewerModal(props.data)}
+             title="View Attachment"
+            />
           ) : null}
     </div>
   );
@@ -330,7 +333,7 @@ const OfflineGrievance = () => {
                 };
                 const mappedData = rowData.map((value) => {
                   return {
-                    SupportTicketNo: value.SupportTicketNo,
+                    GrievenceSupportTicketNo: value.GrievenceSupportTicketNo,
                     ComplaintDate: value.ComplaintDate ? dateToSpecificFormat(value.ComplaintDate.split("T")[0], "DD-MM-YYYY") : "",
                     ApplicationNo: value.ApplicationNo,
                     InsurancePolicyNo: value.InsurancePolicyNo,
@@ -397,6 +400,7 @@ const OfflineGrievance = () => {
     debugger;
     const mappedData = rowData.map((data) => {
       if (data.GrievenceSupportTicketID === selecteddata.GrievenceSupportTicketID) {
+        data.RepresentationType =  selectedData.RepresentationType;
         data.InsuranceCompanyID = selecteddata.InsuranceCompanyID;
         data.InsuranceCompany = selecteddata.InsuranceCompany;
         data.FarmerName= selecteddata.FarmerName;
@@ -490,12 +494,22 @@ const updateInsuranceCompany = (selecteddata) => {
     getTicketStatusListData();
   }, []);
 
+    const [isFileViewerModalOpen, setIsFileViewerModalOpen] = useState(false);
+  
+    const toggleFileViewerModal = (data) => {
+       setSelectedData(data);
+      setIsFileViewerModalOpen(!isFileViewerModalOpen);
+    };
+
   return (
     <>
       {openAddOfflineGrievanceMdal && <AddOfflineGrievance showfunc={openAddOfflineGrievancePage} updateFarmersTickets={updateFarmersTickets} />}
       {openEditOfflineGrievanceMdal && <EditOfflineGrievance showfunc={openEditOfflineGrievancePage} selectedData={selectedData} updateOfflineGrievance={updateOfflineGrievance} />}
       {/* {openEditInsuranceCompanyMdal && <EditInsuranceCompany showfunc={openEditInsuranceCompanyPage} selectedData={selectedData} updateInsuranceCompany={updateInsuranceCompany} />} */}
       {openMyTicketModal && <MyTicketPage showfunc={openMyTicketPage} selectedData={selectedData} />}
+      {isFileViewerModalOpen && (
+              <FileViewer toggleFileViewerModal={toggleFileViewerModal} selectedData={selectedData}  />
+            )}
       <div className={BizClass.Box}>
         <div className={BizClass.PageBar}>
           {addTicketRight ?  <PageBar.Button onClick={() => openAddOfflineGrievancePage()} title="Add Other Media Grievance">
@@ -520,16 +534,18 @@ const updateInsuranceCompany = (selecteddata) => {
                                         toggleSupportTicketDetailsModal,
                                         toggleEditInsuranceCompanyModal,
                                         toggleEditOfflineGrievanceModal,
+                                        toggleFileViewerModal,
                                       }}
                                     />
                <DataGrid.Column valueGetter="node.rowIndex + 1" field="#" headerName="Sr No." width={80} pinned="left" />
+                                    <DataGrid.Column field="RepresentationType" headerName="Representation Type" width="180px"  valueFormatter={(param) => (param.value && param.value === "SINGLE" ? "Individual Representation" : param.value === "MULTIPLE" ? "Joint Representation" : "")} /> 
                                     <DataGrid.Column field="GrievenceSupportTicketNo" headerName="Ticket No" width="150px" />
                                     <DataGrid.Column
              field="ComplaintDate"
              headerName="Complaint Date"
              width="140px"
              valueFormatter={(param) => (param.value ? moment(param.value).format("DD-MM-YYYY") : "")}
-           />
+           />   
                                     <DataGrid.Column field="ApplicationNo" headerName="Application No" width="180px" useValueFormatterForExport={true} />
                                     <DataGrid.Column field="InsurancePolicyNo" headerName="Policy No" width="170px" />
                                     <DataGrid.Column field="TicketStatus" headerName="Ticket Status" width="120px" />

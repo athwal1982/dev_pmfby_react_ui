@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import Calculationdetails from "../Partials/Calculationdetails";
 import Tabledata from "../Partials/Tabledata";
@@ -23,24 +21,25 @@ const WhatsappComponent = ({
   const userData = getSessionStorage("user");
   const [onlygst, setOnlygst] = useState(0);
   const [detailscards, setDetailscards] = useState([]);
-  const columns = ["Sr. No", "Insurance Company", "% Share of IBTC Pulses (B1)", 
-    
-      "Whatsapp count to be Billed(U*= B1 * Total Whatsapp sent)",
+  const columns = [
+    "Sr. No",
+    "Insurance Company",
+    "% Share of IBTC Pulses (B1)",
+
+    "Whatsapp count to be Billed(U*= B1 * Total Whatsapp sent)",
     // "Marketing Conv.", "Service Conv.", "Conversation Utility Conv."
-  
   ];
 
   const tabledata =
     billingDashBoardList && billingDashBoardList.length > 0 && billingDashBoardList[0]
       ? billingDashBoardList[0]?.ic_data.map((item, index) => ({
-       
           index: index + 1,
           id: item["_id"],
           tagedPulses: item?.pulse_percentage ? `${numberWithCommas(parseFloat(item?.pulse_percentage).toFixed(2))}%` : "0%",
-           percentagePulse: item.total_conv_qty ? numberWithCommas(parseFloat(item.total_conv_qty).toFixed(2)) : "0.00",
+          percentagePulse: item.total_conv_qty ? numberWithCommas(parseFloat(item.total_conv_qty).toFixed(2)) : "0.00",
           /* AA untagedPulses: item.srv_conv_qty ? numberWithCommas(parseFloat(item.srv_conv_qty).toFixed(2)) : "0.00",
           totalBillingPulses: item.util_conv_qty ? numberWithCommas(parseFloat(item.util_conv_qty).toFixed(2)) : "0.00", */
-          checkvalue: item?.pulse_percentage, 
+          checkvalue: item?.pulse_percentage,
         }))
       : [];
   const sumData =
@@ -49,14 +48,14 @@ const WhatsappComponent = ({
           (sums, item) => {
             sums.tagedPulses += item.pulse_percentage ? parseFloat(item.pulse_percentage) : 0;
             sums.percentagePulse += item.total_conv_qty ? parseFloat(item.total_conv_qty) : 0;
-         /* AA sums.untagedPulses += item.srv_conv_qty ? parseFloat(item.srv_conv_qty) : 0;
+            /* AA sums.untagedPulses += item.srv_conv_qty ? parseFloat(item.srv_conv_qty) : 0;
             sums.totalBillingPulses += item.util_conv_qty ? parseFloat(item.util_conv_qty) : 0; */
             return sums;
           },
           {
             tagedPulses: 0,
             percentagePulse: 0,
-           /* AA untagedPulses: 0,
+            /* AA untagedPulses: 0,
             totalBillingPulses: 0, */
           },
         )
@@ -66,8 +65,6 @@ const WhatsappComponent = ({
           /* AA untagedPulses: 0,
           totalBillingPulses: 0, */
         };
-
-        
 
   const grandtotal = [
     sumData.tagedPulses ? `${numberWithCommas(parseFloat(sumData.tagedPulses).toFixed(2))}%` : "0%",
@@ -115,7 +112,6 @@ const WhatsappComponent = ({
           name: "Total Conversation Utility Conv. Qty.",
           value: billingDashBoardList?.[0]?.t_util_qty ? numberWithCommas(billingDashBoardList?.[0]?.t_util_qty) : "0.00",
         },
-        
       ]);
     }
   }, [billingDashBoardList]);
@@ -168,7 +164,6 @@ const WhatsappComponent = ({
 };
 
 export default WhatsappComponent;
-
 
 /* AA old Code
 older 

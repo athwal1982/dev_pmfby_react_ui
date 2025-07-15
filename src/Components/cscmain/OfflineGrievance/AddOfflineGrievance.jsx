@@ -11,9 +11,9 @@ import { getSessionStorage, setSessionStorage } from "Components/Common/Login/Au
 import { getMasterDataBindingDataList, getDistrictByState } from "../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
 import { getMasterDataBinding } from "../../Modules/Support/ManageTicket/Services/Methods";
 import { ticketDataBindingData } from "Components/Common/Welcome/Service/Methods";
-import { addKRPHGrievenceSupportTicketData, gCPFileUploadData } from "./Services/Methods";
+import { addKRPHGrievenceSupportTicketData, gCPFileUploadData, addKRPHGrievanceAttachmentData } from "./Services/Methods";
 import BizClass from "./OfflineGrievance.module.scss";
-import Config from  "../../../Configration/Config.json";
+import Config from "../../../Configration/Config.json";
 
 const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
   const setAlertMessage = AlertMessage();
@@ -22,6 +22,11 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
   const [seasonForPolicyNumberDropdownDataList] = useState([
     { CropSeasonID: 1, CropSeasonName: "Kharif" },
     { CropSeasonID: 2, CropSeasonName: "Rabi" },
+  ]);
+
+  const [RepresentationTypeDropdownDataList] = useState([
+    { Value: "SINGLE", label: "Individual Representation" },
+    { Value: "MULTIPLE", label: "Joint Representation" },
   ]);
 
   const [yearList, setYearList] = useState([]);
@@ -55,6 +60,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
   ]);
 
   const [formValuesGI, setFormValuesGI] = useState({
+    txtRepresentationType: null,
     txtState: null,
     txtDistrict: null,
     txtMobileNumber: "",
@@ -83,7 +89,11 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
   const [formValidationKRPHError, setFormValidationKRPHError] = useState({});
   const validateKRPHInfoField = (name, value) => {
     let errorsMsg = "";
-
+    if (name === "txtRepresentationType") {
+      if (!value || typeof value === "undefined") {
+        errorsMsg = "Representation Type is required!";
+      }
+    }
     if (name === "txtState") {
       if (!value || typeof value === "undefined") {
         errorsMsg = "State is required!";
@@ -123,7 +133,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
       }
     }
 
-     if (name === "txtComplaintDate") {
+    if (name === "txtComplaintDate") {
       if (!value || typeof value === "undefined") {
         errorsMsg = "Complaint Date is required!";
       }
@@ -202,6 +212,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
     try {
       const errors = {};
       let formIsValid = true;
+      errors["txtRepresentationType"] = validateKRPHInfoField("txtRepresentationType", formValuesGI.txtRepresentationType);
       errors["txtFarmerEmailID"] = validateKRPHInfoField("txtFarmerEmailID", formValuesGI.txtFarmerEmailID);
       // A errors["txtMobileNumber"] = validateKRPHInfoField("txtMobileNumber", formValuesGI.txtMobileNumber);
       errors["txtComplaintDate"] = validateKRPHInfoField("txtComplaintDate", formValuesGI.txtComplaintDate);
@@ -238,16 +249,11 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
       ) {
         errors["txtSourceOfReceipt"] = validateKRPHInfoField("txtSourceOfReceipt", formValuesGI.txtSourceOfReceipt);
       }
-      if (
-        formValuesGI &&
-        formValuesGI.txtisIdentified &&
-        formValuesGI.txtisIdentified.ID &&
-        formValuesGI.txtisIdentified.ID === 1
-      ) {
-      errors["txtInsuranceCompany"] = validateKRPHInfoField("txtInsuranceCompany", formValuesGI.txtInsuranceCompany);
+      if (formValuesGI && formValuesGI.txtisIdentified && formValuesGI.txtisIdentified.ID && formValuesGI.txtisIdentified.ID === 1) {
+        errors["txtInsuranceCompany"] = validateKRPHInfoField("txtInsuranceCompany", formValuesGI.txtInsuranceCompany);
       }
-     // A errors["txtTicketCategoryType"] = validateKRPHInfoField("txtTicketCategoryType", formValuesGI.txtTicketCategoryType);
-     // A errors["txtTicketCategory"] = validateKRPHInfoField("txtTicketCategory", formValuesGI.txtTicketCategory);
+      // A errors["txtTicketCategoryType"] = validateKRPHInfoField("txtTicketCategoryType", formValuesGI.txtTicketCategoryType);
+      // A errors["txtTicketCategory"] = validateKRPHInfoField("txtTicketCategory", formValuesGI.txtTicketCategory);
       errors["txtTicketDescription"] = validateKRPHInfoField("txtTicketDescription", formValuesGI.txtTicketDescription);
 
       if (Object.values(errors).join("").toString()) {
@@ -513,6 +519,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
   const ClearFormFields = () => {
     setFormValuesGI({
       ...formValuesGI,
+      txtRepresentationType: null,
       txtState: null,
       txtDistrict: null,
       txtMobileNumber: "",
@@ -547,43 +554,52 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
     }
     debugger;
     try {
-            const pAttachment =
-              formValuesGI.txtDocumentUpload && formValuesGI.txtDocumentUpload ? formValuesGI.txtDocumentUpload : "";
-            let pAttachmentName = "";
-            let pdbAttachmentPath = "";
-            let phasDocument = 0;
-            let pAttachmentPath = "";
-            if (pAttachment !== "") {
-              phasDocument = 1;
-              const val = pAttachment.name;
-              const valExtension = val.substring(val.lastIndexOf(".")).toLowerCase().slice(1);
-              const valSpilt = val.split(".");
-              const ValOrgName = valSpilt[0].toString();
-              pAttachmentName = `${ValOrgName}.${valExtension}`;
-              pAttachmentPath = "pmfby/public/krph/documents";
-              pdbAttachmentPath = `https://pmfby.amnex.co.in/pmfby/public/krph/documents/${pAttachmentName}`;
-              switch (valExtension) {
-                case "jpeg":
-                case "jpg":
-                case "png":
-                case "pdf":
-                  break;
-                default:
-                  setAlertMessage({
-                    type: "error",
-                    message: "Please select only jpeg,jpg,png,pdf extension attachment.",
-                  });
-                  return;
-              }
-              if (pAttachment.size > 10485760) {
-                setAlertMessage({
-                  type: "error",
-                  message: "Please upload less than 10MB or 10MB attachment!",
-                });
-                return;
-              }
-            }
-      const formData = {
+    let phasDocument = 0;
+    let pAttachmentPath = "pmfby/public/krph/documents";
+    let pAttachmentSize = 0;
+    let pdbAttachmentPath = [] ;
+    const pAttachment = formValuesGI.txtDocumentUpload && formValuesGI.txtDocumentUpload ? formValuesGI.txtDocumentUpload : "";
+    if (pAttachment.length > 0) {
+      if(pAttachment.length > 5) {
+         setAlertMessage({
+              type: "error",
+              message: "Please select only 5 attachments.",
+            });
+            return;
+      }
+      phasDocument = 1;
+       for (let i = 0; i < pAttachment.length; i++) {
+        const val = pAttachment[i].name;
+        const valExtension = val.substring(val.lastIndexOf(".")).toLowerCase().slice(1);
+        switch (valExtension) {
+          case "jpeg":
+          case "jpg":
+          case "png":
+          case "pdf":
+            break;
+          default:
+            setAlertMessage({
+              type: "error",
+              message: "Please select only jpeg,jpg,png,pdf extension attachment.",
+            });
+            return;
+        }
+      }
+      for (let i = 0; i < pAttachment.length; i++) {
+         pAttachmentSize =+ pAttachment[i].size;
+       }
+        if (pAttachmentSize > 10485760) {
+        setAlertMessage({
+          type: "error",
+          message: "Please upload less than 10MB or 10MB attachment!",
+        });
+        return;
+      }
+    }
+    const formData = {
+        representationType: formValuesGI.txtRepresentationType && formValuesGI.txtRepresentationType.Value
+            ? formValuesGI.txtRepresentationType.Value
+            : "",
         ticketRequestorID: "",
         farmerName: formValuesGI.txtFarmerName ? formValuesGI.txtFarmerName : "",
         email: formValuesGI.txtFarmerEmailID ? formValuesGI.txtFarmerEmailID : "",
@@ -621,7 +637,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
         applicationNo: formValuesGI && formValuesGI.txtApplicationNumber ? formValuesGI.txtApplicationNumber : "",
         insuranceCompanyID: formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyID ? formValuesGI.txtInsuranceCompany.CompanyID : 0,
         insurancePolicyNo: formValuesGI && formValuesGI.txtPolicyNumber ? formValuesGI.txtPolicyNumber : "",
-        attachmentPath: pdbAttachmentPath,
+        attachmentPath: "",
         hasDocument: phasDocument,
         subDistrictID: "",
         subDistrictName: "",
@@ -650,6 +666,9 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
           const user = getSessionStorage("user");
           const newlyAddedTicket = [
             {
+               RepresentationType: formValuesGI.txtRepresentationType && formValuesGI.txtRepresentationType.Value
+            ? formValuesGI.txtRepresentationType.Value
+            : "",
               ApplicationNo: formValuesGI.txtApplicationNumber ? formValuesGI.txtApplicationNumber : "",
               InsertDateTime: moment().utcOffset("+05:30").format("YYYY-MM-DDTHH:mm:ss"),
               CreatedBY: user && user.UserDisplayName ? user.UserDisplayName : "",
@@ -674,7 +693,9 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
               TicketStatusID: 109301,
               BMCGCode: 109019,
               TicketCategoryID:
-                formValuesGI.txtTicketCategoryType && formValuesGI.txtTicketCategoryType.SupportTicketTypeID ? formValuesGI.txtTicketCategoryType.SupportTicketTypeID : 0,
+                formValuesGI.txtTicketCategoryType && formValuesGI.txtTicketCategoryType.SupportTicketTypeID
+                  ? formValuesGI.txtTicketCategoryType.SupportTicketTypeID
+                  : 0,
               TicketCategoryName:
                 formValuesGI.txtTicketCategoryType && formValuesGI.txtTicketCategoryType.SupportTicketTypeName
                   ? formValuesGI.txtTicketCategoryType.SupportTicketTypeName
@@ -683,7 +704,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
               RequestSeason:
                 formValuesGI.txtSeasonForFarmerInfo && formValuesGI.txtSeasonForFarmerInfo.CropSeasonID ? formValuesGI.txtSeasonForFarmerInfo.CropSeasonID : 0,
               HasDocument: phasDocument,
-              AttachmentPath: pdbAttachmentPath,
+              AttachmentPath: "",
               CropName: formValuesGI.txtCropName ? formValuesGI.txtCropName : "",
               VillageName: "",
               DistrictMasterName: formValuesGI.txtDistrict && formValuesGI.txtDistrict.level3Name ? formValuesGI.txtDistrict.level3Name : "",
@@ -717,20 +738,37 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
           ];
           updateFarmersTickets(newlyAddedTicket);
           ClearFormFields();
-          if (pAttachment !== "") {
-                      const formDataDoc = new FormData();
-                      formDataDoc.append("filePath", pAttachmentPath);
-                      formDataDoc.append("documents", pAttachment);
-                      formDataDoc.append("uploadedBy", "KRPH");
-          
-                      try {
-                        const resultDoc = await gCPFileUploadData(formDataDoc);
-                        console.log(resultDoc);
-                        handleResetFile();
-                      } catch (error) {
-                        console.log(error);
-                      }
-                    }
+    if (pAttachment.length > 0) {
+      for (let i = 0; i < pAttachment.length; i++) {
+        const formDataDoc = new FormData();
+        formDataDoc.append("filePath", pAttachmentPath);
+        formDataDoc.append("documents", pAttachment[i]);
+        formDataDoc.append("uploadedBy", "KRPH");
+
+        try {
+        const resultattachment =  await gCPFileUploadData(formDataDoc);
+        if(resultattachment.responseCode === 1) {
+           pdbAttachmentPath.push({attachmentPath: `https://pmfby.amnex.co.in/pmfby/public/krph/documents/${pAttachment[i].name}`});
+        }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      handleResetFile();
+      try {
+        const formDataattachmentPath = {
+          attachment: pdbAttachmentPath,
+          grievenceSupportTicketID: result.responseData.GrievenceSupportTicketID,
+        };
+          await addKRPHGrievanceAttachmentData(formDataattachmentPath);
+      } catch (error) {
+        console.log(error);
+        setAlertMessage({
+          type: "error",
+          message: error,
+        });
+      }
+    }
         }
       } else {
         setAlertMessage({
@@ -812,6 +850,32 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                         mt: 1,
                       }}
                     >
+                       <Typography
+                            sx={{
+                              fontFamily: "Quicksand, sans-serif",
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "2px",
+                              fontSize: "14px",
+                            }}
+                          >
+                            <span>
+                              Representation Type <span className="asteriskCss">&#42;</span>
+                            </span>{" "}
+                            <InputGroup ErrorMsg={formValidationKRPHError["txtRepresentationType"]}>
+                              <InputControl
+                                Input_type="select"
+                                name="txtRepresentationType"
+                                getOptionLabel={(option) => `${option.label}`}
+                                value={formValuesGI.txtRepresentationType}
+                                getOptionValue={(option) => `${option}`}
+                                options={RepresentationTypeDropdownDataList}
+                                ControlTxt="Representation Type"
+                                onChange={(e) => updateStateGI("txtRepresentationType", e)}
+                              />
+                            </InputGroup>
+                            {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtSocialMedia"]}</span> */}
+                          </Typography>
                       <Typography
                         sx={{
                           fontFamily: "Quicksand, sans-serif",
@@ -821,9 +885,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                           fontSize: "14px",
                         }}
                       >
-                        <span>
-                          Farmer Name 
-                        </span>
+                        <span>Farmer Name</span>
                         <InputGroup ErrorMsg={formValidationKRPHError["txtFarmerName"]}>
                           <InputControl
                             Input_type="input"
@@ -845,9 +907,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                           fontSize: "14px",
                         }}
                       >
-                        <span>
-                          Mobile Number 
-                        </span>
+                        <span>Mobile Number</span>
                         <InputGroup ErrorMsg={formValidationKRPHError["txtMobileNumber"]}>
                           <InputControl
                             Input_type="input"
@@ -935,9 +995,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                           fontSize: "14px",
                         }}
                       >
-                        <span>
-                          State 
-                        </span>{" "}
+                        <span>State</span>{" "}
                         <InputGroup ErrorMsg={formValidationKRPHError["txtState"]}>
                           <InputControl
                             Input_type="select"
@@ -962,9 +1020,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                           fontSize: "14px",
                         }}
                       >
-                        <span>
-                          District 
-                        </span>
+                        <span>District</span>
                         <InputGroup ErrorMsg={formValidationKRPHError["txtDistrict"]}>
                           <InputControl
                             Input_type="select"
@@ -1287,9 +1343,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                   <Box className="ticket-content_agent">
                     <div className="container_agent">
                       <div className="form-group_agent">
-                        <label className="ticket-label_agent">
-                          Category 
-                        </label>
+                        <label className="ticket-label_agent">Category</label>
                         <InputGroup ErrorMsg={formValidationKRPHError["txtTicketCategoryType"]}>
                           <InputControl
                             Input_type="select"
@@ -1305,10 +1359,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                         {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtTicketCategoryType"]}</span> */}
                       </div>
                       <div className="form-group_agent">
-                        <label className="ticket-label_agent">
-                          {" "}
-                          Sub Category 
-                        </label>
+                        <label className="ticket-label_agent"> Sub Category</label>
                         <InputGroup ErrorMsg={formValidationKRPHError["txtTicketCategory"]}>
                           <InputControl
                             Input_type="select"
@@ -1337,7 +1388,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                           />
                         </InputGroup>
                       </div>
-                      <div className="form-group_agent" >
+                      <div className="form-group_agent">
                         <label className="ticket-label_agent">
                           {" "}
                           Attachment <b>(File Size : 10MB , File Type: .pdf, .jpg, .jpeg, .png)</b>
@@ -1349,8 +1400,9 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                             type="file"
                             accept="image/*,.pdf"
                             name="txtDocumentUpload"
-                            onChange={(e) => updateStateGI(e.target.name, e.target.files[0])}
+                            onChange={(e) => updateStateGI(e.target.name, e.target.files)}
                             ref={fileRef}
+                            multiple
                           />
                           <KrphButton type="button" varient="primary" onClick={() => handleResetFile()}>
                             {" "}

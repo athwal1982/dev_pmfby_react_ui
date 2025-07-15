@@ -200,10 +200,9 @@
 }
 
 .dashboard_inner .billing-chart-container .right-card-container .card-custom .report_container {
-    display: flex;
-    margin-top: 18px;
-    gap: 5px;
-
+  display: flex;
+  margin-top: 18px;
+  gap: 5px;
 }
 
 .dashboard_inner .billing-chart-container .right-card-container .card-custom .report_container .report-img {

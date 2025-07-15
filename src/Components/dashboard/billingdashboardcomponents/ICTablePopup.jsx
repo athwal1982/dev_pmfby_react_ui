@@ -108,8 +108,6 @@ const ICTablePopup = ({
   };
 
   const handleSubmit = async () => {
-    
-
     if (!members || members.length === 0) {
       setAlertMessage({ type: "error", message: "No data available" });
       return;
@@ -130,8 +128,6 @@ const ICTablePopup = ({
   };
 
   const handleUploadExcelicmail = async (file) => {
-    
-
     const user = getSessionStorage("user");
     const userMenuID = getSessionStorage("UserMenuId");
     if (!file) {
@@ -180,7 +176,6 @@ const ICTablePopup = ({
   };
 
   const handleSendEmailNotif = async (icCompany) => {
-    
     const user = getSessionStorage("user");
     const userMenuID = getSessionStorage("UserMenuId");
 
@@ -225,7 +220,6 @@ const ICTablePopup = ({
   };
 
   const handleUpload = async () => {
-    
     if (file) {
       handleUploadExcelicmail(file);
     } else {

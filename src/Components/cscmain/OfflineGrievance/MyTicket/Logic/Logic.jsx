@@ -90,7 +90,6 @@ function MyTicketLogics() {
     setChatListDetails(chatListDetails);
   };
 
-
   const updateStatusSupportTicket = async () => {
     try {
       const formData = {
@@ -142,7 +141,6 @@ function MyTicketLogics() {
       return;
     }
     if (formValuesTicketProperties.txtTicketStatus !== null) {
-      
       if (ticketData.TicketStatusID === formValuesTicketProperties.txtTicketStatus.CommonMasterValueID) {
         setAlertMessage({
           type: "warning",
@@ -152,8 +150,6 @@ function MyTicketLogics() {
       }
     }
     try {
-      
-
       const formData = {
         grievenceTicketHistoryID: 0,
         grievenceSupportTicketID: ticketData.GrievenceSupportTicketID,

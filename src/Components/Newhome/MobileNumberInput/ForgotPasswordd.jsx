@@ -31,7 +31,6 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
   const { formValues, updateState, createNewPasswordForGotPassword, verifyOTPForForGotPassword, checkUserNameForForGotPassword } = ForgotPasswordLogics();
 
   useEffect(() => {
-    
     generateCaptcha();
     setCaptchaCode(generateCaptcha());
   }, []);
@@ -40,17 +39,14 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
     setRevealNewPassword(!revealNewPassword);
   };
   const handleGetOTP1 = async () => {
-    
     setOtpVisible(true);
   };
   const handleSubmitOtp1 = async () => {
-    
     setInvisible(false);
     setPasswordField(true);
     setSelectedOption("");
   };
   const handleConfirm1 = async () => {
-    
     setIsProcessing(true);
     setSelectedOption("CHPass");
     setConfirmationMessage(true);
@@ -69,7 +65,6 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
   };
 
   const handleGetOTP = async () => {
-    
     setLoading(true);
 
     try {
@@ -105,7 +100,6 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
   };
 
   const handleSubmitOtp = async () => {
-    
     setLoading(true);
 
     if (!/^\d{6}$/.test(formValues?.txtOTP)) {
@@ -141,7 +135,6 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
   };
 
   const handleConfirm = async () => {
-    
     try {
       if (!formValues.txtNewPassword.trim() || !formValues.txtConfirmPassword.trim()) {
         setAlertMessage({
@@ -206,7 +199,7 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
       {isFormVisible && (
         <>
           {/* <motion.div className="mobile-input" initial={{ opacity: 0, y: 80 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 2, ease: "easeOut" }}> */}
-            <>
+          <>
             <div className="mobile-input">
               <div style={{ display: "flex", flexDirection: "row" }}>
                 <img src={resetPass} alt="logo" />
@@ -302,23 +295,23 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
                       </div>
                     </div>
                     <div className="password-input">
-                    <label>Confirm Password</label>
-                    <div className="input-container">
-                      <input
-                        type={revealConfirmPassword ? "text" : "password"}
-                        name="txtConfirmPassword"
-                        value={formValues.txtConfirmPassword}
-                        onChange={(e) => updateState(e.target.name, e.target.value)}
-                        placeholder="Enter Confirm Password"
-                        autoComplete="off"
-                        disabled={isProcessing}
-                      />
-                      {revealConfirmPassword ? (
-                        <VscEyeClosed className="password-icon" onClick={() => toggleConfirmPassword()} />
-                      ) : (
-                        <VscEye className="password-icon" onClick={() => toggleConfirmPassword()} />
-                      )}
-                    </div>
+                      <label>Confirm Password</label>
+                      <div className="input-container">
+                        <input
+                          type={revealConfirmPassword ? "text" : "password"}
+                          name="txtConfirmPassword"
+                          value={formValues.txtConfirmPassword}
+                          onChange={(e) => updateState(e.target.name, e.target.value)}
+                          placeholder="Enter Confirm Password"
+                          autoComplete="off"
+                          disabled={isProcessing}
+                        />
+                        {revealConfirmPassword ? (
+                          <VscEyeClosed className="password-icon" onClick={() => toggleConfirmPassword()} />
+                        ) : (
+                          <VscEye className="password-icon" onClick={() => toggleConfirmPassword()} />
+                        )}
+                      </div>
                     </div>
                     <button type="button" className="get-otp" onClick={handleConfirm} disabled={isProcessing}>
                       {" "}
@@ -327,8 +320,8 @@ const ForgotPasswordd = ({ showfunc, setSelectedOption, selectedOption }) => {
                   </div>
                 )}
               </>
-               </div>
-            </>
+            </div>
+          </>
           {/* </motion.div> */}
         </>
       )}

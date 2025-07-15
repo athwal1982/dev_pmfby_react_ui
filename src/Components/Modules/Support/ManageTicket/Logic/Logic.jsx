@@ -90,8 +90,8 @@ function ManageTicketLogics() {
       { width: 20 },
       { width: 20 },
       { width: 20 },
-      { width: 20 },
       { width: 12 },
+      { width: 20 },
       { width: 22 },
       { width: 20 },
     ];
@@ -116,7 +116,6 @@ function ManageTicketLogics() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const handlePageChange = (page) => {
-    
     setCurrentPage(page);
     // ... do something with `page`
     if (viewTypeMode === "FILTER" && page >= 1) {
@@ -138,7 +137,6 @@ function ManageTicketLogics() {
   const [showHideDownload, setshowHideDownload] = useState(true);
   const [showHideManageTicket, setshowHideManageTicket] = useState(false);
   const getFarmersTickets = async (pviewTYP, pType, pageIndex, pageSize) => {
-    
     setViewTypeMode(pviewTYP);
     let TicketStatusID = 0;
     if (pType === "") {
@@ -215,7 +213,7 @@ function ManageTicketLogics() {
           formValues.txtTicketCategoryType && formValues.txtTicketCategoryType.SupportTicketTypeID ? formValues.txtTicketCategoryType.SupportTicketTypeID : 0,
         supportTicketNo: "",
         applicationNo: "",
-        docketNo:"",
+        docketNo: "",
         statusID: TicketStatusID,
         fromdate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
         toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
@@ -277,7 +275,6 @@ function ManageTicketLogics() {
                 // A gridApi.exportDataAsExcel(excelParams);
                 const columnOrder = {
                   SupportTicketNo: "Ticket No",
-                  TicketNCIPDocketNo: "NCIP Docket No",
                   ApplicationNo: "Application No",
                   InsurancePolicyNo: "Policy No",
                   TicketStatus: "Ticket Status",
@@ -311,13 +308,13 @@ function ManageTicketLogics() {
                   FarmerShare: "Farmer Share",
                   SowingDate: "Sowing Date",
                   LossDate: "Crop Loss At",
+                  TicketNCIPDocketNo: "NCIP Docket No",
                   CreatedBY: "Created By",
                   CreatedAt: "Created At",
                 };
                 const mappedData = result.responseData.supportTicket.map((value) => {
                   return {
                     SupportTicketNo: value.SupportTicketNo,
-                    TicketNCIPDocketNo:value.TicketNCIPDocketNo,
                     ApplicationNo: value.ApplicationNo,
                     InsurancePolicyNo: value.InsurancePolicyNo,
                     TicketStatus: value.TicketStatus,
@@ -356,6 +353,7 @@ function ManageTicketLogics() {
                         )
                       : "",
                     LossDate: value.LossDate ? dateToSpecificFormat(value.LossDate.split("T")[0], "DD-MM-YYYY") : "",
+                    TicketNCIPDocketNo: value.TicketNCIPDocketNo,
                     CreatedBY: value.CreatedBY,
                     CreatedAt: value.CreatedAt
                       ? dateToSpecificFormat(
@@ -542,7 +540,6 @@ function ManageTicketLogics() {
   };
 
   const searchByMobileTicketsOnClick = async (pageIndex, pageSize) => {
-    
     try {
       let ticketNoVal = "";
       let mobileNoVal = "";
@@ -985,7 +982,6 @@ function ManageTicketLogics() {
   const [districtList, setDistrictList] = useState([]);
   const [isLoadingDistrictList, setIsLoadingDistrictList] = useState(false);
   const getDistrictByStateListData = async (statemasterid) => {
-    
     try {
       setIsLoadingDistrictList(true);
       const userData = getSessionStorage("user");
@@ -1063,7 +1059,7 @@ function ManageTicketLogics() {
 
   const updateState = (name, value) => {
     setFormValues({ ...formValues, [name]: value });
-    
+
     if (name === "txtTicketCategoryType") {
       setFormValues({
         ...formValues,
@@ -1181,7 +1177,6 @@ function ManageTicketLogics() {
   };
 
   const getOneDayTicketData = async () => {
-    
     setshowHideDownload(false);
     SetTicketFiltersTab();
     settotalSatatusCount("0");
@@ -1190,7 +1185,6 @@ function ManageTicketLogics() {
   };
 
   const getFilterTicketsClick = async () => {
-    
     setshowHideDownload(true);
     SetTicketFiltersTab();
     settotalSatatusCount("0");
@@ -1203,7 +1197,6 @@ function ManageTicketLogics() {
   };
 
   useEffect(() => {
-    
     if (isDataCleared === true) {
       getFarmersTickets("FILTER", "", 1, 20);
     }
@@ -1216,7 +1209,6 @@ function ManageTicketLogics() {
   }, [formValues]);
 
   const onClickViewManageTickets = () => {
-    
     setshowHideManageTicket(true);
     const userData = getSessionStorage("user");
     const ChkBRHeadTypeID = userData && userData.BRHeadTypeID ? userData.BRHeadTypeID.toString() : "0";

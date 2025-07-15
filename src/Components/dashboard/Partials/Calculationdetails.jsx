@@ -29,35 +29,35 @@ const Calculationdetails = ({ yearMonth, insuranceCompanyReport, activeKey, curr
       <div className="row pt-3">
         <div className="col-md-12">
           {/* {userData?.UserCompanyType == "CSC" && ( */}
-            <div className="calculation-area">
-              {detailscards.map((card, index) =>
-                card.show ? (
-                  <React.Fragment key={index}>
-                    <Contentcardcenter
-                      yearMonth={yearMonth}
-                      insuranceCompanyReport={insuranceCompanyReport}
-                      activeKey={activeKey}
-                      name={card.name}
-                      value={card.value}
-                      icon={currentcarddetails?.icon}
-                      color={currentcarddetails?.color}
-                      show={true}
-                    />
-                    {index < detailscards.length - 1 && showcal && (
-                      <div className="icon" style={{ background: "#D57616" }}>
-                        <FaPlus />
-                      </div>
-                    )}
-                  </React.Fragment>
-                ) : null,
-              )}
-              {showcal && (
-                <div className="icon" style={{ background: "#D57616" }}>
-                  <TbEqual />
-                </div>
-              )}
-              {total && <Contentcardcenter name="Total" value={totalval} icon={currentcarddetails?.icon} color={currentcarddetails?.color} show={false} />}
-            </div>
+          <div className="calculation-area">
+            {detailscards.map((card, index) =>
+              card.show ? (
+                <React.Fragment key={index}>
+                  <Contentcardcenter
+                    yearMonth={yearMonth}
+                    insuranceCompanyReport={insuranceCompanyReport}
+                    activeKey={activeKey}
+                    name={card.name}
+                    value={card.value}
+                    icon={currentcarddetails?.icon}
+                    color={currentcarddetails?.color}
+                    show={true}
+                  />
+                  {index < detailscards.length - 1 && showcal && (
+                    <div className="icon" style={{ background: "#D57616" }}>
+                      <FaPlus />
+                    </div>
+                  )}
+                </React.Fragment>
+              ) : null,
+            )}
+            {showcal && (
+              <div className="icon" style={{ background: "#D57616" }}>
+                <TbEqual />
+              </div>
+            )}
+            {total && <Contentcardcenter name="Total" value={totalval} icon={currentcarddetails?.icon} color={currentcarddetails?.color} show={false} />}
+          </div>
           {/* )} */}
         </div>
       </div>

@@ -60,7 +60,7 @@ const KRPHPortal = () => {
       setCurrentSelectedOption("Support-CSC");
     } else if (getSessionStorage("Links") === "IC") {
       setSelectedOption("Support-IC");
-       setCurrentSelectedOption("Support-IC");
+      setCurrentSelectedOption("Support-IC");
     } else if (getSessionStorage("Links") === "GOI") {
       setSelectedOption("Support-GOI");
     } else if (getSessionStorage("Links") === "ST") {
@@ -86,47 +86,55 @@ const KRPHPortal = () => {
       case "Support-GOI":
         return (
           <Suspense fallback={<Loader />}>
-          <AdminLogin
-            handleOtpSent={handleOtpSent}
-            captchaCode={captchaCode}
-            enteredCaptcha={enteredCaptcha}
-            setSelectedOption={setSelectedOption}
-            handleCaptchaChange={handleCaptchaChange}
-            captchaError={captchaError}
-          />
+            <AdminLogin
+              handleOtpSent={handleOtpSent}
+              captchaCode={captchaCode}
+              enteredCaptcha={enteredCaptcha}
+              setSelectedOption={setSelectedOption}
+              handleCaptchaChange={handleCaptchaChange}
+              captchaError={captchaError}
+            />
           </Suspense>
         );
       case "Support-CSC":
         return (
           <Suspense fallback={<Loader />}>
-          <AdminLogin
-            handleOtpSent={handleOtpSent}
-            captchaCode={captchaCode}
-            enteredCaptcha={enteredCaptcha}
-            setSelectedOption={setSelectedOption}
-            handleCaptchaChange={handleCaptchaChange}
-            captchaError={captchaError}
-          />
+            <AdminLogin
+              handleOtpSent={handleOtpSent}
+              captchaCode={captchaCode}
+              enteredCaptcha={enteredCaptcha}
+              setSelectedOption={setSelectedOption}
+              handleCaptchaChange={handleCaptchaChange}
+              captchaError={captchaError}
+            />
           </Suspense>
         );
 
       case "Support-IC":
         return (
           <Suspense fallback={<Loader />}>
-          <AdminLogin
-            handleOtpSent={handleOtpSent}
-            captchaCode={captchaCode}
-            enteredCaptcha={enteredCaptcha}
-            setSelectedOption={setSelectedOption}
-            handleCaptchaChange={handleCaptchaChange}
-            captchaError={captchaError}
-          />
+            <AdminLogin
+              handleOtpSent={handleOtpSent}
+              captchaCode={captchaCode}
+              enteredCaptcha={enteredCaptcha}
+              setSelectedOption={setSelectedOption}
+              handleCaptchaChange={handleCaptchaChange}
+              captchaError={captchaError}
+            />
           </Suspense>
         );
       case "NCIP-BNK":
-        return  <Suspense fallback={<Loader />}><NCIPLogin /></Suspense>;
+        return (
+          <Suspense fallback={<Loader />}>
+            <NCIPLogin />
+          </Suspense>
+        );
       case "NCIP-ST":
-        return  <Suspense fallback={<Loader />}><NCIPLogin /></Suspense>;
+        return (
+          <Suspense fallback={<Loader />}>
+            <NCIPLogin />
+          </Suspense>
+        );
       case "CHPass":
         return null;
       default:
@@ -323,10 +331,19 @@ const KRPHPortal = () => {
               </span>
             )}
 
-            {isForgotPassword && <Suspense fallback={<Loader />}><ForgotPasswordd selectedOption={selectedOption} setSelectedOption={setSelectedOption}  /></Suspense>}
+            {isForgotPassword && (
+              <Suspense fallback={<Loader />}>
+                <ForgotPasswordd selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
+              </Suspense>
+            )}
 
             {isForgotPassword && (selectedOption === "Support-CSC" || selectedOption === "Support-IC") ? (
-              <a type="button" style={{ cursor: "pointer" }} className={(selectedOption === "Support-CSC" || selectedOption === "Support-IC") ? "backForgot" : ""} onClick={handlebackOption} >
+              <a
+                type="button"
+                style={{ cursor: "pointer" }}
+                className={selectedOption === "Support-CSC" || selectedOption === "Support-IC" ? "backForgot" : ""}
+                onClick={handlebackOption}
+              >
                 Login from here
               </a>
             ) : (

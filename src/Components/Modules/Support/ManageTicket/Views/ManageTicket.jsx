@@ -297,7 +297,6 @@ function ManageTicket({
                         }}
                       />
                       <DataGrid.Column valueGetter="node.rowIndex + 1" field="#" headerName="Sr No." width={80} pinned="left" />
-                      <DataGrid.Column field="TicketNCIPDocketNo" headerName="NCIP Docket No" width="160px" />
                       <DataGrid.Column field="SupportTicketNo" headerName="Ticket No" width="150px" />
                       <DataGrid.Column field="ApplicationNo" headerName="Application No" width="180px" useValueFormatterForExport={true} />
                       <DataGrid.Column field="InsurancePolicyNo" headerName="Policy No" width="170px" />
@@ -333,6 +332,7 @@ function ManageTicket({
                return node.data.LossTime ? Convert24FourHourAndMinute(node.data.LossTime) : null;
              }}
            /> */}
+                       <DataGrid.Column field="TicketNCIPDocketNo" headerName="NCIP Docket No" width="160px" />
                       <DataGrid.Column field="CreatedBY" headerName="Created By" width="160px" />
                       <DataGrid.Column
                         field="#"

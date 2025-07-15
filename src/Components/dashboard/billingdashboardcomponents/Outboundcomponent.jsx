@@ -25,7 +25,6 @@ const Outboundcomponent = ({
   downloadpdfdata,
   userLoggedInData,
 }) => {
-
   const detailscards = [
     {
       show: false,

@@ -105,7 +105,14 @@ const ExportReportLogics = ({ fromDate, toDate, keyvalue, activeKey, yearMonth, 
       setIsLoading(false);
 
       return;
-    } else if (keyvalue === "INBNDCL" || keyvalue === "OTBNDCL" || keyvalue === "WHAPP" || keyvalue === "TXTMSG" || keyvalue === "AGNT" || keyvalue === "AIBT") {
+    } else if (
+      keyvalue === "INBNDCL" ||
+      keyvalue === "OTBNDCL" ||
+      keyvalue === "WHAPP" ||
+      keyvalue === "TXTMSG" ||
+      keyvalue === "AGNT" ||
+      keyvalue === "AIBT"
+    ) {
       setPopup(true);
       setAlertMessage({
         type: "warning",
@@ -146,9 +153,9 @@ const ExportReportLogics = ({ fromDate, toDate, keyvalue, activeKey, yearMonth, 
               ? "SMS"
               : keyvalue === "AGNT"
                 ? "MAN_POWER"
-              : keyvalue === "AIBT"
-              ? "AIBOT"  
-              : "";
+                : keyvalue === "AIBT"
+                  ? "AIBOT"
+                  : "";
 
     if (!fileType) return setAlertMessage({ type: "error", message: "No Data" });
 
@@ -471,9 +478,9 @@ const ExportReportLogics = ({ fromDate, toDate, keyvalue, activeKey, yearMonth, 
               ? "sms"
               : keyvalue === "AGNT"
                 ? "MAN_POWER"
-              : keyvalue === "AIBT"
-              ? "AIBOT"  
-              : "";
+                : keyvalue === "AIBT"
+                  ? "AIBOT"
+                  : "";
 
     const options = {
       method: "POST",
@@ -531,9 +538,9 @@ const ExportReportLogics = ({ fromDate, toDate, keyvalue, activeKey, yearMonth, 
               ? "sms"
               : keyvalue === "AGNT"
                 ? "MAN_POWER"
-              : keyvalue === "AIBT"
-              ? "AIBOT"  
-              : "";;
+                : keyvalue === "AIBT"
+                  ? "AIBOT"
+                  : "";
 
     if (!fileType) {
       setAlertMessage({
@@ -543,7 +550,8 @@ const ExportReportLogics = ({ fromDate, toDate, keyvalue, activeKey, yearMonth, 
       return;
     }
 
-    const endpoint = fileType === "whatsapp" ? "uploadWhatsappRawDataXlsx" : fileType === "sms" ? "uploadSMSrawDataXlsx" : fileType === "AIBOT" ? "uploadAIrawDataXlsx" : "";
+    const endpoint =
+      fileType === "whatsapp" ? "uploadWhatsappRawDataXlsx" : fileType === "sms" ? "uploadSMSrawDataXlsx" : fileType === "AIBOT" ? "uploadAIrawDataXlsx" : "";
 
     if (!endpoint) {
       setAlertMessage({

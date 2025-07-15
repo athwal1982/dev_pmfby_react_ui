@@ -3,7 +3,6 @@ import closeicon from "../../../../assets/img/sla/close.png";
 import Customcardsidebar from "../partials/Customcardsidebar";
 import { Drawer } from "@mui/material";
 const Sidebardrawer = ({ open, currentCard, handleclose }) => {
-  
   const [slamoreInformation] = useState({
     objSystemUptime: [
       { target: ">=97%", penaltyClause: "Nil" },

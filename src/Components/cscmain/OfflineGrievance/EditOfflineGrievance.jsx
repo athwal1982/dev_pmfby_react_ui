@@ -23,6 +23,11 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
     { CropSeasonID: 2, CropSeasonName: "Rabi" },
   ]);
 
+  const [RepresentationTypeDropdownDataList] = useState([
+      { Value: "SINGLE", label: "Individual Representation" },
+      { Value: "MULTIPLE", label: "Joint Representation" },
+  ]);
+
   const [yearList, setYearList] = useState([]);
 
   const [socialMediaList] = useState([
@@ -54,6 +59,7 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
   ]);
 
   const [formValuesGI, setFormValuesGI] = useState({
+    txtRepresentationType: selectedData  && selectedData.RepresentationType ? { Value: selectedData.RepresentationType, label: selectedData.RepresentationType === "SINGLE" ? "Individual Representation" : selectedData.RepresentationType === "MULTIPLE" ? "Joint Representation" : "" } : null,
     txtState: selectedData  && selectedData.StateMasterName && selectedData.StateCodeAlpha ? { StateCodeAlpha: selectedData.StateCodeAlpha, StateMasterName: selectedData.StateMasterName } : null,
     txtDistrict: selectedData  && selectedData.DistrictMasterName && selectedData.DistrictRequestorID ? { level3ID: selectedData.DistrictRequestorID, level3Name: selectedData.DistrictMasterName } : null,
     txtMobileNumber:  selectedData && selectedData.RequestorMobileNo ? selectedData.RequestorMobileNo : "",
@@ -83,6 +89,11 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
   const validateKRPHInfoField = (name, value) => {
     let errorsMsg = "";
 
+        if (name === "txtRepresentationType") {
+      if (!value || typeof value === "undefined") {
+        errorsMsg = "Representation Type is required!";
+      }
+    }
     if (name === "txtState") {
       if (!value || typeof value === "undefined") {
         errorsMsg = "State is required!";
@@ -201,6 +212,7 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
     try {
       const errors = {};
       let formIsValid = true;
+      errors["txtRepresentationType"] = validateKRPHInfoField("txtRepresentationType", formValuesGI.txtRepresentationType);
       errors["txtFarmerEmailID"] = validateKRPHInfoField("txtFarmerEmailID", formValuesGI.txtFarmerEmailID);
       // A errors["txtMobileNumber"] = validateKRPHInfoField("txtMobileNumber", formValuesGI.txtMobileNumber);
       errors["txtComplaintDate"] = validateKRPHInfoField("txtComplaintDate", formValuesGI.txtComplaintDate);
@@ -547,6 +559,9 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
     debugger;
     try {
       const formData = {
+        representationType: formValuesGI.txtRepresentationType && formValuesGI.txtRepresentationType.Value
+            ? formValuesGI.txtRepresentationType.Value
+            : "",
         grievenceSupportTicketID: selectedData && selectedData.GrievenceSupportTicketID ? selectedData.GrievenceSupportTicketID : 0,
         farmerName: formValuesGI.txtFarmerName ? formValuesGI.txtFarmerName : "",
         email: formValuesGI.txtFarmerEmailID ? formValuesGI.txtFarmerEmailID : "",
@@ -600,9 +615,12 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
       setisBtndisabled(0);
      if (result.responseCode === 1) {
                   if (result && result.responseData) {
-                    selectedData.InsuranceCompanyID = formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyID ? formValuesGI.txtInsuranceCompany.CompanyID : 0;
-                    selectedData.InsuranceCompany =  formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyName ? formValuesGI.txtInsuranceCompany.CompanyName : "";
-                     selectedData.FarmerName= formValuesGI.txtFarmerName ? formValuesGI.txtFarmerName : "";
+        selectedData.RepresentationType =  formValuesGI.txtRepresentationType && formValuesGI.txtRepresentationType.Value
+            ? formValuesGI.txtRepresentationType.Value
+            : "";
+        selectedData.InsuranceCompanyID = formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyID ? formValuesGI.txtInsuranceCompany.CompanyID : 0;
+        selectedData.InsuranceCompany =  formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyName ? formValuesGI.txtInsuranceCompany.CompanyName : "";
+        selectedData.FarmerName= formValuesGI.txtFarmerName ? formValuesGI.txtFarmerName : "";
         selectedData.Email= formValuesGI.txtFarmerEmailID ? formValuesGI.txtFarmerEmailID : "";
         selectedData.RequestorMobileNo= formValuesGI.txtMobileNumber ? formValuesGI.txtMobileNumber : "";
         selectedData.ComplaintDate= formValuesGI && formValuesGI.txtComplaintDate ? dateToCompanyFormat(formValuesGI.txtComplaintDate) : "";
@@ -729,6 +747,32 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
                         mt: 1,
                       }}
                     >
+                     <Typography
+                                                sx={{
+                                                  fontFamily: "Quicksand, sans-serif",
+                                                  display: "flex",
+                                                  flexDirection: "column",
+                                                  gap: "2px",
+                                                  fontSize: "14px",
+                                                }}
+                                              >
+                                                <span>
+                                                  Representation Type <span className="asteriskCss">&#42;</span>
+                                                </span>{" "}
+                                                <InputGroup ErrorMsg={formValidationKRPHError["txtRepresentationType"]}>
+                                                  <InputControl
+                                                    Input_type="select"
+                                                    name="txtRepresentationType"
+                                                    getOptionLabel={(option) => `${option.label}`}
+                                                    value={formValuesGI.txtRepresentationType}
+                                                    getOptionValue={(option) => `${option}`}
+                                                    options={RepresentationTypeDropdownDataList}
+                                                    ControlTxt="Representation Type"
+                                                    onChange={(e) => updateStateGI("txtRepresentationType", e)}
+                                                  />
+                                                </InputGroup>
+                                                {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtSocialMedia"]}</span> */}
+                                              </Typography>  
                       <Typography
                         sx={{
                           fontFamily: "Quicksand, sans-serif",

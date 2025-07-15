@@ -72,7 +72,7 @@ function TicketCustomerDetail({
             <p>
               Season - Year :
               <span id="spnSeasonYear">
-                {ticketData && ticketData.RequestSeason && ticketData.RequestSeason === 1 ? "Kharif" : ticketData.RequestSeason === 2 ? "Rabi": ""} -{" "}
+                {ticketData && ticketData.RequestSeason && ticketData.RequestSeason === 1 ? "Kharif" : ticketData.RequestSeason === 2 ? "Rabi" : ""} -{" "}
                 {ticketData && ticketData.RequestYear ? ticketData.RequestYear : ""}
               </span>
             </p>
@@ -125,43 +125,52 @@ function TicketCustomerDetail({
             </p>
             <FiCopy onClick={() => copyToClipboard("spnSourceofGrievance")} />
           </div>
-          {ticketData && ticketData.GrievenceTicketSourceTypeID === 132304 ?  <div className={BizClass.SubBox}>
-            <RiNewspaperLine />
-            <p>
-             Other Source of Grievance :<span id="spnSourceofGrievance">{ticketData && ticketData.GrievenceSourceOtherType ? ticketData.GrievenceSourceOtherType : ""}</span>
-            </p>
-            <FiCopy onClick={() => copyToClipboard("spnSourceofGrievance")} />
-          </div> : null }
-          {ticketData && ticketData.GrievenceTicketSourceTypeID === 132301 ?
-          <>
-          <div className={BizClass.SubBox}>
-            <RiNewspaperLine />
-            <p>
-              Social Media :<span id="spnSocialMedia">{ticketData && ticketData.SocialMediaType ? ticketData.SocialMediaType : ""}</span>
-            </p>
-            <FiCopy onClick={() => copyToClipboard("spnSocialMedia")} />
-          </div>  <div className={BizClass.SubBox}>
-            <RiNewspaperLine />
-            <p>
-              URL/Link :<span id="spnURLLink">{ticketData && ticketData.SocialMediaURL ? ticketData.SocialMediaURL : ""}</span>
-            </p>
-            <FiCopy onClick={() => copyToClipboard("spnURLLink")} />
-          </div> </> :  null }
-           {ticketData && ticketData.SocialMediaTypeID === 133305 ?  <div className={BizClass.SubBox}>
-            <RiNewspaperLine />
-            <p>
-             Other Social Media :<span id="spnSourceofGrievance">{ticketData && ticketData.OtherSocialMedia ? ticketData.OtherSocialMedia : ""}</span>
-            </p>
-            <FiCopy onClick={() => copyToClipboard("spnSourceofGrievance")} />
-          </div> : null }
-          {ticketData && (ticketData.GrievenceTicketSourceTypeID === 132302 || ticketData.GrievenceTicketSourceTypeID === 132303) ?
-          <div className={BizClass.SubBox}>
-            <RiNewspaperLine />
-            <p>
-              Source Of Receipt :<span id="spnSourceOfReceipt">{ticketData && ticketData.ReceiptSource ? ticketData.ReceiptSource : ""}</span>
-            </p>
-            <FiCopy onClick={() => copyToClipboard("spnSourceOfReceipt")} />
-          </div> : null }
+          {ticketData && ticketData.GrievenceTicketSourceTypeID === 132304 ? (
+            <div className={BizClass.SubBox}>
+              <RiNewspaperLine />
+              <p>
+                Other Source of Grievance :
+                <span id="spnSourceofGrievance">{ticketData && ticketData.GrievenceSourceOtherType ? ticketData.GrievenceSourceOtherType : ""}</span>
+              </p>
+              <FiCopy onClick={() => copyToClipboard("spnSourceofGrievance")} />
+            </div>
+          ) : null}
+          {ticketData && ticketData.GrievenceTicketSourceTypeID === 132301 ? (
+            <>
+              <div className={BizClass.SubBox}>
+                <RiNewspaperLine />
+                <p>
+                  Social Media :<span id="spnSocialMedia">{ticketData && ticketData.SocialMediaType ? ticketData.SocialMediaType : ""}</span>
+                </p>
+                <FiCopy onClick={() => copyToClipboard("spnSocialMedia")} />
+              </div>{" "}
+              <div className={BizClass.SubBox}>
+                <RiNewspaperLine />
+                <p>
+                  URL/Link :<span id="spnURLLink">{ticketData && ticketData.SocialMediaURL ? ticketData.SocialMediaURL : ""}</span>
+                </p>
+                <FiCopy onClick={() => copyToClipboard("spnURLLink")} />
+              </div>{" "}
+            </>
+          ) : null}
+          {ticketData && ticketData.SocialMediaTypeID === 133305 ? (
+            <div className={BizClass.SubBox}>
+              <RiNewspaperLine />
+              <p>
+                Other Social Media :<span id="spnSourceofGrievance">{ticketData && ticketData.OtherSocialMedia ? ticketData.OtherSocialMedia : ""}</span>
+              </p>
+              <FiCopy onClick={() => copyToClipboard("spnSourceofGrievance")} />
+            </div>
+          ) : null}
+          {ticketData && (ticketData.GrievenceTicketSourceTypeID === 132302 || ticketData.GrievenceTicketSourceTypeID === 132303) ? (
+            <div className={BizClass.SubBox}>
+              <RiNewspaperLine />
+              <p>
+                Source Of Receipt :<span id="spnSourceOfReceipt">{ticketData && ticketData.ReceiptSource ? ticketData.ReceiptSource : ""}</span>
+              </p>
+              <FiCopy onClick={() => copyToClipboard("spnSourceOfReceipt")} />
+            </div>
+          ) : null}
         </div>
         {/* // Code not in use start */}
         <div className={BizClass.PropertiesBox} style={{ display: "none" }}>
