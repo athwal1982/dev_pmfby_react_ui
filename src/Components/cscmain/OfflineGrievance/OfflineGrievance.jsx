@@ -233,7 +233,8 @@ const OfflineGrievance = () => {
     { CommonMasterValueID: 132301, CommonMasterValue: "Social Media" },
     { CommonMasterValueID: 132302, CommonMasterValue: "Physical Letter" },
     { CommonMasterValueID: 132303, CommonMasterValue: "Email" },
-    { CommonMasterValueID: 132304, CommonMasterValue: "Other" },
+    { CommonMasterValueID: 132304, CommonMasterValue: "CPGRAMS" },
+    { CommonMasterValueID: 132305, CommonMasterValue: "Other" },
   ]);
 
   const [socialMediaList] = useState([
