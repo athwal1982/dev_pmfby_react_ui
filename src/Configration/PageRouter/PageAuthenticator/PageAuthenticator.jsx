@@ -17,7 +17,8 @@ function PageAuthenticator() {
         return <Navigate to="/ServiceSuccess" />;
       }
       // Areturn <Navigate to="/login" />;
-      return <Navigate to="/krph" />;
+      // A return <Navigate to="/krph" />;
+      return <Navigate to="/LandingPage" />;
     } else if (pathUrl.indexOf("BIDashboard") !== -1) {
       return <Navigate to="/BIDashboard" />;
     }
@@ -28,7 +29,8 @@ function PageAuthenticator() {
   }
   //  Areturn <Navigate to="/login" />;
 
-  return <Navigate to="/krph" />;
+  // A return <Navigate to="/krph" />;
+   return <Navigate to="/LandingPage" />;
 }
 
 export default PageAuthenticator;

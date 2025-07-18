@@ -60,6 +60,7 @@ import KRPHPortal from "Components/Newhome/MobileNumberInput/KRPHPortal";
 import TicketSuccess from "Components/Common/Welcome/Modal/TicketSuccess";
 import ImportantInstructions from "Components/Common/ImportantInstructions/ImportantInstructions";
 import LandingKrph from "Components/Landing Page Krph/LandingKrph";
+import LandingPage from "Components/LandingPage/LandingPage";
 import CreateTraining from "Components/Modules/TrainingManagement/CreateTraining/CreateTraining";
 import TrainingList from "Components/Modules/TrainingManagement/TrainingList/TrainingList";
 import CenterTraining from "Components/Modules/TrainingManagement/CenterTraining/CenterTraining";
@@ -82,6 +83,7 @@ const PageRouter = () => {
     <Router>
       <Routes>
         {/* ------------ New Routes ------------ */}
+         <Route exact path="/LandingPage" element={<LandingPage />} />
         <Route exact path="/krph" element={<LandingKrph />} />
         <Route exact path="/krphlogin2" element={<KRPHPortal />} />
         <Route exact path="/ImportantInstructions" element={<ImportantInstructions />} />

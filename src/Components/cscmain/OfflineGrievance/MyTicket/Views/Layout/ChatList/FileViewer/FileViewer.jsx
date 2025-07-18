@@ -2,8 +2,7 @@ import { React, useState, useEffect} from "react";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { Modal } from "Framework/Components/Layout";
 import { Loader } from "Framework/Components/Widgets";
-import  "../../Common/FileViewer/FileViewer.css";
-import {getKRPHGrievanceAttachmentData} from "../../../Components/cscmain/OfflineGrievance/Services/Methods";
+import {getKRPHGrievanceAttachmentData} from "../../../../../Services/Methods";
 
 function FileViewer({ toggleFileViewerModal, selectedData }) {
   const setAlertMessage = AlertMessage();
@@ -29,7 +28,7 @@ const [attachmentData, setAttachmentData] = useState([]);
       } else {
         setAlertMessage({
           type: "error",
-          message: result.response.responseMessage,
+          message: result.responseMessage,
         });
       }
     } catch (error) {
@@ -48,8 +47,8 @@ const [attachmentData, setAttachmentData] = useState([]);
 
 
   return (
-    <Modal varient="center"  title={`Attachmet Detail (Ticket No. :  ${selectedData && selectedData.GrievenceSupportTicketNo ?  selectedData.GrievenceSupportTicketNo : ""})`}  show={toggleFileViewerModal} width="62vw" right="0" height="42vh">
-      <Modal.Body>
+    <Modal varient="center"  title={`Attachmet Detail (Ticket No. :  ${selectedData && selectedData.GrievenceSupportTicketNo ?  selectedData.GrievenceSupportTicketNo : ""})`}  show={toggleFileViewerModal} width="62vw" right="0" style={{ zindex: "999999999999999999999" }}>
+      <Modal.Body >
          {fileViewerIsLoading ? <Loader /> : null}
         <table className="table_bordered table_Height_module_wise_training">
                   <thead>

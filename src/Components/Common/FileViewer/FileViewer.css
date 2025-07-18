@@ -1,6 +1,0 @@
-.myCardGridOfflineGrievance {
-  display: grid;
-  grid-template-rows: max-content 115px;
-  overflow: auto;
-  min-height: 20vh;
-}

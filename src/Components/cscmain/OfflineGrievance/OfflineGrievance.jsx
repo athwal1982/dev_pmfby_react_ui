@@ -5,7 +5,7 @@ import { Loader } from "Framework/Components/Widgets";
 import { dateToSpecificFormat, dateToCompanyFormat, Convert24FourHourAndMinute, daysdifference, dateFormatDefault } from "Configration/Utilities/dateformat";
 import { FcViewDetails } from "react-icons/fc";
 import { FaEdit } from "react-icons/fa";
-import { MdOutlineAttachment } from "react-icons/md";
+import { MdAttachFile } from "react-icons/md";
 import moment from "moment";
 import * as XLSX from "xlsx";
 import { getUserRightCodeAccess } from "Components/Common/Login/Auth/auth";
@@ -17,7 +17,7 @@ import AddOfflineGrievance from "./AddOfflineGrievance";
 import EditOfflineGrievance from "./EditOfflineGrievance";
 // A import EditInsuranceCompany from "./EditInsuranceCompany";
 import MyTicketPage from "./MyTicket/index";
-import FileViewer from  "../../Common/FileViewer/FileViewer";
+import FileViewer from  "./MyTicket/Views/Layout/ChatList/FileViewer/FileViewer";
 
 const cellActionTemplate = (props) => {
   const editTicketRight = getUserRightCodeAccess("ofg3");
@@ -37,7 +37,7 @@ const cellActionTemplate = (props) => {
         title="Update Other Media Grievance"
       /> : null}
       {props.data && props.data.HasDocument && props.data.HasDocument === 1 ? (
-            <MdOutlineAttachment  style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }}
+            <MdAttachFile  style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }}
              onClick={() => props.toggleFileViewerModal(props.data)}
              title="View Attachment"
             />

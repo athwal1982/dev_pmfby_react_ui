@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { MdOutlineEmail, MdOutlineDisabledByDefault } from "react-icons/md";
 import { FaShareAltSquare, FaPalette } from "react-icons/fa";
-import { MdOutlineAttachment } from "react-icons/md";
+import { MdAttachFile } from "react-icons/md";
 import { Loader, Button } from "Framework/Components/Widgets";
 import classNames from "classnames";
 import { PropTypes } from "prop-types";
@@ -9,6 +9,7 @@ import { daysdifference, dateFormatDefault, dateToSpecificFormat, Convert24FourH
 import parse from "html-react-parser";
 import { getSessionStorage } from "Components/Common/Login/Auth/auth";
 import BizClass from "./ChatList.module.scss";
+import FileViewer from  "./FileViewer/FileViewer";
 
 function TicketSourceIconWithSwitch(parameter) {
   switch (parameter) {
@@ -25,7 +26,16 @@ function TicketSourceIconWithSwitch(parameter) {
 
 function ChatList({ children, chatListDetails, isLoadingchatListDetails, selectedData, showMoreChatListOnClick }) {
   const user = getSessionStorage("user");
+
+      const [isFileViewerModalOpen, setIsFileViewerModalOpen] = useState(false);
+    
+      const toggleFileViewerModal = () => {
+        setIsFileViewerModalOpen(!isFileViewerModalOpen);
+      };
   return (
+    <>{isFileViewerModalOpen && (
+                  <FileViewer toggleFileViewerModal={toggleFileViewerModal} selectedData={selectedData}  />
+                )}
     <div className={BizClass.ChatBox}>
       <div className={classNames(BizClass.Heading, BizClass.urgent)}>
         <div className={BizClass.TickIcon}>{TicketSourceIconWithSwitch(selectedData.GrievenceTicketSourceTypeID)}</div>
@@ -33,9 +43,7 @@ function ChatList({ children, chatListDetails, isLoadingchatListDetails, selecte
           <h4>
             {`${selectedData.GrievenceSupportTicketNo} || ${selectedData.TicketCategoryName}`}{" "}
             {selectedData.HasDocument && selectedData.HasDocument === 1 ? (
-              <a href={selectedData.AttachmentPath} target="_blank">
-                <MdOutlineAttachment style={{ cursor: "pointer", color: "#000000" }} />
-              </a>
+                <MdAttachFile style={{ cursor: "pointer", color: "#000000" }} onClick={() => toggleFileViewerModal()} />
             ) : null}{" "}
           </h4>
           <p>
@@ -106,6 +114,7 @@ function ChatList({ children, chatListDetails, isLoadingchatListDetails, selecte
         </div>
       </div>
     </div>
+    </>
   );
 }
 

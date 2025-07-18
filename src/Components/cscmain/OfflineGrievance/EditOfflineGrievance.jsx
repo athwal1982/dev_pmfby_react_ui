@@ -42,7 +42,8 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
     { CommonMasterValueID: 132301, CommonMasterValue: "Social Media" },
     { CommonMasterValueID: 132302, CommonMasterValue: "Physical Letter" },
     { CommonMasterValueID: 132303, CommonMasterValue: "Email" },
-    { CommonMasterValueID: 132304, CommonMasterValue: "Other" },
+    { CommonMasterValueID: 132304, CommonMasterValue: "CPGRAMS" },
+    { CommonMasterValueID: 132305, CommonMasterValue: "Other" },
   ]);
 
   const [isIdentified] = useState([
@@ -237,7 +238,7 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
         formValuesGI &&
         formValuesGI.txtSourceOfGrievance &&
         formValuesGI.txtSourceOfGrievance.CommonMasterValueID &&
-        formValuesGI.txtSourceOfGrievance.CommonMasterValueID === 132304
+        formValuesGI.txtSourceOfGrievance.CommonMasterValueID === 132305
       ) {
         errors["txtOtherSourceOfGrievance"] = validateKRPHInfoField("txtOtherSourceOfGrievance", formValuesGI.txtOtherSourceOfGrievance);
       }
@@ -1080,7 +1081,7 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
                       {formValuesGI &&
                       formValuesGI.txtSourceOfGrievance &&
                       formValuesGI.txtSourceOfGrievance.CommonMasterValueID &&
-                      formValuesGI.txtSourceOfGrievance.CommonMasterValueID === 132304 ? (
+                      formValuesGI.txtSourceOfGrievance.CommonMasterValueID === 132305 ? (
                         <Typography
                           sx={{
                             fontFamily: "Quicksand, sans-serif",
