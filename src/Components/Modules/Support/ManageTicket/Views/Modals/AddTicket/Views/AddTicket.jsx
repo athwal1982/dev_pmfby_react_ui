@@ -979,7 +979,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                       </button>
                       {formValuesForFarmerInfo.txtYearForFarmerInfo &&
                       formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
-                      formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2023 ? null : (
+                      formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null : (
                         <button type="button" className={selectedOption === "4" && BizClass.Active} onClick={() => selectedOptionOnClick("LO")}>
                           <div className={BizClass.ValidateTabCheckBox} />
                           <span>Crop Loss Intimation</span>

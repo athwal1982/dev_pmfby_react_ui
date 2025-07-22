@@ -216,23 +216,23 @@ const Header = ({ handleWhatsAppClick }) => {
                     onClick={handleWhatsAppClick}
                     sx={{
                       cursor: "pointer",
-                      fontFamily: "Quicksand, sans-serif",
+                      fontFamily: "Open Sans",
                       color: "white",
-                      fontSize: { xs: "12px", md: "14px" },
+                      fontSize: { xs: "11px", md: "12px" },
                       display: "flex",
                       alignItems: "center",
                       gap: 1,
                     }}
                   >
                     <img src={whatsapp_orig} alt="" style={{ height: "18px", cursor:"pointer" }} />
-                    PMFBY WhatsApp - 7065514447  
+                    <span>PMFBY WhatsApp - 7065514447 </span> 
                   </Typography>
                   <span style={{color:"white"}}> | </span> 
                   <Typography
                     sx={{
                       fontFamily: "Open Sans",
                       color: "white",
-                      fontSize: { xs: "10px", md: "14px" },
+                      fontSize: { xs: "11px", md: "12px" },
                       display: "flex",
                       alignItems: "center",
                       gap: 1,
@@ -388,9 +388,10 @@ const Header = ({ handleWhatsAppClick }) => {
                         justifyContent: "space-between",
                         alignItems: "center",
                         fontFamily: "Open Sans",
+                        fontSize: { xs: "14px", md: "14px" },
                       }}
                     >
-                     Download Farmer App
+                     <span>Download Farmer App</span>
                       <IconButton
                         onClick={handleCloseFarmerApp}
                         sx={{

@@ -819,7 +819,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
 
   return (
     <>
-      <Modal varient="half" title="Add Other Media Grievance" right="0" width="90.5vw" show={showfunc}>
+      <Modal varient="half" title="Add Grievance From Other Sources" right="0" width="90.5vw" show={showfunc}>
         <Modal.Body>
           <Box
             sx={{

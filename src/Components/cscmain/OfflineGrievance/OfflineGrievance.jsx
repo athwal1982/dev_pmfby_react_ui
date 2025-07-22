@@ -34,7 +34,7 @@ const cellActionTemplate = (props) => {
         style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }}
         onClick={() => props.toggleEditOfflineGrievanceModal(props.data)}
         // A onClick={() => props.toggleEditInsuranceCompanyModal(props.data)}
-        title="Update Other Media Grievance"
+        title="Update Grievance From Other Sources"
       /> : null}
       {props.data && props.data.HasDocument && props.data.HasDocument === 1 ? (
             <MdAttachFile  style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }}
@@ -513,8 +513,8 @@ const updateInsuranceCompany = (selecteddata) => {
             )}
       <div className={BizClass.Box}>
         <div className={BizClass.PageBar}>
-          {addTicketRight ?  <PageBar.Button onClick={() => openAddOfflineGrievancePage()} title="Add Other Media Grievance">
-            Add Other Media Grievances
+          {addTicketRight ?  <PageBar.Button onClick={() => openAddOfflineGrievancePage()} title="Add Grievance From Other Sources">
+            Add Grievance From Other Sources
           </PageBar.Button> : null}
           <PageBar.ExcelButton onClick={() => exportClick()}>Export</PageBar.ExcelButton>
         </div>

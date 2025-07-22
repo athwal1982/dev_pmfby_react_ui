@@ -2,3 +2,62 @@
   overflow: auto;
   height: 100vh;
 }
+.list_items_footer {
+  text-decoration: underline;
+}
+
+.list_items_footer:hover {
+  text-decoration: underline;
+  text-decoration-color: red;
+}
+.footer-farmerr-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: transparent;
+  color: #666;
+  font-size: 13px;
+  bottom: 0;
+  text-align: center;
+  font-family: "Open Sans";
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+
+  .footer-farmerr-page {
+    position: static;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-farmerr-page {
+    position: static;
+    width: 100%;
+  }
+}
+
+.footer-contentt-page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  background-color: #fff7f1;
+  font-size: 13px;
+  font-family: "Open Sans";
+}
+
+
+.footer-contentt-page a {
+  color: black;
+  margin: 0 5px;
+  text-decoration: none;
+}
+
+.footer-contentt-page a:hover {
+  text-decoration: underline;
+  color: #075307;
+
+}
