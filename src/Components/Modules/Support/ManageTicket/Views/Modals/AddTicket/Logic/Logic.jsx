@@ -28,7 +28,8 @@ import {
   getLevel5Data,
   getLevel6Data,
   getLevel7Data,
-  UploadDocumentData,
+  gCPFileUploadData,
+  addKRPHSupportAttachmentData,
   farmerCallingHistoryData,
 } from "../Services/Methods";
 // A import { getfarmerTicketsList } from "../../../../Services/Methods";
@@ -1503,7 +1504,7 @@ function AddTicketLogics() {
 
   const [formValidationCounter, setFormValidationCounter] = useState({});
   const [formValuesTicketCreation, setFormValuesTicketCreation] = useState({
-    // A txtDocumentUpload: "",
+    txtDocumentUpload: "",
     txtTicketCategory: null,
     txtTicketCategoryType: null,
     txtCropLossDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
@@ -3470,6 +3471,7 @@ function AddTicketLogics() {
   const [btnLoaderSupportTicketActive, setBtnLoaderSupportTicketActive] = useState(false);
   // A const supportTicketOnClick = async (updateFarmersTickets, updateFarmersTicketsStatusCount, showfunc) => {
   const supportTicketOnClick = async (updateFarmersTickets, showfunc) => {
+    debugger;
     try {
       if (selectedFarmer.length === 0 && selectedFarmer.length !== undefined) {
         setAlertMessage({
@@ -3500,37 +3502,45 @@ function AddTicketLogics() {
       if (!handleValidationSupportTicket()) {
         return;
       }
+      let phasDocument = 0;
+      let pAttachmentPath = "pmfby/public/krph/documents";
+      let pAttachmentSize = 0;
+      let pdbAttachmentPath = [];
       const pAttachment =
         formValuesTicketCreation.txtDocumentUpload && formValuesTicketCreation.txtDocumentUpload ? formValuesTicketCreation.txtDocumentUpload : "";
-      const UniqueDateTimeTick = getCurrentDateTimeTick();
-      let pAttachmentName = "";
-      let phasDocument = 0;
-      let pAttachmentPath = "";
-      if (pAttachment !== "") {
-        phasDocument = 1;
-        const val = pAttachment.name;
-        const valExtension = val.substring(val.lastIndexOf(".")).toLowerCase().slice(1);
-        const valSpilt = val.split(".");
-        const ValOrgName = valSpilt[0].toString();
-        pAttachmentName = `${UniqueDateTimeTick}_${ValOrgName}.${valExtension}`;
-        pAttachmentPath = `krph_documents/${pAttachmentName}`;
-        switch (valExtension) {
-          case "jpeg":
-          case "jpg":
-          case "png":
-          case "pdf":
-            break;
-          default:
-            setAlertMessage({
-              type: "error",
-              message: "Please select only jpeg,jpg,png,pdf extension attachment.",
-            });
-            return;
-        }
-        if (pAttachment.size > 2000000) {
+      if (pAttachment.length > 0) {
+        if (pAttachment.length > 5) {
           setAlertMessage({
             type: "error",
-            message: "Please upload less than 2MB or 2MB attachment!",
+            message: "Please select only 5 attachments.",
+          });
+          return;
+        }
+        phasDocument = 1;
+        for (let i = 0; i < pAttachment.length; i++) {
+          const val = pAttachment[i].name;
+          const valExtension = val.substring(val.lastIndexOf(".")).toLowerCase().slice(1);
+          switch (valExtension) {
+            case "jpeg":
+            case "jpg":
+            case "png":
+            case "pdf":
+              break;
+            default:
+              setAlertMessage({
+                type: "error",
+                message: "Please select only jpeg,jpg,png,pdf extension attachment.",
+              });
+              return;
+          }
+        }
+        for (let i = 0; i < pAttachment.length; i++) {
+          pAttachmentSize = +pAttachment[i].size;
+        }
+        if (pAttachmentSize > 10485760) {
+          setAlertMessage({
+            type: "error",
+            message: "Please upload less than 10MB or 10MB attachment!",
           });
           return;
         }
@@ -3636,7 +3646,7 @@ function AddTicketLogics() {
             : 0,
         onTimeIntimationFlag: stateCropLossIntimation,
         hasDocument: phasDocument,
-        attachmentPath: pAttachmentPath,
+        attachmentPath: "",
         cropName: formValuesTicketCreation.txtCropName ? formValuesTicketCreation.txtCropName : "",
         applicationCropName: selectedInsuranceDetails ? selectedInsuranceDetails.cropName : "",
         area: selectedInsuranceDetails ? selectedInsuranceDetails.policyArea : "",
@@ -3731,7 +3741,7 @@ function AddTicketLogics() {
                   : "",
               ApplicationNo: papplicationNo,
               HasDocument: phasDocument,
-              AttachmentPath: `krph_documents/${pAttachmentName}`,
+              AttachmentPath: "",
               CropName: formValuesTicketCreation.txtCropName ? formValuesTicketCreation.txtCropName : "",
               ApplicationCropName: selectedInsuranceDetails ? selectedInsuranceDetails.cropName : "",
               AREA: selectedInsuranceDetails ? selectedInsuranceDetails.policyArea : "",
@@ -3771,18 +3781,40 @@ function AddTicketLogics() {
           // ***************************
           console.log(showfunc);
 
-          if (pAttachment !== "") {
-            const formDataDoc = new FormData();
-            formDataDoc.append("ImageName", pAttachmentName);
-            formDataDoc.append("ImgPath", pAttachmentPath);
-            formDataDoc.append("files", pAttachment);
+          if (pAttachment.length > 0) {
+            for (let i = 0; i < pAttachment.length; i++) {
+              const formDataDoc = new FormData();
+              formDataDoc.append("filePath", pAttachmentPath);
+              formDataDoc.append("documents", pAttachment[i]);
+              formDataDoc.append("uploadedBy", "KRPH");
 
+              try {
+                const resultattachment = await gCPFileUploadData(formDataDoc);
+                if (resultattachment.responseCode === 1) {
+                  pdbAttachmentPath.push({ attachmentPath: `https://pmfby.amnex.co.in/pmfby/public/krph/documents/${pAttachment[i].name}` });
+                } else if (resultattachment.responseCode === 0) {
+                  setAlertMessage({
+                    type: "error",
+                    message: resultattachment.responseMessage,
+                  });
+                }
+              } catch (error) {
+                console.log(error);
+              }
+            }
+            handleResetFile();
             try {
-              const resultDoc = await UploadDocumentData(formDataDoc);
-              console.log(resultDoc);
-              handleResetFile();
+              const formDataattachmentPath = {
+                attachment: pdbAttachmentPath,
+                supportTicketID: result.response.responseData.SupportTicketID,
+              };
+              await addKRPHSupportAttachmentData(formDataattachmentPath);
             } catch (error) {
               console.log(error);
+              setAlertMessage({
+                type: "error",
+                message: error,
+              });
             }
           }
           clearInsuranceFieldsAndTicketCreation();

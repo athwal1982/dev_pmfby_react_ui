@@ -1041,8 +1041,9 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                       type="file"
                       accept="image/*,.pdf"
                       name="txtDocumentUpload"
-                      onChange={(e) => updateStateTicketCreation(e.target.name, e.target.files[0])}
+                      onChange={(e) => updateStateTicketCreation(e.target.name, e.target.files)}
                       ref={fileRef}
+                      multiple
                     />
                   </Form.InputGroup>
                   <Form.InputGroup column={1}>

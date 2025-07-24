@@ -555,52 +555,50 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
     }
     debugger;
     try {
-    let phasDocument = 0;
-    let pAttachmentPath = "pmfby/public/krph/documents";
-    let pAttachmentSize = 0;
-    let pdbAttachmentPath = [] ;
-    const pAttachment = formValuesGI.txtDocumentUpload && formValuesGI.txtDocumentUpload ? formValuesGI.txtDocumentUpload : "";
-    if (pAttachment.length > 0) {
-      if(pAttachment.length > 5) {
-         setAlertMessage({
-              type: "error",
-              message: "Please select only 5 attachments.",
-            });
-            return;
-      }
-      phasDocument = 1;
-       for (let i = 0; i < pAttachment.length; i++) {
-        const val = pAttachment[i].name;
-        const valExtension = val.substring(val.lastIndexOf(".")).toLowerCase().slice(1);
-        switch (valExtension) {
-          case "jpeg":
-          case "jpg":
-          case "png":
-          case "pdf":
-            break;
-          default:
-            setAlertMessage({
-              type: "error",
-              message: "Please select only jpeg,jpg,png,pdf extension attachment.",
-            });
-            return;
+      let phasDocument = 0;
+      let pAttachmentPath = "pmfby/public/krph/documents";
+      let pAttachmentSize = 0;
+      let pdbAttachmentPath = [];
+      const pAttachment = formValuesGI.txtDocumentUpload && formValuesGI.txtDocumentUpload ? formValuesGI.txtDocumentUpload : "";
+      if (pAttachment.length > 0) {
+        if (pAttachment.length > 5) {
+          setAlertMessage({
+            type: "error",
+            message: "Please select only 5 attachments.",
+          });
+          return;
+        }
+        phasDocument = 1;
+        for (let i = 0; i < pAttachment.length; i++) {
+          const val = pAttachment[i].name;
+          const valExtension = val.substring(val.lastIndexOf(".")).toLowerCase().slice(1);
+          switch (valExtension) {
+            case "jpeg":
+            case "jpg":
+            case "png":
+            case "pdf":
+              break;
+            default:
+              setAlertMessage({
+                type: "error",
+                message: "Please select only jpeg,jpg,png,pdf extension attachment.",
+              });
+              return;
+          }
+        }
+        for (let i = 0; i < pAttachment.length; i++) {
+          pAttachmentSize = +pAttachment[i].size;
+        }
+        if (pAttachmentSize > 10485760) {
+          setAlertMessage({
+            type: "error",
+            message: "Please upload less than 10MB or 10MB attachment!",
+          });
+          return;
         }
       }
-      for (let i = 0; i < pAttachment.length; i++) {
-         pAttachmentSize =+ pAttachment[i].size;
-       }
-        if (pAttachmentSize > 10485760) {
-        setAlertMessage({
-          type: "error",
-          message: "Please upload less than 10MB or 10MB attachment!",
-        });
-        return;
-      }
-    }
-    const formData = {
-        representationType: formValuesGI.txtRepresentationType && formValuesGI.txtRepresentationType.Value
-            ? formValuesGI.txtRepresentationType.Value
-            : "",
+      const formData = {
+        representationType: formValuesGI.txtRepresentationType && formValuesGI.txtRepresentationType.Value ? formValuesGI.txtRepresentationType.Value : "",
         ticketRequestorID: "",
         farmerName: formValuesGI.txtFarmerName ? formValuesGI.txtFarmerName : "",
         email: formValuesGI.txtFarmerEmailID ? formValuesGI.txtFarmerEmailID : "",
@@ -667,9 +665,8 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
           const user = getSessionStorage("user");
           const newlyAddedTicket = [
             {
-               RepresentationType: formValuesGI.txtRepresentationType && formValuesGI.txtRepresentationType.Value
-            ? formValuesGI.txtRepresentationType.Value
-            : "",
+              RepresentationType:
+                formValuesGI.txtRepresentationType && formValuesGI.txtRepresentationType.Value ? formValuesGI.txtRepresentationType.Value : "",
               ApplicationNo: formValuesGI.txtApplicationNumber ? formValuesGI.txtApplicationNumber : "",
               InsertDateTime: moment().utcOffset("+05:30").format("YYYY-MM-DDTHH:mm:ss"),
               CreatedBY: user && user.UserDisplayName ? user.UserDisplayName : "",
@@ -739,37 +736,37 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
           ];
           updateFarmersTickets(newlyAddedTicket);
           ClearFormFields();
-    if (pAttachment.length > 0) {
-      for (let i = 0; i < pAttachment.length; i++) {
-        const formDataDoc = new FormData();
-        formDataDoc.append("filePath", pAttachmentPath);
-        formDataDoc.append("documents", pAttachment[i]);
-        formDataDoc.append("uploadedBy", "KRPH");
+          if (pAttachment.length > 0) {
+            for (let i = 0; i < pAttachment.length; i++) {
+              const formDataDoc = new FormData();
+              formDataDoc.append("filePath", pAttachmentPath);
+              formDataDoc.append("documents", pAttachment[i]);
+              formDataDoc.append("uploadedBy", "KRPH");
 
-        try {
-        const resultattachment =  await gCPFileUploadData(formDataDoc);
-        if(resultattachment.responseCode === 1) {
-           pdbAttachmentPath.push({attachmentPath: `https://pmfby.amnex.co.in/pmfby/public/krph/documents/${pAttachment[i].name}`});
-        }
-        } catch (error) {
-          console.log(error);
-        }
-      }
-      handleResetFile();
-      try {
-        const formDataattachmentPath = {
-          attachment: pdbAttachmentPath,
-          grievenceSupportTicketID: result.responseData.GrievenceSupportTicketID,
-        };
-          await addKRPHGrievanceAttachmentData(formDataattachmentPath);
-      } catch (error) {
-        console.log(error);
-        setAlertMessage({
-          type: "error",
-          message: error,
-        });
-      }
-    }
+              try {
+                const resultattachment = await gCPFileUploadData(formDataDoc);
+                if (resultattachment.responseCode === 1) {
+                  pdbAttachmentPath.push({ attachmentPath: `https://pmfby.amnex.co.in/pmfby/public/krph/documents/${pAttachment[i].name}` });
+                }
+              } catch (error) {
+                console.log(error);
+              }
+            }
+            handleResetFile();
+            try {
+              const formDataattachmentPath = {
+                attachment: pdbAttachmentPath,
+                grievenceSupportTicketID: result.responseData.GrievenceSupportTicketID,
+              };
+              await addKRPHGrievanceAttachmentData(formDataattachmentPath);
+            } catch (error) {
+              console.log(error);
+              setAlertMessage({
+                type: "error",
+                message: error,
+              });
+            }
+          }
         }
       } else {
         setAlertMessage({
@@ -851,32 +848,32 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                         mt: 1,
                       }}
                     >
-                       <Typography
-                            sx={{
-                              fontFamily: "Quicksand, sans-serif",
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "2px",
-                              fontSize: "14px",
-                            }}
-                          >
-                            <span>
-                              Representation Type <span className="asteriskCss">&#42;</span>
-                            </span>{" "}
-                            <InputGroup ErrorMsg={formValidationKRPHError["txtRepresentationType"]}>
-                              <InputControl
-                                Input_type="select"
-                                name="txtRepresentationType"
-                                getOptionLabel={(option) => `${option.label}`}
-                                value={formValuesGI.txtRepresentationType}
-                                getOptionValue={(option) => `${option}`}
-                                options={RepresentationTypeDropdownDataList}
-                                ControlTxt="Representation Type"
-                                onChange={(e) => updateStateGI("txtRepresentationType", e)}
-                              />
-                            </InputGroup>
-                            {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtSocialMedia"]}</span> */}
-                          </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: "Quicksand, sans-serif",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "2px",
+                          fontSize: "14px",
+                        }}
+                      >
+                        <span>
+                          Representation Type <span className="asteriskCss">&#42;</span>
+                        </span>{" "}
+                        <InputGroup ErrorMsg={formValidationKRPHError["txtRepresentationType"]}>
+                          <InputControl
+                            Input_type="select"
+                            name="txtRepresentationType"
+                            getOptionLabel={(option) => `${option.label}`}
+                            value={formValuesGI.txtRepresentationType}
+                            getOptionValue={(option) => `${option}`}
+                            options={RepresentationTypeDropdownDataList}
+                            ControlTxt="Representation Type"
+                            onChange={(e) => updateStateGI("txtRepresentationType", e)}
+                          />
+                        </InputGroup>
+                        {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtSocialMedia"]}</span> */}
+                      </Typography>
                       <Typography
                         sx={{
                           fontFamily: "Quicksand, sans-serif",

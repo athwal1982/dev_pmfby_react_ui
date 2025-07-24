@@ -332,7 +332,7 @@ function ManageTicket({
                return node.data.LossTime ? Convert24FourHourAndMinute(node.data.LossTime) : null;
              }}
            /> */}
-                       <DataGrid.Column field="TicketNCIPDocketNo" headerName="NCIP Docket No" width="160px" />
+                      <DataGrid.Column field="TicketNCIPDocketNo" headerName="NCIP Docket No" width="160px" />
                       <DataGrid.Column field="CreatedBY" headerName="Created By" width="160px" />
                       <DataGrid.Column
                         field="#"

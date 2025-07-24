@@ -27,6 +27,11 @@ const APIEndpoints = {
     GetLevel7: "FGMS/GetLevel7",
     UploadDocument: "FGMS/UploadDocument",
     FarmerCallingHistory: "FGMS/FarmerCallingHistory",
+    GCPFileUpload: "FGMS/GCPFileUpload",
+    AddKRPHSupportAttachment: "FGMS/AddKRPHSupportAttachment",
+    GetKRPHSupportAttachment: "FGMS/GetKRPHSupportAttachment",
+    AddKRPHTicketHistoryAttachment: "FGMS/AddKRPHTicketHistoryAttachment",
+    GetKRPHTicketHistoryAttachment: "FGMS/GetKRPHTicketHistoryAttachment",
   },
 };
 

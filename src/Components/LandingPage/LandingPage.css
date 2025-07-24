@@ -23,7 +23,6 @@
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
-
   .footer-farmerr-page {
     position: static;
     width: 100%;
@@ -49,7 +48,6 @@
   font-family: "Open Sans";
 }
 
-
 .footer-contentt-page a {
   color: black;
   margin: 0 5px;
@@ -59,5 +57,4 @@
 .footer-contentt-page a:hover {
   text-decoration: underline;
   color: #075307;
-
 }

@@ -109,9 +109,9 @@ function ChatList({
           <div className={BizClass.TicketDetail}>
             <h4>
               {`${selectedData.SupportTicketNo} || ${selectedData.TicketCategoryName}`}{" "}
-              {/* {selectedData.HasDocument && selectedData.HasDocument === 1 ? (
-                <MdAttachFile onClick={() => toggleFileViewerModal(selectedData.SupportTicketAttachment)} style={{ cursor: "pointer", color: "#000000" }} />
-              ) : null}{" "} */}
+              {selectedData.HasDocument && selectedData.HasDocument === 1 ? (
+                <MdAttachFile style={{ cursor: "pointer", color: "#000000" }} onClick={() => toggleFileViewerModal("SPTCKT")} />
+              ) : null}{" "}
             </h4>
             <p>
               Created By {selectedData.CreatedBY} - {selectedData.BusinessRelationName} || {`${selectedData.TicketStatus}(${selectedData.TicketHeadName})`}
@@ -165,12 +165,9 @@ function ChatList({
                           <p>
                             {" "}
                             ({data.CreatedBY} - {data.UserType}){" "}
-                            {/* {data.HasDocument && data.HasDocument === 1 ? (
-                              <MdAttachFile
-                                onClick={() => toggleFileViewerModal(data.TicketHistoryAttachment)}
-                                style={{ cursor: "pointer", color: "#000000" }}
-                              />
-                            ) : null}{" "} */}
+                            {data.HasDocument && data.HasDocument === 1 ? (
+                              <MdAttachFile onClick={() => toggleFileViewerModal("TCKHIS")} style={{ cursor: "pointer", color: "#000000" }} />
+                            ) : null}{" "}
                           </p>
                           <span>
                             {/* {dateFormat(data.TicketHistoryDate.split("T")[0])} at {tConvert(data.TicketHistoryDate.split("T")[1])} */}

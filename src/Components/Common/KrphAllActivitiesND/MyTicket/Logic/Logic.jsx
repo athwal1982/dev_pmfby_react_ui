@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import moment from "moment";
 import publicIp from "public-ip";
 // A import Config from "Configration/Config.json";
@@ -13,7 +13,12 @@ import {
   editSupportTicketReview,
   addCSCSupportTicketReview,
 } from "../Services/Services";
-import { getFarmerPolicyDetail, sendSMSToFarmer } from "../../../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
+import {
+  getFarmerPolicyDetail,
+  sendSMSToFarmer,
+  gCPFileUploadData,
+  AddKRPHTicketHistoryAttachmentData,
+} from "../../../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
 
 function MyTicketLogics() {
   const [value, setValue] = useState("<p></p>");
@@ -22,51 +27,51 @@ function MyTicketLogics() {
 
   const resolvedTicketRight = getUserRightCodeAccess("mdh9");
   const setAlertMessage = AlertMessage();
-  // A const fileRef = useRef(null);
+  const fileRef = useRef(null);
 
   const [formValuesTicketProperties, setFormValuesTicketProperties] = useState({
     txtTicketStatus: null,
-    // A txtDocumentUpload: "",
+    txtDocumentUpload: "",
     txtBankName: null,
   });
 
-  // A const [formValidationSupportTicketReviewError, setFormValidationSupportTicketReviewError] = useState({});
+  const [formValidationSupportTicketReviewError, setFormValidationSupportTicketReviewError] = useState({});
 
-  // A const validateFieldSupportTicketReview = (name, value) => {
-  // A  let errorsMsg = "";
-  // A  if (name === "txtDocumentUpload") {
-  // A    if (value && typeof value !== "undefined") {
-  // A      const regex = new RegExp("^[a-zA-Z0-9_.-]*$");
-  // A      if (!regex.test(value.name)) {
-  // A        errorsMsg = "Attachment name is not in valid format.";
-  // A      }
-  // A    }
-  // A  }
-  // A  return errorsMsg;
-  // A };
+  const validateFieldSupportTicketReview = (name, value) => {
+    let errorsMsg = "";
+    // A if (name === "txtDocumentUpload") {
+    // A  if (value && typeof value !== "undefined") {
+    // A    const regex = new RegExp("^[a-zA-Z0-9_.-]*$");
+    // A    if (!regex.test(value.name)) {
+    // A      errorsMsg = "Attachment name is not in valid format.";
+    // A    }
+    // A  }
+    // A }
+    return errorsMsg;
+  };
 
-  // A const handleValidationSupportTicketReview = () => {
-  // A  try {
-  // A    const errors = {};
-  // A    let formIsValid = true;
-  // A    errors["txtDocumentUpload"] = validateFieldSupportTicketReview("txtDocumentUpload", formValuesTicketProperties.txtDocumentUpload);
-  // A    if (Object.values(errors).join("").toString()) {
-  // A      formIsValid = false;
-  // A    }
-  // A    setFormValidationSupportTicketReviewError(errors);
-  // A    return formIsValid;
-  // A  } catch (error) {
-  // A    setAlertMessage({
-  // A      type: "error",
-  // A      message: "Something Went Wrong",
-  // A    });
-  // A    return false;
-  // A  }
-  // A };
+  const handleValidationSupportTicketReview = () => {
+    try {
+      const errors = {};
+      let formIsValid = true;
+      errors["txtDocumentUpload"] = validateFieldSupportTicketReview("txtDocumentUpload", formValuesTicketProperties.txtDocumentUpload);
+      if (Object.values(errors).join("").toString()) {
+        formIsValid = false;
+      }
+      setFormValidationSupportTicketReviewError(errors);
+      return formIsValid;
+    } catch (error) {
+      setAlertMessage({
+        type: "error",
+        message: "Something Went Wrong",
+      });
+      return false;
+    }
+  };
 
   const updateStateTicketProperties = (name, value) => {
     setFormValuesTicketProperties({ ...formValuesTicketProperties, [name]: value });
-    // A formValidationSupportTicketReviewError[name] = validateFieldSupportTicketReview(name, value);
+    formValidationSupportTicketReviewError[name] = validateFieldSupportTicketReview(name, value);
   };
 
   const [ticketData, setTicketData] = useState("");
@@ -327,10 +332,10 @@ function MyTicketLogics() {
     }
   };
 
-  // A const handleResetFile = async () => {
-  // A  fileRef.current.value = null;
-  // A  setFormValidationSupportTicketReviewError({});
-  // A };
+  const handleResetFile = async () => {
+    fileRef.current.value = null;
+    setFormValidationSupportTicketReviewError({});
+  };
 
   const updateStatusSupportTicket = async () => {
     try {
@@ -381,9 +386,9 @@ function MyTicketLogics() {
       });
       return;
     }
-    // A if (!handleValidationSupportTicketReview()) {
-    // A  return;
-    // A }
+    if (!handleValidationSupportTicketReview()) {
+      return;
+    }
     if (formValuesTicketProperties.txtTicketStatus !== null) {
       // Anil const chkAccessALL = ticketData && ticketData.AccessALL ? ticketData.AccessALL : "";
 
@@ -548,52 +553,57 @@ function MyTicketLogics() {
       // Anil Code not in use
       // Anil let SaveTicketStatusID = "0";
       // Anil SaveTicketStatusID = ticketData.TicketStatusID;
-      // A const pAttachment =
-      // A  formValuesTicketProperties.txtDocumentUpload && formValuesTicketProperties.txtDocumentUpload ? formValuesTicketProperties.txtDocumentUpload : "";
-      // A const UniqueDateTimeTick = getCurrentDateTimeTick();
-      // A let pAttachmentName = "";
-      // A let pAttachmentPath = "";
-      // A let pAttachmentDirPath = "";
-      // A let phasDocument = 0;
-      // A if (pAttachment !== "") {
-      // A  phasDocument = 1;
-      // A  const val = pAttachment.name;
-      // A  const valExtension = val.substring(val.lastIndexOf(".")).toLowerCase().slice(1);
-      // A  const valSpilt = val.split(".");
-      // A  const ValOrgName = valSpilt[0].toString();
-      // A  pAttachmentName = `${UniqueDateTimeTick}_${ValOrgName}.${valExtension}`;
-      // A  pAttachmentPath = `${ticketData.TicketRequestorID}/${ticketData.SupportTicketNo}/${pAttachmentName}`;
-      // A  pAttachmentDirPath = `${ticketData.TicketRequestorID}/${ticketData.SupportTicketNo}/`;
-      // A  switch (valExtension) {
-      // A    case "jpeg":
-      // A    case "jpg":
-      // A    case "png":
-      // A    case "pdf":
-      // A      break;
-      // A    default:
-      // A      setAlertMessage({
-      // A        type: "error",
-      // A        message: "Please select only jpeg,jpg,png,pdf extension attachment.",
-      // A      });
-      // A      return;
-      // A  }
-      // A  if (pAttachment.size > 2000000) {
-      // A    setAlertMessage({
-      // A      type: "error",
-      // A      message: "Please upload less than 2MB or 2MB attachment!",
-      // A    });
-      // A    return;
-      // A  }
-      // A }
+      let phasDocument = 0;
+      let pAttachmentPath = "pmfby/public/krph/documents";
+      let pAttachmentSize = 0;
+      let pdbAttachmentPath = [];
+      const pAttachment =
+        formValuesTicketProperties.txtDocumentUpload && formValuesTicketProperties.txtDocumentUpload ? formValuesTicketProperties.txtDocumentUpload : "";
+      if (pAttachment.length > 0) {
+        if (pAttachment.length > 5) {
+          setAlertMessage({
+            type: "error",
+            message: "Please select only 5 attachments.",
+          });
+          return;
+        }
+        phasDocument = 1;
+        for (let i = 0; i < pAttachment.length; i++) {
+          const val = pAttachment[i].name;
+          const valExtension = val.substring(val.lastIndexOf(".")).toLowerCase().slice(1);
+          switch (valExtension) {
+            case "jpeg":
+            case "jpg":
+            case "png":
+            case "pdf":
+              break;
+            default:
+              setAlertMessage({
+                type: "error",
+                message: "Please select only jpeg,jpg,png,pdf extension attachment.",
+              });
+              return;
+          }
+        }
+        for (let i = 0; i < pAttachment.length; i++) {
+          pAttachmentSize = +pAttachment[i].size;
+        }
+        if (pAttachmentSize > 10485760) {
+          setAlertMessage({
+            type: "error",
+            message: "Please upload less than 10MB or 10MB attachment!",
+          });
+          return;
+        }
+      }
       const formData = {
         ticketHistoryID: 0,
         supportTicketID: ticketData.SupportTicketID,
         agentUserID: ticketData.AgentUserID ? ticketData.AgentUserID : "0",
         ticketStatusID: formValuesTicketProperties.txtTicketStatus.CommonMasterValueID,
         ticketDescription: value,
-        hasDocument: 0,
-        // A hasDocument: phasDocument,
-        // A ticketHistoryAttachment: `krph_documents/${pAttachmentPath}`,
+        hasDocument: phasDocument,
+        attachmentPath: "",
       };
       setBtnLoaderActive1(true);
       const result = await addSupportTicketReview(formData);
@@ -606,15 +616,14 @@ function MyTicketLogics() {
             CreatedBY: user && user.UserDisplayName ? user.UserDisplayName.toString() : "",
             UserType: user && user.UserCompanyType ? user.UserCompanyType.toString() : "",
             AgentUserID: ticketData.AgentUserID ? ticketData.AgentUserID : "0",
-            // A HasDocument: phasDocument,
-            HasDocument: 0,
+            HasDocument: phasDocument,
             InsertIPAddress: ip,
             InsertUserID: user && user.LoginID ? user.LoginID.toString() : "0",
             SupportTicketID: ticketData.SupportTicketID,
             TicketDescription: value,
             TicketHistoryDate: moment().utcOffset("+05:30").format("YYYY-MM-DDTHH:mm:ss"),
             TicketStatusID: formValuesTicketProperties.txtTicketStatus.CommonMasterValueID,
-            // A TicketHistoryAttachment: `${Config.BaseUrl}krph_documents/${pAttachmentPath}`,
+            AttachmentPath: "",
             IsNewlyAdded: true,
           };
           updateTicketHistorytData(newlyAddedEntry);
@@ -637,20 +646,38 @@ function MyTicketLogics() {
             type: "success",
             message: result.response.responseMessage,
           });
-          // A if (pAttachment !== "") {
-          // A  const formDataDoc = new FormData();
-          // A  formDataDoc.append("ImgPath", pAttachmentDirPath);
-          // A  formDataDoc.append("files", pAttachment);
-          // A  formDataDoc.append("ImageName", pAttachmentName);
+          if (pAttachment.length > 0) {
+            for (let i = 0; i < pAttachment.length; i++) {
+              const formDataDoc = new FormData();
+              formDataDoc.append("filePath", pAttachmentPath);
+              formDataDoc.append("documents", pAttachment[i]);
+              formDataDoc.append("uploadedBy", "KRPH");
 
-          // A  try {
-          // A    const resultDoc = await UploadDocumentData(formDataDoc);
-          // A    console.log(resultDoc);
-          // A    handleResetFile();
-          // A  } catch (error) {
-          // A    console.log(error);
-          // A  }
-          // A }
+              try {
+                const resultattachment = await gCPFileUploadData(formDataDoc);
+                if (resultattachment.responseCode === 1) {
+                  pdbAttachmentPath.push({ attachmentPath: `https://pmfby.amnex.co.in/pmfby/public/krph/documents/${pAttachment[i].name}` });
+                }
+              } catch (error) {
+                console.log(error);
+              }
+            }
+            handleResetFile();
+            try {
+              const formDataattachmentPath = {
+                attachment: pdbAttachmentPath,
+                supportTicketID: ticketData.SupportTicketID,
+                ticketHistoryID: result.response.responseData.TicketHistoryID,
+              };
+              await AddKRPHTicketHistoryAttachmentData(formDataattachmentPath);
+            } catch (error) {
+              console.log(error);
+              setAlertMessage({
+                type: "error",
+                message: error,
+              });
+            }
+          }
           if (formValuesTicketProperties.txtTicketStatus.BMCGCode.toString() === "109025") {
             SendSMSToFarmerAgaintSupportTicket("C", ticketData.RequestorMobileNo, ticketData.SupportTicketNo);
           } else if (formValuesTicketProperties.txtTicketStatus.BMCGCode.toString() === "109026") {
@@ -1012,7 +1039,7 @@ function MyTicketLogics() {
     setWordcount,
     btnLoaderActiveOld,
     btnLoaderActive1,
-    // A formValidationSupportTicketReviewError,
+    formValidationSupportTicketReviewError,
     valueEditTicketComment,
     setValueEditTicketComment,
     handleSaveEditTicketComment,
@@ -1020,8 +1047,8 @@ function MyTicketLogics() {
     wordcountEditTicketComment,
     setWordcountEditTicketComment,
     setSelectedHistoryData,
-    // A fileRef,
-    // A handleResetFile,
+    fileRef,
+    handleResetFile,
     btnLoaderActiveComment,
     handleAddComment,
   };

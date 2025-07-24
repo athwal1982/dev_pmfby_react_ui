@@ -14,7 +14,7 @@ import { ticketDataBindingData } from "Components/Common/Welcome/Service/Methods
 import { editKRPHGrievenceSupportTicket } from "./Services/Methods";
 import BizClass from "./OfflineGrievance.module.scss";
 
-const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance }) => {
+const EditOfflineGrievance = ({ showfunc, selectedData, updateOfflineGrievance }) => {
   const setAlertMessage = AlertMessage();
 
   const ticketBindingData = getSessionStorage("ticketDataBindingSsnStrg");
@@ -24,8 +24,8 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
   ]);
 
   const [RepresentationTypeDropdownDataList] = useState([
-      { Value: "SINGLE", label: "Individual Representation" },
-      { Value: "MULTIPLE", label: "Joint Representation" },
+    { Value: "SINGLE", label: "Individual Representation" },
+    { Value: "MULTIPLE", label: "Joint Representation" },
   ]);
 
   const [yearList, setYearList] = useState([]);
@@ -60,28 +60,70 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
   ]);
 
   const [formValuesGI, setFormValuesGI] = useState({
-    txtRepresentationType: selectedData  && selectedData.RepresentationType ? { Value: selectedData.RepresentationType, label: selectedData.RepresentationType === "SINGLE" ? "Individual Representation" : selectedData.RepresentationType === "MULTIPLE" ? "Joint Representation" : "" } : null,
-    txtState: selectedData  && selectedData.StateMasterName && selectedData.StateCodeAlpha ? { StateCodeAlpha: selectedData.StateCodeAlpha, StateMasterName: selectedData.StateMasterName } : null,
-    txtDistrict: selectedData  && selectedData.DistrictMasterName && selectedData.DistrictRequestorID ? { level3ID: selectedData.DistrictRequestorID, level3Name: selectedData.DistrictMasterName } : null,
-    txtMobileNumber:  selectedData && selectedData.RequestorMobileNo ? selectedData.RequestorMobileNo : "",
+    txtRepresentationType:
+      selectedData && selectedData.RepresentationType
+        ? {
+            Value: selectedData.RepresentationType,
+            label:
+              selectedData.RepresentationType === "SINGLE"
+                ? "Individual Representation"
+                : selectedData.RepresentationType === "MULTIPLE"
+                  ? "Joint Representation"
+                  : "",
+          }
+        : null,
+    txtState:
+      selectedData && selectedData.StateMasterName && selectedData.StateCodeAlpha
+        ? { StateCodeAlpha: selectedData.StateCodeAlpha, StateMasterName: selectedData.StateMasterName }
+        : null,
+    txtDistrict:
+      selectedData && selectedData.DistrictMasterName && selectedData.DistrictRequestorID
+        ? { level3ID: selectedData.DistrictRequestorID, level3Name: selectedData.DistrictMasterName }
+        : null,
+    txtMobileNumber: selectedData && selectedData.RequestorMobileNo ? selectedData.RequestorMobileNo : "",
     txtFarmerName: selectedData && selectedData.FarmerName ? selectedData.FarmerName : "",
-    txtComplaintDate: selectedData  &&  selectedData.ComplaintDate ?  dateToSpecificFormat(selectedData.ComplaintDate,"YYYY-MM-DD") : "",
+    txtComplaintDate: selectedData && selectedData.ComplaintDate ? dateToSpecificFormat(selectedData.ComplaintDate, "YYYY-MM-DD") : "",
     txtFarmerEmailID: selectedData && selectedData.Email ? selectedData.Email : "",
-    txtYearForFarmerInfo: selectedData  && selectedData.RequestYear  ? { Value: selectedData.RequestYear, Name: selectedData.RequestYear } : null,
-    txtSeasonForFarmerInfo: selectedData  && selectedData.RequestSeason ? { CropSeasonID: selectedData.RequestSeason, CropSeasonName: selectedData.RequestSeason && selectedData.RequestSeason === 1 ? "Kharif" : selectedData.RequestSeason === 2 ? "Rabi": "" } : null,
-    txtSourceOfGrievance: selectedData  && selectedData.GrievenceSourceType && selectedData.GrievenceTicketSourceTypeID ? { CommonMasterValueID: selectedData.GrievenceTicketSourceTypeID, CommonMasterValue: selectedData.GrievenceSourceType } : null,
+    txtYearForFarmerInfo: selectedData && selectedData.RequestYear ? { Value: selectedData.RequestYear, Name: selectedData.RequestYear } : null,
+    txtSeasonForFarmerInfo:
+      selectedData && selectedData.RequestSeason
+        ? {
+            CropSeasonID: selectedData.RequestSeason,
+            CropSeasonName: selectedData.RequestSeason && selectedData.RequestSeason === 1 ? "Kharif" : selectedData.RequestSeason === 2 ? "Rabi" : "",
+          }
+        : null,
+    txtSourceOfGrievance:
+      selectedData && selectedData.GrievenceSourceType && selectedData.GrievenceTicketSourceTypeID
+        ? { CommonMasterValueID: selectedData.GrievenceTicketSourceTypeID, CommonMasterValue: selectedData.GrievenceSourceType }
+        : null,
     txtOtherSourceOfGrievance: selectedData && selectedData.GrievenceSourceOtherType ? selectedData.GrievenceSourceOtherType : "",
-    txtSocialMedia: selectedData  && selectedData.SocialMediaType && selectedData.SocialMediaTypeID ? { CommonMasterValueID: selectedData.SocialMediaTypeID, CommonMasterValue: selectedData.SocialMediaType } : null,
+    txtSocialMedia:
+      selectedData && selectedData.SocialMediaType && selectedData.SocialMediaTypeID
+        ? { CommonMasterValueID: selectedData.SocialMediaTypeID, CommonMasterValue: selectedData.SocialMediaType }
+        : null,
     txturl: selectedData && selectedData.SocialMediaURL ? selectedData.SocialMediaURL : "",
     txtOtherSocialMediaSource: selectedData && selectedData.OtherSocialMedia ? selectedData.OtherSocialMedia : "",
-    txtSourceOfReceipt: selectedData  && selectedData.ReceiptSource && selectedData.ReceiptSourceID ? { CommonMasterValueID: selectedData.ReceiptSourceID, CommonMasterValue: selectedData.ReceiptSource } : null,
-    txtisIdentified: selectedData && selectedData.InsuranceCompanyID === 0 ? { ID: 2, Value: "No" } : selectedData.InsuranceCompanyID > 0 ? { ID: 2, Value: "Yes" }: null ,
-    txtInsuranceCompany: selectedData  && selectedData.InsuranceCompanyID && selectedData.InsuranceCompany ? { CompanyID: selectedData.InsuranceCompanyID, CompanyName: selectedData.InsuranceCompany } : null,
+    txtSourceOfReceipt:
+      selectedData && selectedData.ReceiptSource && selectedData.ReceiptSourceID
+        ? { CommonMasterValueID: selectedData.ReceiptSourceID, CommonMasterValue: selectedData.ReceiptSource }
+        : null,
+    txtisIdentified:
+      selectedData && selectedData.InsuranceCompanyID === 0 ? { ID: 2, Value: "No" } : selectedData.InsuranceCompanyID > 0 ? { ID: 2, Value: "Yes" } : null,
+    txtInsuranceCompany:
+      selectedData && selectedData.InsuranceCompanyID && selectedData.InsuranceCompany
+        ? { CompanyID: selectedData.InsuranceCompanyID, CompanyName: selectedData.InsuranceCompany }
+        : null,
     txtApplicationNumber: selectedData && selectedData.ApplicationNo ? selectedData.ApplicationNo : "",
     txtPolicyNumber: selectedData && selectedData.InsurancePolicyNo ? selectedData.InsurancePolicyNo : "",
     txtCropName: selectedData && selectedData.CropName ? selectedData.CropName : "",
-    txtTicketCategoryType: selectedData  && selectedData.TicketCategoryName && selectedData.TicketCategoryID ? { SupportTicketTypeID: selectedData.TicketCategoryID, SupportTicketTypeName: selectedData.TicketCategoryName } : null,
-    txtTicketCategory:  selectedData  && selectedData.TicketSubCategoryName && selectedData.TicketSubCategoryID ? { TicketCategoryID: selectedData.TicketSubCategoryID, TicketCategoryName: selectedData.TicketSubCategoryName } : null,
+    txtTicketCategoryType:
+      selectedData && selectedData.TicketCategoryName && selectedData.TicketCategoryID
+        ? { SupportTicketTypeID: selectedData.TicketCategoryID, SupportTicketTypeName: selectedData.TicketCategoryName }
+        : null,
+    txtTicketCategory:
+      selectedData && selectedData.TicketSubCategoryName && selectedData.TicketSubCategoryID
+        ? { TicketCategoryID: selectedData.TicketSubCategoryID, TicketCategoryName: selectedData.TicketSubCategoryName }
+        : null,
     txtDocumentUpload: "",
     txtTicketDescription: selectedData && selectedData.GrievenceDescription ? selectedData.GrievenceDescription : "",
   });
@@ -90,7 +132,7 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
   const validateKRPHInfoField = (name, value) => {
     let errorsMsg = "";
 
-        if (name === "txtRepresentationType") {
+    if (name === "txtRepresentationType") {
       if (!value || typeof value === "undefined") {
         errorsMsg = "Representation Type is required!";
       }
@@ -250,16 +292,11 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
       ) {
         errors["txtSourceOfReceipt"] = validateKRPHInfoField("txtSourceOfReceipt", formValuesGI.txtSourceOfReceipt);
       }
-      if (
-        formValuesGI &&
-        formValuesGI.txtisIdentified &&
-        formValuesGI.txtisIdentified.ID &&
-        formValuesGI.txtisIdentified.ID === 1
-      ) {
-      errors["txtInsuranceCompany"] = validateKRPHInfoField("txtInsuranceCompany", formValuesGI.txtInsuranceCompany);
+      if (formValuesGI && formValuesGI.txtisIdentified && formValuesGI.txtisIdentified.ID && formValuesGI.txtisIdentified.ID === 1) {
+        errors["txtInsuranceCompany"] = validateKRPHInfoField("txtInsuranceCompany", formValuesGI.txtInsuranceCompany);
       }
-     // A errors["txtTicketCategoryType"] = validateKRPHInfoField("txtTicketCategoryType", formValuesGI.txtTicketCategoryType);
-     // A errors["txtTicketCategory"] = validateKRPHInfoField("txtTicketCategory", formValuesGI.txtTicketCategory);
+      // A errors["txtTicketCategoryType"] = validateKRPHInfoField("txtTicketCategoryType", formValuesGI.txtTicketCategoryType);
+      // A errors["txtTicketCategory"] = validateKRPHInfoField("txtTicketCategory", formValuesGI.txtTicketCategory);
       errors["txtTicketDescription"] = validateKRPHInfoField("txtTicketDescription", formValuesGI.txtTicketDescription);
 
       if (Object.values(errors).join("").toString()) {
@@ -560,9 +597,7 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
     debugger;
     try {
       const formData = {
-        representationType: formValuesGI.txtRepresentationType && formValuesGI.txtRepresentationType.Value
-            ? formValuesGI.txtRepresentationType.Value
-            : "",
+        representationType: formValuesGI.txtRepresentationType && formValuesGI.txtRepresentationType.Value ? formValuesGI.txtRepresentationType.Value : "",
         grievenceSupportTicketID: selectedData && selectedData.GrievenceSupportTicketID ? selectedData.GrievenceSupportTicketID : 0,
         farmerName: formValuesGI.txtFarmerName ? formValuesGI.txtFarmerName : "",
         email: formValuesGI.txtFarmerEmailID ? formValuesGI.txtFarmerEmailID : "",
@@ -614,65 +649,67 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
       const result = await editKRPHGrievenceSupportTicket(formData);
       setBtnLoaderSupportTicketActive(false);
       setisBtndisabled(0);
-     if (result.responseCode === 1) {
-                  if (result && result.responseData) {
-        selectedData.RepresentationType =  formValuesGI.txtRepresentationType && formValuesGI.txtRepresentationType.Value
-            ? formValuesGI.txtRepresentationType.Value
-            : "";
-        selectedData.InsuranceCompanyID = formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyID ? formValuesGI.txtInsuranceCompany.CompanyID : 0;
-        selectedData.InsuranceCompany =  formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyName ? formValuesGI.txtInsuranceCompany.CompanyName : "";
-        selectedData.FarmerName= formValuesGI.txtFarmerName ? formValuesGI.txtFarmerName : "";
-        selectedData.Email= formValuesGI.txtFarmerEmailID ? formValuesGI.txtFarmerEmailID : "";
-        selectedData.RequestorMobileNo= formValuesGI.txtMobileNumber ? formValuesGI.txtMobileNumber : "";
-        selectedData.ComplaintDate= formValuesGI && formValuesGI.txtComplaintDate ? dateToCompanyFormat(formValuesGI.txtComplaintDate) : "";
-        selectedData.StateCodeAlpha= formValuesGI.txtState && formValuesGI.txtState.StateCodeAlpha ? formValuesGI.txtState.StateCodeAlpha : "";
-        selectedData.DistrictRequestorID= formValuesGI.txtDistrict && formValuesGI.txtDistrict.level3ID ? formValuesGI.txtDistrict.level3ID : "";
-        selectedData.GrievenceSourceTypeID=
-          formValuesGI.txtSourceOfGrievance && formValuesGI.txtSourceOfGrievance.CommonMasterValueID
-            ? formValuesGI.txtSourceOfGrievance.CommonMasterValueID
-            : 0;
-        selectedData.GrievenceSourceOtherType= formValuesGI && formValuesGI.txtOtherSourceOfGrievance ? formValuesGI.txtOtherSourceOfGrievance : "";
-        selectedData.SocialMediaTypeID= formValuesGI.txtSocialMedia && formValuesGI.txtSocialMedia.CommonMasterValueID ? formValuesGI.txtSocialMedia.CommonMasterValueID : 0;
-        selectedData.OtherSocialMedia= formValuesGI && formValuesGI.txtOtherSocialMediaSource ? formValuesGI.txtOtherSocialMediaSource : "";
-        selectedData.SocialMediaURL= formValuesGI && formValuesGI.txturl ? formValuesGI.txturl : "";
-        selectedData.ReceiptSourceID=
-          formValuesGI.txtSourceOfReceipt && formValuesGI.txtSourceOfReceipt.CommonMasterValueID ? formValuesGI.txtSourceOfReceipt.CommonMasterValueID : 0;
-        selectedData.TicketCategoryID=
-          formValuesGI.txtTicketCategoryType && formValuesGI.txtTicketCategoryType.SupportTicketTypeID
-            ? formValuesGI.txtTicketCategoryType.SupportTicketTypeID
-            : 0;
-        selectedData.TicketSubCategoryID=
-          formValuesGI.txtTicketCategory && formValuesGI.txtTicketCategory.TicketCategoryID ? formValuesGI.txtTicketCategory.TicketCategoryID : 0;
-        selectedData.RequestYear= formValuesGI.txtYearForFarmerInfo && formValuesGI.txtYearForFarmerInfo.Value ? formValuesGI.txtYearForFarmerInfo.Value : 0;
-        selectedData.RequestSeason=
-          formValuesGI.txtSeasonForFarmerInfo && formValuesGI.txtSeasonForFarmerInfo.CropSeasonID ? formValuesGI.txtSeasonForFarmerInfo.CropSeasonID : 0;
-        selectedData.CropName= formValuesGI && formValuesGI.txtCropName ? formValuesGI.txtCropName : "";
-        selectedData.ApplicationNo= formValuesGI && formValuesGI.txtApplicationNumber ? formValuesGI.txtApplicationNumber : "";
-        selectedData.InsurancePolicyNo= formValuesGI && formValuesGI.txtPolicyNumber ? formValuesGI.txtPolicyNumber : "";
-        selectedData.DistrictMasterName= formValuesGI.txtDistrict && formValuesGI.txtDistrict.level3Name ? formValuesGI.txtDistrict.level3Name : "";
-        selectedData.ticketSubCategoryName=
-          formValuesGI.txtTicketCategory && formValuesGI.txtTicketCategory.TicketCategoryName ? formValuesGI.txtTicketCategory.TicketCategoryName : "";
-        selectedData.ticketCategoryName=
-          formValuesGI.txtTicketCategoryType && formValuesGI.txtTicketCategoryType.SupportTicketTypeName
-            ? formValuesGI.txtTicketCategoryType.SupportTicketTypeName
-            : "";
-        selectedData.StateMasterName= formValuesGI.txtState && formValuesGI.txtState.StateMasterName ? formValuesGI.txtState.StateMasterName : "";
-        selectedData.GrievenceDescription= formValuesGI && formValuesGI.txtTicketDescription ? formValuesGI.txtTicketDescription : "";
-                    updateOfflineGrievance(selectedData);
-                    showfunc();
-                  }
-                  setBtnLoaderSupportTicketActive(false);
-                  setAlertMessage({
-                    type: "success",
-                    message: result.responseMessage,
-                  });
-                } else {
-                  setBtnLoaderSupportTicketActive(false);
-                  setAlertMessage({
-                    type: "error",
-                    message: result.responseMessage,
-                  });
-                }
+      if (result.responseCode === 1) {
+        if (result && result.responseData) {
+          selectedData.RepresentationType =
+            formValuesGI.txtRepresentationType && formValuesGI.txtRepresentationType.Value ? formValuesGI.txtRepresentationType.Value : "";
+          selectedData.InsuranceCompanyID =
+            formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyID ? formValuesGI.txtInsuranceCompany.CompanyID : 0;
+          selectedData.InsuranceCompany =
+            formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyName ? formValuesGI.txtInsuranceCompany.CompanyName : "";
+          selectedData.FarmerName = formValuesGI.txtFarmerName ? formValuesGI.txtFarmerName : "";
+          selectedData.Email = formValuesGI.txtFarmerEmailID ? formValuesGI.txtFarmerEmailID : "";
+          selectedData.RequestorMobileNo = formValuesGI.txtMobileNumber ? formValuesGI.txtMobileNumber : "";
+          selectedData.ComplaintDate = formValuesGI && formValuesGI.txtComplaintDate ? dateToCompanyFormat(formValuesGI.txtComplaintDate) : "";
+          selectedData.StateCodeAlpha = formValuesGI.txtState && formValuesGI.txtState.StateCodeAlpha ? formValuesGI.txtState.StateCodeAlpha : "";
+          selectedData.DistrictRequestorID = formValuesGI.txtDistrict && formValuesGI.txtDistrict.level3ID ? formValuesGI.txtDistrict.level3ID : "";
+          selectedData.GrievenceSourceTypeID =
+            formValuesGI.txtSourceOfGrievance && formValuesGI.txtSourceOfGrievance.CommonMasterValueID
+              ? formValuesGI.txtSourceOfGrievance.CommonMasterValueID
+              : 0;
+          selectedData.GrievenceSourceOtherType = formValuesGI && formValuesGI.txtOtherSourceOfGrievance ? formValuesGI.txtOtherSourceOfGrievance : "";
+          selectedData.SocialMediaTypeID =
+            formValuesGI.txtSocialMedia && formValuesGI.txtSocialMedia.CommonMasterValueID ? formValuesGI.txtSocialMedia.CommonMasterValueID : 0;
+          selectedData.OtherSocialMedia = formValuesGI && formValuesGI.txtOtherSocialMediaSource ? formValuesGI.txtOtherSocialMediaSource : "";
+          selectedData.SocialMediaURL = formValuesGI && formValuesGI.txturl ? formValuesGI.txturl : "";
+          selectedData.ReceiptSourceID =
+            formValuesGI.txtSourceOfReceipt && formValuesGI.txtSourceOfReceipt.CommonMasterValueID ? formValuesGI.txtSourceOfReceipt.CommonMasterValueID : 0;
+          selectedData.TicketCategoryID =
+            formValuesGI.txtTicketCategoryType && formValuesGI.txtTicketCategoryType.SupportTicketTypeID
+              ? formValuesGI.txtTicketCategoryType.SupportTicketTypeID
+              : 0;
+          selectedData.TicketSubCategoryID =
+            formValuesGI.txtTicketCategory && formValuesGI.txtTicketCategory.TicketCategoryID ? formValuesGI.txtTicketCategory.TicketCategoryID : 0;
+          selectedData.RequestYear = formValuesGI.txtYearForFarmerInfo && formValuesGI.txtYearForFarmerInfo.Value ? formValuesGI.txtYearForFarmerInfo.Value : 0;
+          selectedData.RequestSeason =
+            formValuesGI.txtSeasonForFarmerInfo && formValuesGI.txtSeasonForFarmerInfo.CropSeasonID ? formValuesGI.txtSeasonForFarmerInfo.CropSeasonID : 0;
+          selectedData.CropName = formValuesGI && formValuesGI.txtCropName ? formValuesGI.txtCropName : "";
+          selectedData.ApplicationNo = formValuesGI && formValuesGI.txtApplicationNumber ? formValuesGI.txtApplicationNumber : "";
+          selectedData.InsurancePolicyNo = formValuesGI && formValuesGI.txtPolicyNumber ? formValuesGI.txtPolicyNumber : "";
+          selectedData.DistrictMasterName = formValuesGI.txtDistrict && formValuesGI.txtDistrict.level3Name ? formValuesGI.txtDistrict.level3Name : "";
+          selectedData.ticketSubCategoryName =
+            formValuesGI.txtTicketCategory && formValuesGI.txtTicketCategory.TicketCategoryName ? formValuesGI.txtTicketCategory.TicketCategoryName : "";
+          selectedData.ticketCategoryName =
+            formValuesGI.txtTicketCategoryType && formValuesGI.txtTicketCategoryType.SupportTicketTypeName
+              ? formValuesGI.txtTicketCategoryType.SupportTicketTypeName
+              : "";
+          selectedData.StateMasterName = formValuesGI.txtState && formValuesGI.txtState.StateMasterName ? formValuesGI.txtState.StateMasterName : "";
+          selectedData.GrievenceDescription = formValuesGI && formValuesGI.txtTicketDescription ? formValuesGI.txtTicketDescription : "";
+          updateOfflineGrievance(selectedData);
+          showfunc();
+        }
+        setBtnLoaderSupportTicketActive(false);
+        setAlertMessage({
+          type: "success",
+          message: result.responseMessage,
+        });
+      } else {
+        setBtnLoaderSupportTicketActive(false);
+        setAlertMessage({
+          type: "error",
+          message: result.responseMessage,
+        });
+      }
     } catch (error) {
       console.log(error);
       setAlertMessage({
@@ -701,7 +738,10 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
     getStateKRPHListData();
     getInsuranceCompanyListData();
     getTicketCategoryTypeListData("1", 0, "TCKTYP");
-    getTicketCategoryListData(selectedData.TicketCategoryID, {SupportTicketTypeID: selectedData.TicketCategoryID, SupportTicketTypeName: selectedData.TicketCategoryName});
+    getTicketCategoryListData(selectedData.TicketCategoryID, {
+      SupportTicketTypeID: selectedData.TicketCategoryID,
+      SupportTicketTypeName: selectedData.TicketCategoryName,
+    });
     document.body.style.height = "100vh";
     document.body.style.width = "100vw";
     document.body.style.overflowY = "scroll";
@@ -748,32 +788,6 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
                         mt: 1,
                       }}
                     >
-                     <Typography
-                                                sx={{
-                                                  fontFamily: "Quicksand, sans-serif",
-                                                  display: "flex",
-                                                  flexDirection: "column",
-                                                  gap: "2px",
-                                                  fontSize: "14px",
-                                                }}
-                                              >
-                                                <span>
-                                                  Representation Type <span className="asteriskCss">&#42;</span>
-                                                </span>{" "}
-                                                <InputGroup ErrorMsg={formValidationKRPHError["txtRepresentationType"]}>
-                                                  <InputControl
-                                                    Input_type="select"
-                                                    name="txtRepresentationType"
-                                                    getOptionLabel={(option) => `${option.label}`}
-                                                    value={formValuesGI.txtRepresentationType}
-                                                    getOptionValue={(option) => `${option}`}
-                                                    options={RepresentationTypeDropdownDataList}
-                                                    ControlTxt="Representation Type"
-                                                    onChange={(e) => updateStateGI("txtRepresentationType", e)}
-                                                  />
-                                                </InputGroup>
-                                                {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtSocialMedia"]}</span> */}
-                                              </Typography>  
                       <Typography
                         sx={{
                           fontFamily: "Quicksand, sans-serif",
@@ -784,8 +798,32 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
                         }}
                       >
                         <span>
-                          Farmer Name 
-                        </span>
+                          Representation Type <span className="asteriskCss">&#42;</span>
+                        </span>{" "}
+                        <InputGroup ErrorMsg={formValidationKRPHError["txtRepresentationType"]}>
+                          <InputControl
+                            Input_type="select"
+                            name="txtRepresentationType"
+                            getOptionLabel={(option) => `${option.label}`}
+                            value={formValuesGI.txtRepresentationType}
+                            getOptionValue={(option) => `${option}`}
+                            options={RepresentationTypeDropdownDataList}
+                            ControlTxt="Representation Type"
+                            onChange={(e) => updateStateGI("txtRepresentationType", e)}
+                          />
+                        </InputGroup>
+                        {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtSocialMedia"]}</span> */}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: "Quicksand, sans-serif",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "2px",
+                          fontSize: "14px",
+                        }}
+                      >
+                        <span>Farmer Name</span>
                         <InputGroup ErrorMsg={formValidationKRPHError["txtFarmerName"]}>
                           <InputControl
                             Input_type="input"
@@ -807,9 +845,7 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
                           fontSize: "14px",
                         }}
                       >
-                        <span>
-                          Mobile Number 
-                        </span>
+                        <span>Mobile Number</span>
                         <InputGroup ErrorMsg={formValidationKRPHError["txtMobileNumber"]}>
                           <InputControl
                             Input_type="input"
@@ -897,9 +933,7 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
                           fontSize: "14px",
                         }}
                       >
-                        <span>
-                          State 
-                        </span>{" "}
+                        <span>State</span>{" "}
                         <InputGroup ErrorMsg={formValidationKRPHError["txtState"]}>
                           <InputControl
                             Input_type="select"
@@ -924,9 +958,7 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
                           fontSize: "14px",
                         }}
                       >
-                        <span>
-                          District 
-                        </span>
+                        <span>District</span>
                         <InputGroup ErrorMsg={formValidationKRPHError["txtDistrict"]}>
                           <InputControl
                             Input_type="select"
@@ -1249,9 +1281,7 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
                   <Box className="ticket-content_agent">
                     <div className="container_agent">
                       <div className="form-group_agent">
-                        <label className="ticket-label_agent">
-                          Category 
-                        </label>
+                        <label className="ticket-label_agent">Category</label>
                         <InputGroup ErrorMsg={formValidationKRPHError["txtTicketCategoryType"]}>
                           <InputControl
                             Input_type="select"
@@ -1267,10 +1297,7 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
                         {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtTicketCategoryType"]}</span> */}
                       </div>
                       <div className="form-group_agent">
-                        <label className="ticket-label_agent">
-                          {" "}
-                          Sub Category 
-                        </label>
+                        <label className="ticket-label_agent"> Sub Category</label>
                         <InputGroup ErrorMsg={formValidationKRPHError["txtTicketCategory"]}>
                           <InputControl
                             Input_type="select"
@@ -1299,7 +1326,7 @@ const EditOfflineGrievance = ({ showfunc,selectedData, updateOfflineGrievance })
                           />
                         </InputGroup>
                       </div>
-                      <div className="form-group_agent" style={{display: "none"}}>
+                      <div className="form-group_agent" style={{ display: "none" }}>
                         <label className="ticket-label_agent">
                           {" "}
                           Attachment <b>(File Size : 500 kb , File Type: .pdf, .jpg, .jpeg, .png)</b>

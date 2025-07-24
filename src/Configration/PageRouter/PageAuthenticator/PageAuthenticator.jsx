@@ -30,7 +30,7 @@ function PageAuthenticator() {
   //  Areturn <Navigate to="/login" />;
 
   // A return <Navigate to="/krph" />;
-   return <Navigate to="/LandingPage" />;
+  return <Navigate to="/LandingPage" />;
 }
 
 export default PageAuthenticator;

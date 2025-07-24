@@ -2,10 +2,9 @@ import { React, useState, useEffect } from "react";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { Modal } from "Framework/Components/Layout";
 import { Loader } from "Framework/Components/Widgets";
-import { FaFileImage, FaFilePdf } from "react-icons/fa";
-import { getKRPHGrievanceAttachmentData } from "../../../../../Services/Methods";
+import { getKRPHSupportAttachmentData, getKRPHTicketHistoryAttachmentData } from "../../../../../ManageTicket/Views/Modals/AddTicket/Services/Methods";
 
-function FileViewer({ toggleFileViewerModal, selectedData }) {
+function FileViewer({ toggleFileViewerModal, selectedData, apiFor }) {
   const setAlertMessage = AlertMessage();
 
   const [fileViewerIsLoading, setFileViewerIsLoading] = useState(false);
@@ -14,11 +13,22 @@ function FileViewer({ toggleFileViewerModal, selectedData }) {
     debugger;
     try {
       setAttachmentData([]);
-      const formdata = {
-        grievenceSupportTicketID: selectedData && selectedData.GrievenceSupportTicketID ? selectedData.GrievenceSupportTicketID : 0,
-      };
       setFileViewerIsLoading(true);
-      const result = await getKRPHGrievanceAttachmentData(formdata);
+      let formdata = null;
+      let result = null;
+      if (apiFor === "SPTCKT") {
+        formdata = {
+          supportTicketID: selectedData && selectedData.SupportTicketID ? selectedData.SupportTicketID : 0,
+        };
+        result = await getKRPHSupportAttachmentData(formdata);
+      } else if (apiFor === "TCKHIS") {
+        formdata = {
+          supportTicketID: selectedData && selectedData.SupportTicketID ? selectedData.SupportTicketID : 0,
+          ticketHistoryID: selectedData && selectedData.TicketHistoryID ? selectedData.TicketHistoryID : 0,
+        };
+        result = await getKRPHTicketHistoryAttachmentData(formdata);
+      }
+
       setFileViewerIsLoading(false);
       if (result.responseCode === 1) {
         if (result.responseData && result.responseData.attachment && result.responseData.attachment.length > 0) {
@@ -48,9 +58,9 @@ function FileViewer({ toggleFileViewerModal, selectedData }) {
   return (
     <Modal
       varient="center"
-      title={`Attachmet Detail (Ticket No. :  ${selectedData && selectedData.GrievenceSupportTicketNo ? selectedData.GrievenceSupportTicketNo : ""})`}
+      title={`Attachmet Detail (Ticket No. :  ${selectedData && selectedData.SupportTicketNo ? selectedData.SupportTicketNo : ""})`}
       show={toggleFileViewerModal}
-      width="34vw"
+      width="62vw"
       right="0"
       style={{ zindex: "999999999999999999999" }}
     >
@@ -68,11 +78,9 @@ function FileViewer({ toggleFileViewerModal, selectedData }) {
               <tr>
                 <td>{i + 1}</td>
                 <td>
-                  {v.AttachmentPath && v.AttachmentPath.split(".").pop().split("?")[0] === "pdf" ? (
-                      <a href={v.AttachmentPath} style={{cursor: "pointer"}} target="_blank"><FaFilePdf style={{fontSize:"40px"}} /></a>
-                   ) : (
-                  <a href={v.AttachmentPath} style={{cursor: "pointer"}} target="_blank"><FaFileImage style={{fontSize:"40px"}}/></a>
-                  )}
+                  <a href={v.AttachmentPath} target="_blank">
+                    {v.AttachmentPath}
+                  </a>
                 </td>
               </tr>
             ))}

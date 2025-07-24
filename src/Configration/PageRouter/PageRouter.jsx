@@ -83,7 +83,7 @@ const PageRouter = () => {
     <Router>
       <Routes>
         {/* ------------ New Routes ------------ */}
-         <Route exact path="/LandingPage" element={<LandingPage />} />
+        <Route exact path="/LandingPage" element={<LandingPage />} />
         <Route exact path="/krph" element={<LandingKrph />} />
         <Route exact path="/krphlogin2" element={<KRPHPortal />} />
         <Route exact path="/ImportantInstructions" element={<ImportantInstructions />} />

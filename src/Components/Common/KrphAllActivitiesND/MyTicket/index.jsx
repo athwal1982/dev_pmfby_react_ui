@@ -33,15 +33,15 @@ function MyTicketPage({ selectedData, showfunc }) {
     wordcount,
     setWordcount,
     btnLoaderActive1,
-    // A formValidationSupportTicketReviewError,
+    formValidationSupportTicketReviewError,
     valueEditTicketComment,
     setValueEditTicketComment,
     handleSaveEditTicketComment,
     btnLoaderActiveEditTicketComment,
     wordcountEditTicketComment,
     setWordcountEditTicketComment,
-    // A fileRef,
-    // A handleResetFile,
+    fileRef,
+    handleResetFile,
     setSelectedHistoryData,
     btnLoaderActiveComment,
     handleAddComment,
@@ -87,9 +87,9 @@ function MyTicketPage({ selectedData, showfunc }) {
           wordcount={wordcount}
           setWordcount={setWordcount}
           btnLoaderActive1={btnLoaderActive1}
-          // A formValidationSupportTicketReviewError={formValidationSupportTicketReviewError}
-          // A fileRef={fileRef}
-          // A handleResetFile={handleResetFile}
+          formValidationSupportTicketReviewError={formValidationSupportTicketReviewError}
+          fileRef={fileRef}
+          handleResetFile={handleResetFile}
           btnLoaderActiveComment={btnLoaderActiveComment}
           handleAddComment={handleAddComment}
         />

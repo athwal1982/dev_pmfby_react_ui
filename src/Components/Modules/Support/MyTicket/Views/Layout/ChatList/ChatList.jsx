@@ -11,7 +11,7 @@ import { PropTypes } from "prop-types";
 import { daysdifference, dateFormatDefault, dateToSpecificFormat, Convert24FourHourAndMinute } from "Configration/Utilities/dateformat";
 import parse from "html-react-parser";
 import { getSessionStorage } from "Components/Common/Login/Auth/auth";
-import FileViewer from "./FileViewer";
+import FileViewer from "./FileViewer/FileViewer";
 import EditTicketComment from "./EditTicketComment";
 import BizClass from "./ChatList.module.scss";
 
@@ -52,15 +52,12 @@ function ChatList({
   const user = getSessionStorage("user");
   const ChkBRHeadTypeID = user && user.BRHeadTypeID ? user.BRHeadTypeID.toString() : "0";
 
-  const [fileViewerIsLoading, setFileViewerIsLoading] = useState(false);
   const [isFileViewerModalOpen, setIsFileViewerModalOpen] = useState(false);
-  const [selectedFileForFileViewerURL, setSelectedFileForFileViewerURL] = useState("");
+  const [apiFor, setapiFor] = useState(false);
 
-  const toggleFileViewerModal = (pAttahmentURL) => {
-    setFileViewerIsLoading(true);
+  const toggleFileViewerModal = (papiFor) => {
     setIsFileViewerModalOpen(!isFileViewerModalOpen);
-    setSelectedFileForFileViewerURL(pAttahmentURL);
-    setFileViewerIsLoading(false);
+    setapiFor(papiFor);
   };
   const [isEditTicketCommentModalOpen, setIsEditTicketCommentModalOpen] = useState(false);
   const toggleEditTicketCommentModal = (data) => {
@@ -89,9 +86,7 @@ function ChatList({
 
   return (
     <>
-      {isFileViewerModalOpen && (
-        <FileViewer toggleFileViewerModal={toggleFileViewerModal} imageURL={selectedFileForFileViewerURL} fileViewerIsLoading={fileViewerIsLoading} />
-      )}
+      {isFileViewerModalOpen && <FileViewer toggleFileViewerModal={toggleFileViewerModal} selectedData={selectedData} apiFor={apiFor} />}
       {isEditTicketCommentModalOpen && (
         <EditTicketComment
           toggleEditTicketCommentModal={toggleEditTicketCommentModal}
@@ -110,10 +105,7 @@ function ChatList({
             <h4>
               {`${selectedData.SupportTicketNo} || ${selectedData.TicketCategoryName}`}{" "}
               {selectedData.HasDocument && selectedData.HasDocument === 1 ? (
-                <MdAttachFile
-                  onClick={() => toggleFileViewerModal(Config.MainUrl + selectedData.AttachmentPath)}
-                  style={{ cursor: "pointer", color: "#000000" }}
-                />
+                <MdAttachFile style={{ cursor: "pointer", color: "#000000" }} onClick={() => toggleFileViewerModal("SPTCKT")} />
               ) : null}{" "}
             </h4>
             <p>
@@ -169,10 +161,7 @@ function ChatList({
                             {" "}
                             ({data.CreatedBY} - {data.UserType}){" "}
                             {data.HasDocument && data.HasDocument === 1 ? (
-                              <MdAttachFile
-                                onClick={() => toggleFileViewerModal(Config.MainUrl + data.AttachmentPath)}
-                                style={{ cursor: "pointer", color: "#000000" }}
-                              />
+                              <MdAttachFile onClick={() => toggleFileViewerModal("TCKHIS")} style={{ cursor: "pointer", color: "#000000" }} />
                             ) : null}{" "}
                           </p>
                           <span>

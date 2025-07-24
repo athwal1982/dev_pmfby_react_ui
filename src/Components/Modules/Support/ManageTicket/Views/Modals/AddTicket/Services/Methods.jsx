@@ -1,4 +1,4 @@
-import { ApiCalling, apiCallingWithFormData } from "Services/Utilities/ApiCalling/ApiCalling";
+import { ApiCalling, apiCallingWithFormData, apiCallingFormData } from "Services/Utilities/ApiCalling/ApiCalling";
 import APIEndpoints from "./EndPoints";
 
 export const getMasterDataBindingDataList = async (formData) => {
@@ -532,5 +532,85 @@ export const farmerCallingHistoryData = async (formData) => {
   } catch (error) {
     console.log(error);
     return { response: { responseCode: 0, responseData: null, responseMessage: error } };
+  }
+};
+
+export const gCPFileUploadData = async (formData) => {
+  try {
+    const result = await apiCallingFormData(formData, APIEndpoints.AddTicket.GCPFileUpload);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return {
+      response: { responseCode: 0, responseData: null, responseMessage: error },
+    };
+  }
+};
+
+export const addKRPHSupportAttachmentData = async (formData) => {
+  try {
+    const requestData = {
+      main: {
+        ...formData,
+      },
+    };
+    const result = await ApiCalling(requestData, APIEndpoints.AddTicket.AddKRPHSupportAttachment);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return {
+      response: { responseCode: 0, responseData: null, responseMessage: error },
+    };
+  }
+};
+
+export const getKRPHSupportAttachmentData = async (formData) => {
+  try {
+    const requestData = {
+      main: {
+        ...formData,
+      },
+    };
+    const result = await ApiCalling(requestData, APIEndpoints.AddTicket.GetKRPHSupportAttachment);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return {
+      response: { responseCode: 0, responseData: null, responseMessage: error },
+    };
+  }
+};
+
+export const AddKRPHTicketHistoryAttachmentData = async (formData) => {
+  try {
+    const requestData = {
+      main: {
+        ...formData,
+      },
+    };
+    const result = await ApiCalling(requestData, APIEndpoints.AddTicket.AddKRPHTicketHistoryAttachment);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return {
+      response: { responseCode: 0, responseData: null, responseMessage: error },
+    };
+  }
+};
+
+export const getKRPHTicketHistoryAttachmentData = async (formData) => {
+  try {
+    const requestData = {
+      main: {
+        ...formData,
+      },
+    };
+    const result = await ApiCalling(requestData, APIEndpoints.AddTicket.GetKRPHTicketHistoryAttachment);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return {
+      response: { responseCode: 0, responseData: null, responseMessage: error },
+    };
   }
 };

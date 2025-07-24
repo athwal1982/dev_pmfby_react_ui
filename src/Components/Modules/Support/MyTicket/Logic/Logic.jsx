@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import moment from "moment";
 import publicIp from "public-ip";
-import { getCurrentDateTimeTick } from "Configration/Utilities/dateformat";
 import { getSessionStorage, getUserRightCodeAccess } from "Components/Common/Login/Auth/auth";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import {
@@ -12,7 +11,12 @@ import {
   editSupportTicketReview,
   addCSCSupportTicketReview,
 } from "../Services/Services";
-import { getFarmerPolicyDetail, sendSMSToFarmer, UploadDocumentData } from "../../ManageTicket/Views/Modals/AddTicket/Services/Methods";
+import {
+  getFarmerPolicyDetail,
+  sendSMSToFarmer,
+  gCPFileUploadData,
+  AddKRPHTicketHistoryAttachmentData,
+} from "../../ManageTicket/Views/Modals/AddTicket/Services/Methods";
 import { FaLaptopHouse } from "react-icons/fa";
 
 function MyTicketLogics() {
@@ -34,14 +38,14 @@ function MyTicketLogics() {
 
   const validateFieldSupportTicketReview = (name, value) => {
     let errorsMsg = "";
-    if (name === "txtDocumentUpload") {
-      if (value && typeof value !== "undefined") {
-        const regex = new RegExp("^[a-zA-Z0-9_.-]*$");
-        if (!regex.test(value.name)) {
-          errorsMsg = "Attachment name is not in valid format.";
-        }
-      }
-    }
+    // A if (name === "txtDocumentUpload") {
+    // A  if (value && typeof value !== "undefined") {
+    // A    const regex = new RegExp("^[a-zA-Z0-9_.-]*$");
+    // A    if (!regex.test(value.name)) {
+    // A      errorsMsg = "Attachment name is not in valid format.";
+    // A    }
+    // A  }
+    // A }
     return errorsMsg;
   };
 
@@ -549,37 +553,45 @@ function MyTicketLogics() {
       // Anil Code not in use
       // Anil let SaveTicketStatusID = "0";
       // Anil SaveTicketStatusID = ticketData.TicketStatusID;
+      let phasDocument = 0;
+      let pAttachmentPath = "pmfby/public/krph/documents";
+      let pAttachmentSize = 0;
+      let pdbAttachmentPath = [];
       const pAttachment =
         formValuesTicketProperties.txtDocumentUpload && formValuesTicketProperties.txtDocumentUpload ? formValuesTicketProperties.txtDocumentUpload : "";
-      const UniqueDateTimeTick = getCurrentDateTimeTick();
-      let pAttachmentName = "";
-      let pAttachmentPath = "";
-      let phasDocument = 0;
-      if (pAttachment !== "") {
-        phasDocument = 1;
-        const val = pAttachment.name;
-        const valExtension = val.substring(val.lastIndexOf(".")).toLowerCase().slice(1);
-        const valSpilt = val.split(".");
-        const ValOrgName = valSpilt[0].toString();
-        pAttachmentName = `${UniqueDateTimeTick}_${ValOrgName}.${valExtension}`;
-        pAttachmentPath = `krph_documents/${pAttachmentName}`;
-        switch (valExtension) {
-          case "jpeg":
-          case "jpg":
-          case "png":
-          case "pdf":
-            break;
-          default:
-            setAlertMessage({
-              type: "error",
-              message: "Please select only jpeg,jpg,png,pdf extension attachment.",
-            });
-            return;
-        }
-        if (pAttachment.size > 2000000) {
+      if (pAttachment.length > 0) {
+        if (pAttachment.length > 5) {
           setAlertMessage({
             type: "error",
-            message: "Please upload less than 2MB or 2MB attachment!",
+            message: "Please select only 5 attachments.",
+          });
+          return;
+        }
+        phasDocument = 1;
+        for (let i = 0; i < pAttachment.length; i++) {
+          const val = pAttachment[i].name;
+          const valExtension = val.substring(val.lastIndexOf(".")).toLowerCase().slice(1);
+          switch (valExtension) {
+            case "jpeg":
+            case "jpg":
+            case "png":
+            case "pdf":
+              break;
+            default:
+              setAlertMessage({
+                type: "error",
+                message: "Please select only jpeg,jpg,png,pdf extension attachment.",
+              });
+              return;
+          }
+        }
+        for (let i = 0; i < pAttachment.length; i++) {
+          pAttachmentSize = +pAttachment[i].size;
+        }
+        if (pAttachmentSize > 10485760) {
+          setAlertMessage({
+            type: "error",
+            message: "Please upload less than 10MB or 10MB attachment!",
           });
           return;
         }
@@ -591,7 +603,7 @@ function MyTicketLogics() {
         ticketStatusID: formValuesTicketProperties.txtTicketStatus.CommonMasterValueID,
         ticketDescription: value,
         hasDocument: phasDocument,
-        attachmentPath: pAttachmentPath,
+        attachmentPath: "",
       };
       setBtnLoaderActive1(true);
       const result = await addSupportTicketReview(formData);
@@ -611,7 +623,7 @@ function MyTicketLogics() {
             TicketDescription: value,
             TicketHistoryDate: moment().utcOffset("+05:30").format("YYYY-MM-DDTHH:mm:ss"),
             TicketStatusID: formValuesTicketProperties.txtTicketStatus.CommonMasterValueID,
-            AttachmentPath: `krph_documents/${pAttachmentName}`,
+            AttachmentPath: "",
             IsNewlyAdded: true,
           };
           updateTicketHistorytData(newlyAddedEntry);
@@ -634,18 +646,36 @@ function MyTicketLogics() {
             type: "success",
             message: result.response.responseMessage,
           });
-          if (pAttachment !== "") {
-            const formDataDoc = new FormData();
-            formDataDoc.append("ImageName", pAttachmentName);
-            formDataDoc.append("ImgPath", pAttachmentPath);
-            formDataDoc.append("files", pAttachment);
+          if (pAttachment.length > 0) {
+            for (let i = 0; i < pAttachment.length; i++) {
+              const formDataDoc = new FormData();
+              formDataDoc.append("filePath", pAttachmentPath);
+              formDataDoc.append("documents", pAttachment[i]);
+              formDataDoc.append("uploadedBy", "KRPH");
 
+              try {
+                const resultattachment = await gCPFileUploadData(formDataDoc);
+                if (resultattachment.responseCode === 1) {
+                  pdbAttachmentPath.push({ attachmentPath: `https://pmfby.amnex.co.in/pmfby/public/krph/documents/${pAttachment[i].name}` });
+                }
+              } catch (error) {
+                console.log(error);
+              }
+            }
+            handleResetFile();
             try {
-              const resultDoc = await UploadDocumentData(formDataDoc);
-              console.log(resultDoc);
-              handleResetFile();
+              const formDataattachmentPath = {
+                attachment: pdbAttachmentPath,
+                supportTicketID: ticketData.SupportTicketID,
+                ticketHistoryID: result.response.responseData.TicketHistoryID,
+              };
+              await AddKRPHTicketHistoryAttachmentData(formDataattachmentPath);
             } catch (error) {
               console.log(error);
+              setAlertMessage({
+                type: "error",
+                message: error,
+              });
             }
           }
           if (formValuesTicketProperties.txtTicketStatus.BMCGCode.toString() === "109025") {

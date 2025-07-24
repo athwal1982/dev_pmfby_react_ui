@@ -4,7 +4,6 @@ import { Facebook, Instagram, YouTube, LinkedIn, WhatsApp, HeadsetMic, LocationO
 import bottom_yellow_grass from "../../assets/bottom_yellow_grass.jpg";
 import "./Header.css";
 
-
 const Footer = () => {
   debugger;
   const Mainlinks = [
@@ -20,32 +19,28 @@ const Footer = () => {
 
   return (
     <>
-    
-    <footer className="footer-farmerr-page">
-       <img
-                  src={bottom_yellow_grass}
-                  alt=""
-                  style={{ maxWidth: "100%"}}
-                />
-          <div className="footer-contentt-page">
-            {Mainlinks.map(({ text, href }) => (
-             <a href={href} >{text}</a>
-                ))}
-          </div>
-           <Box sx={{  fontFamily: "Open Sans",bgcolor: "#075307", padding: "10px 0 10px 0px" }} className="footer_box2">
-            <Typography
-              fontSize="13px"
-              sx={{
-                color: "white",
-                fontFamily: "Quicksand, sans-serif",
-                textAlign: "center",
-              }}
-            >
-              Copyright © For Department of Agriculture and Farmers Welfare, Ministry of Agriculture and Farmers Welfare, Government of India. All Rights Reserved.
-            </Typography>
-          </Box>
-        </footer>
-          </>
+      <footer className="footer-farmerr-page">
+        <img src={bottom_yellow_grass} alt="" style={{ maxWidth: "100%" }} />
+        <div className="footer-contentt-page">
+          {Mainlinks.map(({ text, href }) => (
+            <a href={href}>{text}</a>
+          ))}
+        </div>
+        <Box sx={{ fontFamily: "Open Sans", bgcolor: "#075307", padding: "10px 0 10px 0px" }} className="footer_box2">
+          <Typography
+            fontSize="13px"
+            sx={{
+              color: "white",
+              fontFamily: "Quicksand, sans-serif",
+              textAlign: "center",
+            }}
+          >
+            Copyright © For Department of Agriculture and Farmers Welfare, Ministry of Agriculture and Farmers Welfare, Government of India. All Rights
+            Reserved.
+          </Typography>
+        </Box>
+      </footer>
+    </>
   );
 };
 

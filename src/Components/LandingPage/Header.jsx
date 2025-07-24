@@ -18,7 +18,6 @@ import { setSessionStorage } from "../Common/Login/Auth/auth";
 import { Headphones, Close } from "@mui/icons-material";
 import qr_app from "../../assets/img/qr_app.jpg";
 
-
 const Header = ({ handleWhatsAppClick }) => {
   const [mobileAnchorEl, setMobileAnchorEl] = React.useState(null);
 
@@ -47,15 +46,15 @@ const Header = ({ handleWhatsAppClick }) => {
     setOpenDropdown(null);
   };
 
-    const [open, setOpen] = useState(false);
-  
-    const handleClickFarmerApp = () => {
-       setOpen(true);
-    };
-  
-    const handleCloseFarmerApp = () => {
-      setOpen(false); // A Close the popup
-    };
+  const [open, setOpen] = useState(false);
+
+  const handleClickFarmerApp = () => {
+    setOpen(true);
+  };
+
+  const handleCloseFarmerApp = () => {
+    setOpen(false); // A Close the popup
+  };
 
   const menuItems = [
     {
@@ -168,7 +167,6 @@ const Header = ({ handleWhatsAppClick }) => {
     setMobileMenuOpen(null);
   };
 
-
   return (
     <>
       <Box>
@@ -181,7 +179,7 @@ const Header = ({ handleWhatsAppClick }) => {
             background: "#086107",
             borderBottom: "0.5px solid #E9ECEF",
             flexWrap: "wrap",
-            gap: "0"
+            gap: "0",
           }}
         >
           <Grid
@@ -193,8 +191,25 @@ const Header = ({ handleWhatsAppClick }) => {
               justifyContent: { xs: "center", md: "flex-start" },
             }}
           >
-<div className="newHeader__upperHeaderLogo___2oRzJ col-lg-12 col-md-12 col-sm-12 col-xs-12"><img src="https://pmfby.amnex.co.in/pmfby/public/img/Emblem.svg" alt="Govt. of India National Emblem" title="Govt. of India National Emblem" class="newHeader__upperHeaderLogoH___3uufO" /><ul><li><span>भारत सरकार</span><span>GOVERNMENT OF INDIA</span></li><li><span>कृषि एवं किसान कल्याण मंत्रालय</span><span>MINISTRY OF AGRICULTURE &amp; FARMERS WELFARE</span></li></ul></div>
-            
+            <div className="newHeader__upperHeaderLogo___2oRzJ col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <img
+                src="https://pmfby.amnex.co.in/pmfby/public/img/Emblem.svg"
+                alt="Govt. of India National Emblem"
+                title="Govt. of India National Emblem"
+                class="newHeader__upperHeaderLogoH___3uufO"
+              />
+              <ul>
+                <li>
+                  <span>भारत सरकार</span>
+                  <span>GOVERNMENT OF INDIA</span>
+                </li>
+                <li>
+                  <span>कृषि एवं किसान कल्याण मंत्रालय</span>
+                  <span>MINISTRY OF AGRICULTURE &amp; FARMERS WELFARE</span>
+                </li>
+              </ul>
+            </div>
+
             {/* <img src={ministry_logo} alt="PMFBY Logo" className="img_mininstry_header" style={{}} /> */}
           </Grid>
 
@@ -211,64 +226,62 @@ const Header = ({ handleWhatsAppClick }) => {
             }}
           >
             <Stack direction="row" alignItems="center" spacing={1} flexWrap="wrap">
-              <img src={download_app} alt=" Download Farmer App" onClick={handleClickFarmerApp} style={{cursor:"pointer", height: "40px"}} /> <span style={{color:"white"}}> | </span> 
-                  <Typography
-                    onClick={handleWhatsAppClick}
-                    sx={{
-                      cursor: "pointer",
-                      fontFamily: "Open Sans",
-                      color: "white",
-                      fontSize: { xs: "11px", md: "12px" },
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                    }}
-                  >
-                    <img src={whatsapp_orig} alt="" style={{ height: "18px", cursor:"pointer" }} />
-                    <span>PMFBY WhatsApp - 7065514447 </span> 
-                  </Typography>
-                  <span style={{color:"white"}}> | </span> 
-                  <Typography
-                    sx={{
-                      fontFamily: "Open Sans",
-                      color: "white",
-                      fontSize: { xs: "11px", md: "12px" },
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                    }}
-                  >
-                    <Headphones />
-                 <span className="blink_krph_helpline">KRPH Helpline - 14447</span>  
-                  </Typography>
+              <img src={download_app} alt=" Download Farmer App" onClick={handleClickFarmerApp} style={{ cursor: "pointer", height: "40px" }} />{" "}
+              <span style={{ color: "white" }}> | </span>
+              <Typography
+                onClick={handleWhatsAppClick}
+                sx={{
+                  cursor: "pointer",
+                  fontFamily: "Open Sans",
+                  color: "white",
+                  fontSize: { xs: "11px", md: "12px" },
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                }}
+              >
+                <img src={whatsapp_orig} alt="" style={{ height: "18px", cursor: "pointer" }} />
+                <span>PMFBY WhatsApp - 7065514447 </span>
+              </Typography>
+              <span style={{ color: "white" }}> | </span>
+              <Typography
+                sx={{
+                  fontFamily: "Open Sans",
+                  color: "white",
+                  fontSize: { xs: "11px", md: "12px" },
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                }}
+              >
+                <Headphones />
+                <span className="blink_krph_helpline">KRPH Helpline - 14447</span>
+              </Typography>
             </Stack>
           </Grid>
         </Grid>
         {/* Navigation Menu */}
         <Box className="navbar-container-landing">
           <Box className="logo-container-landing">
-             <a href="https://pmfby.gov.in/" target="_blank">
-                <LogoPMFBY style={{ width: "85%" }} />
-              </a>
+            <a href="https://pmfby.gov.in/" target="_blank">
+              <LogoPMFBY style={{ width: "85%" }} />
+            </a>
           </Box>
 
           {/* Desktop Menu */}
-          <Box className="menu-container-landing-page" style={{paddingRight: "54px" }}>
+          <Box className="menu-container-landing-page" style={{ paddingRight: "54px" }}>
             {menuItems.map(({ icon, label, path, isDropdown, submenu, value }, index) => {
               const isActive = location.pathname === path;
 
               return (
-                <Box
-                  key={index}
-                  className="menu-dropdown-landing"
-                >
+                <Box key={index} className="menu-dropdown-landing">
                   <Button
                     sx={{ textTransform: "none" }}
                     onClick={isDropdown ? (e) => handleClick(e, label) : () => handleGotoKrph(path)}
                     className={isActive ? "custom-button-login-landing-page active" : "custom-button-login-landing-page"}
                   >
                     <Box className="icon-container-landing-page">
-                      <img src={icon} alt={label}/>
+                      <img src={icon} alt={label} />
                     </Box>
                     <span style={{ color: "#686E74" }}>
                       {label}
@@ -359,65 +372,65 @@ const Header = ({ handleWhatsAppClick }) => {
           </Menu>
         </Box>
       </Box>
-       <Dialog
-                    open={open}
-                    onClose={handleCloseFarmerApp}
-                    maxWidth="sm"
-                    fullWidth
-                    className="dialog_WhatsappQR"
-                    sx={{
-                      "& .MuiPaper-root": {
-                        borderRadius: "30px",
-                        borderColor: "none",
-                        boxShadow: "none",
-                      },
-                    }}
-                    BackdropProps={{
-                      style: {
-                        backgroundColor: " rgba(0, 0, 0, 0.1)",
-                      },
-                    }}
-                  >
-                    <DialogTitle
-                      sx={{
-                        fontSize:"18px",
-                        padding: "5px 24px 5px 24px",
-                        bgcolor: "#075307",
-                        color: "white",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        fontFamily: "Open Sans",
-                        fontSize: { xs: "14px", md: "14px" },
-                      }}
-                    >
-                     <span>Download Farmer App</span>
-                      <IconButton
-                        onClick={handleCloseFarmerApp}
-                        sx={{
-                          color: "white",
-                          "&:hover": {
-                            backgroundColor: "white",
-                            color: "#075307",
-                          },
-                        }}
-                      >
-                        <Close />
-                      </IconButton>
-                    </DialogTitle>
-                    <DialogContent sx={{ textAlign: "justify", padding: "0px 40px 20px 40px", fontFamily: "Open Sans", fontSize:"14px", lineHeight:"22px"}}>
-                      <Box sx={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
-                        <div style={{ border: "1px solid #EFF0F1", borderRadius: "5px", padding: "10px" }}>
-                          <img src={qr_app} alt="QR" width="100%" />
-                        </div>
-                      </Box>
-<div>
-   Crop Insurance App comes under Pradhan Mantri Fasal Bima Yojana. It is owned by the Department of Agriculture & Farmer Welfare, Govt. of
-                          India. The application provides services related to agriculture insurance to farmers. Through this digital platform, a farmer can register
-                          him/herself and get insurance for crop(s) being cultivated for Kharif and Rabi in a hassle-free manner.
-</div>
-                    </DialogContent>
-                  </Dialog>
+      <Dialog
+        open={open}
+        onClose={handleCloseFarmerApp}
+        maxWidth="sm"
+        fullWidth
+        className="dialog_WhatsappQR"
+        sx={{
+          "& .MuiPaper-root": {
+            borderRadius: "30px",
+            borderColor: "none",
+            boxShadow: "none",
+          },
+        }}
+        BackdropProps={{
+          style: {
+            backgroundColor: " rgba(0, 0, 0, 0.1)",
+          },
+        }}
+      >
+        <DialogTitle
+          sx={{
+            fontSize: "18px",
+            padding: "5px 24px 5px 24px",
+            bgcolor: "#075307",
+            color: "white",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            fontFamily: "Open Sans",
+            fontSize: { xs: "14px", md: "14px" },
+          }}
+        >
+          <span>Download Farmer App</span>
+          <IconButton
+            onClick={handleCloseFarmerApp}
+            sx={{
+              color: "white",
+              "&:hover": {
+                backgroundColor: "white",
+                color: "#075307",
+              },
+            }}
+          >
+            <Close />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent sx={{ textAlign: "justify", padding: "0px 40px 20px 40px", fontFamily: "Open Sans", fontSize: "14px", lineHeight: "22px" }}>
+          <Box sx={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+            <div style={{ border: "1px solid #EFF0F1", borderRadius: "5px", padding: "10px" }}>
+              <img src={qr_app} alt="QR" width="100%" />
+            </div>
+          </Box>
+          <div>
+            Crop Insurance App comes under Pradhan Mantri Fasal Bima Yojana. It is owned by the Department of Agriculture & Farmer Welfare, Govt. of India. The
+            application provides services related to agriculture insurance to farmers. Through this digital platform, a farmer can register him/herself and get
+            insurance for crop(s) being cultivated for Kharif and Rabi in a hassle-free manner.
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

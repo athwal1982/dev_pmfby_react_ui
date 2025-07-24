@@ -5,9 +5,9 @@ const HeroSection = () => {
   return (
     <div className="box_heroSection">
       <div className="main_header">
-        <img className="video_HeroSection" src={minis_gif} alt="Hero Background"  />
+        <img className="video_HeroSection" src={minis_gif} alt="Hero Background" />
       </div>
-      </div>
+    </div>
   );
 };
 

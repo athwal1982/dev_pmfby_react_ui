@@ -42,8 +42,9 @@ function ChatBox({
             type="file"
             accept="image/*,.pdf"
             name="txtDocumentUpload"
-            onChange={(e) => updateStateTicketProperties(e.target.name, e.target.files[0])}
+            onChange={(e) => updateStateTicketProperties(e.target.name, e.target.files)}
             ref={fileRef}
+            multiple
           />
         </Form.InputGroup>
         <Form.InputGroup column={1}>
