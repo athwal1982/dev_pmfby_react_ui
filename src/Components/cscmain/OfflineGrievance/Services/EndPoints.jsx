@@ -7,6 +7,7 @@ const APIEndpoints = {
     GCPFileUpload: "FGMS/GCPFileUpload",
     AddKRPHGrievanceAttachment: "FGMS/AddKRPHGrievanceAttachment",
     GetKRPHGrievanceAttachment: "FGMS/GetKRPHGrievanceAttachment",
+    DeleteKRPHGrievanceAttachment: "FGMS/DeleteKRPHGrievanceAttachment",
   },
 };
 

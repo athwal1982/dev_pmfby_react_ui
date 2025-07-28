@@ -7,7 +7,7 @@ import { InputControl, InputGroup } from "Framework/OldFramework/FormComponents/
 import { KrphButton } from "../../Common/KrphAllActivitiesND/Widgets/KrphButton";
 import { gCPFileUploadData,addKRPHGrievanceAttachmentData } from "../OfflineGrievance/Services/Methods";
 
-function FileUpload({ selectedData, toggleFileUploadModal }) {
+function FileUpload({ selectedData, toggleFileUploadModal, updateRowOfAttachment, atttachmentcount }) {
   const setAlertMessage = AlertMessage();
 
     const fileRef = useRef(null);
@@ -24,7 +24,7 @@ function FileUpload({ selectedData, toggleFileUploadModal }) {
   };
   const [btnLoaderActive, setBtnLoaderActive] = useState(false);
   const handleSave = async () => {
-    
+    debugger;
     let pAttachmentPath = "pmfby/public/krph/documents";
     let pAttachmentSize = 0;
     let pdbAttachmentPath = [];
@@ -34,6 +34,14 @@ function FileUpload({ selectedData, toggleFileUploadModal }) {
         setAlertMessage({
           type: "error",
           message: "Please select only 5 attachments.",
+        });
+        return;
+      } 
+      
+      if (atttachmentcount + pAttachment.length > 5) {
+        setAlertMessage({
+          type: "error",
+          message: `You can upload 5 attachments, ${atttachmentcount} ${atttachmentcount > 1 ? "attachments" : "attachment"}  already uploaed.`,
         });
         return;
       }
@@ -102,6 +110,8 @@ function FileUpload({ selectedData, toggleFileUploadModal }) {
               type: "success",
               message: resultattachmentdb.responseMessage,
             });
+            selectedData.HasDocument = 1 ;
+            updateRowOfAttachment(selectedData);
             toggleFileUploadModal();
           } else {
             setAlertMessage({

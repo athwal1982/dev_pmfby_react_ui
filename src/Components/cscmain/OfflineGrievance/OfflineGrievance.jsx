@@ -40,7 +40,7 @@ const cellActionTemplate = (props) => {
           title="Update Grievance From Other Sources"
         />
       ) : null}
-      {props.data && props.data.HasDocument && props.data.HasDocument === 1 && fileuploadRight === true ? (
+      {fileuploadRight === true ? (
       <FaUpload style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }} onClick={() => props.toggleFileUploadModal(props.data)} title="File Upload" />
       ) : null}
       {props.data && props.data.HasDocument && props.data.HasDocument === 1 ? (
@@ -454,6 +454,17 @@ const OfflineGrievance = () => {
     setRowData(mappedData);
   };
 
+    const updateRowOfAttachment = (selecteddata) => {
+    debugger;
+    const mappedData = rowData.map((data) => {
+      if (data.GrievenceSupportTicketID === selecteddata.GrievenceSupportTicketID) {
+        data.HasDocument = selecteddata.HasDocument;
+      }
+      return data;
+    });
+    setRowData(mappedData);
+  };
+
   const getRowStyle = (params) => {
     if (params.data.IsNewlyAdded) {
       return { background: "#d5a10e" };
@@ -510,7 +521,7 @@ const OfflineGrievance = () => {
   };
 
   const [isFileUploadModalOpen, setIsFileUploadModalOpen] = useState(false);
-
+  const [atttachmentcount, setAtttachmentcount] = useState(0);
   const toggleFileUploadModal = async(data) => {
     debugger;
     if(data) {
@@ -521,6 +532,7 @@ const OfflineGrievance = () => {
           const result = await getKRPHGrievanceAttachmentData(formdata);
           if (result.responseCode === 1) {
             if (result.responseData && result.responseData.attachment && result.responseData.attachment.length > 0) {
+              setAtttachmentcount(result.responseData.attachment.length);
               if(result.responseData.attachment.length === 5) {
                 setAlertMessage({
                 type: "error",
@@ -562,8 +574,8 @@ const OfflineGrievance = () => {
       )}
       {/* {openEditInsuranceCompanyMdal && <EditInsuranceCompany showfunc={openEditInsuranceCompanyPage} selectedData={selectedData} updateInsuranceCompany={updateInsuranceCompany} />} */}
       {openMyTicketModal && <MyTicketPage showfunc={openMyTicketPage} selectedData={selectedData} />}
-      {isFileViewerModalOpen && <FileViewer toggleFileViewerModal={toggleFileViewerModal} selectedData={selectedData} />}
-      {isFileUploadModalOpen && <FileUpload toggleFileUploadModal={toggleFileUploadModal} selectedData={selectedData} />}
+      {isFileViewerModalOpen && <FileViewer toggleFileViewerModal={toggleFileViewerModal} selectedData={selectedData} updateRowOfAttachment={updateRowOfAttachment} />}
+      {isFileUploadModalOpen && <FileUpload toggleFileUploadModal={toggleFileUploadModal} selectedData={selectedData} updateRowOfAttachment={updateRowOfAttachment} atttachmentcount={atttachmentcount} />}
       <div className={BizClass.Box}>
         <div className={BizClass.PageBar}>
           {addTicketRight ? (
