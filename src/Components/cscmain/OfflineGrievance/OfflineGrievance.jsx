@@ -23,7 +23,7 @@ import FileUpload from "./FileUpload";
 
 const cellActionTemplate = (props) => {
   const editTicketRight = getUserRightCodeAccess("ofg3");
-   const fileuploadRight = getUserRightCodeAccess("offu");
+  const fileuploadRight = getUserRightCodeAccess("offu");
   return (
     <div style={{ display: "flex", gap: "4px", marginTop: "2px" }}>
       <FcViewDetails
@@ -41,7 +41,11 @@ const cellActionTemplate = (props) => {
         />
       ) : null}
       {fileuploadRight === true ? (
-      <FaUpload style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }} onClick={() => props.toggleFileUploadModal(props.data)} title="File Upload" />
+        <FaUpload
+          style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }}
+          onClick={() => props.toggleFileUploadModal(props.data)}
+          title="File Upload"
+        />
       ) : null}
       {props.data && props.data.HasDocument && props.data.HasDocument === 1 ? (
         <MdAttachFile
@@ -454,7 +458,7 @@ const OfflineGrievance = () => {
     setRowData(mappedData);
   };
 
-    const updateRowOfAttachment = (selecteddata) => {
+  const updateRowOfAttachment = (selecteddata) => {
     debugger;
     const mappedData = rowData.map((data) => {
       if (data.GrievenceSupportTicketID === selecteddata.GrievenceSupportTicketID) {
@@ -522,48 +526,48 @@ const OfflineGrievance = () => {
 
   const [isFileUploadModalOpen, setIsFileUploadModalOpen] = useState(false);
   const [atttachmentcount, setAtttachmentcount] = useState(0);
-  const toggleFileUploadModal = async(data) => {
+  const toggleFileUploadModal = async (data) => {
     debugger;
-    if(data) {
-     try {
-          const formdata = {
-            grievenceSupportTicketID: data && data.GrievenceSupportTicketID ? data.GrievenceSupportTicketID : 0,
-          };
-          const result = await getKRPHGrievanceAttachmentData(formdata);
-          if (result.responseCode === 1) {
-            if (result.responseData && result.responseData.attachment && result.responseData.attachment.length > 0) {
-              setAtttachmentcount(result.responseData.attachment.length);
-              if(result.responseData.attachment.length === 5) {
-                setAlertMessage({
+    if (data) {
+      try {
+        const formdata = {
+          grievenceSupportTicketID: data && data.GrievenceSupportTicketID ? data.GrievenceSupportTicketID : 0,
+        };
+        const result = await getKRPHGrievanceAttachmentData(formdata);
+        if (result.responseCode === 1) {
+          if (result.responseData && result.responseData.attachment && result.responseData.attachment.length > 0) {
+            setAtttachmentcount(result.responseData.attachment.length);
+            if (result.responseData.attachment.length === 5) {
+              setAlertMessage({
                 type: "error",
                 message: "You have already uploaded 5 images.",
-            });
-            return;
-              } else {
-                 setSelectedData(data);
-                 setIsFileUploadModalOpen(!isFileUploadModalOpen);
-              }
+              });
+              return;
             } else {
-               setSelectedData(data);
-                 setIsFileUploadModalOpen(!isFileUploadModalOpen);
+              setSelectedData(data);
+              setIsFileUploadModalOpen(!isFileUploadModalOpen);
             }
           } else {
-            setAlertMessage({
-              type: "error",
-              message: result.responseMessage,
-            });
+            setSelectedData(data);
+            setIsFileUploadModalOpen(!isFileUploadModalOpen);
           }
-        } catch (error) {
-          console.log(error);
+        } else {
           setAlertMessage({
             type: "error",
-            message: error,
+            message: result.responseMessage,
           });
         }
+      } catch (error) {
+        console.log(error);
+        setAlertMessage({
+          type: "error",
+          message: error,
+        });
+      }
     } else {
-       setSelectedData(data);
-       setIsFileUploadModalOpen(!isFileUploadModalOpen);
-    }  
+      setSelectedData(data);
+      setIsFileUploadModalOpen(!isFileUploadModalOpen);
+    }
   };
 
   return (
@@ -574,8 +578,17 @@ const OfflineGrievance = () => {
       )}
       {/* {openEditInsuranceCompanyMdal && <EditInsuranceCompany showfunc={openEditInsuranceCompanyPage} selectedData={selectedData} updateInsuranceCompany={updateInsuranceCompany} />} */}
       {openMyTicketModal && <MyTicketPage showfunc={openMyTicketPage} selectedData={selectedData} />}
-      {isFileViewerModalOpen && <FileViewer toggleFileViewerModal={toggleFileViewerModal} selectedData={selectedData} updateRowOfAttachment={updateRowOfAttachment} />}
-      {isFileUploadModalOpen && <FileUpload toggleFileUploadModal={toggleFileUploadModal} selectedData={selectedData} updateRowOfAttachment={updateRowOfAttachment} atttachmentcount={atttachmentcount} />}
+      {isFileViewerModalOpen && (
+        <FileViewer toggleFileViewerModal={toggleFileViewerModal} selectedData={selectedData} updateRowOfAttachment={updateRowOfAttachment} />
+      )}
+      {isFileUploadModalOpen && (
+        <FileUpload
+          toggleFileUploadModal={toggleFileUploadModal}
+          selectedData={selectedData}
+          updateRowOfAttachment={updateRowOfAttachment}
+          atttachmentcount={atttachmentcount}
+        />
+      )}
       <div className={BizClass.Box}>
         <div className={BizClass.PageBar}>
           {addTicketRight ? (

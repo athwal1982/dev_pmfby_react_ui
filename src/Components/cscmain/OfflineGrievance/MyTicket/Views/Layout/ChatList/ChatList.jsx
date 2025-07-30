@@ -34,7 +34,7 @@ function ChatList({ children, chatListDetails, isLoadingchatListDetails, selecte
   const toggleFileViewerModal = () => {
     setIsFileViewerModalOpen(!isFileViewerModalOpen);
   };
-    const copyToClipboard = (text) => {
+  const copyToClipboard = (text) => {
     if (text) {
       navigator.clipboard.writeText(text);
       setAlertMessage({
@@ -48,7 +48,7 @@ function ChatList({ children, chatListDetails, isLoadingchatListDetails, selecte
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = html;
     return tempDiv.textContent || tempDiv.innerText || "";
-  };
+  }
 
   return (
     <>
@@ -60,7 +60,7 @@ function ChatList({ children, chatListDetails, isLoadingchatListDetails, selecte
             <h4>
               {`${selectedData.GrievenceSupportTicketNo} || ${selectedData.TicketCategoryName}`}{" "}
               {selectedData.HasDocument && selectedData.HasDocument === 1 ? (
-                <MdAttachFile style={{ cursor: "pointer", color: "#000000", display:"none" }} onClick={() => toggleFileViewerModal()} />
+                <MdAttachFile style={{ cursor: "pointer", color: "#000000", display: "none" }} onClick={() => toggleFileViewerModal()} />
               ) : null}{" "}
             </h4>
             <p>
@@ -85,11 +85,11 @@ function ChatList({ children, chatListDetails, isLoadingchatListDetails, selecte
         </div>
         <div className={BizClass.TicketRemarks}>
           <p>
-              <MdOutlineContentCopy
-                          style={{ color: "#000000", fontSize: "18px", cursor: "pointer" }}
-                          title="Copy Ticket Description"
-                          onClick={() => copyToClipboard(selectedData ? selectedData.GrievenceDescription : "")}
-                        />{" "}
+            <MdOutlineContentCopy
+              style={{ color: "#000000", fontSize: "18px", cursor: "pointer" }}
+              title="Copy Ticket Description"
+              onClick={() => copyToClipboard(selectedData ? selectedData.GrievenceDescription : "")}
+            />{" "}
             Farmer Query :-
             <span> {selectedData && selectedData.GrievenceDescription ? parse(selectedData.GrievenceDescription) : null} </span>
           </p>
@@ -124,12 +124,12 @@ function ChatList({ children, chatListDetails, isLoadingchatListDetails, selecte
                         </div>
                         <div className={BizClass.ChatBody}>
                           <span>
-                                                        <MdOutlineContentCopy
-                                                          className="copy-icon"
-                                                          title="Copy Ticket Comment"
-                                                          onClick={() => copyToClipboard(stripHtmlTags(data.TicketDescription))}
-                                                        />
-                                                      </span>
+                            <MdOutlineContentCopy
+                              className="copy-icon"
+                              title="Copy Ticket Comment"
+                              onClick={() => copyToClipboard(stripHtmlTags(data.TicketDescription))}
+                            />
+                          </span>
                           <h4> {parse(data.TicketDescription)}</h4>
                         </div>
                       </div>

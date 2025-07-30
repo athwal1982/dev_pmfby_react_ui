@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import moment from "moment";
 import publicIp from "public-ip";
-import { getSessionStorage, getUserRightCodeAccess } from "Components/Common/Login/Auth/auth";
+import { getSessionStorage } from "Components/Common/Login/Auth/auth";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { getGrievenceSupportTicketReview, addGrievenceSupportTicketReview, getMasterDataBinding, farmerTicketStatusUpdate } from "../Services/Services";
 // A import { sendSMSToFarmer } from "../../../Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
@@ -10,8 +10,6 @@ function MyTicketLogics() {
   const [value, setValue] = useState("<p></p>");
   const [replyBoxCollapsed, setReplyBoxCollapsed] = useState(true);
   const [wordcount, setWordcount] = useState(0);
-
-  const resolvedTicketRight = getUserRightCodeAccess("mdh9");
 
   const setAlertMessage = AlertMessage();
 
@@ -32,17 +30,17 @@ function MyTicketLogics() {
   const getChatListDetailsData = async (pticketData, pPageIndex, pPageSize) => {
     try {
       setTicketData(pticketData);
-      setFormValuesTicketProperties({
-        ...formValuesTicketProperties,
-        txtTicketStatus:
-          pticketData && pticketData.TicketStatus && pticketData.TicketStatusID
-            ? {
-                CommonMasterValueID: pticketData.TicketStatusID,
-                CommonMasterValue: pticketData.TicketStatus,
-                BMCGCode: pticketData.BMCGCode,
-              }
-            : null,
-      });
+      // A setFormValuesTicketProperties({
+      // A  ...formValuesTicketProperties,
+      // A  txtTicketStatus:
+      // A    pticketData && pticketData.TicketStatus && pticketData.TicketStatusID
+      // A      ? {
+      // A          CommonMasterValueID: pticketData.TicketStatusID,
+      // A          CommonMasterValue: pticketData.TicketStatus,
+      // A          BMCGCode: pticketData.BMCGCode,
+      // A        }
+      // A      : null,
+      // A });
       setIsLoadingchatListDetails(true);
       const formdata = {
         grievenceSupportTicketID: pticketData.GrievenceSupportTicketID,
@@ -132,11 +130,22 @@ function MyTicketLogics() {
     debugger;
     if (e) e.preventDefault();
     let popUpMsg = "";
-    if (value === "" || value === "<p><p>") {
+
+    const strippedText = value.replace(/<[^>]*>/g, "").trim();
+
+    if (!strippedText) {
       popUpMsg = "Ticket comment is required!";
       setAlertMessage({
         type: "warning",
         message: popUpMsg,
+      });
+      return;
+    }
+
+    if (formValuesTicketProperties.txtTicketStatus === null) {
+      setAlertMessage({
+        type: "warning",
+        message: "Ticket status is required!",
       });
       return;
     }
@@ -216,7 +225,8 @@ function MyTicketLogics() {
   };
   const [ticketStatusList, setTicketStatusList] = useState([]);
   const [isLoadingTicketStatusList, setIsTicketStatusList] = useState(false);
-  const getTicketStatusListData = async () => {
+  const getTicketStatusListData = async (pticketData) => {
+    debugger;
     try {
       setTicketStatusList([]);
       setIsTicketStatusList(true);
@@ -232,7 +242,33 @@ function MyTicketLogics() {
       setIsTicketStatusList(false);
       if (result.response.responseCode === 1) {
         if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
-          setTicketStatusList(result.response.responseData.masterdatabinding);
+          let filterStatusData = [];
+          const user = getSessionStorage("user");
+          const ChkBRHeadTypeID = user && user.BRHeadTypeID ? user.BRHeadTypeID.toString() : "0";
+          if (pticketData && pticketData.GrievenceTicketSourceTypeID === 132304 && ChkBRHeadTypeID === "124002") {
+            filterStatusData = result.response.responseData.masterdatabinding.filter((data) => {
+              return data.CommonMasterValueID === 109303;
+            });
+            setTicketStatusList(filterStatusData);
+          } else if (pticketData && pticketData.GrievenceTicketSourceTypeID === 132304 && ChkBRHeadTypeID === "124003") {
+            filterStatusData = result.response.responseData.masterdatabinding.filter((data) => {
+              return data.CommonMasterValueID === 109302;
+            });
+            setTicketStatusList(filterStatusData);
+          } else if (pticketData && pticketData.TicketStatusID === 109303 && (ChkBRHeadTypeID === "124001" || ChkBRHeadTypeID === "124002")) {
+            filterStatusData = result.response.responseData.masterdatabinding.filter((data) => {
+              return data.CommonMasterValueID === 109304;
+            });
+            setTicketStatusList(filterStatusData);
+          } else if (
+            ((pticketData && pticketData.TicketStatusID === 109301) || (pticketData && pticketData.TicketStatusID === 109302)) &&
+            ChkBRHeadTypeID === "124003"
+          ) {
+            filterStatusData = result.response.responseData.masterdatabinding.filter((data) => {
+              return data.CommonMasterValueID === 109302 || data.CommonMasterValueID === 109303;
+            });
+            setTicketStatusList(filterStatusData);
+          }
         } else {
           setTicketStatusList([]);
         }

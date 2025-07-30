@@ -1230,7 +1230,8 @@ const EditOfflineGrievance = ({ showfunc, selectedData, updateOfflineGrievance }
                         </InputGroup>
                         <span className="login_ErrorTxt">{formValidationKRPHError["txtisIdentified"]}</span>
                       </Typography>
-                      {selectedData && selectedData.InsuranceCompanyID > 0 ? (
+                      {(formValuesGI && formValuesGI.txtisIdentified && formValuesGI.txtisIdentified.ID && formValuesGI.txtisIdentified.ID === 1) ||
+                      (selectedData && selectedData.InsuranceCompanyID > 0) ? (
                         <Typography
                           sx={{
                             fontFamily: "Quicksand, sans-serif",

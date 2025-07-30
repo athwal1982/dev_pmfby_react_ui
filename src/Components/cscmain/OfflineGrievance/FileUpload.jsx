@@ -5,16 +5,16 @@ import { Button, Loader } from "Framework/Components/Widgets";
 import { Box } from "@mui/material";
 import { InputControl, InputGroup } from "Framework/OldFramework/FormComponents/FormComponents";
 import { KrphButton } from "../../Common/KrphAllActivitiesND/Widgets/KrphButton";
-import { gCPFileUploadData,addKRPHGrievanceAttachmentData } from "../OfflineGrievance/Services/Methods";
+import { gCPFileUploadData, addKRPHGrievanceAttachmentData } from "../OfflineGrievance/Services/Methods";
 
 function FileUpload({ selectedData, toggleFileUploadModal, updateRowOfAttachment, atttachmentcount }) {
   const setAlertMessage = AlertMessage();
 
-    const fileRef = useRef(null);
-  
-    const handleResetFile = async () => {
-      fileRef.current.value = null;
-    };
+  const fileRef = useRef(null);
+
+  const handleResetFile = async () => {
+    fileRef.current.value = null;
+  };
 
   const [formValues, setFormValues] = useState({
     txtDocumentUpload: "",
@@ -36,8 +36,8 @@ function FileUpload({ selectedData, toggleFileUploadModal, updateRowOfAttachment
           message: "Please select only 5 attachments.",
         });
         return;
-      } 
-      
+      }
+
       if (atttachmentcount + pAttachment.length > 5) {
         setAlertMessage({
           type: "error",
@@ -110,7 +110,7 @@ function FileUpload({ selectedData, toggleFileUploadModal, updateRowOfAttachment
               type: "success",
               message: resultattachmentdb.responseMessage,
             });
-            selectedData.HasDocument = 1 ;
+            selectedData.HasDocument = 1;
             updateRowOfAttachment(selectedData);
             toggleFileUploadModal();
           } else {

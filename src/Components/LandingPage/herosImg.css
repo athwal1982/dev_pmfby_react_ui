@@ -137,12 +137,12 @@
 
 .banner-text {
   position: absolute;
-  left: 7%;            /* distance from the left edge of the container */
-  top: 20%;            /* vertical centering */
+  left: 7%; /* distance from the left edge of the container */
+  top: 20%; /* vertical centering */
   transform: translateY(-50%);
-  font-size: 2.5rem;   /* adjust size as needed */
+  font-size: 2.5rem; /* adjust size as needed */
   font-weight: 700;
-  color: #1b2a44;      /* choose a contrasting color */
+  color: #1b2a44; /* choose a contrasting color */
   white-space: nowrap;
   pointer-events: none;
   line-height: 1.3;
@@ -178,4 +178,3 @@
     line-height: 1.2;
   }
 }
-

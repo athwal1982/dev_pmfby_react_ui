@@ -1,12 +1,15 @@
 import React from "react";
 import { PropTypes } from "prop-types";
 import { PageBar } from "Framework/Components/Layout";
-import { getUserRightCodeAccess } from "Components/Common/Login/Auth/auth";
+import { getUserRightCodeAccess, getSessionStorage } from "Components/Common/Login/Auth/auth";
 import BizClass from "./MyTicket.module.scss";
 
 function MyTicket({ children, replyBoxCollapsed, setReplyBoxCollapsed, setTicketStatusBtn, ticketData, showfunc }) {
+  debugger;
   const replyTicketRight = getUserRightCodeAccess("ofga");
-  const reopenTicketRight = getUserRightCodeAccess("rot2");
+  const reopenTicketRight = getUserRightCodeAccess("ofro");
+  const user = getSessionStorage("user");
+  const ChkBRHeadTypeID = user && user.BRHeadTypeID ? user.BRHeadTypeID.toString() : "0";
 
   const toggelReplyCloseButton = (type) => {
     if (type === "Reply") {
@@ -29,10 +32,18 @@ function MyTicket({ children, replyBoxCollapsed, setReplyBoxCollapsed, setTicket
          */}
         <PageBar.Button onClick={() => showfunc(null)}>Back</PageBar.Button>
         {replyTicketRight ? (
-          ticketData.TicketStatusID && ticketData.TicketStatusID.toString() !== "109303" ? (
+          (ticketData && ticketData.GrievenceTicketSourceTypeID === 132304 && ChkBRHeadTypeID === "124002") ||
+          (ticketData && ticketData.GrievenceTicketSourceTypeID === 132304 && ChkBRHeadTypeID === "124003") ||
+          (ticketData && ticketData.TicketStatusID === 109302 && ChkBRHeadTypeID === "124003") ||
+          (ticketData && ticketData.TicketStatusID === 109301 && ChkBRHeadTypeID === "124003") ? (
             <PageBar.Button onClick={() => toggelReplyCloseButton("Reply")}>Reply</PageBar.Button>
           ) : null
         ) : null}
+        {/* {replyTicketRight ? (
+          ticketData.TicketStatusID && ticketData.TicketStatusID.toString() !== "109303" ? (
+            <PageBar.Button onClick={() => toggelReplyCloseButton("Reply")}>Reply</PageBar.Button>
+          ) : null
+        ) : null} */}
         {reopenTicketRight ? (
           ticketData.TicketStatusID && ticketData.TicketStatusID.toString() === "109303" ? (
             <PageBar.Button onClick={() => toggelReOpenButton()}>Re-Open</PageBar.Button>

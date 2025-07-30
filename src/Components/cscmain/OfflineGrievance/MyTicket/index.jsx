@@ -37,8 +37,9 @@ function MyTicketPage({ selectedData, showfunc }) {
   } = MyTicketLogics();
 
   useEffect(() => {
+    debugger;
     getChatListDetailsData(selectedData, 1, 5);
-    getTicketStatusListData();
+    getTicketStatusListData(selectedData);
     getBankListData();
   }, []);
 
