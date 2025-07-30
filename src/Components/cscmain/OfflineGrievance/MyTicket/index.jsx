@@ -34,6 +34,8 @@ function MyTicketPage({ selectedData, showfunc }) {
     wordcount,
     setWordcount,
     btnLoaderActive1,
+    btnLoaderActiveComment,
+    handleAddComment,
   } = MyTicketLogics();
 
   useEffect(() => {
@@ -67,6 +69,8 @@ function MyTicketPage({ selectedData, showfunc }) {
           wordcount={wordcount}
           setWordcount={setWordcount}
           btnLoaderActive1={btnLoaderActive1}
+          btnLoaderActiveComment={btnLoaderActiveComment}
+          handleAddComment={handleAddComment}
         />
       </ChatList>
       <TicketCustomerDetail

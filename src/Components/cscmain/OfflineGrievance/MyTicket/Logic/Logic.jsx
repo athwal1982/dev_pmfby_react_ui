@@ -3,7 +3,7 @@ import moment from "moment";
 import publicIp from "public-ip";
 import { getSessionStorage } from "Components/Common/Login/Auth/auth";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
-import { getGrievenceSupportTicketReview, addGrievenceSupportTicketReview, getMasterDataBinding, farmerTicketStatusUpdate } from "../Services/Services";
+import { addGrievenceSupportTicketReview, getMasterDataBinding, farmerTicketStatusUpdate, addKRPHGrievanceSupportTicketComment,getKRPHGrievanceSupportTicketComment } from "../Services/Services";
 // A import { sendSMSToFarmer } from "../../../Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
 
 function MyTicketLogics() {
@@ -47,19 +47,19 @@ function MyTicketLogics() {
         pageIndex: pPageIndex,
         pageSize: pPageSize,
       };
-      const result = await getGrievenceSupportTicketReview(formdata);
+      const result = await getKRPHGrievanceSupportTicketComment(formdata);
       console.log(result, "chat List");
       setIsLoadingchatListDetails(false);
-      if (result.responseCode === 1) {
-        if (result.responseData.supportTicket && result.responseData.supportTicket.length > 0) {
-          setChatListDetails(result.responseData.supportTicket);
+      if (result.response.responseCode === 1) {
+        if (result.response.responseData.supportTicket && result.response.responseData.supportTicket.length > 0) {
+          setChatListDetails(result.response.responseData.supportTicket);
         } else {
           setChatListDetails([]);
         }
       } else {
         setAlertMessage({
           type: "error",
-          message: result.responseMessage,
+          message: result.response.responseMessage,
         });
       }
     } catch (error) {
@@ -247,7 +247,7 @@ function MyTicketLogics() {
           const ChkBRHeadTypeID = user && user.BRHeadTypeID ? user.BRHeadTypeID.toString() : "0";
           if (pticketData && pticketData.GrievenceTicketSourceTypeID === 132304 && ChkBRHeadTypeID === "124002") {
             filterStatusData = result.response.responseData.masterdatabinding.filter((data) => {
-              return data.CommonMasterValueID === 109303;
+              return data.CommonMasterValueID === 109302 || data.CommonMasterValueID === 109303;
             });
             setTicketStatusList(filterStatusData);
           } else if (pticketData && pticketData.GrievenceTicketSourceTypeID === 132304 && ChkBRHeadTypeID === "124003") {
@@ -260,10 +260,7 @@ function MyTicketLogics() {
               return data.CommonMasterValueID === 109304;
             });
             setTicketStatusList(filterStatusData);
-          } else if (
-            ((pticketData && pticketData.TicketStatusID === 109301) || (pticketData && pticketData.TicketStatusID === 109302)) &&
-            ChkBRHeadTypeID === "124003"
-          ) {
+          } else if ((pticketData && pticketData.TicketStatusID === 109301) || (pticketData && pticketData.TicketStatusID === 109302) || (pticketData && pticketData.TicketStatusID === 109304) && ChkBRHeadTypeID === "124003") {
             filterStatusData = result.response.responseData.masterdatabinding.filter((data) => {
               return data.CommonMasterValueID === 109302 || data.CommonMasterValueID === 109303;
             });
@@ -472,6 +469,70 @@ function MyTicketLogics() {
     }
   };
 
+    const [btnLoaderActiveComment, setbtnLoaderActiveComment] = useState(false);
+    const handleAddComment = async (e) => {
+      debugger;
+      try {
+        if (e) e.preventDefault();
+        let popUpMsg = "";
+        const strippedText = value.replace(/<[^>]*>/g, "").trim();
+
+    if (!strippedText) {
+      popUpMsg = "Ticket comment is required!";
+      setAlertMessage({
+        type: "warning",
+        message: popUpMsg,
+      });
+      return;
+    }
+        const formData = {
+          grievenceTicketHistoryID: 0,
+          grievenceSupportTicketID: ticketData.GrievenceSupportTicketID,
+          userID: ticketData.InsertUserID ? ticketData.InsertUserID : "0",
+          ticketStatusID: ticketData && ticketData.TicketStatusID ? ticketData.TicketStatusID : 0,
+          ticketDescription: value,
+          hasDocument: 0,
+          attachmentPath: "",
+        };
+        setbtnLoaderActiveComment(true);
+        const result = await addKRPHGrievanceSupportTicketComment(formData);
+        setbtnLoaderActiveComment(false);
+        if (result.response.responseCode === 1) {
+          if (result.response && result.response.responseData && result.response.responseData.GrievenceTicketReviewHistoryID) {
+            const ip = await publicIp.v4();
+            const user = getSessionStorage("user");
+            const newlyAddedEntry = {
+              CreatedBY: user && user.UserDisplayName ? user.UserDisplayName.toString() : "",
+              UserType: user && user.UserCompanyType ? user.UserCompanyType.toString() : "",
+              AgentUserID: ticketData.InsertUserID ? ticketData.InsertUserID : "0",
+              HasDocument: 0,
+              InsertIPAddress: ip,
+              InsertUserID: user && user.LoginID ? user.LoginID.toString() : "0",
+              SupportTicketID: ticketData.SupportTicketID,
+              TicketDescription: value,
+              TicketHistoryDate: moment().utcOffset("+05:30").format("YYYY-MM-DDTHH:mm:ss"),
+              TicketStatusID: 0,
+              AttachmentPath: "",
+              IsNewlyAdded: true,
+            };
+            updateTicketHistorytData(newlyAddedEntry);
+            setValue("<p></p>");
+            setWordcount(0);
+            setReplyBoxCollapsed(!replyBoxCollapsed);
+            setAlertMessage({
+              type: "success",
+              message: result.response.responseMessage,
+            });
+          }
+        } else {
+          setAlertMessage({
+            type: "warning",
+            message: result.response.responseMessage,
+          });
+        }
+      } catch (error) {}
+    };
+
   return {
     value,
     setValue,
@@ -501,6 +562,8 @@ function MyTicketLogics() {
     wordcount,
     setWordcount,
     btnLoaderActive1,
+    btnLoaderActiveComment,
+    handleAddComment,
   };
 }
 

@@ -4,6 +4,8 @@ const APIEndpoints = {
     AddGrievenceSupportTicketReview: "FGMS/AddGrievenceSupportTicketReview",
     GetMasterDataBinding: "FGMS/GetMasterDataBinding",
     FarmerTicketStatusUpdate: "FGMS/FarmerTicketStatusUpdate",
+    AddKRPHGrievanceSupportTicketComment: "FGMS/AddKRPHGrievanceSupportTicketComment",
+    GetKRPHGrievanceSupportTicketComment: "FGMS/GetKRPHGrievanceSupportTicketComment",
   },
 };
 

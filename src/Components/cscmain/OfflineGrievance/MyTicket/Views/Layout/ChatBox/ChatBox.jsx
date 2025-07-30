@@ -3,6 +3,7 @@ import TextEditor from "Framework/Components/Widgets/TextEditor/TextEditor";
 import { PropTypes } from "prop-types";
 import { Loader, Button } from "Framework/Components/Widgets";
 import { PageBar } from "Framework/Components/Layout";
+import { getSessionStorage } from "Components/Common/Login/Auth/auth";
 import BizClass from "./ChatBox.module.scss";
 
 function ChatBox({
@@ -17,8 +18,13 @@ function ChatBox({
   updateStateTicketProperties,
   wordcount,
   setWordcount,
+  btnLoaderActiveComment,
+  handleAddComment,
 }) {
   const sizeLimit = 2000;
+
+   const user = getSessionStorage("user");
+   const ChkBRHeadTypeID = user && user.BRHeadTypeID ? user.BRHeadTypeID.toString() : "0";
 
   return (
     <div className={BizClass.ReplyBox} style={{ display: replyBoxCollapsed ? "none" : "block" }}>
@@ -41,6 +47,11 @@ function ChatBox({
         <Button type="button" varient="secondary" trigger={btnLoaderActive1} onClick={(e) => handleSave(e)}>
           Send
         </Button>
+        {ChkBRHeadTypeID === "124002" ? (
+                  <Button type="button" varient="primary" trigger={btnLoaderActiveComment} onClick={() => handleAddComment()}>
+                    Comment
+                  </Button>
+        ) : null}
       </div>
     </div>
   );
