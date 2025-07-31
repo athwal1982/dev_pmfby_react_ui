@@ -5,9 +5,9 @@ import { Loader } from "Framework/Components/Widgets";
 import { FaFileImage, FaFilePdf, FaRegTrashAlt } from "react-icons/fa";
 import ConfirmDialog from "Framework/ConfirmDialog/ConfirmDialog";
 import { getSessionStorage } from "Components/Common/Login/Auth/auth";
-import { getKRPHGrievanceAttachmentData, deleteKRPHGrievanceAttachmentData } from "../../../../../Services/Methods";
+import { getKRPHGrievanceAttachmentData, deleteKRPHGrievanceAttachmentData, getKRPHGrievenceTicketHistoryAttachmentData } from "../../../../../Services/Methods";
 
-function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment }) {
+function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment, apiDataAttachment }) {
   const setAlertMessage = AlertMessage();
   const user = getSessionStorage("user");
   const ChkBRHeadTypeID = user && user.BRHeadTypeID ? user.BRHeadTypeID.toString() : "0";
@@ -26,11 +26,21 @@ function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment
     debugger;
     try {
       setAttachmentData([]);
-      const formdata = {
-        grievenceSupportTicketID: selectedData && selectedData.GrievenceSupportTicketID ? selectedData.GrievenceSupportTicketID : 0,
-      };
+      let formdata = null;
+      let result = null;
       setFileViewerIsLoading(true);
-      const result = await getKRPHGrievanceAttachmentData(formdata);
+            if (apiDataAttachment.apiFor === "SPTCKT") {
+              formdata = {
+                 grievenceSupportTicketID: selectedData && selectedData.GrievenceSupportTicketID ? selectedData.GrievenceSupportTicketID : 0,
+              };
+              result = await getKRPHGrievanceAttachmentData(formdata);
+            } else if (apiDataAttachment.apiFor === "TCKHIS") {
+              formdata = {
+                grievenceSupportTicketID: selectedData && selectedData.GrievenceSupportTicketID ? selectedData.GrievenceSupportTicketID : 0,
+                grievenceTicketHistoryID: apiDataAttachment && apiDataAttachment.GrievenceTicketHistoryID ? apiDataAttachment.GrievenceTicketHistoryID : 0,
+              };
+              result = await getKRPHGrievenceTicketHistoryAttachmentData(formdata);
+            }
       setFileViewerIsLoading(false);
       if (result.responseCode === 1) {
         if (result.responseData && result.responseData.attachment && result.responseData.attachment.length > 0) {
@@ -120,7 +130,7 @@ function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment
           <table className="table_bordered table_Height_module_wise_training">
             <thead>
               <tr>
-                {ChkBRHeadTypeID === "124002" || ChkBRHeadTypeID === "124001" ? <th>Action</th> : null}
+                {(ChkBRHeadTypeID === "124002" || ChkBRHeadTypeID === "124001") && apiDataAttachment.apiFor === "SPTCKT" ? <th>Action</th> : null}
                 <th>Sr. No.</th>
                 <th>Attachment</th>
               </tr>
@@ -128,7 +138,7 @@ function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment
             <tbody>
               {attachmentData.map((v, i) => (
                 <tr>
-                  {ChkBRHeadTypeID === "124002" || ChkBRHeadTypeID === "124001" ? (
+                  {(ChkBRHeadTypeID === "124002" || ChkBRHeadTypeID === "124001") && apiDataAttachment.apiFor === "SPTCKT" ? (
                     <td>
                       <FaRegTrashAlt
                         style={{ fontSize: "22px", color: "#000000", cursor: "pointer" }}

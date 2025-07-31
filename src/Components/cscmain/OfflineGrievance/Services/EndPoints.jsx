@@ -8,6 +8,8 @@ const APIEndpoints = {
     AddKRPHGrievanceAttachment: "FGMS/AddKRPHGrievanceAttachment",
     GetKRPHGrievanceAttachment: "FGMS/GetKRPHGrievanceAttachment",
     DeleteKRPHGrievanceAttachment: "FGMS/DeleteKRPHGrievanceAttachment",
+    AddKRPHGrievenceTicketHistoryAttachment: "FGMS/AddKRPHGrievenceTicketHistoryAttachment",
+    GetKRPHGrievenceTicketHistoryAttachment: "FGMS/GetKRPHGrievenceTicketHistoryAttachment",
   },
 };
 

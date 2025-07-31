@@ -49,7 +49,7 @@ const cellActionTemplate = (props) => {
       ) : null}
       {props.data && props.data.HasDocument && props.data.HasDocument === 1 ? (
         <MdAttachFile
-          style={{ fontSize: "16px", color: "#000000", cursor: "pointer" }}
+          style={{ fontSize: "16px", color: "#000000", cursor: "pointer", display:"none" }}
           onClick={() => props.toggleFileViewerModal(props.data)}
           title="View Attachment"
         />

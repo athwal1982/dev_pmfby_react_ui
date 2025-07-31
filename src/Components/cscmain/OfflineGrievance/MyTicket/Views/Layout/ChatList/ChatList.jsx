@@ -25,15 +25,18 @@ function TicketSourceIconWithSwitch(parameter) {
   }
 }
 
-function ChatList({ children, chatListDetails, isLoadingchatListDetails, selectedData, showMoreChatListOnClick }) {
+function ChatList({ children, chatListDetails, isLoadingchatListDetails, selectedData, showMoreChatListOnClick, apiDataAttachment, setapiDataAttachment }) {
   const setAlertMessage = AlertMessage();
   const user = getSessionStorage("user");
 
   const [isFileViewerModalOpen, setIsFileViewerModalOpen] = useState(false);
 
-  const toggleFileViewerModal = () => {
+  const toggleFileViewerModal = (papiFor,pGrievenceTicketHistoryID) => {
+    debugger;
     setIsFileViewerModalOpen(!isFileViewerModalOpen);
+    setapiDataAttachment({apiFor: papiFor, GrievenceTicketHistoryID: pGrievenceTicketHistoryID});
   };
+
   const copyToClipboard = (text) => {
     if (text) {
       navigator.clipboard.writeText(text);
@@ -52,7 +55,7 @@ function ChatList({ children, chatListDetails, isLoadingchatListDetails, selecte
 
   return (
     <>
-      {isFileViewerModalOpen && <FileViewer toggleFileViewerModal={toggleFileViewerModal} selectedData={selectedData} />}
+      {isFileViewerModalOpen && <FileViewer toggleFileViewerModal={toggleFileViewerModal} selectedData={selectedData} apiDataAttachment={apiDataAttachment} />}
       <div className={BizClass.ChatBox}>
         <div className={classNames(BizClass.Heading, BizClass.urgent)}>
           <div className={BizClass.TickIcon}>{TicketSourceIconWithSwitch(selectedData.GrievenceTicketSourceTypeID)}</div>
@@ -60,8 +63,8 @@ function ChatList({ children, chatListDetails, isLoadingchatListDetails, selecte
             <h4>
               {`${selectedData.GrievenceSupportTicketNo} || ${selectedData.TicketCategoryName}`}{" "}
               {selectedData.HasDocument && selectedData.HasDocument === 1 ? (
-                <MdAttachFile style={{ cursor: "pointer", color: "#000000", display: "none" }} onClick={() => toggleFileViewerModal()} />
-              ) : null}{" "}
+                              <MdAttachFile style={{ cursor: "pointer", color: "#000000" }} onClick={() => toggleFileViewerModal("SPTCKT")} />
+                            ) : null}{" "}
             </h4>
             <p>
               Created By {selectedData.CreatedBY} || {`${selectedData.TicketStatus}`}
@@ -114,6 +117,9 @@ function ChatList({ children, chatListDetails, isLoadingchatListDetails, selecte
                           <p>
                             {" "}
                             ({data.CreatedBY} - {data.UserType})
+                            {data.HasDocument && data.HasDocument === "1" ? (
+                                                          <MdAttachFile onClick={() => toggleFileViewerModal("TCKHIS",data.GrievenceTicketHistoryID)} style={{ cursor: "pointer", color: "#000000" }} />
+                                                        ) : null}{" "}
                           </p>
                           <span>
                             {dateToSpecificFormat(

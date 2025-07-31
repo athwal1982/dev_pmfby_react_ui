@@ -34,8 +34,13 @@ function MyTicketPage({ selectedData, showfunc }) {
     wordcount,
     setWordcount,
     btnLoaderActive1,
+    formValidationSupportTicketReviewError,
+    fileRef,
+    handleResetFile,
     btnLoaderActiveComment,
     handleAddComment,
+    setapiDataAttachment,
+    apiDataAttachment,
   } = MyTicketLogics();
 
   useEffect(() => {
@@ -55,7 +60,7 @@ function MyTicketPage({ selectedData, showfunc }) {
       closeSupportTicketOnClick={closeSupportTicketOnClick}
       showfunc={showfunc}
     >
-      <ChatList chatListDetails={chatListDetails} isLoadingchatListDetails={isLoadingchatListDetails} selectedData={selectedData}>
+      <ChatList chatListDetails={chatListDetails} isLoadingchatListDetails={isLoadingchatListDetails} selectedData={selectedData} apiDataAttachment={apiDataAttachment} setapiDataAttachment={setapiDataAttachment}>
         <ChatBox
           replyBoxCollapsed={replyBoxCollapsed}
           value={value}
@@ -69,6 +74,9 @@ function MyTicketPage({ selectedData, showfunc }) {
           wordcount={wordcount}
           setWordcount={setWordcount}
           btnLoaderActive1={btnLoaderActive1}
+          formValidationSupportTicketReviewError={formValidationSupportTicketReviewError}
+          fileRef={fileRef}
+          handleResetFile={handleResetFile}
           btnLoaderActiveComment={btnLoaderActiveComment}
           handleAddComment={handleAddComment}
         />

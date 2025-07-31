@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import moment from "moment";
 import publicIp from "public-ip";
 import { getSessionStorage } from "Components/Common/Login/Auth/auth";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { addGrievenceSupportTicketReview, getMasterDataBinding, farmerTicketStatusUpdate, addKRPHGrievanceSupportTicketComment,getKRPHGrievanceSupportTicketComment } from "../Services/Services";
-// A import { sendSMSToFarmer } from "../../../Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
+import { gCPFileUploadData, addKRPHGrievenceTicketHistoryAttachmentData } from "../../Services/Methods";
 
 function MyTicketLogics() {
   const [value, setValue] = useState("<p></p>");
@@ -12,14 +12,51 @@ function MyTicketLogics() {
   const [wordcount, setWordcount] = useState(0);
 
   const setAlertMessage = AlertMessage();
+  const fileRef = useRef(null);
 
   const [formValuesTicketProperties, setFormValuesTicketProperties] = useState({
     txtTicketStatus: null,
+    txtDocumentUpload: "",
     txtBankName: null,
   });
 
+  const [formValidationSupportTicketReviewError, setFormValidationSupportTicketReviewError] = useState({});
+
+  const validateFieldSupportTicketReview = (name, value) => {
+    let errorsMsg = "";
+    // A if (name === "txtDocumentUpload") {
+    // A  if (value && typeof value !== "undefined") {
+    // A    const regex = new RegExp("^[a-zA-Z0-9_.-]*$");
+    // A    if (!regex.test(value.name)) {
+    // A      errorsMsg = "Attachment name is not in valid format.";
+    // A    }
+    // A  }
+    // A }
+    return errorsMsg;
+  };
+
+  const handleValidationSupportTicketReview = () => {
+    try {
+      const errors = {};
+      let formIsValid = true;
+      errors["txtDocumentUpload"] = validateFieldSupportTicketReview("txtDocumentUpload", formValuesTicketProperties.txtDocumentUpload);
+      if (Object.values(errors).join("").toString()) {
+        formIsValid = false;
+      }
+      setFormValidationSupportTicketReviewError(errors);
+      return formIsValid;
+    } catch (error) {
+      setAlertMessage({
+        type: "error",
+        message: "Something Went Wrong",
+      });
+      return false;
+    }
+  };
+
   const updateStateTicketProperties = (name, value) => {
     setFormValuesTicketProperties({ ...formValuesTicketProperties, [name]: value });
+    formValidationSupportTicketReviewError[name] = validateFieldSupportTicketReview(name, value);
   };
 
   const [ticketData, setTicketData] = useState("");
@@ -125,9 +162,14 @@ function MyTicketLogics() {
     }
   };
 
+  const handleResetFile = async () => {
+    fileRef.current.value = null;
+    setFormValidationSupportTicketReviewError({});
+  };
+
+  const [apiDataAttachment, setapiDataAttachment] = useState({apiFor: "", GrievenceTicketHistoryID: 0 });
   const [btnLoaderActive1, setBtnLoaderActive1] = useState(false);
   const handleSave = async (e) => {
-    debugger;
     if (e) e.preventDefault();
     let popUpMsg = "";
 
@@ -158,6 +200,49 @@ function MyTicketLogics() {
         return;
       }
     }
+    let phasDocument = 0;
+      let pAttachmentPath = "pmfby/public/krph/documents";
+      let pAttachmentSize = 0;
+      let pdbAttachmentPath = [];
+      const pAttachment =
+        formValuesTicketProperties.txtDocumentUpload && formValuesTicketProperties.txtDocumentUpload ? formValuesTicketProperties.txtDocumentUpload : "";
+      if (pAttachment.length > 0) {
+        if (pAttachment.length > 5) {
+          setAlertMessage({
+            type: "error",
+            message: "Please select only 5 attachments.",
+          });
+          return;
+        }
+        phasDocument = 1;
+        for (let i = 0; i < pAttachment.length; i++) {
+          const val = pAttachment[i].name;
+          const valExtension = val.substring(val.lastIndexOf(".")).toLowerCase().slice(1);
+          switch (valExtension) {
+            case "jpeg":
+            case "jpg":
+            case "png":
+            case "pdf":
+              break;
+            default:
+              setAlertMessage({
+                type: "error",
+                message: "Please select only jpeg,jpg,png,pdf extension attachment.",
+              });
+              return;
+          }
+        }
+        for (let i = 0; i < pAttachment.length; i++) {
+          pAttachmentSize = +pAttachment[i].size;
+        }
+        if (pAttachmentSize > 10485760) {
+          setAlertMessage({
+            type: "error",
+            message: "Please upload less than 10MB or 10MB attachment!",
+          });
+          return;
+        }
+      }
     try {
       const formData = {
         grievenceTicketHistoryID: 0,
@@ -165,13 +250,14 @@ function MyTicketLogics() {
         agentUserID: ticketData.InsertUserID ? ticketData.InsertUserID : "0",
         ticketStatusID: formValuesTicketProperties.txtTicketStatus.CommonMasterValueID,
         ticketDescription: value,
-        hasDocument: 0,
+        hasDocument: phasDocument,
         attachmentPath: "",
       };
       setBtnLoaderActive1(true);
       const result = await addGrievenceSupportTicketReview(formData);
       setBtnLoaderActive1(false);
       if (result.response.responseCode === 1) {
+         debugger;
         if (result.response && result.response.responseData && result.response.responseData.GrievenceTicketHistoryID) {
           const ip = await publicIp.v4();
           const user = getSessionStorage("user");
@@ -179,10 +265,11 @@ function MyTicketLogics() {
             CreatedBY: user && user.UserDisplayName ? user.UserDisplayName.toString() : "",
             UserType: user && user.UserCompanyType ? user.UserCompanyType.toString() : "",
             AgentUserID: ticketData.InsertUserID ? ticketData.InsertUserID : "0",
-            HasDocument: 0,
+            HasDocument: phasDocument.toString(),
             InsertIPAddress: ip,
             InsertUserID: user && user.LoginID ? user.LoginID.toString() : "0",
             GrievenceSupportTicketID: ticketData.GrievenceSupportTicketID,
+            GrievenceTicketHistoryID: result.response.responseData.GrievenceTicketHistoryID,
             TicketDescription: value,
             TicketHistoryDate: moment().utcOffset("+05:30").format("YYYY-MM-DDTHH:mm:ss"),
             TicketStatusID: formValuesTicketProperties.txtTicketStatus.CommonMasterValueID,
@@ -208,6 +295,39 @@ function MyTicketLogics() {
             type: "success",
             message: result.response.responseMessage,
           });
+                   if (pAttachment.length > 0) {
+                      for (let i = 0; i < pAttachment.length; i++) {
+                        const formDataDoc = new FormData();
+                        formDataDoc.append("filePath", pAttachmentPath);
+                        formDataDoc.append("documents", pAttachment[i]);
+                        formDataDoc.append("uploadedBy", "KRPH");
+          
+                        try {
+                          const resultattachment = await gCPFileUploadData(formDataDoc);
+                          if (resultattachment.responseCode === 1) {
+                            pdbAttachmentPath.push({ attachmentPath: `https://pmfby.amnex.co.in/pmfby/public/krph/documents/${pAttachment[i].name}` });
+                          }
+                        } catch (error) {
+                          console.log(error);
+                        }
+                      }
+                      handleResetFile();
+                      try {
+                        const formDataattachmentPath = {
+                          attachment: pdbAttachmentPath,
+                          grievenceSupportTicketID: ticketData.GrievenceSupportTicketID,
+                          grievenceTicketHistoryID: result.response.responseData.GrievenceTicketHistoryID,
+                        };
+                        await addKRPHGrievenceTicketHistoryAttachmentData(formDataattachmentPath);
+                        setapiDataAttachment({apiFor: "TCKHIS", GrievenceTicketHistoryID: result.response.responseData.GrievenceTicketHistoryID});
+                      } catch (error) {
+                        console.log(error);
+                        setAlertMessage({
+                          type: "error",
+                          message: error,
+                        });
+                      }
+                    }
         }
       } else {
         setAlertMessage({
@@ -562,8 +682,13 @@ function MyTicketLogics() {
     wordcount,
     setWordcount,
     btnLoaderActive1,
+    fileRef,
+    formValidationSupportTicketReviewError,
+    handleResetFile,
     btnLoaderActiveComment,
     handleAddComment,
+    setapiDataAttachment,
+    apiDataAttachment,
   };
 }
 

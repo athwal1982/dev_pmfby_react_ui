@@ -2,7 +2,7 @@ import React from "react";
 import TextEditor from "Framework/Components/Widgets/TextEditor/TextEditor";
 import { PropTypes } from "prop-types";
 import { Loader, Button } from "Framework/Components/Widgets";
-import { PageBar } from "Framework/Components/Layout";
+import { Form, PageBar } from "Framework/Components/Layout";
 import { getSessionStorage } from "Components/Common/Login/Auth/auth";
 import BizClass from "./ChatBox.module.scss";
 
@@ -18,6 +18,9 @@ function ChatBox({
   updateStateTicketProperties,
   wordcount,
   setWordcount,
+  formValidationSupportTicketReviewError,
+  fileRef,
+  handleResetFile,
   btnLoaderActiveComment,
   handleAddComment,
 }) {
@@ -33,6 +36,23 @@ function ChatBox({
         <p>
           Count : {sizeLimit} / {sizeLimit - wordcount}
         </p>
+         <Form.InputGroup label="" errorMsg={formValidationSupportTicketReviewError["txtDocumentUpload"]}>
+                  <Form.InputControl
+                    control="input"
+                    type="file"
+                    accept="image/*,.pdf"
+                    name="txtDocumentUpload"
+                    onChange={(e) => updateStateTicketProperties(e.target.name, e.target.files)}
+                    ref={fileRef}
+                    multiple
+                  />
+                </Form.InputGroup>
+                <Form.InputGroup column={1}>
+                  <Button type="button" varient="primary" onClick={() => handleResetFile()}>
+                    {" "}
+                    Reset File
+                  </Button>
+                </Form.InputGroup>
         <PageBar.Select
           control="select"
           name="txtTicketStatus"
