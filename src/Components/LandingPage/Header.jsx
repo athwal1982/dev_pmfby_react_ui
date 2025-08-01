@@ -382,7 +382,12 @@ const Header = ({ handleWhatsAppClick }) => {
                     transformOrigin={{ vertical: "top", horizontal: "left" }}
                   >
                     {submenu.map((subItem, subIndex) => (
-                      <MenuItem key={subIndex} onClick={() => handleGotoKrph(subItem.path)} className="menu-item-landing-page">
+                      <MenuItem key={subIndex} onClick={() => handleGotoKrph(subItem.path)} sx={{
+                            color: "#fff",
+                            textAlign: "left",
+                            fontSize: "14px",
+                            backgroundColor: "#086107",
+                          }} className="menu-item-landing-page">
                         {subItem.label}
                       </MenuItem>
                     ))}

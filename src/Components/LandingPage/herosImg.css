@@ -172,8 +172,16 @@
 /* Extra Small Devices (up to 480px) */
 @media (max-width: 480px) {
   .banner-text {
-    font-size: 1.6rem;
-    top: 20%;
+    font-size: 1.3rem;
+    top: 7%;
+    left: 7%;
+    line-height: 1.2;
+  }
+}
+@media (max-width: 375px) {
+  .banner-text {
+    font-size: 1.1rem;
+    top: 6%;
     left: 7%;
     line-height: 1.2;
   }
@@ -204,9 +212,23 @@
   pointer-events: none;
 }
 
-/* 📱 Responsive Design */
-@media (max-width: 768px) {
-  .main-image,
+/* Tablet Devices (768px - 1024px) */
+@media (max-width: 1024px) {
+ .main-image {
+    width: 100%;
+  }
+  .grass-overlay {
+    width: 100%;
+  }
+}
+
+/* Mobile Devices (481px - 767px) */
+@media (max-width: 767px) {
+   .main-image {
+    width: 104%;
+    object-fit: cover;
+    object-position: right center;
+  }
   .grass-overlay {
     width: 100%;
   }
@@ -219,6 +241,24 @@
 
   .main-image {
     width: 100%;
+    object-fit: cover;
+    object-position: right center;
+  }
+
+  .grass-overlay {
+    width: 100%;
+  }
+}
+
+@media (max-width: 320px) {
+  .image-container {
+    max-width: 100%;
+  }
+
+  .main-image {
+    width: 112%;
+    object-fit: cover;
+    object-position: right center;
   }
 
   .grass-overlay {

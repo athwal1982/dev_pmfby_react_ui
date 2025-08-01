@@ -7,6 +7,7 @@ import { FcViewDetails } from "react-icons/fc";
 import { FaEdit, FaUpload } from "react-icons/fa";
 import { MdAttachFile } from "react-icons/md";
 import moment from "moment";
+import HeaderPortal from "../../Modules/Support/ManageTicket/Views/Layout/FarmerAuthenticateModal/HeaderPortal";
 import * as XLSX from "xlsx";
 import { getUserRightCodeAccess } from "Components/Common/Login/Auth/auth";
 import { getMasterDataBindingDataList } from "../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
@@ -140,6 +141,9 @@ const OfflineGrievance = () => {
       const requestData = {
         fromDate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
         toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
+        requestorMobileNo: "",
+        grievenceSupportTicketNo: "",
+        applicationNo: "",
         stateCodeAlpha: formValues.txtState && formValues.txtState.StateCodeAlpha ? formValues.txtState.StateCodeAlpha : "",
         grievenceTicketSourceTypeID:
           formValues.txtgrievenceTicketSourceType && formValues.txtgrievenceTicketSourceType.CommonMasterValueID
@@ -570,6 +574,129 @@ const OfflineGrievance = () => {
     }
   };
 
+  const searchByoptions = [
+    { value: "1", label: "Mobile No" },
+    { value: "2", label: "Ticket No" },
+    { value: "3", label: "Application No" },
+  ];
+
+  const [filterValues, setFilterValues] = useState({
+    SearchByFilter: null,
+    txtSearchFilter: "",
+  });
+
+    const updateFilterState = (name, value) => {
+      setFilterValues({ ...filterValues, [name]: value });
+    };
+  
+    const searchByMobileTicketsOnClick = async (pageIndex, pageSize) => {
+      try {
+        let ticketNoVal = "";
+        let mobileNoVal = "";
+        let applicationNoVal = "";
+  
+        if (!filterValues.SearchByFilter) {
+          setAlertMessage({
+            type: "error",
+            message: "Please select search type.",
+          });
+          return;
+        }
+        const regex = new RegExp("^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-s./0-9]*$");
+        if (filterValues.SearchByFilter.value === "1") {
+          if (filterValues.txtSearchFilter.length === 0) {
+            setAlertMessage({
+              type: "error",
+              message: "Please enter Mobile No.",
+            });
+            return;
+          }
+  
+          if (!regex.test(filterValues.txtSearchFilter)) {
+            setAlertMessage({
+              type: "error",
+              message: "Please enter Valid Mobile No.",
+            });
+            return;
+          }
+          if (filterValues.txtSearchFilter.length < 10 || filterValues.txtSearchFilter.length > 10) {
+            setAlertMessage({
+              type: "error",
+              message: "Please enter Valid 10 digit mobile No.",
+            });
+            return;
+          }
+  
+          mobileNoVal = filterValues.txtSearchFilter;
+        } else if (filterValues.SearchByFilter.value === "2") {
+          if (filterValues.txtSearchFilter.length === 0) {
+            setAlertMessage({
+              type: "error",
+              message: "Please enter Ticket No.",
+            });
+            return;
+          }
+  
+          if (!regex.test(filterValues.txtSearchFilter)) {
+            setAlertMessage({
+              type: "error",
+              message: "Please enter numeric value for Ticket No.",
+            });
+            return;
+          }
+          ticketNoVal = filterValues.txtSearchFilter;
+        } else if (filterValues.SearchByFilter.value === "3") {
+          if (filterValues.txtSearchFilter.length === 0) {
+            setAlertMessage({
+              type: "error",
+              message: "Please enter Application No.",
+            });
+            return;
+          }
+          if (!regex.test(filterValues.txtSearchFilter)) {
+            setAlertMessage({
+              type: "error",
+              message: "Please enter numeric value for Application No",
+            });
+            return;
+          }
+          applicationNoVal = filterValues.txtSearchFilter;
+        } 
+        const formData = {
+        fromDate:  "",
+        toDate: "",
+        requestorMobileNo: mobileNoVal,
+        grievenceSupportTicketNo: ticketNoVal,
+        applicationNo: applicationNoVal,
+        stateCodeAlpha: "",
+        grievenceTicketSourceTypeID: 0,
+        socialMediaTypeID: 0,
+        receiptSourceID: 0,
+        ticketStatusID: 0,
+        };
+        setIsLoadingMaster(true);
+        const result = await getGrievenceTicketsListData(formData);
+        setIsLoadingMaster(false);
+      if (result.responseCode === 1) {
+        if (result.responseData && result.responseData.grievenceTicket && result.responseData.grievenceTicket.length > 0) {
+          setRowData([]);
+          setRowData(result.responseData.grievenceTicket);
+        } else {
+          setRowData([]);
+        }
+      } else {
+        setAlertMessage({ open: true, type: "error", message: result.responseMessage });
+        console.log(result.responseMessage);
+      }
+      } catch (error) {
+        console.log(error);
+        setAlertMessage({
+          type: "error",
+          message: error,
+        });
+      }
+    };
+
   return (
     <>
       {openAddOfflineGrievanceMdal && <AddOfflineGrievance showfunc={openAddOfflineGrievancePage} updateFarmersTickets={updateFarmersTickets} />}
@@ -597,6 +724,25 @@ const OfflineGrievance = () => {
             </PageBar.Button>
           ) : null}
           <PageBar.ExcelButton onClick={() => exportClick()}>Export</PageBar.ExcelButton>
+          <HeaderPortal>
+             <PageBar.Select
+                                  ControlTxt="Search By"
+                                  name="SearchByFilter"
+                                  getOptionLabel={(option) => `${option.label}`}
+                                  getOptionValue={(option) => `${option}`}
+                                  options={searchByoptions}
+                                  value={filterValues.SearchByFilter}
+                                  onChange={(e) => updateFilterState("SearchByFilter", e)}
+                                />
+                                <PageBar.Search
+                                  placeholder="Search "
+                                  name="txtSearchFilter"
+                                  value={filterValues.txtSearchFilter}
+                                  onChange={(e) => updateFilterState(e.target.name, e.target.value)}
+                                  onClick={() => searchByMobileTicketsOnClick()}
+                                  style={{ width: "158px" }}
+                                />
+          </HeaderPortal>
         </div>
         <div className={BizClass.MainBox}>
           {viewTicketRight ? (

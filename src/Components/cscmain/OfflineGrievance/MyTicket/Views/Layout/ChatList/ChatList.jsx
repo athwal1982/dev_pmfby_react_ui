@@ -1,8 +1,9 @@
 import { React, useState } from "react";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
-import { MdOutlineEmail, MdOutlineDisabledByDefault } from "react-icons/md";
-import { FaShareAltSquare, FaPalette } from "react-icons/fa";
+import { MdOutlineEmail } from "react-icons/md";
+import { FaShareAltSquare, FaPalette, FaEnvelopeOpenText } from "react-icons/fa";
 import { MdAttachFile, MdOutlineContentCopy } from "react-icons/md";
+import { BsBoxes } from "react-icons/bs";
 import { Loader, Button } from "Framework/Components/Widgets";
 import classNames from "classnames";
 import { PropTypes } from "prop-types";
@@ -20,8 +21,10 @@ function TicketSourceIconWithSwitch(parameter) {
       return <FaPalette title="Physical Letter" />;
     case 132303:
       return <MdOutlineEmail title="Email" />;
+    case 132304:
+      return <FaEnvelopeOpenText title="CPGRAMS" />;  
     default:
-      return <MdOutlineDisabledByDefault />;
+      return <BsBoxes />;
   }
 }
 
