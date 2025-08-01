@@ -278,6 +278,42 @@
   padding: 10px 60px 0px 40px !important;
 }
 
+/* Extra large devices (large desktops, 1200px and up) */
+@media (max-width: 1200px) {
+  .gridContainer_Header {
+    padding: 10px 50px 0px 30px !important;
+  }
+}
+
+/* Large devices (desktops, 992px - 1199px) */
+@media (max-width: 992px) {
+  .gridContainer_Header {
+    padding: 10px 40px 0px 25px !important;
+  }
+}
+
+/* Medium devices (tablets, 768px - 991px) */
+@media (max-width: 768px) {
+  .gridContainer_Header {
+    padding: 10px 30px 0px 20px !important;
+  }
+}
+
+/* Small devices (phones, 576px - 767px) */
+@media (max-width: 576px) {
+  .gridContainer_Header {
+    padding: 10px 20px 0px 15px !important;
+  }
+}
+
+/* Extra small devices (small phones, below 576px) */
+@media (max-width: 400px) {
+  .gridContainer_Header {
+    padding: 10px 15px 0px 10px !important;
+  }
+}
+
+
 @media (max-width: 768px) {
   .footer_box {
     padding: 20px 30px 10px 30px !important;
@@ -352,43 +388,43 @@
 
 @media (min-width: 1210px) and (max-width: 1330px) {
   .box_heroSection {
-    height: 440px;
+    height: 455px;
   }
 }
 
 @media (max-width: 1210px) and (min-width: 1024px) {
   .box_heroSection {
-    height: 450px;
+    height: 455px;
   }
 }
 
 @media (max-width: 1024px) and (min-width: 769px) {
   .box_heroSection {
-    height: 350px;
+    height: 435px;
   }
 }
 
 @media (min-width: 481px) and (max-width: 560px) {
   .box_heroSection {
-    height: 310px;
+    height: 455px;
   }
 }
 
 @media (min-width: 561px) and (max-width: 680px) {
   .box_heroSection {
-    height: 320px;
+    height: 455px;
   }
 }
 
 @media (min-width: 681px) and (max-width: 768px) {
   .box_heroSection {
-    height: 345px;
+    height: 275px;
   }
 }
 
 @media (max-width: 480px) {
   .box_heroSection {
-    height: 145px;
+    height: 455px;
   }
 }
 
@@ -533,3 +569,40 @@
   line-height: 1.5;
   letter-spacing: 0.00938em;
 }
+
+.download-button {
+  display: inline-flex;
+  align-items: center;
+  background-color: #074502;
+  color: white;
+  padding: 10px 30px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-family: "Open Sans";
+  font-size: 11px;
+  border: 1px solid #ffffff80;
+  box-shadow: 0 0 2px #ffffff80;
+  transition: background-color 0.3s;
+  font-weight: 500;
+  height: 32px;
+  cursor: pointer;
+}
+
+
+@media (max-width: 480px) {
+  .download-button {
+    font-size: 11px;
+    padding: 8px 25px;
+  }
+
+  .download-button .icon {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.download-button .icon {
+  margin-right: 8px;
+  fill: white;
+}
+

@@ -81,7 +81,7 @@ function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment
         setAttachmentData(filteredData);
         if (filteredData.length === 0) {
           selectedData.HasDocument = 0;
-          updateRowOfAttachment(selectedData);
+          // A updateRowOfAttachment(selectedData);
           toggleFileViewerModal();
         }
       } else {
@@ -100,13 +100,14 @@ function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment
   };
 
   const handleDeleteFile = (pGrievenceTicketAttachmentID) => {
-    setConfirmAlert({
-      open: true,
-      title: "Delete Confirmation",
-      msg: "Do you want to delete ?",
-      button: { confirmText: "Yes", abortText: "No", Color: "Danger" },
-      onConfirm: () => deleteFileOnClick(pGrievenceTicketAttachmentID),
-    });
+    // A setConfirmAlert({
+    // A  open: true,
+    // A  title: "Delete Confirmation",
+    // A  msg: "Do you want to delete ?",
+    // A  button: { confirmText: "Yes", abortText: "No", Color: "Danger" },
+    // A  onConfirm: () => deleteFileOnClick(pGrievenceTicketAttachmentID),
+    // A });
+  deleteFileOnClick(pGrievenceTicketAttachmentID);  
   };
 
   useEffect(() => {
@@ -123,7 +124,6 @@ function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment
         show={toggleFileViewerModal}
         width="34vw"
         right="0"
-        style={{ zindex: "999999999999999999999" }}
       >
         <Modal.Body>
           {fileViewerIsLoading ? <Loader /> : null}
