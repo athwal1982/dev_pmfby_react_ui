@@ -47,18 +47,21 @@ function ChatList({
   wordcountEditTicketComment,
   setWordcountEditTicketComment,
   setSelectedHistoryData,
+  apiDataAttachment,
+  setapiDataAttachment
 }) {
   const setAlertMessage = AlertMessage();
   const user = getSessionStorage("user");
   const ChkBRHeadTypeID = user && user.BRHeadTypeID ? user.BRHeadTypeID.toString() : "0";
 
   const [isFileViewerModalOpen, setIsFileViewerModalOpen] = useState(false);
-  const [apiFor, setapiFor] = useState(false);
 
-  const toggleFileViewerModal = (papiFor) => {
+  const toggleFileViewerModal = (papiFor,pTicketHistoryID) => {
+    debugger;
     setIsFileViewerModalOpen(!isFileViewerModalOpen);
-    setapiFor(papiFor);
+    setapiDataAttachment({apiFor: papiFor, TicketHistoryID: pTicketHistoryID});
   };
+
   const [isEditTicketCommentModalOpen, setIsEditTicketCommentModalOpen] = useState(false);
   const toggleEditTicketCommentModal = (data) => {
     if (data) {
@@ -86,7 +89,7 @@ function ChatList({
 
   return (
     <>
-      {isFileViewerModalOpen && <FileViewer toggleFileViewerModal={toggleFileViewerModal} selectedData={selectedData} apiFor={apiFor} />}
+      {isFileViewerModalOpen && <FileViewer toggleFileViewerModal={toggleFileViewerModal} selectedData={selectedData} apiDataAttachment={apiDataAttachment} />}
       {isEditTicketCommentModalOpen && (
         <EditTicketComment
           toggleEditTicketCommentModal={toggleEditTicketCommentModal}
@@ -160,9 +163,9 @@ function ChatList({
                           <p>
                             {" "}
                             ({data.CreatedBY} - {data.UserType}){" "}
-                            {data.HasDocument && data.HasDocument === 1 ? (
-                              <MdAttachFile onClick={() => toggleFileViewerModal("TCKHIS")} style={{ cursor: "pointer", color: "#000000" }} />
-                            ) : null}{" "}
+                            {data.HasDocument && data.HasDocument === "1" ? (
+                                   <MdAttachFile onClick={() => toggleFileViewerModal("TCKHIS",data.TicketHistoryID)} style={{ cursor: "pointer", color: "#000000" }} />
+                             ) : null}{" "}
                           </p>
                           <span>
                             {/* {dateFormat(data.TicketHistoryDate.split("T")[0])} at {tConvert(data.TicketHistoryDate.split("T")[1])} */}

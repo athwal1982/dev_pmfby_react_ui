@@ -2,9 +2,10 @@ import { React, useState, useEffect } from "react";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { Modal } from "Framework/Components/Layout";
 import { Loader } from "Framework/Components/Widgets";
+import { FaFileImage, FaFilePdf } from "react-icons/fa";
 import { getKRPHSupportAttachmentData, getKRPHTicketHistoryAttachmentData } from "../../../../../ManageTicket/Views/Modals/AddTicket/Services/Methods";
 
-function FileViewer({ toggleFileViewerModal, selectedData, apiFor }) {
+function FileViewer({ toggleFileViewerModal, selectedData, apiDataAttachment }) {
   const setAlertMessage = AlertMessage();
 
   const [fileViewerIsLoading, setFileViewerIsLoading] = useState(false);
@@ -16,15 +17,15 @@ function FileViewer({ toggleFileViewerModal, selectedData, apiFor }) {
       setFileViewerIsLoading(true);
       let formdata = null;
       let result = null;
-      if (apiFor === "SPTCKT") {
+      if (apiDataAttachment.apiFor === "SPTCKT") {
         formdata = {
           supportTicketID: selectedData && selectedData.SupportTicketID ? selectedData.SupportTicketID : 0,
         };
         result = await getKRPHSupportAttachmentData(formdata);
-      } else if (apiFor === "TCKHIS") {
+      } else if (apiDataAttachment.apiFor === "TCKHIS") {
         formdata = {
           supportTicketID: selectedData && selectedData.SupportTicketID ? selectedData.SupportTicketID : 0,
-          ticketHistoryID: selectedData && selectedData.TicketHistoryID ? selectedData.TicketHistoryID : 0,
+          ticketHistoryID: apiDataAttachment && apiDataAttachment.TicketHistoryID ? apiDataAttachment.TicketHistoryID : 0,
         };
         result = await getKRPHTicketHistoryAttachmentData(formdata);
       }
@@ -60,9 +61,8 @@ function FileViewer({ toggleFileViewerModal, selectedData, apiFor }) {
       varient="center"
       title={`Attachmet Detail (Ticket No. :  ${selectedData && selectedData.SupportTicketNo ? selectedData.SupportTicketNo : ""})`}
       show={toggleFileViewerModal}
-      width="62vw"
+      width="40vw"
       right="0"
-      style={{ zindex: "999999999999999999999" }}
     >
       <Modal.Body>
         {fileViewerIsLoading ? <Loader /> : null}
@@ -78,9 +78,15 @@ function FileViewer({ toggleFileViewerModal, selectedData, apiFor }) {
               <tr>
                 <td>{i + 1}</td>
                 <td>
-                  <a href={v.AttachmentPath} target="_blank">
-                    {v.AttachmentPath}
-                  </a>
+                 {v.AttachmentPath && v.AttachmentPath.split(".").pop().split("?")[0] === "pdf" ? (
+                                       <a href={v.AttachmentPath} style={{ cursor: "pointer" }} target="_blank">
+                                         <FaFilePdf style={{ fontSize: "40px", color: "e5252a" }} />
+                                       </a>
+                                     ) : (
+                                       <a href={v.AttachmentPath} style={{ cursor: "pointer" }} target="_blank">
+                                         <FaFileImage style={{ fontSize: "40px", color: "#000000" }} />
+                                       </a>
+                                     )}
                 </td>
               </tr>
             ))}

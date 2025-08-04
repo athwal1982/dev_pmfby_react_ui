@@ -48,6 +48,8 @@ function MyTicketPage({ selectedData, showfunc }) {
     setSelectedHistoryData,
     btnLoaderActiveComment,
     handleAddComment,
+    setapiDataAttachment,
+    apiDataAttachment,
   } = MyTicketLogics();
 
   useEffect(() => {
@@ -78,6 +80,8 @@ function MyTicketPage({ selectedData, showfunc }) {
         wordcountEditTicketComment={wordcountEditTicketComment}
         setWordcountEditTicketComment={setWordcountEditTicketComment}
         setSelectedHistoryData={setSelectedHistoryData}
+        apiDataAttachment={apiDataAttachment}
+        setapiDataAttachment={setapiDataAttachment}
       >
         <ChatBox
           replyBoxCollapsed={replyBoxCollapsed}

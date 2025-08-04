@@ -374,6 +374,7 @@ function MyTicketLogics() {
     }
   };
 
+   const [apiDataAttachment, setapiDataAttachment] = useState({apiFor: "", TicketHistoryID: 0 });
   const [btnLoaderActive1, setBtnLoaderActive1] = useState(false);
   const handleSave = async (e) => {
     if (e) e.preventDefault();
@@ -616,10 +617,11 @@ function MyTicketLogics() {
             CreatedBY: user && user.UserDisplayName ? user.UserDisplayName.toString() : "",
             UserType: user && user.UserCompanyType ? user.UserCompanyType.toString() : "",
             AgentUserID: ticketData.AgentUserID ? ticketData.AgentUserID : "0",
-            HasDocument: phasDocument,
+            HasDocument: phasDocument.toString(),
             InsertIPAddress: ip,
             InsertUserID: user && user.LoginID ? user.LoginID.toString() : "0",
             SupportTicketID: ticketData.SupportTicketID,
+            TicketHistoryID: result.response.responseData.TicketHistoryID,
             TicketDescription: value,
             TicketHistoryDate: moment().utcOffset("+05:30").format("YYYY-MM-DDTHH:mm:ss"),
             TicketStatusID: formValuesTicketProperties.txtTicketStatus.CommonMasterValueID,
@@ -670,6 +672,7 @@ function MyTicketLogics() {
                 ticketHistoryID: result.response.responseData.TicketHistoryID,
               };
               await AddKRPHTicketHistoryAttachmentData(formDataattachmentPath);
+               setapiDataAttachment({apiFor: "TCKHIS", TicketHistoryID: result.response.responseData.TicketHistoryID});
             } catch (error) {
               console.log(error);
               setAlertMessage({
@@ -1094,6 +1097,8 @@ function MyTicketLogics() {
     handleResetFile,
     btnLoaderActiveComment,
     handleAddComment,
+    setapiDataAttachment,
+    apiDataAttachment,
   };
 }
 
