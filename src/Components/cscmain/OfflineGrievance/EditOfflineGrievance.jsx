@@ -1,6 +1,7 @@
 import { React, useState, useEffect, useRef } from "react";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
-import { Box, Card, Typography } from "@mui/material";
+import { Box, Card, Typography, Tooltip, IconButton, Button } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
 import { motion, AnimatePresence } from "framer-motion";
 import { dateToCompanyFormat, dateToSpecificFormat } from "Configration/Utilities/dateformat";
 import moment from "moment";
@@ -13,6 +14,7 @@ import { getMasterDataBinding } from "../../Modules/Support/ManageTicket/Service
 import { ticketDataBindingData } from "Components/Common/Welcome/Service/Methods";
 import { editKRPHGrievenceSupportTicket } from "./Services/Methods";
 import BizClass from "./OfflineGrievance.module.scss";
+import EditSOSEmergencyOfflineGrievancePopup from "./EditSOSEmergencyOfflineGrievancePopup";
 
 const EditOfflineGrievance = ({ showfunc, selectedData, updateOfflineGrievance }) => {
   const setAlertMessage = AlertMessage();
@@ -126,6 +128,8 @@ const EditOfflineGrievance = ({ showfunc, selectedData, updateOfflineGrievance }
         : null,
     txtDocumentUpload: "",
     txtTicketDescription: selectedData && selectedData.GrievenceDescription ? selectedData.GrievenceDescription : "",
+    txtCPGramRegistrationNumber: selectedData && selectedData.CPGramRegistrationNumber ? selectedData.CPGramRegistrationNumber : "",
+    txtLegalDescription: selectedData && selectedData.LegalRemarks ? selectedData.LegalRemarks : ""
   });
 
   const [formValidationKRPHError, setFormValidationKRPHError] = useState({});
@@ -185,6 +189,19 @@ const EditOfflineGrievance = ({ showfunc, selectedData, updateOfflineGrievance }
     if (name === "txtSourceOfGrievance") {
       if (!value || typeof value === "undefined") {
         errorsMsg = "Source Of Grievance is required!";
+      }
+    }
+
+   
+    if (name === "txtCPGramRegistrationNumber") {
+      if (!value || typeof value === "undefined") {
+        errorsMsg = "CPGRAM Registration Number is required!";
+      }
+      if (value) {
+        const pattern = new RegExp(/^[A-Z0-9]+\/[A-Z]+\/\d{4}\/\d+$/);
+        if (!pattern.test(value)) {
+          errorsMsg = "CPGRAM Registration Number is not valid";
+        }
       }
     }
 
@@ -260,6 +277,14 @@ const EditOfflineGrievance = ({ showfunc, selectedData, updateOfflineGrievance }
       // A errors["txtMobileNumber"] = validateKRPHInfoField("txtMobileNumber", formValuesGI.txtMobileNumber);
       errors["txtComplaintDate"] = validateKRPHInfoField("txtComplaintDate", formValuesGI.txtComplaintDate);
       errors["txtSourceOfGrievance"] = validateKRPHInfoField("txtSourceOfGrievance", formValuesGI.txtSourceOfGrievance);
+      if (
+        formValuesGI &&
+        formValuesGI.txtSourceOfGrievance &&
+        formValuesGI.txtSourceOfGrievance.CommonMasterValueID &&
+        formValuesGI.txtSourceOfGrievance.CommonMasterValueID === 132304
+      ) {
+        errors["txtCPGramRegistrationNumber"] = validateKRPHInfoField("txtCPGramRegistrationNumber", formValuesGI.txtCPGramRegistrationNumber);
+      }
       if (
         formValuesGI &&
         formValuesGI.txtSourceOfGrievance &&
@@ -353,6 +378,11 @@ const EditOfflineGrievance = ({ showfunc, selectedData, updateOfflineGrievance }
         ...formValuesGI,
         txtSourceOfGrievance: value,
         txtSocialMedia: null,
+        txturl: "",
+        txtOtherSourceOfGrievance: "",
+        txtOtherSocialMediaSource : "",
+        txtSourceOfReceipt: null,
+        txtCPGramRegistrationNumber: "",
       });
     }
   };
@@ -560,32 +590,6 @@ const EditOfflineGrievance = ({ showfunc, selectedData, updateOfflineGrievance }
     }
   };
 
-  const ClearFormFields = () => {
-    setFormValuesGI({
-      ...formValuesGI,
-      txtState: null,
-      txtDistrict: null,
-      txtMobileNumber: "",
-      txtFarmerName: "",
-      txtComplaintDate: "",
-      txtFarmerEmailID: "",
-      txtYearForFarmerInfo: null,
-      txtSeasonForFarmerInfo: null,
-      txtSourceOfGrievance: null,
-      txtOtherSourceOfGrievance: "",
-      txtSocialMedia: null,
-      txturl: "",
-      txtOtherSocialMediaSource: "",
-      txtInsuranceCompany: null,
-      txtApplicationNumber: "",
-      txtPolicyNumber: "",
-      txtCropName: "",
-      txtTicketCategoryType: null,
-      txtTicketCategory: null,
-      txtDocumentUpload: "",
-      txtTicketDescription: "",
-    });
-  };
 
   const [isBtndisabled, setisBtndisabled] = useState(0);
   const [btnLoaderSupportTicketActive, setBtnLoaderSupportTicketActive] = useState(false);
@@ -630,7 +634,7 @@ const EditOfflineGrievance = ({ showfunc, selectedData, updateOfflineGrievance }
         insuranceCompanyID: formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyID ? formValuesGI.txtInsuranceCompany.CompanyID : 0,
         insurancePolicyNo: formValuesGI && formValuesGI.txtPolicyNumber ? formValuesGI.txtPolicyNumber : "",
         attachmentPath: "",
-        hasDocument: 0,
+        hasDocument: selectedData && selectedData.HasDocument ? selectedData.HasDocument : 0,
         subDistrictID: "",
         subDistrictName: "",
         districtMasterName: formValuesGI.txtDistrict && formValuesGI.txtDistrict.level3Name ? formValuesGI.txtDistrict.level3Name : "",
@@ -643,6 +647,9 @@ const EditOfflineGrievance = ({ showfunc, selectedData, updateOfflineGrievance }
         insuranceCompany: formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyName ? formValuesGI.txtInsuranceCompany.CompanyName : "",
         stateMasterName: formValuesGI.txtState && formValuesGI.txtState.StateMasterName ? formValuesGI.txtState.StateMasterName : "",
         grievenceDescription: formValuesGI && formValuesGI.txtTicketDescription ? formValuesGI.txtTicketDescription : "",
+        isLegal: showMessage ? 1 : 0,
+        legalRemarks: showMessage === true && formValuesGI.txtLegalDescription ? formValuesGI.txtLegalDescription : "",
+        cPGramRegistrationNumber: formValuesGI && formValuesGI.txtCPGramRegistrationNumber ? formValuesGI.txtCPGramRegistrationNumber : "",
       };
       setisBtndisabled(1);
       setBtnLoaderSupportTicketActive(true);
@@ -663,17 +670,25 @@ const EditOfflineGrievance = ({ showfunc, selectedData, updateOfflineGrievance }
           selectedData.ComplaintDate = formValuesGI && formValuesGI.txtComplaintDate ? dateToCompanyFormat(formValuesGI.txtComplaintDate) : "";
           selectedData.StateCodeAlpha = formValuesGI.txtState && formValuesGI.txtState.StateCodeAlpha ? formValuesGI.txtState.StateCodeAlpha : "";
           selectedData.DistrictRequestorID = formValuesGI.txtDistrict && formValuesGI.txtDistrict.level3ID ? formValuesGI.txtDistrict.level3ID : "";
-          selectedData.GrievenceSourceTypeID =
+          selectedData.GrievenceTicketSourceTypeID =
             formValuesGI.txtSourceOfGrievance && formValuesGI.txtSourceOfGrievance.CommonMasterValueID
               ? formValuesGI.txtSourceOfGrievance.CommonMasterValueID
               : 0;
+          selectedData.GrievenceSourceType =
+            formValuesGI.txtSourceOfGrievance && formValuesGI.txtSourceOfGrievance.CommonMasterValue
+              ? formValuesGI.txtSourceOfGrievance.CommonMasterValue
+              : "";    
           selectedData.GrievenceSourceOtherType = formValuesGI && formValuesGI.txtOtherSourceOfGrievance ? formValuesGI.txtOtherSourceOfGrievance : "";
           selectedData.SocialMediaTypeID =
             formValuesGI.txtSocialMedia && formValuesGI.txtSocialMedia.CommonMasterValueID ? formValuesGI.txtSocialMedia.CommonMasterValueID : 0;
+          selectedData.SocialMediaType =
+            formValuesGI.txtSocialMedia && formValuesGI.txtSocialMedia.CommonMasterValue ? formValuesGI.txtSocialMedia.CommonMasterValue : "";
           selectedData.OtherSocialMedia = formValuesGI && formValuesGI.txtOtherSocialMediaSource ? formValuesGI.txtOtherSocialMediaSource : "";
           selectedData.SocialMediaURL = formValuesGI && formValuesGI.txturl ? formValuesGI.txturl : "";
           selectedData.ReceiptSourceID =
             formValuesGI.txtSourceOfReceipt && formValuesGI.txtSourceOfReceipt.CommonMasterValueID ? formValuesGI.txtSourceOfReceipt.CommonMasterValueID : 0;
+          selectedData.ReceiptSource =
+            formValuesGI.txtSourceOfReceipt && formValuesGI.txtSourceOfReceipt.CommonMasterValue ? formValuesGI.txtSourceOfReceipt.CommonMasterValue : "";  
           selectedData.TicketCategoryID =
             formValuesGI.txtTicketCategoryType && formValuesGI.txtTicketCategoryType.SupportTicketTypeID
               ? formValuesGI.txtTicketCategoryType.SupportTicketTypeID
@@ -695,6 +710,9 @@ const EditOfflineGrievance = ({ showfunc, selectedData, updateOfflineGrievance }
               : "";
           selectedData.StateMasterName = formValuesGI.txtState && formValuesGI.txtState.StateMasterName ? formValuesGI.txtState.StateMasterName : "";
           selectedData.GrievenceDescription = formValuesGI && formValuesGI.txtTicketDescription ? formValuesGI.txtTicketDescription : "";
+          selectedData.IsLegal = showMessage ? 1 : 0;
+          selectedData.LegalRemarks = formValuesGI && formValuesGI.txtLegalDescription ? formValuesGI.txtLegalDescription : "";
+          selectedData.CPGramRegistrationNumber = formValuesGI && formValuesGI.txtCPGramRegistrationNumber ? formValuesGI.txtCPGramRegistrationNumber : "";
           updateOfflineGrievance(selectedData);
           showfunc();
         }
@@ -725,6 +743,45 @@ const EditOfflineGrievance = ({ showfunc, selectedData, updateOfflineGrievance }
     fileRef.current.value = null;
     setFormValidationSupportTicketReviewError({});
   };
+
+  const [openSOS, setOpenSOS] = useState(false);
+  const [showMessage, setShowMessage] = useState(selectedData && selectedData.IsLegal === 1 ? true : false);
+  
+   const handleSOSPopup = () => {
+    debugger;
+      if (showMessage === true) {
+        setShowMessage(false);
+      }
+  
+      if (showMessage === false) {
+        setOpenSOS(true);
+        setShowMessage(true);
+      }
+    };
+      
+  const handleEditSOSPopup = () => {
+        setOpenSOS(true);
+        setShowMessage(true);
+      };
+      const handleCloseSOSPopup = () => {
+        debugger;
+        setOpenSOS(false);
+        if(selectedData &&  selectedData.IsLegal === 0) {
+           setShowMessage(false);
+        }
+       
+      };
+
+      const handleRemoveSOSPopup = () => {
+        selectedData.IsLegal = 0;
+         setFormValuesGI({
+      ...formValuesGI,
+      txtLegalDescription:"",
+    });
+        setShowMessage(false);
+      };
+
+      
 
   useEffect(() => {
     const currentYear = new Date().getFullYear();
@@ -1001,6 +1058,33 @@ const EditOfflineGrievance = ({ showfunc, selectedData, updateOfflineGrievance }
                         {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtSourceOfGrievance"]}</span> */}
                       </Typography>
                       {formValuesGI &&
+                                                formValuesGI.txtSourceOfGrievance &&
+                                                formValuesGI.txtSourceOfGrievance.CommonMasterValueID &&
+                                                formValuesGI.txtSourceOfGrievance.CommonMasterValueID === 132304 ? (
+                                                  <Typography
+                                                    sx={{
+                                                      fontFamily: "Quicksand, sans-serif",
+                                                      display: "flex",
+                                                      flexDirection: "column",
+                                                      gap: "2px",
+                                                      fontSize: "14px",
+                                                    }}
+                                                  >
+                                                    <span>
+                                                      CPGRAM Registration Number<span className="asteriskCss">&#42;</span>
+                                                    </span>{" "}
+                                                    <InputGroup ErrorMsg={formValidationKRPHError["txtCPGramRegistrationNumber"]}>
+                                                      <InputControl
+                                                        Input_type="input"
+                                                        name="txtCPGramRegistrationNumber"
+                                                        value={formValuesGI.txtCPGramRegistrationNumber}
+                                                        onChange={(e) => updateStateGI("txtCPGramRegistrationNumber", e.target.value)}
+                                                      />
+                                                    </InputGroup>
+                                                    {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtCPGramRegistrationNumber"]}</span> */}
+                                                  </Typography>
+                                                ) : null}
+                      {formValuesGI &&
                       formValuesGI.txtSourceOfGrievance &&
                       formValuesGI.txtSourceOfGrievance.CommonMasterValueID &&
                       formValuesGI.txtSourceOfGrievance.CommonMasterValueID === 132301 ? (
@@ -1260,6 +1344,56 @@ const EditOfflineGrievance = ({ showfunc, selectedData, updateOfflineGrievance }
                         </Typography>
                       ) : null}
                     </Box>
+                     <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+                                                    <div style={{ display: "flex", alignItems: "flex-start", padding: "0px 0px 0px 15px" }}>
+                                                                 
+                                                               </div>
+                                                    <div style={{ display: "flex", alignItems: "flex-end" }}>
+                                                        <>
+                                                          <Tooltip title="Use LEGAL button only for legal cases" arrow disablePortal PopperProps={{
+                        modifiers: [
+                          {
+                            name: "zIndex",
+                            enabled: true,
+                            phase: "write",
+                            fn: ({ state }) => {
+                              state.styles.popper.zIndex = 99999999999; // A ensure above dialog
+                            },
+                          },
+                        ],
+                      }}>
+                                                            <IconButton color="primary" >
+                                                              <InfoIcon />
+                                                            </IconButton>
+                                                          </Tooltip>
+                                        
+                                                          <Button
+                                                            variant={showMessage ? "contained" : "outlined"}
+                                                            color={showMessage ? "error" : "error"}
+                                                            onClick={selectedData && selectedData.IsLegal === 0 ? () => {
+                                                              handleSOSPopup();
+                                                            }: null}
+                                                          >
+                                                            Legal
+                                                          </Button>
+                                                          {selectedData && selectedData.IsLegal === 1 ?<> 
+                                                          <Button onClick={() => {
+                                                              handleEditSOSPopup();
+                                                            }}>Edit</Button>  <Button onClick={() => {
+                                                              handleRemoveSOSPopup();
+                                                            }}>Remove</Button></> : null }
+                                                          <EditSOSEmergencyOfflineGrievancePopup
+                                                            setOpenSOS={setOpenSOS}
+                                                            setShowMessage={setShowMessage}
+                                                            open={openSOS}
+                                                            onClose={handleCloseSOSPopup}
+                                                            formValuesGI={formValuesGI}
+                                                            updateStateGI={updateStateGI}
+                                                            setAlertMessage={setAlertMessage} 
+                                                          />
+                                                        </>
+                                                    </div>
+                                                  </Box>  
                   </Card>
                 </motion.div>
               </AnimatePresence>

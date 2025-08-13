@@ -1,6 +1,7 @@
 import { React, useState, useEffect, useRef } from "react";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
-import { Box, Card, Typography } from "@mui/material";
+import { Box, Card, Typography, Tooltip, IconButton, Button } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
 import { motion, AnimatePresence } from "framer-motion";
 import { dateToCompanyFormat } from "Configration/Utilities/dateformat";
 import moment from "moment";
@@ -13,7 +14,7 @@ import { getMasterDataBinding } from "../../Modules/Support/ManageTicket/Service
 import { ticketDataBindingData } from "Components/Common/Welcome/Service/Methods";
 import { addKRPHGrievenceSupportTicketData, gCPFileUploadData, addKRPHGrievanceAttachmentData } from "./Services/Methods";
 import BizClass from "./OfflineGrievance.module.scss";
-import Config from "../../../Configration/Config.json";
+import SOSEmergencyOfflineGrievancePopup from "./SOSEmergencyOfflineGrievancePopup";
 
 const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
   const setAlertMessage = AlertMessage();
@@ -85,6 +86,8 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
     txtTicketCategory: null,
     txtDocumentUpload: "",
     txtTicketDescription: "",
+    txtLegalDescription: "",
+    txtCPGramRegistrationNumber: "",
   });
 
   const [formValidationKRPHError, setFormValidationKRPHError] = useState({});
@@ -143,6 +146,18 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
     if (name === "txtSourceOfGrievance") {
       if (!value || typeof value === "undefined") {
         errorsMsg = "Source Of Grievance is required!";
+      }
+    }
+
+    if (name === "txtCPGramRegistrationNumber") {
+      if (!value || typeof value === "undefined") {
+        errorsMsg = "CPGRAM Registration Number is required!";
+      }
+      if (value) {
+        const pattern = new RegExp(/^[A-Z0-9]+\/[A-Z]+\/\d{4}\/\d+$/);
+        if (!pattern.test(value)) {
+          errorsMsg = "CPGRAM Registration Number is not valid";
+        }
       }
     }
 
@@ -218,6 +233,14 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
       // A errors["txtMobileNumber"] = validateKRPHInfoField("txtMobileNumber", formValuesGI.txtMobileNumber);
       errors["txtComplaintDate"] = validateKRPHInfoField("txtComplaintDate", formValuesGI.txtComplaintDate);
       errors["txtSourceOfGrievance"] = validateKRPHInfoField("txtSourceOfGrievance", formValuesGI.txtSourceOfGrievance);
+      if (
+        formValuesGI &&
+        formValuesGI.txtSourceOfGrievance &&
+        formValuesGI.txtSourceOfGrievance.CommonMasterValueID &&
+        formValuesGI.txtSourceOfGrievance.CommonMasterValueID === 132304
+      ) {
+        errors["txtCPGramRegistrationNumber"] = validateKRPHInfoField("txtCPGramRegistrationNumber", formValuesGI.txtCPGramRegistrationNumber);
+      }
       if (
         formValuesGI &&
         formValuesGI.txtSourceOfGrievance &&
@@ -543,6 +566,8 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
       txtTicketCategory: null,
       txtDocumentUpload: "",
       txtTicketDescription: "",
+      txtLegalDescription: "",
+      txtCPGramRegistrationNumber: "",
     });
   };
 
@@ -650,6 +675,9 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
         insuranceCompany: formValuesGI.txtInsuranceCompany && formValuesGI.txtInsuranceCompany.CompanyName ? formValuesGI.txtInsuranceCompany.CompanyName : "",
         stateMasterName: formValuesGI.txtState && formValuesGI.txtState.StateMasterName ? formValuesGI.txtState.StateMasterName : "",
         grievenceDescription: formValuesGI && formValuesGI.txtTicketDescription ? formValuesGI.txtTicketDescription : "",
+        isLegal: showMessage ? 1 : 0,
+        legalRemarks: showMessage === true && formValuesGI.txtLegalDescription ? formValuesGI.txtLegalDescription : "",
+        cPGramRegistrationNumber: formValuesGI && formValuesGI.txtCPGramRegistrationNumber ? formValuesGI.txtCPGramRegistrationNumber : "",
       };
       setisBtndisabled(1);
       setBtnLoaderSupportTicketActive(true);
@@ -731,11 +759,15 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                   : 0,
               ReceiptSource:
                 formValuesGI.txtSourceOfReceipt && formValuesGI.txtSourceOfReceipt.CommonMasterValue ? formValuesGI.txtSourceOfReceipt.CommonMasterValue : "",
+              IsLegal: showMessage ? 1 : 0,
+              LegalRemarks: showMessage === true && formValuesGI.txtLegalDescription ? formValuesGI.txtLegalDescription : "",
+              CPGramRegistrationNumber: formValuesGI && formValuesGI.txtCPGramRegistrationNumber ? formValuesGI.txtCPGramRegistrationNumber : "", 
               IsNewlyAdded: true,
             },
           ];
           updateFarmersTickets(newlyAddedTicket);
           ClearFormFields();
+          setShowMessage(false);
           if (pAttachment.length > 0) {
             for (let i = 0; i < pAttachment.length; i++) {
               const formDataDoc = new FormData();
@@ -789,6 +821,25 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
     fileRef.current.value = null;
     setFormValidationKRPHError({});
   };
+
+  
+    const [openSOS, setOpenSOS] = useState(false);
+    const [showMessage, setShowMessage] = useState(false);
+  
+    const handleSOSPopup = () => {
+      if (showMessage === true) {
+        setShowMessage(false);
+      }
+  
+      if (showMessage === false) {
+        setOpenSOS(true);
+        setShowMessage(true);
+      }
+    };
+    const handleCloseSOSPopup = () => {
+      setOpenSOS(false);
+      setShowMessage(false);
+    };
 
   useEffect(() => {
     const currentYear = new Date().getFullYear();
@@ -1060,6 +1111,33 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                         </InputGroup>
                         {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtSourceOfGrievance"]}</span> */}
                       </Typography>
+                       {formValuesGI &&
+                          formValuesGI.txtSourceOfGrievance &&
+                          formValuesGI.txtSourceOfGrievance.CommonMasterValueID &&
+                          formValuesGI.txtSourceOfGrievance.CommonMasterValueID === 132304 ? (
+                            <Typography
+                              sx={{
+                                fontFamily: "Quicksand, sans-serif",
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "2px",
+                                fontSize: "14px",
+                              }}
+                            >
+                              <span>
+                                CPGRAM Registration Number<span className="asteriskCss">&#42;</span>
+                              </span>{" "}
+                              <InputGroup ErrorMsg={formValidationKRPHError["txtCPGramRegistrationNumber"]}>
+                                <InputControl
+                                  Input_type="input"
+                                  name="txtCPGramRegistrationNumber"
+                                  value={formValuesGI.txtCPGramRegistrationNumber}
+                                  onChange={(e) => updateStateGI("txtCPGramRegistrationNumber", e.target.value)}
+                                />
+                              </InputGroup>
+                              {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtCPGramRegistrationNumber"]}</span> */}
+                            </Typography>
+                          ) : null}
                       {formValuesGI &&
                       formValuesGI.txtSourceOfGrievance &&
                       formValuesGI.txtSourceOfGrievance.CommonMasterValueID &&
@@ -1318,7 +1396,52 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                           {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtInsuranceCompany"]}</span> */}
                         </Typography>
                       ) : null}
+                              
                     </Box>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+                                <div style={{ display: "flex", alignItems: "flex-start", padding: "0px 0px 0px 15px" }}>
+                                             
+                                           </div>
+                                <div style={{ display: "flex", alignItems: "flex-end" }}>
+                                    <>
+                                      <Tooltip title="Use LEGAL button only for legal cases" arrow disablePortal PopperProps={{
+    modifiers: [
+      {
+        name: "zIndex",
+        enabled: true,
+        phase: "write",
+        fn: ({ state }) => {
+          state.styles.popper.zIndex = 99999999999; // A ensure above dialog
+        },
+      },
+    ],
+  }}>
+                                        <IconButton color="primary" >
+                                          <InfoIcon />
+                                        </IconButton>
+                                      </Tooltip>
+                    
+                                      <Button
+                                        onClick={() => {
+                                          handleSOSPopup();
+                                        }}
+                                        variant={showMessage ? "contained" : "outlined"}
+                                        color={showMessage ? "error" : "error"}
+                                      >
+                                        Legal
+                                      </Button>
+                                      <SOSEmergencyOfflineGrievancePopup
+                                        setOpenSOS={setOpenSOS}
+                                        setShowMessage={setShowMessage}
+                                        open={openSOS}
+                                        onClose={handleCloseSOSPopup}
+                                        formValuesGI={formValuesGI}
+                                        updateStateGI={updateStateGI}
+                                        setAlertMessage={setAlertMessage}
+                                      />
+                                    </>
+                                </div>
+                              </Box>  
                   </Card>
                 </motion.div>
               </AnimatePresence>

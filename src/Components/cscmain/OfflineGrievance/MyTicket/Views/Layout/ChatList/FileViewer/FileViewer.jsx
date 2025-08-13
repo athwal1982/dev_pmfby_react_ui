@@ -5,7 +5,11 @@ import { Loader } from "Framework/Components/Widgets";
 import { FaFileImage, FaFilePdf, FaRegTrashAlt } from "react-icons/fa";
 import ConfirmDialog from "Framework/ConfirmDialog/ConfirmDialog";
 import { getSessionStorage } from "Components/Common/Login/Auth/auth";
-import { getKRPHGrievanceAttachmentData, deleteKRPHGrievanceAttachmentData, getKRPHGrievenceTicketHistoryAttachmentData } from "../../../../../Services/Methods";
+import {
+  getKRPHGrievanceAttachmentData,
+  deleteKRPHGrievanceAttachmentData,
+  getKRPHGrievenceTicketHistoryAttachmentData,
+} from "../../../../../Services/Methods";
 
 function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment, apiDataAttachment }) {
   const setAlertMessage = AlertMessage();
@@ -29,18 +33,18 @@ function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment
       let formdata = null;
       let result = null;
       setFileViewerIsLoading(true);
-            if (apiDataAttachment.apiFor === "SPTCKT") {
-              formdata = {
-                 grievenceSupportTicketID: selectedData && selectedData.GrievenceSupportTicketID ? selectedData.GrievenceSupportTicketID : 0,
-              };
-              result = await getKRPHGrievanceAttachmentData(formdata);
-            } else if (apiDataAttachment.apiFor === "TCKHIS") {
-              formdata = {
-                grievenceSupportTicketID: selectedData && selectedData.GrievenceSupportTicketID ? selectedData.GrievenceSupportTicketID : 0,
-                grievenceTicketHistoryID: apiDataAttachment && apiDataAttachment.GrievenceTicketHistoryID ? apiDataAttachment.GrievenceTicketHistoryID : 0,
-              };
-              result = await getKRPHGrievenceTicketHistoryAttachmentData(formdata);
-            }
+      if (apiDataAttachment.apiFor === "SPTCKT") {
+        formdata = {
+          grievenceSupportTicketID: selectedData && selectedData.GrievenceSupportTicketID ? selectedData.GrievenceSupportTicketID : 0,
+        };
+        result = await getKRPHGrievanceAttachmentData(formdata);
+      } else if (apiDataAttachment.apiFor === "TCKHIS") {
+        formdata = {
+          grievenceSupportTicketID: selectedData && selectedData.GrievenceSupportTicketID ? selectedData.GrievenceSupportTicketID : 0,
+          grievenceTicketHistoryID: apiDataAttachment && apiDataAttachment.GrievenceTicketHistoryID ? apiDataAttachment.GrievenceTicketHistoryID : 0,
+        };
+        result = await getKRPHGrievenceTicketHistoryAttachmentData(formdata);
+      }
       setFileViewerIsLoading(false);
       if (result.responseCode === 1) {
         if (result.responseData && result.responseData.attachment && result.responseData.attachment.length > 0) {
@@ -107,7 +111,7 @@ function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment
     // A  button: { confirmText: "Yes", abortText: "No", Color: "Danger" },
     // A  onConfirm: () => deleteFileOnClick(pGrievenceTicketAttachmentID),
     // A });
-  deleteFileOnClick(pGrievenceTicketAttachmentID);  
+    deleteFileOnClick(pGrievenceTicketAttachmentID);
   };
 
   useEffect(() => {

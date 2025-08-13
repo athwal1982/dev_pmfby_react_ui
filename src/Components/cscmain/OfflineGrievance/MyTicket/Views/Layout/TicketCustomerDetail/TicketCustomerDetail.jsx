@@ -139,6 +139,16 @@ function TicketCustomerDetail({
             </p>
             <FiCopy onClick={() => copyToClipboard("spnSourceofGrievance")} />
           </div>
+           {ticketData && ticketData.GrievenceTicketSourceTypeID === 132304 ? (
+            <div className={BizClass.SubBox}>
+              <RiNewspaperLine />
+              <p>
+                CPGRAM Registration No. :
+                <span id="spnSourceofGrievance">{ticketData && ticketData.CPGramRegistrationNumber ? ticketData.CPGramRegistrationNumber : ""}</span>
+              </p>
+              <FiCopy onClick={() => copyToClipboard("spnSourceofGrievance")} />
+            </div>
+          ) : null}
           {ticketData && ticketData.GrievenceTicketSourceTypeID === 132305 ? (
             <div className={BizClass.SubBox}>
               <RiNewspaperLine />

@@ -14,7 +14,8 @@ function PageAuthenticator() {
   if (checkAuthExist()) {
     if (pathUrl.indexOf("uniqueID") !== -1 && pathUrl.indexOf("userID") !== -1 && pathUrl.indexOf("mobileNumber") !== -1) {
       if (servicesuccessData === "TC" || servicesuccessData === "CD") {
-        return <Navigate to="/ServiceSuccess" />;
+        // A return <Navigate to="/ServiceSuccess" />;
+        return <Navigate to="/LandingPage" />;
       }
       // Areturn <Navigate to="/login" />;
       // A return <Navigate to="/krph" />;

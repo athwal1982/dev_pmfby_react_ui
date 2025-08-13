@@ -48,7 +48,7 @@ function ChatList({
   setWordcountEditTicketComment,
   setSelectedHistoryData,
   apiDataAttachment,
-  setapiDataAttachment
+  setapiDataAttachment,
 }) {
   const setAlertMessage = AlertMessage();
   const user = getSessionStorage("user");
@@ -56,10 +56,10 @@ function ChatList({
 
   const [isFileViewerModalOpen, setIsFileViewerModalOpen] = useState(false);
 
-  const toggleFileViewerModal = (papiFor,pTicketHistoryID) => {
+  const toggleFileViewerModal = (papiFor, pTicketHistoryID) => {
     debugger;
     setIsFileViewerModalOpen(!isFileViewerModalOpen);
-    setapiDataAttachment({apiFor: papiFor, TicketHistoryID: pTicketHistoryID});
+    setapiDataAttachment({ apiFor: papiFor, TicketHistoryID: pTicketHistoryID });
   };
 
   const [isEditTicketCommentModalOpen, setIsEditTicketCommentModalOpen] = useState(false);
@@ -164,8 +164,11 @@ function ChatList({
                             {" "}
                             ({data.CreatedBY} - {data.UserType}){" "}
                             {data.HasDocument && data.HasDocument === "1" ? (
-                                   <MdAttachFile onClick={() => toggleFileViewerModal("TCKHIS",data.TicketHistoryID)} style={{ cursor: "pointer", color: "#000000" }} />
-                             ) : null}{" "}
+                              <MdAttachFile
+                                onClick={() => toggleFileViewerModal("TCKHIS", data.TicketHistoryID)}
+                                style={{ cursor: "pointer", color: "#000000" }}
+                              />
+                            ) : null}{" "}
                           </p>
                           <span>
                             {/* {dateFormat(data.TicketHistoryDate.split("T")[0])} at {tConvert(data.TicketHistoryDate.split("T")[1])} */}

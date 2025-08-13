@@ -29,6 +29,7 @@ const APIEndpoints = {
     FarmerCallingHistory: "FGMS/FarmerCallingHistory",
     AddKRPHSupportTicket: "FGMS/AddKRPHSupportTicket",
     KrphFarmerCallingHistory: "FGMS/KrphFarmerCallingHistory",
+    AddKrphfarmerCallingHistory: "FGMS/AddKrphfarmerCallingHistory",
     CheckKRPHFarmerByMobileNumber: "FGMS/CheckKRPHFarmerByMobileNumber",
     KRPHFarmerSelect: "FGMS/KRPHFarmerSelect",
     AddKRPHFarmerSupportTicket: "FGMS/AddKRPHFarmerSupportTicket",

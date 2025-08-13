@@ -21,6 +21,9 @@ import EditOfflineGrievance from "./EditOfflineGrievance";
 import MyTicketPage from "./MyTicket/index";
 import FileViewer from "./MyTicket/Views/Layout/ChatList/FileViewer/FileViewer";
 import FileUpload from "./FileUpload";
+import { Dialog, DialogContent, TextField, IconButton, Typography, Box } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 
 const cellActionTemplate = (props) => {
   const editTicketRight = getUserRightCodeAccess("ofg3");
@@ -50,10 +53,15 @@ const cellActionTemplate = (props) => {
       ) : null}
       {props.data && props.data.HasDocument && props.data.HasDocument === 1 ? (
         <MdAttachFile
-          style={{ fontSize: "16px", color: "#000000", cursor: "pointer", display:"none" }}
+          style={{ fontSize: "16px", color: "#000000", cursor: "pointer", display: "none" }}
           onClick={() => props.toggleFileViewerModal(props.data)}
           title="View Attachment"
         />
+      ) : null}
+      {props.data && props.data.IsLegal && props.data.IsLegal === 1 ? (
+        <span style={{ fontSize: "18px", cursor: "pointer" }} onClick={() => props.toggleEmergencyCallModal(props.data)}>
+           🏛️
+        </span>
       ) : null}
     </div>
   );
@@ -281,6 +289,7 @@ const OfflineGrievance = () => {
     // A XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
     worksheet["!cols"] = [
       { width: 20 },
+      { width: 25 },
       { width: 15 },
       { width: 22 },
       { width: 22 },
@@ -327,6 +336,7 @@ const OfflineGrievance = () => {
     }
     const columnOrder = {
       GrievenceSupportTicketNo: "Ticket No",
+      CPGramRegistrationNumber: "CPGRAM Registration No",
       ComplaintDate: "Complaint Date",
       ApplicationNo: "Application No",
       InsurancePolicyNo: "Policy No",
@@ -354,6 +364,7 @@ const OfflineGrievance = () => {
     const mappedData = rowData.map((value) => {
       return {
         GrievenceSupportTicketNo: value.GrievenceSupportTicketNo,
+        CPGramRegistrationNumber: value.CPGramRegistrationNumber,
         ComplaintDate: value.ComplaintDate ? dateToSpecificFormat(value.ComplaintDate.split("T")[0], "DD-MM-YYYY") : "",
         ApplicationNo: value.ApplicationNo,
         InsurancePolicyNo: value.InsurancePolicyNo,
@@ -415,39 +426,18 @@ const OfflineGrievance = () => {
 
   const updateOfflineGrievance = (selecteddata) => {
     debugger;
-    const mappedData = rowData.map((data) => {
-      if (data.GrievenceSupportTicketID === selecteddata.GrievenceSupportTicketID) {
-        data.RepresentationType = selectedData.RepresentationType;
-        data.InsuranceCompanyID = selecteddata.InsuranceCompanyID;
-        data.InsuranceCompany = selecteddata.InsuranceCompany;
-        data.FarmerName = selecteddata.FarmerName;
-        data.Email = selecteddata.Email;
-        data.RequestorMobileNo = selecteddata.RequestorMobileNo;
-        data.ComplaintDate = selecteddata.ComplaintDate;
-        data.StateCodeAlpha = selecteddata.StateCodeAlpha;
-        data.DistrictRequestorID = selecteddata.DistrictRequestorID;
-        data.GrievenceSourceTypeID = selecteddata.GrievenceSourceTypeID;
-        data.GrievenceSourceOtherType = selecteddata.GrievenceSourceOtherType;
-        data.SocialMediaTypeID = selecteddata.SocialMediaTypeID;
-        data.OtherSocialMedia = selecteddata.OtherSocialMedia;
-        data.SocialMediaURL = selecteddata.SocialMediaURL;
-        data.ReceiptSourceID = selecteddata.ReceiptSourceID;
-        data.TicketCategoryID = selecteddata.TicketCategoryID;
-        data.TicketSubCategoryID = selecteddata.TicketSubCategoryID;
-        data.RequestYear = selecteddata.RequestYear;
-        data.RequestSeason = selecteddata.RequestSeason;
-        data.CropName = selecteddata.CropName;
-        data.ApplicationNo = selecteddata.ApplicationNo;
-        data.InsurancePolicyNo = selecteddata.InsurancePolicyNo;
-        data.DistrictMasterName = selecteddata.DistrictMasterName;
-        data.ticketSubCategoryName = selecteddata.ticketSubCategoryName;
-        data.ticketCategoryName = selecteddata.ticketCategoryName;
-        data.StateMasterName = selecteddata.StateMasterName;
-        data.GrievenceDescription = selecteddata.GrievenceDescription;
-      }
-      return data;
-    });
-    setRowData(mappedData);
+    if (gridApi) {
+      const itemsToUpdate = [];
+      gridApi.forEachNode(function (rowNode) {
+        if (rowNode.data.GrievenceSupportTicketID === selecteddata.GrievenceSupportTicketID) {
+          itemsToUpdate.push(selecteddata);
+          rowNode.setData(selecteddata);
+        }
+      });
+      gridApi.updateRowData({
+        update: itemsToUpdate,
+      });
+    }
   };
 
   const updateInsuranceCompany = (selecteddata) => {
@@ -473,13 +463,21 @@ const OfflineGrievance = () => {
     setRowData(mappedData);
   };
 
-  const getRowStyle = (params) => {
+const getRowStyle = (params) => {
     if (params.data.IsNewlyAdded) {
       return { background: "#d5a10e" };
     }
     if (params.node.rowIndex % 2 === 0) {
+      if (params.data.IsLegal === 1) {
+        return { background: "#ff9500" };
+      }
       return { background: "#fff" };
+    } else {
+      if (params.data.IsLegal === 1) {
+        return { background: "#ff9500" };
+      }
     }
+
     return { background: "#f3f6f9" };
   };
 
@@ -515,6 +513,7 @@ const OfflineGrievance = () => {
   const toggleEditInsuranceCompanyModal = (data) => {
     openEditInsuranceCompanyPage(data);
   };
+  
 
   useEffect(() => {
     getStateListData();
@@ -585,85 +584,85 @@ const OfflineGrievance = () => {
     txtSearchFilter: "",
   });
 
-    const updateFilterState = (name, value) => {
-      setFilterValues({ ...filterValues, [name]: value });
-    };
-  
-    const searchByMobileTicketsOnClick = async (pageIndex, pageSize) => {
-      try {
-        let ticketNoVal = "";
-        let mobileNoVal = "";
-        let applicationNoVal = "";
-  
-        if (!filterValues.SearchByFilter) {
+  const updateFilterState = (name, value) => {
+    setFilterValues({ ...filterValues, [name]: value });
+  };
+
+  const searchByMobileTicketsOnClick = async (pageIndex, pageSize) => {
+    try {
+      let ticketNoVal = "";
+      let mobileNoVal = "";
+      let applicationNoVal = "";
+
+      if (!filterValues.SearchByFilter) {
+        setAlertMessage({
+          type: "error",
+          message: "Please select search type.",
+        });
+        return;
+      }
+      const regex = new RegExp("^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-s./0-9]*$");
+      if (filterValues.SearchByFilter.value === "1") {
+        if (filterValues.txtSearchFilter.length === 0) {
           setAlertMessage({
             type: "error",
-            message: "Please select search type.",
+            message: "Please enter Mobile No.",
           });
           return;
         }
-        const regex = new RegExp("^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-s./0-9]*$");
-        if (filterValues.SearchByFilter.value === "1") {
-          if (filterValues.txtSearchFilter.length === 0) {
-            setAlertMessage({
-              type: "error",
-              message: "Please enter Mobile No.",
-            });
-            return;
-          }
-  
-          if (!regex.test(filterValues.txtSearchFilter)) {
-            setAlertMessage({
-              type: "error",
-              message: "Please enter Valid Mobile No.",
-            });
-            return;
-          }
-          if (filterValues.txtSearchFilter.length < 10 || filterValues.txtSearchFilter.length > 10) {
-            setAlertMessage({
-              type: "error",
-              message: "Please enter Valid 10 digit mobile No.",
-            });
-            return;
-          }
-  
-          mobileNoVal = filterValues.txtSearchFilter;
-        } else if (filterValues.SearchByFilter.value === "2") {
-          if (filterValues.txtSearchFilter.length === 0) {
-            setAlertMessage({
-              type: "error",
-              message: "Please enter Ticket No.",
-            });
-            return;
-          }
-  
-          if (!regex.test(filterValues.txtSearchFilter)) {
-            setAlertMessage({
-              type: "error",
-              message: "Please enter numeric value for Ticket No.",
-            });
-            return;
-          }
-          ticketNoVal = filterValues.txtSearchFilter;
-        } else if (filterValues.SearchByFilter.value === "3") {
-          if (filterValues.txtSearchFilter.length === 0) {
-            setAlertMessage({
-              type: "error",
-              message: "Please enter Application No.",
-            });
-            return;
-          }
-          if (!regex.test(filterValues.txtSearchFilter)) {
-            setAlertMessage({
-              type: "error",
-              message: "Please enter numeric value for Application No",
-            });
-            return;
-          }
-          applicationNoVal = filterValues.txtSearchFilter;
-        } 
-        const formData = {
-        fromDate:  "",
+
+        if (!regex.test(filterValues.txtSearchFilter)) {
+          setAlertMessage({
+            type: "error",
+            message: "Please enter Valid Mobile No.",
+          });
+          return;
+        }
+        if (filterValues.txtSearchFilter.length < 10 || filterValues.txtSearchFilter.length > 10) {
+          setAlertMessage({
+            type: "error",
+            message: "Please enter Valid 10 digit mobile No.",
+          });
+          return;
+        }
+
+        mobileNoVal = filterValues.txtSearchFilter;
+      } else if (filterValues.SearchByFilter.value === "2") {
+        if (filterValues.txtSearchFilter.length === 0) {
+          setAlertMessage({
+            type: "error",
+            message: "Please enter Ticket No.",
+          });
+          return;
+        }
+
+        if (!regex.test(filterValues.txtSearchFilter)) {
+          setAlertMessage({
+            type: "error",
+            message: "Please enter numeric value for Ticket No.",
+          });
+          return;
+        }
+        ticketNoVal = filterValues.txtSearchFilter;
+      } else if (filterValues.SearchByFilter.value === "3") {
+        if (filterValues.txtSearchFilter.length === 0) {
+          setAlertMessage({
+            type: "error",
+            message: "Please enter Application No.",
+          });
+          return;
+        }
+        if (!regex.test(filterValues.txtSearchFilter)) {
+          setAlertMessage({
+            type: "error",
+            message: "Please enter numeric value for Application No",
+          });
+          return;
+        }
+        applicationNoVal = filterValues.txtSearchFilter;
+      }
+      const formData = {
+        fromDate: "",
         toDate: "",
         requestorMobileNo: mobileNoVal,
         grievenceSupportTicketNo: ticketNoVal,
@@ -673,10 +672,10 @@ const OfflineGrievance = () => {
         socialMediaTypeID: 0,
         receiptSourceID: 0,
         ticketStatusID: 0,
-        };
-        setIsLoadingMaster(true);
-        const result = await getGrievenceTicketsListData(formData);
-        setIsLoadingMaster(false);
+      };
+      setIsLoadingMaster(true);
+      const result = await getGrievenceTicketsListData(formData);
+      setIsLoadingMaster(false);
       if (result.responseCode === 1) {
         if (result.responseData && result.responseData.grievenceTicket && result.responseData.grievenceTicket.length > 0) {
           setRowData([]);
@@ -688,17 +687,25 @@ const OfflineGrievance = () => {
         setAlertMessage({ open: true, type: "error", message: result.responseMessage });
         console.log(result.responseMessage);
       }
-      } catch (error) {
-        console.log(error);
-        setAlertMessage({
-          type: "error",
-          message: error,
-        });
-      }
+    } catch (error) {
+      console.log(error);
+      setAlertMessage({
+        type: "error",
+        message: error,
+      });
+    }
+  };
+
+    const [openEmegencyCallModal, setOpenEmegencyCallModal] = useState(false);
+    const [ticketRowData, setticketRowData] = useState();
+    const toggleEmergencyCallModal = (data) => {
+      setOpenEmegencyCallModal(!openEmegencyCallModal);
+      setticketRowData(data);
     };
 
   return (
     <>
+        {openEmegencyCallModal && <SOSEmergencyPopup toggleEmergencyCallModal={toggleEmergencyCallModal} ticketRowData={ticketRowData} />}
       {openAddOfflineGrievanceMdal && <AddOfflineGrievance showfunc={openAddOfflineGrievancePage} updateFarmersTickets={updateFarmersTickets} />}
       {openEditOfflineGrievanceMdal && (
         <EditOfflineGrievance showfunc={openEditOfflineGrievancePage} selectedData={selectedData} updateOfflineGrievance={updateOfflineGrievance} />
@@ -725,23 +732,23 @@ const OfflineGrievance = () => {
           ) : null}
           <PageBar.ExcelButton onClick={() => exportClick()}>Export</PageBar.ExcelButton>
           <HeaderPortal>
-             <PageBar.Select
-                                  ControlTxt="Search By"
-                                  name="SearchByFilter"
-                                  getOptionLabel={(option) => `${option.label}`}
-                                  getOptionValue={(option) => `${option}`}
-                                  options={searchByoptions}
-                                  value={filterValues.SearchByFilter}
-                                  onChange={(e) => updateFilterState("SearchByFilter", e)}
-                                />
-                                <PageBar.Search
-                                  placeholder="Search "
-                                  name="txtSearchFilter"
-                                  value={filterValues.txtSearchFilter}
-                                  onChange={(e) => updateFilterState(e.target.name, e.target.value)}
-                                  onClick={() => searchByMobileTicketsOnClick()}
-                                  style={{ width: "158px" }}
-                                />
+            <PageBar.Select
+              ControlTxt="Search By"
+              name="SearchByFilter"
+              getOptionLabel={(option) => `${option.label}`}
+              getOptionValue={(option) => `${option}`}
+              options={searchByoptions}
+              value={filterValues.SearchByFilter}
+              onChange={(e) => updateFilterState("SearchByFilter", e)}
+            />
+            <PageBar.Search
+              placeholder="Search "
+              name="txtSearchFilter"
+              value={filterValues.txtSearchFilter}
+              onChange={(e) => updateFilterState(e.target.name, e.target.value)}
+              onClick={() => searchByMobileTicketsOnClick()}
+              style={{ width: "158px" }}
+            />
           </HeaderPortal>
         </div>
         <div className={BizClass.MainBox}>
@@ -761,7 +768,7 @@ const OfflineGrievance = () => {
                     headerName="Action"
                     lockPosition="1"
                     pinned="left"
-                    width={100}
+                    width={125}
                     cellRenderer="actionTemplate"
                     cellRendererParams={{
                       toggleSupportTicketDetailsModal,
@@ -769,6 +776,7 @@ const OfflineGrievance = () => {
                       toggleEditOfflineGrievanceModal,
                       toggleFileViewerModal,
                       toggleFileUploadModal,
+                      toggleEmergencyCallModal,
                     }}
                   />
                   <DataGrid.Column valueGetter="node.rowIndex + 1" field="#" headerName="Sr No." width={80} pinned="left" />
@@ -781,6 +789,7 @@ const OfflineGrievance = () => {
                     }
                   />
                   <DataGrid.Column field="GrievenceSupportTicketNo" headerName="Ticket No" width="150px" />
+                    <DataGrid.Column field="CPGramRegistrationNumber" headerName="CPGRAM Registration No" width="200px" />
                   <DataGrid.Column
                     field="ComplaintDate"
                     headerName="Complaint Date"
@@ -951,3 +960,32 @@ const OfflineGrievance = () => {
 };
 
 export default OfflineGrievance;
+
+function SOSEmergencyPopup({ toggleEmergencyCallModal, ticketRowData }) {
+  return (
+    <Dialog open={toggleEmergencyCallModal} onClose={toggleEmergencyCallModal} maxWidth="sm" fullWidth>
+      {/* Header Section */}
+      <Box sx={{ display: "flex", alignItems: "center", p: 2, borderBottom: "1px solid #ddd" }}>
+        <RadioButtonCheckedIcon sx={{ color: "red", mr: 1 }} />
+        <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: "bold", color: "red" }}>
+           Legal Cases
+        </Typography>
+        <IconButton onClick={toggleEmergencyCallModal}>
+          <CloseIcon />
+        </IconButton>
+      </Box>
+
+      {/* Content */}
+      <DialogContent>
+        <Typography sx={{ mb: 2, color: "#555" }}>
+                 Legal cases involving court notices, FIRs, or ongoing litigation are flagged as high priority and require immediate escalation and resolution for Legal cases.
+               </Typography>
+
+        {/* Description Field */}
+        <Typography sx={{ fontWeight: "bold", mb: 1 }}>Description <span className="asteriskCss">&#42;</span></Typography>
+        <TextField value={ticketRowData.LegalRemarks} fullWidth multiline rows={4} variant="outlined" />
+      </DialogContent>
+    </Dialog>
+  );
+}
+

@@ -68,6 +68,7 @@ import {
   checkKRPHFarmerByMobileNumber,
   farmerTicketSummaryKRPH,
   addKRPHFarmerSupportTicketData,
+  addKrphfarmerCallingHistorydata,
 } from "./Services/Methods";
 import { getUserRightData } from "../../Modules/Setup/MenuManagement/Services/Methods";
 import MyTicketPage from "./MyTicket/index";
@@ -318,7 +319,8 @@ function KrphAllActivitiesNDN() {
         callPurpose: formValuesGI.txtCallPurpose && formValuesGI.txtCallPurpose.Value ? formValuesGI.txtCallPurpose.Value : "",
         isRegistered: valisRegistered,
       };
-      const result = await krphFarmerCallingHistorydata(formData);
+      // A const result = await krphFarmerCallingHistorydata(formData);
+      const result = await addKrphfarmerCallingHistorydata(formData);
       if (result.response.responseCode === 1) {
         setSessionStorage("servicesuccess", "CD");
         setServiceSuccessState("SUCCESS");
@@ -397,7 +399,8 @@ function KrphAllActivitiesNDN() {
         callPurpose: formValuesGI.txtCallPurpose && formValuesGI.txtCallPurpose.Value ? formValuesGI.txtCallPurpose.Value : "",
         isRegistered: valisRegistered,
       };
-      const result = await krphFarmerCallingHistorydata(formData);
+      // A const result = await krphFarmerCallingHistorydata(formData);
+      const result = await addKrphfarmerCallingHistorydata(formData);
       if (result.response.responseCode === 1) {
         if (result.response.responseData.CallingMasterID > 0) {
           setgetCallingMasterID(result.response.responseData.CallingMasterID);
@@ -457,7 +460,8 @@ function KrphAllActivitiesNDN() {
 
   const SavevalidateFarmerCallingMaserIDFail = async (pformdata) => {
     try {
-      const result = await krphFarmerCallingHistorydata(pformdata);
+      // A const result = await krphFarmerCallingHistorydata(pformdata);
+      const result = await addKrphfarmerCallingHistorydata(pformdata);
       if (result.response.responseCode === 1) {
         setgetCallingMasterID(result.response.responseData.CallingMasterID);
       }

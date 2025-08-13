@@ -26,8 +26,8 @@ function ChatBox({
 }) {
   const sizeLimit = 2000;
 
-   const user = getSessionStorage("user");
-   const ChkBRHeadTypeID = user && user.BRHeadTypeID ? user.BRHeadTypeID.toString() : "0";
+  const user = getSessionStorage("user");
+  const ChkBRHeadTypeID = user && user.BRHeadTypeID ? user.BRHeadTypeID.toString() : "0";
 
   return (
     <div className={BizClass.ReplyBox} style={{ display: replyBoxCollapsed ? "none" : "block" }}>
@@ -36,23 +36,23 @@ function ChatBox({
         <p>
           Count : {sizeLimit} / {sizeLimit - wordcount}
         </p>
-         <Form.InputGroup label="" errorMsg={formValidationSupportTicketReviewError["txtDocumentUpload"]}>
-                  <Form.InputControl
-                    control="input"
-                    type="file"
-                    accept="image/*,.pdf"
-                    name="txtDocumentUpload"
-                    onChange={(e) => updateStateTicketProperties(e.target.name, e.target.files)}
-                    ref={fileRef}
-                    multiple
-                  />
-                </Form.InputGroup>
-                <Form.InputGroup column={1}>
-                  <Button type="button" varient="primary" onClick={() => handleResetFile()}>
-                    {" "}
-                    Reset File
-                  </Button>
-                </Form.InputGroup>
+        <Form.InputGroup label="" errorMsg={formValidationSupportTicketReviewError["txtDocumentUpload"]}>
+          <Form.InputControl
+            control="input"
+            type="file"
+            accept="image/*,.pdf"
+            name="txtDocumentUpload"
+            onChange={(e) => updateStateTicketProperties(e.target.name, e.target.files)}
+            ref={fileRef}
+            multiple
+          />
+        </Form.InputGroup>
+        <Form.InputGroup column={1}>
+          <Button type="button" varient="primary" onClick={() => handleResetFile()}>
+            {" "}
+            Reset File
+          </Button>
+        </Form.InputGroup>
         <PageBar.Select
           control="select"
           name="txtTicketStatus"
@@ -68,9 +68,9 @@ function ChatBox({
           Send
         </Button>
         {ChkBRHeadTypeID === "124002" ? (
-                  <Button type="button" varient="primary" trigger={btnLoaderActiveComment} onClick={() => handleAddComment()}>
-                    Comment
-                  </Button>
+          <Button type="button" varient="primary" trigger={btnLoaderActiveComment} onClick={() => handleAddComment()}>
+            Comment
+          </Button>
         ) : null}
       </div>
     </div>

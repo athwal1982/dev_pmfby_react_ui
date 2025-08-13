@@ -3,7 +3,13 @@ import moment from "moment";
 import publicIp from "public-ip";
 import { getSessionStorage } from "Components/Common/Login/Auth/auth";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
-import { addGrievenceSupportTicketReview, getMasterDataBinding, farmerTicketStatusUpdate, addKRPHGrievanceSupportTicketComment,getKRPHGrievanceSupportTicketComment } from "../Services/Services";
+import {
+  addGrievenceSupportTicketReview,
+  getMasterDataBinding,
+  farmerTicketStatusUpdate,
+  addKRPHGrievanceSupportTicketComment,
+  getKRPHGrievanceSupportTicketComment,
+} from "../Services/Services";
 import { gCPFileUploadData, addKRPHGrievenceTicketHistoryAttachmentData } from "../../Services/Methods";
 
 function MyTicketLogics() {
@@ -167,7 +173,7 @@ function MyTicketLogics() {
     setFormValidationSupportTicketReviewError({});
   };
 
-  const [apiDataAttachment, setapiDataAttachment] = useState({apiFor: "", GrievenceTicketHistoryID: 0 });
+  const [apiDataAttachment, setapiDataAttachment] = useState({ apiFor: "", GrievenceTicketHistoryID: 0 });
   const [btnLoaderActive1, setBtnLoaderActive1] = useState(false);
   const handleSave = async (e) => {
     if (e) e.preventDefault();
@@ -201,48 +207,48 @@ function MyTicketLogics() {
       }
     }
     let phasDocument = 0;
-      let pAttachmentPath = "pmfby/public/krph/documents";
-      let pAttachmentSize = 0;
-      let pdbAttachmentPath = [];
-      const pAttachment =
-        formValuesTicketProperties.txtDocumentUpload && formValuesTicketProperties.txtDocumentUpload ? formValuesTicketProperties.txtDocumentUpload : "";
-      if (pAttachment.length > 0) {
-        if (pAttachment.length > 5) {
-          setAlertMessage({
-            type: "error",
-            message: "Please select only 5 attachments.",
-          });
-          return;
-        }
-        phasDocument = 1;
-        for (let i = 0; i < pAttachment.length; i++) {
-          const val = pAttachment[i].name;
-          const valExtension = val.substring(val.lastIndexOf(".")).toLowerCase().slice(1);
-          switch (valExtension) {
-            case "jpeg":
-            case "jpg":
-            case "png":
-            case "pdf":
-              break;
-            default:
-              setAlertMessage({
-                type: "error",
-                message: "Please select only jpeg,jpg,png,pdf extension attachment.",
-              });
-              return;
-          }
-        }
-        for (let i = 0; i < pAttachment.length; i++) {
-          pAttachmentSize = +pAttachment[i].size;
-        }
-        if (pAttachmentSize > 10485760) {
-          setAlertMessage({
-            type: "error",
-            message: "Please upload less than 10MB or 10MB attachment!",
-          });
-          return;
+    let pAttachmentPath = "pmfby/public/krph/documents";
+    let pAttachmentSize = 0;
+    let pdbAttachmentPath = [];
+    const pAttachment =
+      formValuesTicketProperties.txtDocumentUpload && formValuesTicketProperties.txtDocumentUpload ? formValuesTicketProperties.txtDocumentUpload : "";
+    if (pAttachment.length > 0) {
+      if (pAttachment.length > 5) {
+        setAlertMessage({
+          type: "error",
+          message: "Please select only 5 attachments.",
+        });
+        return;
+      }
+      phasDocument = 1;
+      for (let i = 0; i < pAttachment.length; i++) {
+        const val = pAttachment[i].name;
+        const valExtension = val.substring(val.lastIndexOf(".")).toLowerCase().slice(1);
+        switch (valExtension) {
+          case "jpeg":
+          case "jpg":
+          case "png":
+          case "pdf":
+            break;
+          default:
+            setAlertMessage({
+              type: "error",
+              message: "Please select only jpeg,jpg,png,pdf extension attachment.",
+            });
+            return;
         }
       }
+      for (let i = 0; i < pAttachment.length; i++) {
+        pAttachmentSize = +pAttachment[i].size;
+      }
+      if (pAttachmentSize > 10485760) {
+        setAlertMessage({
+          type: "error",
+          message: "Please upload less than 10MB or 10MB attachment!",
+        });
+        return;
+      }
+    }
     try {
       const formData = {
         grievenceTicketHistoryID: 0,
@@ -257,7 +263,7 @@ function MyTicketLogics() {
       const result = await addGrievenceSupportTicketReview(formData);
       setBtnLoaderActive1(false);
       if (result.response.responseCode === 1) {
-         debugger;
+        debugger;
         if (result.response && result.response.responseData && result.response.responseData.GrievenceTicketHistoryID) {
           const ip = await publicIp.v4();
           const user = getSessionStorage("user");
@@ -295,39 +301,39 @@ function MyTicketLogics() {
             type: "success",
             message: result.response.responseMessage,
           });
-                   if (pAttachment.length > 0) {
-                      for (let i = 0; i < pAttachment.length; i++) {
-                        const formDataDoc = new FormData();
-                        formDataDoc.append("filePath", pAttachmentPath);
-                        formDataDoc.append("documents", pAttachment[i]);
-                        formDataDoc.append("uploadedBy", "KRPH");
-          
-                        try {
-                          const resultattachment = await gCPFileUploadData(formDataDoc);
-                          if (resultattachment.responseCode === 1) {
-                            pdbAttachmentPath.push({ attachmentPath: `https://pmfby.amnex.co.in/pmfby/public/krph/documents/${pAttachment[i].name}` });
-                          }
-                        } catch (error) {
-                          console.log(error);
-                        }
-                      }
-                      handleResetFile();
-                      try {
-                        const formDataattachmentPath = {
-                          attachment: pdbAttachmentPath,
-                          grievenceSupportTicketID: ticketData.GrievenceSupportTicketID,
-                          grievenceTicketHistoryID: result.response.responseData.GrievenceTicketHistoryID,
-                        };
-                        await addKRPHGrievenceTicketHistoryAttachmentData(formDataattachmentPath);
-                        setapiDataAttachment({apiFor: "TCKHIS", GrievenceTicketHistoryID: result.response.responseData.GrievenceTicketHistoryID});
-                      } catch (error) {
-                        console.log(error);
-                        setAlertMessage({
-                          type: "error",
-                          message: error,
-                        });
-                      }
-                    }
+          if (pAttachment.length > 0) {
+            for (let i = 0; i < pAttachment.length; i++) {
+              const formDataDoc = new FormData();
+              formDataDoc.append("filePath", pAttachmentPath);
+              formDataDoc.append("documents", pAttachment[i]);
+              formDataDoc.append("uploadedBy", "KRPH");
+
+              try {
+                const resultattachment = await gCPFileUploadData(formDataDoc);
+                if (resultattachment.responseCode === 1) {
+                  pdbAttachmentPath.push({ attachmentPath: `https://pmfby.amnex.co.in/pmfby/public/krph/documents/${pAttachment[i].name}` });
+                }
+              } catch (error) {
+                console.log(error);
+              }
+            }
+            handleResetFile();
+            try {
+              const formDataattachmentPath = {
+                attachment: pdbAttachmentPath,
+                grievenceSupportTicketID: ticketData.GrievenceSupportTicketID,
+                grievenceTicketHistoryID: result.response.responseData.GrievenceTicketHistoryID,
+              };
+              await addKRPHGrievenceTicketHistoryAttachmentData(formDataattachmentPath);
+              setapiDataAttachment({ apiFor: "TCKHIS", GrievenceTicketHistoryID: result.response.responseData.GrievenceTicketHistoryID });
+            } catch (error) {
+              console.log(error);
+              setAlertMessage({
+                type: "error",
+                message: error,
+              });
+            }
+          }
         }
       } else {
         setAlertMessage({
@@ -380,7 +386,11 @@ function MyTicketLogics() {
               return data.CommonMasterValueID === 109304;
             });
             setTicketStatusList(filterStatusData);
-          } else if ((pticketData && pticketData.TicketStatusID === 109301) || (pticketData && pticketData.TicketStatusID === 109302) || (pticketData && pticketData.TicketStatusID === 109304) && ChkBRHeadTypeID === "124003") {
+          } else if (
+            (pticketData && pticketData.TicketStatusID === 109301) ||
+            (pticketData && pticketData.TicketStatusID === 109302) ||
+            (pticketData && pticketData.TicketStatusID === 109304 && ChkBRHeadTypeID === "124003")
+          ) {
             filterStatusData = result.response.responseData.masterdatabinding.filter((data) => {
               return data.CommonMasterValueID === 109302 || data.CommonMasterValueID === 109303;
             });
@@ -589,69 +599,69 @@ function MyTicketLogics() {
     }
   };
 
-    const [btnLoaderActiveComment, setbtnLoaderActiveComment] = useState(false);
-    const handleAddComment = async (e) => {
-      debugger;
-      try {
-        if (e) e.preventDefault();
-        let popUpMsg = "";
-        const strippedText = value.replace(/<[^>]*>/g, "").trim();
+  const [btnLoaderActiveComment, setbtnLoaderActiveComment] = useState(false);
+  const handleAddComment = async (e) => {
+    debugger;
+    try {
+      if (e) e.preventDefault();
+      let popUpMsg = "";
+      const strippedText = value.replace(/<[^>]*>/g, "").trim();
 
-    if (!strippedText) {
-      popUpMsg = "Ticket comment is required!";
-      setAlertMessage({
-        type: "warning",
-        message: popUpMsg,
-      });
-      return;
-    }
-        const formData = {
-          grievenceTicketHistoryID: 0,
-          grievenceSupportTicketID: ticketData.GrievenceSupportTicketID,
-          userID: ticketData.InsertUserID ? ticketData.InsertUserID : "0",
-          ticketStatusID: ticketData && ticketData.TicketStatusID ? ticketData.TicketStatusID : 0,
-          ticketDescription: value,
-          hasDocument: 0,
-          attachmentPath: "",
-        };
-        setbtnLoaderActiveComment(true);
-        const result = await addKRPHGrievanceSupportTicketComment(formData);
-        setbtnLoaderActiveComment(false);
-        if (result.response.responseCode === 1) {
-          if (result.response && result.response.responseData && result.response.responseData.GrievenceTicketReviewHistoryID) {
-            const ip = await publicIp.v4();
-            const user = getSessionStorage("user");
-            const newlyAddedEntry = {
-              CreatedBY: user && user.UserDisplayName ? user.UserDisplayName.toString() : "",
-              UserType: user && user.UserCompanyType ? user.UserCompanyType.toString() : "",
-              AgentUserID: ticketData.InsertUserID ? ticketData.InsertUserID : "0",
-              HasDocument: 0,
-              InsertIPAddress: ip,
-              InsertUserID: user && user.LoginID ? user.LoginID.toString() : "0",
-              SupportTicketID: ticketData.SupportTicketID,
-              TicketDescription: value,
-              TicketHistoryDate: moment().utcOffset("+05:30").format("YYYY-MM-DDTHH:mm:ss"),
-              TicketStatusID: 0,
-              AttachmentPath: "",
-              IsNewlyAdded: true,
-            };
-            updateTicketHistorytData(newlyAddedEntry);
-            setValue("<p></p>");
-            setWordcount(0);
-            setReplyBoxCollapsed(!replyBoxCollapsed);
-            setAlertMessage({
-              type: "success",
-              message: result.response.responseMessage,
-            });
-          }
-        } else {
+      if (!strippedText) {
+        popUpMsg = "Ticket comment is required!";
+        setAlertMessage({
+          type: "warning",
+          message: popUpMsg,
+        });
+        return;
+      }
+      const formData = {
+        grievenceTicketHistoryID: 0,
+        grievenceSupportTicketID: ticketData.GrievenceSupportTicketID,
+        userID: ticketData.InsertUserID ? ticketData.InsertUserID : "0",
+        ticketStatusID: ticketData && ticketData.TicketStatusID ? ticketData.TicketStatusID : 0,
+        ticketDescription: value,
+        hasDocument: 0,
+        attachmentPath: "",
+      };
+      setbtnLoaderActiveComment(true);
+      const result = await addKRPHGrievanceSupportTicketComment(formData);
+      setbtnLoaderActiveComment(false);
+      if (result.response.responseCode === 1) {
+        if (result.response && result.response.responseData && result.response.responseData.GrievenceTicketReviewHistoryID) {
+          const ip = await publicIp.v4();
+          const user = getSessionStorage("user");
+          const newlyAddedEntry = {
+            CreatedBY: user && user.UserDisplayName ? user.UserDisplayName.toString() : "",
+            UserType: user && user.UserCompanyType ? user.UserCompanyType.toString() : "",
+            AgentUserID: ticketData.InsertUserID ? ticketData.InsertUserID : "0",
+            HasDocument: 0,
+            InsertIPAddress: ip,
+            InsertUserID: user && user.LoginID ? user.LoginID.toString() : "0",
+            SupportTicketID: ticketData.SupportTicketID,
+            TicketDescription: value,
+            TicketHistoryDate: moment().utcOffset("+05:30").format("YYYY-MM-DDTHH:mm:ss"),
+            TicketStatusID: 0,
+            AttachmentPath: "",
+            IsNewlyAdded: true,
+          };
+          updateTicketHistorytData(newlyAddedEntry);
+          setValue("<p></p>");
+          setWordcount(0);
+          setReplyBoxCollapsed(!replyBoxCollapsed);
           setAlertMessage({
-            type: "warning",
+            type: "success",
             message: result.response.responseMessage,
           });
         }
-      } catch (error) {}
-    };
+      } else {
+        setAlertMessage({
+          type: "warning",
+          message: result.response.responseMessage,
+        });
+      }
+    } catch (error) {}
+  };
 
   return {
     value,

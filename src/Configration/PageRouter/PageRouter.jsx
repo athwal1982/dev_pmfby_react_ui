@@ -33,6 +33,7 @@ import SLAReport from "Components/Modules/Reports/SLAReport";
 import FarmerCallingHistory from "Components/Modules/Reports/FarmerCallingHistory";
 import CSCInboundVoice from "Components/Modules/Reports/CSCInboundVoice";
 import DashboardTicketCount from "Components/Modules/Reports/DashboardTicketCount";
+import OnlineOfflineTickets from "Components/Modules/Reports/OnlineOfflineTickets";
 import FarmerEnquiryRegistration from "Components/Modules/FarmerEnquiryRegistration/FarmerEnquiryRegistration";
 import FarmerEnquiryTickets from "Components/Modules/FarmerEnquiryRegistration/FarmerEnquiryTickets";
 // A import FarmerCreatedTicket from "Components/Modules/Support/FarmerCreatedTicket/FarmerCreatedTicket";
@@ -76,6 +77,7 @@ import NCIPTicketSync from "Components/Modules/Reports/NCIPTicketSync";
 import BotFarmerTicket from "Components/Modules/Reports/BotFarmerTicket";
 import BIDashboard from "Components/Common/BIDashboard/BIDashboard";
 import BIDashboard1 from "Components/Common/BIDashboard/BIDashboard1";
+import KRPHPortalN from "Components/Newhome/MobileNumberInput/KRPHPortalN";
 
 const PageRouter = () => {
   return (
@@ -86,6 +88,7 @@ const PageRouter = () => {
         <Route exact path="/LandingPage" element={<LandingPage />} />
         <Route exact path="/krph" element={<LandingKrph />} />
         <Route exact path="/krphlogin2" element={<KRPHPortal />} />
+        <Route exact path="/krphloginN" element={<KRPHPortalN />} />
         <Route exact path="/ImportantInstructions" element={<ImportantInstructions />} />
         <Route exact path="/mobile-input" element={<MobileNumberInput />} />
         <Route exact path="/otp-input" element={<OTPInput />} />
@@ -140,6 +143,7 @@ const PageRouter = () => {
         <Route exact path="/FarmerCallingHistory" element={<Page component={<FarmerCallingHistory />} title="Farmer Calling History" />} />
         <Route exact path="/CSCInboundVoice" element={<Page component={<CSCInboundVoice />} title="BOT Inbound Calls" />} />
         <Route exact path="/DashboardTicketCount" element={<Page component={<DashboardTicketCount />} title="Dashboard Ticket Count" />} />
+        <Route exact path="/OnlineOfflineTickets" element={<Page component={<OnlineOfflineTickets />} title="Online Offline Tickets" />} />
         <Route exact path="/FarmerEnquiryRegistration" element={<Page component={<FarmerEnquiryRegistration />} title="Unregistered Farmers" />} />
         <Route exact path="/FarmerEnquiryTickets" element={<Page component={<FarmerEnquiryTickets />} title="Unregistered Farmer Ticket" />} />
         {/* <Route exact path="/FarmerCreatedTicket" element={<Page component={<FarmerCreatedTicket />} title="Farmer Ticket" />} /> */}

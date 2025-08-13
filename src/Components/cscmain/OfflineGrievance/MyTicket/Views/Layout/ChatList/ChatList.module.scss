@@ -162,10 +162,13 @@
     p {
       font-size: 12px;
       color: #ffffff;
-      margin: 2px 1px 0px;
+      margin: 10px 1px 0px;
       background-color: #29b873;
       border-radius: 5px;
       padding: 2px 5px 2px 5px;
+      height: 6vh;
+      overflow: auto;
+      width: 100%;
       span {
         font-weight: bold;
       }

@@ -78,15 +78,15 @@ function FileViewer({ toggleFileViewerModal, selectedData, apiDataAttachment }) 
               <tr>
                 <td>{i + 1}</td>
                 <td>
-                 {v.AttachmentPath && v.AttachmentPath.split(".").pop().split("?")[0] === "pdf" ? (
-                                       <a href={v.AttachmentPath} style={{ cursor: "pointer" }} target="_blank">
-                                         <FaFilePdf style={{ fontSize: "40px", color: "e5252a" }} />
-                                       </a>
-                                     ) : (
-                                       <a href={v.AttachmentPath} style={{ cursor: "pointer" }} target="_blank">
-                                         <FaFileImage style={{ fontSize: "40px", color: "#000000" }} />
-                                       </a>
-                                     )}
+                  {v.AttachmentPath && v.AttachmentPath.split(".").pop().split("?")[0] === "pdf" ? (
+                    <a href={v.AttachmentPath} style={{ cursor: "pointer" }} target="_blank">
+                      <FaFilePdf style={{ fontSize: "40px", color: "e5252a" }} />
+                    </a>
+                  ) : (
+                    <a href={v.AttachmentPath} style={{ cursor: "pointer" }} target="_blank">
+                      <FaFileImage style={{ fontSize: "40px", color: "#000000" }} />
+                    </a>
+                  )}
                 </td>
               </tr>
             ))}

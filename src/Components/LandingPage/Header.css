@@ -68,6 +68,13 @@
   gap: 5px;
 }
 
+.menu-container-landing-login {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  padding-right: 54px;
+}
+
 .custom-button-login-landing-page {
   display: flex !important;
   padding: 5px 6px !important;
@@ -136,6 +143,10 @@
   .menu-container-landing-page {
     gap: 5px;
   }
+
+  .menu-container-landing-login {
+    gap: 5px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -143,6 +154,12 @@
   .menu-container-landing-page {
     display: none;
   }
+
+  .menu-container-landing-login {
+    padding: 0px;
+    padding-right: 6px;
+  }
+
 
   .hamburger-icon-landing {
     display: block !important;
@@ -312,7 +329,6 @@
     padding: 10px 15px 0px 10px !important;
   }
 }
-
 
 @media (max-width: 768px) {
   .footer_box {
@@ -588,7 +604,6 @@
   cursor: pointer;
 }
 
-
 @media (max-width: 480px) {
   .download-button {
     font-size: 11px;
@@ -605,4 +620,3 @@
   margin-right: 8px;
   fill: white;
 }
-

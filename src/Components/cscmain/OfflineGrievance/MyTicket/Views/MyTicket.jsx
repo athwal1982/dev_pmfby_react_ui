@@ -5,7 +5,7 @@ import { getUserRightCodeAccess, getSessionStorage } from "Components/Common/Log
 import BizClass from "./MyTicket.module.scss";
 
 function MyTicket({ children, replyBoxCollapsed, setReplyBoxCollapsed, setTicketStatusBtn, ticketData, showfunc }) {
- debugger;
+  debugger;
   const replyTicketRight = getUserRightCodeAccess("ofga");
   const reopenTicketRight = getUserRightCodeAccess("ofro");
   const user = getSessionStorage("user");
@@ -35,7 +35,8 @@ function MyTicket({ children, replyBoxCollapsed, setReplyBoxCollapsed, setTicket
           (ticketData && ticketData.GrievenceTicketSourceTypeID === 132304 && ChkBRHeadTypeID === "124002" && ticketData.TicketStatusID !== 109303) ||
           (ticketData && ticketData.GrievenceTicketSourceTypeID === 132304 && ChkBRHeadTypeID === "124003") ||
           (ticketData && ticketData.TicketStatusID === 109302 && ChkBRHeadTypeID === "124003") ||
-          (ticketData && ticketData.TicketStatusID === 109301 && ChkBRHeadTypeID === "124003") || (ticketData && ticketData.TicketStatusID === 109304 && ChkBRHeadTypeID === "124003") ? (
+          (ticketData && ticketData.TicketStatusID === 109301 && ChkBRHeadTypeID === "124003") ||
+          (ticketData && ticketData.TicketStatusID === 109304 && ChkBRHeadTypeID === "124003") ? (
             <PageBar.Button onClick={() => toggelReplyCloseButton("Reply")}>Reply</PageBar.Button>
           ) : null
         ) : null}

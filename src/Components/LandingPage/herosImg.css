@@ -214,7 +214,7 @@
 
 /* Tablet Devices (768px - 1024px) */
 @media (max-width: 1024px) {
- .main-image {
+  .main-image {
     width: 100%;
   }
   .grass-overlay {
@@ -224,7 +224,7 @@
 
 /* Mobile Devices (481px - 767px) */
 @media (max-width: 767px) {
-   .main-image {
+  .main-image {
     width: 104%;
     object-fit: cover;
     object-position: right center;

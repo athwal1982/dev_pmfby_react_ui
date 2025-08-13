@@ -78,6 +78,7 @@ const Billingdashboard = () => {
     txtMonthFilter: null,
   });
   const updateSearchFormState = (name, value) => {
+    
     setSearchFormValues({ ...searchFormValues, [name]: value });
   };
 
@@ -261,6 +262,7 @@ const Billingdashboard = () => {
 
   const getbillingAgentDashboardList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
+      
       setIsLoadingBillingDashBoardList(true);
       const formData = {
         from: formattedStartDate,
@@ -302,6 +304,7 @@ const Billingdashboard = () => {
 
   const getbillingAgentOverTimeDashboardList = async (formattedStartDate, formattedEndDate) => {
     try {
+      
       const formData = {
         from: formattedStartDate,
         to: formattedEndDate,
@@ -340,6 +343,7 @@ const Billingdashboard = () => {
 
   const getbillingObCallDetailsList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
+      
       setIsLoadingBillingDashBoardList(true);
       const formData = {
         from: formattedStartDate,
@@ -379,6 +383,7 @@ const Billingdashboard = () => {
 
   const getbillingSmsCompanyDetailsList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
+      
       setIsLoadingBillingDashBoardList(true);
       const formData = {
         active_agent: "",
@@ -436,6 +441,7 @@ const Billingdashboard = () => {
   };
   const getbillingWhatsappCompanyDetailsList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
+      
       setIsLoadingBillingDashBoardList(true);
       const formData = {
         active_agent: "",
@@ -501,6 +507,7 @@ const Billingdashboard = () => {
   };
   const getbillingIbCompanyShareDetailsList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
+      
       setIsLoadingBillingDashBoardList(true);
       const formattedYearMonth = `${formattedStartDate.split("-")[0]}-${formattedStartDate.split("-")[1]}`;
       const formData = {
@@ -566,6 +573,7 @@ const Billingdashboard = () => {
 
   const getbillingAgentWorkingDayDetailsDataList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
+      
       setbillingDashBoardAgentWorkingDetailsList([]);
       // A setTotalno_of_working_hours(0);
       // A setTotalno_of_training_hours(0);
@@ -642,6 +650,7 @@ const Billingdashboard = () => {
 
   const getbillingAgentWorkingOverTimeDetailsDataList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
+      
       setbillingDashBoardAgentWorkingOverTimeDetailsList([]);
       setTotalworking_days_overtime(0);
       setTotalweekly_off__holidays_overtime(0);
@@ -713,6 +722,7 @@ const Billingdashboard = () => {
 
   const getbillingobcompanyShareDetailsDataList = async (formattedStartDate, formattedEndDate) => {
     try {
+      
       setbillingDashBoardObICDetailsList([]);
       setIsLoadingBillingDashBoardList(true);
       const formData = {
@@ -789,7 +799,9 @@ const Billingdashboard = () => {
   };
 
   const getbillingDashBoardAgentICDataList = async (formattedStartDate, formattedEndDate, pnoOfWorkingDays) => {
+    debugger;
     try {
+      
       const formData = {
         from: formattedStartDate,
         to: formattedEndDate,
@@ -804,6 +816,16 @@ const Billingdashboard = () => {
         if (result.responseData && result.responseData.length > 0) {
           setbillingDashBoardAgentICListList(result.responseData);
           // A let ptotalAgentCost = 0;
+          let onCalculateVal = 0 ;
+          const selectedDate = new Date(formattedEndDate);
+          const month = selectedDate.getMonth() + 1; 
+          const year = selectedDate.getFullYear();
+          if(year <= 2025 && month  <= 6) {
+            onCalculateVal  = 31000;
+          } else  {
+              onCalculateVal = 32860;
+          }
+
           let ptotalShareOfWorkingDays = 0;
           let ptotalIBTCAgentPercntShare = 0;
           let ptotalICAgentTotalAmount = 0;
@@ -816,7 +838,8 @@ const Billingdashboard = () => {
             });
           }
           const totalDaysInMonth = daysInMonth(searchFormValues.txtMonthFilter.value, searchFormValues.txtYearFilter.value);
-          ptotalICAgentTotalAmount = parseFloat(parseFloat(ptotalShareOfWorkingDays * 31000)) / totalDaysInMonth;
+          // A ptotalICAgentTotalAmount = parseFloat(parseFloat(ptotalShareOfWorkingDays * 31000)) / totalDaysInMonth;
+          ptotalICAgentTotalAmount = parseFloat(parseFloat(ptotalShareOfWorkingDays * onCalculateVal)) / totalDaysInMonth;
           ptotalICAgentGSTAmount = parseFloat((parseFloat(ptotalICAgentTotalAmount) * 87) / 100);
 
           setgrandTotalAgentCost(ptotalShareOfWorkingDays);
@@ -849,6 +872,7 @@ const Billingdashboard = () => {
 
   const getbillingDashBoardAgentOverTimeICDataList = async (formattedStartDate, formattedEndDate, pnoOfWorkingOverTime) => {
     try {
+      
       const formData = {
         from: formattedStartDate,
         to: formattedEndDate,
@@ -869,6 +893,16 @@ const Billingdashboard = () => {
           let ptotalICAgentTotalAmountOverTime = 0;
           let ptotalICAgentGSTAmountOverTime = 0;
           let ptotalICAgentTotalBillableAmountOverTime = 0;
+
+          let onCalculateVal = 0 ;
+          const selectedDate = new Date(formattedEndDate);
+          const month = selectedDate.getMonth() + 1; 
+          const year = selectedDate.getFullYear();
+          if(year <= 2025 && month  <= 6) {
+            onCalculateVal  = 31000;
+          } else  {
+              onCalculateVal = 32860;
+          }
           if (result.responseData[0].IC_data.length > 0) {
             result.responseData[0].IC_data.forEach((v) => {
               ptotalShareOfWorkingDaysOverTime += parseFloat(parseFloat(v.percentagePulse * pnoOfWorkingOverTime) / 100);
@@ -876,7 +910,8 @@ const Billingdashboard = () => {
             });
           }
           const totalDaysInMonth = daysInMonth(searchFormValues.txtMonthFilter.value, searchFormValues.txtYearFilter.value);
-          ptotalICAgentTotalAmountOverTime = parseFloat(parseFloat(parseFloat(parseFloat(pnoOfWorkingOverTime * 31000)) / totalDaysInMonth / 8) * 2);
+          // A ptotalICAgentTotalAmountOverTime = parseFloat(parseFloat(parseFloat(parseFloat(pnoOfWorkingOverTime * 31000)) / totalDaysInMonth / 8) * 2);
+          ptotalICAgentTotalAmountOverTime = parseFloat(parseFloat(parseFloat(parseFloat(pnoOfWorkingOverTime * onCalculateVal)) / totalDaysInMonth / 8) * 2);
           ptotalICAgentGSTAmountOverTime = parseFloat((parseFloat(ptotalICAgentTotalAmountOverTime) * 11) / 100);
 
           setgrandTotalAgentCostOverTime(ptotalShareOfWorkingDaysOverTime);
@@ -1012,13 +1047,24 @@ const Billingdashboard = () => {
           let ptotalICAgentTotalAmount = 0;
           let ptotalICAgentGSTAmount = 0;
           let ptotalICAgentTotalBillableAmount = 0;
+
+          let onCalculateVal = 0 ;
+          const selectedDate = new Date(formattedEndDate);
+          const month = selectedDate.getMonth() + 1; 
+          const year = selectedDate.getFullYear();
+          if(year <= 2025 && month  <= 6) {
+            onCalculateVal  = 31000;
+          } else  {
+              onCalculateVal = 32860;
+          }
           if (result.responseData[0].IC_data.length > 0) {
             result.responseData[0].IC_data.forEach((v) => {
               ptotalShareOfWorkingDays += parseFloat(parseFloat(v.percentagePulse * pnoOfWorkingDays) / 100);
             });
           }
           const totalDaysInMonth = daysInMonth(searchFormValues.txtMonthFilter.value, searchFormValues.txtYearFilter.value);
-          ptotalICAgentTotalAmount = parseFloat(parseFloat(ptotalShareOfWorkingDays * 31000)) / totalDaysInMonth;
+          // A ptotalICAgentTotalAmount = parseFloat(parseFloat(ptotalShareOfWorkingDays * 31000)) / totalDaysInMonth;
+          ptotalICAgentTotalAmount = parseFloat(parseFloat(ptotalShareOfWorkingDays * onCalculateVal)) / totalDaysInMonth;
           ptotalICAgentGSTAmount = parseFloat((parseFloat(ptotalICAgentTotalAmount) * 18) / 100);
           settotalICAgentTotalAmount(ptotalICAgentTotalAmount);
           settotalICAgentGSTAmount(ptotalICAgentGSTAmount);
@@ -1229,6 +1275,7 @@ const Billingdashboard = () => {
 
   const getbillingAgentWorkingOverTimeDetailsDataListForSummary = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
+      
       setIsLoadingBillingDashBoardList(true);
       const formData = {
         active_agent: "0",
@@ -1264,6 +1311,7 @@ const Billingdashboard = () => {
 
   const getbillingDashBoardAgentOverTimeICDataListForSummary = async (formattedStartDate, formattedEndDate, pnoOfWorkingOverTime) => {
     try {
+      
       const formData = {
         from: formattedStartDate,
         to: formattedEndDate,
@@ -1280,13 +1328,23 @@ const Billingdashboard = () => {
           let ptotalICAgentTotalAmountOverTime = 0;
           let ptotalICAgentGSTAmountOverTime = 0;
           let ptotalICAgentTotalBillableAmountOverTime = 0;
+          let onCalculateVal = 0 ;
+          const selectedDate = new Date(formattedEndDate);
+          const month = selectedDate.getMonth() + 1; 
+          const year = selectedDate.getFullYear();
+          if(year <= 2025 && month  <= 6) {
+            onCalculateVal  = 31000;
+          } else  {
+              onCalculateVal = 32860;
+          }
           if (result.responseData[0].IC_data.length > 0) {
             result.responseData[0].IC_data.forEach((v) => {
               ptotalShareOfWorkingDaysOverTime += parseFloat(parseFloat(v.percentagePulse * pnoOfWorkingOverTime) / 100);
             });
           }
           const totalDaysInMonth = daysInMonth(searchFormValues.txtMonthFilter.value, searchFormValues.txtYearFilter.value);
-          ptotalICAgentTotalAmountOverTime = parseFloat(parseFloat(parseFloat(parseFloat(pnoOfWorkingOverTime * 31000)) / totalDaysInMonth / 8) * 2);
+          // A ptotalICAgentTotalAmountOverTime = parseFloat(parseFloat(parseFloat(parseFloat(pnoOfWorkingOverTime * 31000)) / totalDaysInMonth / 8) * 2);
+          ptotalICAgentTotalAmountOverTime = parseFloat(parseFloat(parseFloat(parseFloat(pnoOfWorkingOverTime * onCalculateVal)) / totalDaysInMonth / 8) * 2);
           ptotalICAgentGSTAmountOverTime = parseFloat((parseFloat(ptotalICAgentTotalAmountOverTime) * 18) / 100);
 
           setgrandTotalAgentCostOverTime(ptotalShareOfWorkingDaysOverTime);
@@ -1379,14 +1437,17 @@ const Billingdashboard = () => {
         setAgentOvertime(tempresult.responseData[0].agent_overtime_cost);
         setTextMessage(tempresult.responseData[0].sms_costing);
         setWhatsapp(tempresult.responseData[0].whatsapp_gupsup_cost); */
+      
       }
     } else {
       setTotalbillingsummary({});
+      
     }
   };
 
   const getbillingAiBotCompanyDetailsList = async (formattedStartDate, formattedEndDate, companylist) => {
     try {
+      
       setIsLoadingBillingDashBoardList(true);
       const formData = {
         active_agent: "",
@@ -1547,6 +1608,7 @@ const Billingdashboard = () => {
   const formattedYear_MonthName = formatYear_MonthName(yearMonth);
 
   const OnClickExcelDataDownlaod = (pType) => {
+    
     if (pType === "INBNDCL") {
       InBoundCallsDataArrangeAndDownload();
     } else if (pType === "OTBNDCL") {
@@ -1564,6 +1626,8 @@ const Billingdashboard = () => {
     }
   };
   const InBoundCallsDataArrangeAndDownload = () => {
+    
+
     const columnOrderTaggedUntagged = {
       total_matched_with_ticket: "Tagging With Tickets",
       total_matched_without_ticket: "Tagging Without Tickets",
@@ -1624,6 +1688,8 @@ const Billingdashboard = () => {
   };
 
   const downloadExcelInbound = (dataTaggedUntagged, dataInboundICDetails) => {
+    
+
     const worksheetTaggedUntagged = XLSX.utils.json_to_sheet(dataTaggedUntagged);
     const worksheetInboundICDetails = XLSX.utils.json_to_sheet(dataInboundICDetails);
     const workbook = XLSX.utils.book_new();
@@ -1638,6 +1704,7 @@ const Billingdashboard = () => {
   };
 
   const OutBoundCallsDataArrangeAndDownload = () => {
+    
     const columnOrderCountAgentAndOutboundCalls = {
       // AtotalDistinctAgents: "No. Of Active Agents",
       totalCalls: "No. Of Outbound Calls",
@@ -1693,7 +1760,7 @@ const Billingdashboard = () => {
       gst: mappedDataOutboundICDetails.reduce((sum, row) => sum + parseFloat(row.gst || 0), 0).toFixed(2),
       grant_total: mappedDataOutboundICDetails.reduce((sum, row) => sum + parseFloat(row.grant_total || 0), 0).toFixed(2),
     };
-
+    
     mappedDataOutboundICDetails.push(grandTotalRow);
 
     const rearrangedDataOutboundICDetails = rearrangeAndRenameColumns(mappedDataOutboundICDetails, columnOrderOutboundICDetails);
@@ -1701,6 +1768,7 @@ const Billingdashboard = () => {
   };
 
   const downloadExcelOutbound = (dataCountAgentAndOutboundCalls, dataOutboundICDetails) => {
+    
     const worksheetAgentAndOutboundCalls = XLSX.utils.json_to_sheet(dataCountAgentAndOutboundCalls);
     const worksheetOutboundICDetails = XLSX.utils.json_to_sheet(dataOutboundICDetails);
     const workbook = XLSX.utils.book_new();
@@ -1809,6 +1877,7 @@ const Billingdashboard = () => {
     downloadExcelaiBot(rearrangedDataaiBotICDetails);
   };
 
+  
   const downloadExcelaiBot = (dataaiBotICDetails) => {
     const worksheetaiBotICDetails = XLSX.utils.json_to_sheet(dataaiBotICDetails);
     const workbook = XLSX.utils.book_new();
@@ -1830,8 +1899,8 @@ const Billingdashboard = () => {
       // AA srv_conv_costing: "Service Conv. Amount",
       // AA util_conv_qty: "Conversation Utility Conv.",
       // AA util_conv_costing: "Conversation Utility Conv. Amount",
-      total_conv_qty: "WhatsApp Submission",
-      total: "Total Amount",
+          total_conv_qty  :"WhatsApp Submission",
+         total: "Total Amount",
       gst: "GST (18%)",
       grand_total: "Grand Total Amount",
     };
@@ -1870,6 +1939,7 @@ const Billingdashboard = () => {
     );
   };
   const AgentsDataArrangeAndDownload = () => {
+    debugger;
     const columnOrderCountAgents = {
       // A active_agent: "No. Of Active Agents",
       total_working_days_in_month: "No. Of Working Days",
@@ -1885,14 +1955,24 @@ const Billingdashboard = () => {
       };
     });
     const rearrangedDataCountAgents = rearrangeAndRenameColumns(mappedDataCountAgents, columnOrderCountAgents);
-
+     
+    let onCalculateVal = 0 ;
+    const selectedDate = new Date(currentdaterange?.to);
+    const month = selectedDate.getMonth() + 1; 
+    const year = selectedDate.getFullYear();
+    if(year <= 2025 && month  <= 6) {
+            onCalculateVal  = 31000;
+    } else  {
+              onCalculateVal = 32860;
+    }
     const columnOrderInboundICDetails = {
       srn: "Sr. No.",
       _id: "IC name",
       sum_of_pulses: "Sum of call_pulse",
       percentagePulse: "% of Call Pulse ",
       billing_day: "Count of Billing Days",
-      billing_amount: "Billing Amount Rs 31000/30 Days*Billing Days)",
+      // A billing_amount: "Billing Amount Rs 31000/30 Days*Billing Days)",
+      billing_amount: `Billing Amount Rs ${onCalculateVal}/30 Days*Billing Days)`,
       gst: "GST (18%)",
       grand_total: "Grand Total Amount(Rs)",
     };
@@ -1902,8 +1982,8 @@ const Billingdashboard = () => {
       const totalPulses = value.totalPulses ? parseFloat(value.totalPulses) : 0.0;
       const billingDays = percentagePulse && noOfWorkingDays ? parseFloat((percentagePulse * noOfWorkingDays) / 100).toFixed(2) : 0.0;
 
-      const billingAmount = percentagePulse && noOfWorkingDays ? parseFloat(billingDays * (31000 / 30)).toFixed(2) : 0.0;
-
+      // A const billingAmount = percentagePulse && noOfWorkingDays ? parseFloat(billingDays * (31000 / 30)).toFixed(2) : 0.0;
+     const billingAmount = percentagePulse && noOfWorkingDays ? parseFloat(billingDays * (onCalculateVal / 30)).toFixed(2) : 0.0;
       const gst = billingAmount ? parseFloat(billingAmount * 0.18).toFixed(2) : 0.0;
 
       const grandTotal = billingAmount ? parseFloat(parseFloat(billingAmount) + parseFloat(gst)).toFixed(2) : 0.0;
@@ -1956,6 +2036,7 @@ const Billingdashboard = () => {
   };
 
   const downloadExcelAgent = (dataCountAgents, dataInboundICDetails, dataAgentDetails) => {
+    
     const worksheetCountAgents = XLSX.utils.json_to_sheet(dataCountAgents);
     const worksheetInboundICDetails = XLSX.utils.json_to_sheet(dataInboundICDetails);
     const worksheetAgentDetails = XLSX.utils.json_to_sheet(dataAgentDetails);
@@ -2051,6 +2132,7 @@ const Billingdashboard = () => {
   };
 
   useEffect(() => {
+    
     const now = new Date();
     const currentYear = now.getFullYear();
     const yearArray = [];
@@ -2116,25 +2198,28 @@ const Billingdashboard = () => {
   }, [activeKey]);
 
   //  A get Companylist options
-  const getallinsurancecampanylist = async () => {
-    debugger;
+    const getallinsurancecampanylist = async () => {
+      debugger;
     try {
+      
       setIsLoadingBillingDashBoardList(true);
       const formData = {};
       const result = await getInsuranceCompanyListUpdatedAPI(formData);
 
-      if (result.responseCode === 1) {
-        setIsLoadingBillingDashBoardList(false);
-        if (result.responseData.length > 0) {
-          let allcompanywithNamelist = [];
-          for (let i = 0; i < result.responseData.length; i++) {
-            allcompanywithNamelist.push(result.responseData[i]?.InsuranceMasterName);
-          }
-          setInsuranceCompanyoption(allcompanywithNamelist);
-        } else {
-          setInsuranceCompanyoption([]);
-        }
-      } else {
+      
+
+          if (result.responseCode === 1) {
+  setIsLoadingBillingDashBoardList(false);
+  if (result.responseData.length > 0) {
+    let allcompanywithNamelist = [];
+    for (let i = 0; i < result.responseData.length; i++) {
+      allcompanywithNamelist.push(result.responseData[i]?.InsuranceMasterName);
+    }
+    setInsuranceCompanyoption(allcompanywithNamelist);
+  } else {
+    setInsuranceCompanyoption([]);
+  }
+}  else {
         setIsLoadingBillingDashBoardList(false);
         setInsuranceCompanyoption([]);
         setAlertMessage({
@@ -2161,6 +2246,7 @@ const Billingdashboard = () => {
   };
 
   useEffect(() => {
+    
     if (totalbillingsummary) {
       setTotal(
         `Rs. ${numberWithCommas(
@@ -2172,7 +2258,7 @@ const Billingdashboard = () => {
               (totalbillingsummary?.agent_overtime_cost || 0) +
               (totalbillingsummary?.sms_costing || 0) +
               (totalbillingsummary?.whatsapp_gupsup_cost || 0) +
-              (totalbillingsummary?.aiBot_costing || 0)
+               (totalbillingsummary?.aiBot_costing || 0)
             ).toFixed(2),
           ),
         )}`,
@@ -2374,8 +2460,7 @@ const Billingdashboard = () => {
                     />
                   </>
                 )}
-                {currentmenu === "AIBT" && (
-                  <>
+                {currentmenu === "AIBT" && ( <>
                     <AibotComponent
                       toDate={toDate}
                       fromDate={fromDate}
@@ -2395,7 +2480,7 @@ const Billingdashboard = () => {
                       sumColumn={sumColumn}
                     />
                   </>
-                )}
+                )} 
               </>
             )}
           </>

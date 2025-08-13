@@ -60,7 +60,13 @@ function MyTicketPage({ selectedData, showfunc }) {
       closeSupportTicketOnClick={closeSupportTicketOnClick}
       showfunc={showfunc}
     >
-      <ChatList chatListDetails={chatListDetails} isLoadingchatListDetails={isLoadingchatListDetails} selectedData={selectedData} apiDataAttachment={apiDataAttachment} setapiDataAttachment={setapiDataAttachment}>
+      <ChatList
+        chatListDetails={chatListDetails}
+        isLoadingchatListDetails={isLoadingchatListDetails}
+        selectedData={selectedData}
+        apiDataAttachment={apiDataAttachment}
+        setapiDataAttachment={setapiDataAttachment}
+      >
         <ChatBox
           replyBoxCollapsed={replyBoxCollapsed}
           value={value}
