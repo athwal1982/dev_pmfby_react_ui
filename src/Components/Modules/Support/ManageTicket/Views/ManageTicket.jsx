@@ -111,13 +111,14 @@ function ManageTicket({
   };
 
   useEffect(() => {
+    debugger;
     if (esclationTicketRight) {
       getFarmersTickets("ESCAL", "", 1, 20);
       getFarmersTickets("DEFESCAL", "", 1, 20);
     } else {
       if (ChkBRHeadTypeID === "124001" && ChkAppAccessTypeID === "503" && showHideManageTicket === false) {
         console.log(showHideManageTicket);
-      } else {
+      } else if (ChkBRHeadTypeID === "124003") {
         getFarmersTickets("DEFESCAL", "DEFAULTFILTER", 1, 20);
       }
     }

@@ -371,7 +371,7 @@ function MyTicketLogics() {
           let filterStatusData = [];
           const user = getSessionStorage("user");
           const ChkBRHeadTypeID = user && user.BRHeadTypeID ? user.BRHeadTypeID.toString() : "0";
-          if (pticketData && pticketData.GrievenceTicketSourceTypeID === 132304 && ChkBRHeadTypeID === "124002") {
+          if (pticketData && pticketData.GrievenceTicketSourceTypeID === 132304 && pticketData.TicketStatusID !== 109303 && ChkBRHeadTypeID === "124002") {
             filterStatusData = result.response.responseData.masterdatabinding.filter((data) => {
               return data.CommonMasterValueID === 109302 || data.CommonMasterValueID === 109303;
             });

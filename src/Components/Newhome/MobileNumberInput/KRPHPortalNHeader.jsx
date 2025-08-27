@@ -31,7 +31,7 @@ const KRPHPortalNHeader = ({ handleWhatsAppClick }) => {
     };
   return (
     <>
-      <Box>
+      <Box className="header_top_fix">
         <Grid
           className="gridContainer_Header"
           container

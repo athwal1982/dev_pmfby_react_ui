@@ -620,3 +620,10 @@
   margin-right: 8px;
   fill: white;
 }
+
+.header_top_fix {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}

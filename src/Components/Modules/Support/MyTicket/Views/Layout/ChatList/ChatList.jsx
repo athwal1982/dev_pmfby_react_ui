@@ -10,10 +10,22 @@ import classNames from "classnames";
 import { PropTypes } from "prop-types";
 import { daysdifference, dateFormatDefault, dateToSpecificFormat, Convert24FourHourAndMinute } from "Configration/Utilities/dateformat";
 import parse from "html-react-parser";
+import AudioFile from "Framework/Assets/Images/audio-file.png";
 import { getSessionStorage } from "Components/Common/Login/Auth/auth";
 import FileViewer from "./FileViewer/FileViewer";
 import EditTicketComment from "./EditTicketComment";
 import BizClass from "./ChatList.module.scss";
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+  Grid,
+  Paper
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
+
 
 function TicketSourceIconWithSwitch(parameter) {
   switch (parameter) {
@@ -56,14 +68,14 @@ function ChatList({
 
   const [isFileViewerModalOpen, setIsFileViewerModalOpen] = useState(false);
 
-  const toggleFileViewerModal = (papiFor, pTicketHistoryID) => {
+  const toggleFileViewerModal = (papiFor, pGrievenceTicketHistoryID) => {
     debugger;
     setIsFileViewerModalOpen(!isFileViewerModalOpen);
-    setapiDataAttachment({ apiFor: papiFor, TicketHistoryID: pTicketHistoryID });
+    setapiDataAttachment({ apiFor: papiFor, GrievenceTicketHistoryID: pGrievenceTicketHistoryID });
   };
-
   const [isEditTicketCommentModalOpen, setIsEditTicketCommentModalOpen] = useState(false);
   const toggleEditTicketCommentModal = (data) => {
+    
     if (data) {
       setSelectedHistoryData(data);
       setValueEditTicketComment(data.TicketDescription);
@@ -103,37 +115,37 @@ function ChatList({
       )}
       <div className={BizClass.ChatBox}>
         <div className={classNames(BizClass.Heading, BizClass.urgent)}>
-          <div className={BizClass.TickIcon}>{TicketSourceIconWithSwitch(selectedData.TicketSourceID)}</div>
+          
           <div className={BizClass.TicketDetail}>
-            <h4>
-              {`${selectedData.SupportTicketNo} || ${selectedData.TicketCategoryName}`}{" "}
-              {selectedData.HasDocument && selectedData.HasDocument === 1 ? (
-                <MdAttachFile style={{ cursor: "pointer", color: "#000000" }} onClick={() => toggleFileViewerModal("SPTCKT")} />
-              ) : null}{" "}
-            </h4>
-            <p>
-              Created By {selectedData.CreatedBY} - {selectedData.BusinessRelationName} || {`${selectedData.TicketStatus}(${selectedData.TicketHeadName})`}
-            </p>
+           <div class={BizClass.ticketcard}>
+    <div class={BizClass.ticketheader}>
+      <div class={BizClass.leftpanel}>
+        <h1><strong>Ticket Number : </strong>  {selectedData && selectedData.SupportTicketNo  ? selectedData.SupportTicketNo  : null}</h1>
+        <h1><strong>Ticket Type : </strong>{selectedData && selectedData.TicketHeadName ? selectedData.TicketHeadName : null} → {selectedData && selectedData.TicketTypeName ? selectedData.TicketTypeName : null} →  {selectedData && selectedData.TicketCategoryName ? selectedData.TicketCategoryName : null} </h1>
+        <h1><strong>Source : </strong>  {selectedData && selectedData.CreatedBY  ? selectedData.CreatedBY  : null}</h1>
+      </div>
+      <div class={BizClass.rightpanel}>
+        <span
+  className={classNames(
+    BizClass.status, 
+    selectedData?.TicketStatus ? BizClass[selectedData.TicketStatus.toLowerCase().toString().replace("-","")] : ""
+  )}
+>
+  {selectedData?.TicketStatus || ""}
+</span><br />
+<br />
+<Button type="button" varient="primary" >
+          TRAIL
+        </Button>
+      </div>
+    </div>
+    </div>
           </div>
-          <div className={BizClass.TicketSubDetail}>
-            <span className={BizClass.StatusBox} style={{ display: "none" }}>
-              Waiting on Customer
-            </span>
-            <div className={BizClass.SubDetail}>
-              <h4>Since {daysdifference(dateFormatDefault(new Date()), dateFormatDefault(selectedData.CreatedAt.split("T")[0]))} Day Ago</h4>
-              <p>
-                {/* From {dateFormat(selectedData.CreatedAt.split("T")[0])} at {tConvert(selectedData.CreatedAt.split("T")[1])} */}
-                From{" "}
-                {dateToSpecificFormat(
-                  `${selectedData.CreatedAt.split("T")[0]} ${Convert24FourHourAndMinute(selectedData.CreatedAt.split("T")[1])}`,
-                  "DD-MM-YYYY HH:mm",
-                )}
-              </p>
-            </div>
-          </div>
+          
         </div>
+        
         <div className={BizClass.TicketRemarks}>
-          <p>
+           {/* <p>
             <MdOutlineContentCopy
               style={{ color: "#000000", fontSize: "18px", cursor: "pointer" }}
               title="Copy Ticket Description"
@@ -141,45 +153,153 @@ function ChatList({
             />{" "}
             Farmer Query :-
             <span> {selectedData && selectedData.TicketDescription ? parse(selectedData.TicketDescription) : null} </span>
-          </p>
-        </div>
-        <div className={BizClass.MainBox}>
-          {children}
-          <div className={BizClass.ChattingBox}>
-            {!isLoadingchatListDetails ? (
+          </p> */}
+        </div> 
+ <div className={BizClass.Event1panel}>
+{children}  
+</div>        
+<div className={BizClass.Event1panel}>
+        <Accordion defaultExpanded sx={{ borderRadius: 2, boxShadow: 3, overflow: "hidden" }}>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
+            sx={{
+      backgroundColor: "#21862d",
+      color: "white",
+      fontWeight: "bold",
+      minHeight: 35, 
+      "&.Mui-expanded": {
+        minHeight: 35, 
+      },
+      "& .MuiAccordionSummary-content": {
+        margin: 0,
+        minHeight: 35,
+        alignItems: "center",
+      },
+      "& .MuiAccordionSummary-content.Mui-expanded": {
+        margin: 0,
+        minHeight: 35,
+      },
+    }}
+      >
+        <Grid container spacing={1}>
+          <Grid item xs={10} md={3}>
+            <Typography variant="body2">Event 1: Ticket Generated</Typography>
+          </Grid>
+          <Grid item xs={10} md={3}>
+            <Typography variant="body2">{dateToSpecificFormat(
+                  `${selectedData.CreatedAt.split("T")[0]} ${Convert24FourHourAndMinute(selectedData.CreatedAt.split("T")[1])}`,
+                  "DD-MM-YYYY HH:mm",
+                )}</Typography>
+          </Grid>
+          <Grid item xs={10} md={3}>
+            <Typography variant="body2">Agent ID: {selectedData && selectedData.AgentUserID ? selectedData.AgentUserID : null}</Typography>
+          </Grid>
+          <Grid item xs={10} md={3}>
+            <Typography variant="body2">Name: {selectedData && selectedData.AgentName ? selectedData.AgentName : null}</Typography>
+          </Grid>
+        </Grid>
+      </AccordionSummary>
+
+      {/* Accordion Content */}
+      <AccordionDetails sx={{ backgroundColor: "#f5f7fa" }}>
+        <Paper
+          elevation={0}
+          sx={{
+            p: 2,
+            borderRadius: 2,
+            width: "100%",
+            backgroundColor: "white",
+          }}
+        >
+          <Grid container spacing={4} alignItems="center">
+            <Grid item xs={12} md={8}>
+              <Typography variant="subtitle2" fontWeight="bold">
+                Description : <MdOutlineContentCopy
+              style={{ color: "#000000", fontSize: "18px", cursor: "pointer" }}
+              title="Copy Ticket Description"
+              onClick={() => copyToClipboard(selectedData ? selectedData.TicketDescription : "")}
+            />
+            {selectedData.HasDocument && selectedData.HasDocument === 1 ? (
+                             <MdAttachFile style={{ color: "#000000", fontSize: "18px", cursor: "pointer" }} onClick={() => toggleFileViewerModal("SPTCKT")} />
+                           ) : null}{" "}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {selectedData && selectedData.TicketDescription ? parse(selectedData.TicketDescription) : null}
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} md={4} sx={{ textAlign: "left" }}>
+              <Typography variant="subtitle2" fontWeight="bold" display="inline">
+                Recording:
+              </Typography>
+               <audio controls style={{width:"250px", height:"28px", backgroundColor:"#21862",}} src={selectedData.CallingAudioFile && selectedData.CallingAudioFile ? selectedData.CallingAudioFile : null}>
+          </audio>
+            </Grid>
+          </Grid>
+        </Paper>
+      </AccordionDetails>
+    </Accordion>
+</div> 
+<div className={BizClass.Event1panel}>
+       {!isLoadingchatListDetails ? (
               chatListDetails && chatListDetails.length > 0 ? (
                 chatListDetails.map((data, i) => {
                   return (
-                    <div
-                      className={classNames(
-                        BizClass.ChatDiv,
-                        data.InsertUserID.toString() === user.LoginID.toString() ? BizClass.Responder : BizClass.Requester,
-                      )}
-                      key={i}
-                    >
-                      <div className={BizClass.ImgDiv} />
-                      <div className={BizClass.ChatContent}>
-                        <div className={BizClass.ChatTitle}>
-                          <p>
-                            {" "}
-                            ({data.CreatedBY} - {data.UserType}){" "}
-                            {data.HasDocument && data.HasDocument === "1" ? (
-                              <MdAttachFile
-                                onClick={() => toggleFileViewerModal("TCKHIS", data.TicketHistoryID)}
-                                style={{ cursor: "pointer", color: "#000000" }}
-                              />
-                            ) : null}{" "}
-                          </p>
-                          <span>
-                            {/* {dateFormat(data.TicketHistoryDate.split("T")[0])} at {tConvert(data.TicketHistoryDate.split("T")[1])} */}
-                            {dateToSpecificFormat(
+                     <Accordion  sx={{ borderRadius: 2, boxShadow: 3, mb: 1, overflow: "hidden" }}>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
+           sx={{
+      backgroundColor: "#21862d",
+      color: "white",
+      fontWeight: "bold",
+      minHeight: 35, 
+      "&.Mui-expanded": {
+        minHeight: 35, 
+      },
+      "& .MuiAccordionSummary-content": {
+        margin: 0,
+        minHeight: 35,
+        alignItems: "center",
+      },
+      "& .MuiAccordionSummary-content.Mui-expanded": {
+        margin: 0,
+        minHeight: 35,
+      },
+    }}
+      >
+        <Grid container spacing={1}>
+          <Grid item xs={10} md={3}>
+            <Typography variant="body2">Event {(i+1) + 1}: {data.TicketStatus}</Typography>
+          </Grid>
+          <Grid item xs={10} md={3}>
+            <Typography variant="body2">{dateToSpecificFormat(
                               `${data.TicketHistoryDate.split("T")[0]} ${Convert24FourHourAndMinute(data.TicketHistoryDate.split("T")[1])}`,
                               "DD-MM-YYYY HH:mm",
-                            )}
-                          </span>
-                        </div>
-                        <div className={BizClass.ChatBody}>
-                          {ChkBRHeadTypeID.toString() === "124003" && selectedData.TicketStatusID.toString() === "109302" && i === 0 ? (
+                            )}</Typography>
+          </Grid>
+          <Grid item xs={10} md={3}>
+            <Typography variant="body2">{data.UserType}</Typography>
+          </Grid>
+          <Grid item xs={10} md={3}>
+            <Typography variant="body2">Name: {data.CreatedBY}</Typography>
+          </Grid>
+        </Grid>
+      </AccordionSummary>
+
+      <AccordionDetails sx={{ backgroundColor: "#f5f7fa" }}>
+        <Paper
+          elevation={0}
+          sx={{
+            p: 2,
+            borderRadius: 2,
+            width: "100%",
+            backgroundColor: "white",
+          }}
+        >
+          <Grid container spacing={4} alignItems="center">
+            <Grid item xs={12} md={12}>
+              <Typography variant="subtitle2" fontWeight="bold">
+                Description : {ChkBRHeadTypeID.toString() === "124003" && selectedData.TicketStatusID.toString() === "109302" && i === 0 ? (
                             <span>
                               <MdOutlineContentCopy
                                 className="copy-icon"
@@ -198,21 +318,23 @@ function ChatList({
                               />
                             </span>
                           )}
-                          <h4> {parse(data.TicketDescription)}</h4>
-                        </div>
-                      </div>
-                    </div>
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {data && data.TicketDescription ? parse(data.TicketDescription) : null}
+              </Typography>
+            </Grid>
+
+          </Grid>
+        </Paper>
+      </AccordionDetails>
+    </Accordion>
                   );
                 })
               ) : null
             ) : (
               <Loader />
-            )}
-          </div>
-          <div style={{ float: "right" }}>
-            {chatListDetails.length <= 5 || chatListDetails.length === 0 ? null : <Button onClick={() => showMoreChatListOnClick()}>Show More</Button>}
-          </div>
-        </div>
+            )} 
+       </div> 
       </div>
     </>
   );

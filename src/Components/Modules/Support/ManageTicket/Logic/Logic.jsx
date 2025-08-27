@@ -16,6 +16,10 @@ function ManageTicketLogics() {
   const [isDataCleared, setIsDataCleared] = useState(false);
   const [isDataClearedEsclated, setIsDataClearedEsclated] = useState(false);
 
+  const userData = getSessionStorage("user");
+  const ChkBRHeadTypeID = userData && userData.BRHeadTypeID ? userData.BRHeadTypeID.toString() : "0";
+  const ChkAppAccessTypeID = userData && userData.AppAccessTypeID ? userData.AppAccessTypeID.toString() : "0";
+
   const [filterValues, setFilterValues] = useState({
     SearchByFilter: null,
     txtSearchFilter: "",
@@ -116,6 +120,7 @@ function ManageTicketLogics() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const handlePageChange = (page) => {
+    
     setCurrentPage(page);
     // ... do something with `page`
     if (viewTypeMode === "FILTER" && page >= 1) {
@@ -213,7 +218,7 @@ function ManageTicketLogics() {
           formValues.txtTicketCategoryType && formValues.txtTicketCategoryType.SupportTicketTypeID ? formValues.txtTicketCategoryType.SupportTicketTypeID : 0,
         supportTicketNo: "",
         applicationNo: "",
-        docketNo: "",
+        docketNo:"",
         statusID: TicketStatusID,
         fromdate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
         toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
@@ -353,7 +358,7 @@ function ManageTicketLogics() {
                         )
                       : "",
                     LossDate: value.LossDate ? dateToSpecificFormat(value.LossDate.split("T")[0], "DD-MM-YYYY") : "",
-                    TicketNCIPDocketNo: value.TicketNCIPDocketNo,
+                    TicketNCIPDocketNo:value.TicketNCIPDocketNo,
                     CreatedBY: value.CreatedBY,
                     CreatedAt: value.CreatedAt
                       ? dateToSpecificFormat(
@@ -540,6 +545,7 @@ function ManageTicketLogics() {
   };
 
   const searchByMobileTicketsOnClick = async (pageIndex, pageSize) => {
+    
     try {
       let ticketNoVal = "";
       let mobileNoVal = "";
@@ -982,6 +988,7 @@ function ManageTicketLogics() {
   const [districtList, setDistrictList] = useState([]);
   const [isLoadingDistrictList, setIsLoadingDistrictList] = useState(false);
   const getDistrictByStateListData = async (statemasterid) => {
+    
     try {
       setIsLoadingDistrictList(true);
       const userData = getSessionStorage("user");
@@ -1059,7 +1066,7 @@ function ManageTicketLogics() {
 
   const updateState = (name, value) => {
     setFormValues({ ...formValues, [name]: value });
-
+    
     if (name === "txtTicketCategoryType") {
       setFormValues({
         ...formValues,
@@ -1177,6 +1184,7 @@ function ManageTicketLogics() {
   };
 
   const getOneDayTicketData = async () => {
+    
     setshowHideDownload(false);
     SetTicketFiltersTab();
     settotalSatatusCount("0");
@@ -1185,6 +1193,7 @@ function ManageTicketLogics() {
   };
 
   const getFilterTicketsClick = async () => {
+    
     setshowHideDownload(true);
     SetTicketFiltersTab();
     settotalSatatusCount("0");
@@ -1197,23 +1206,24 @@ function ManageTicketLogics() {
   };
 
   useEffect(() => {
-    if (isDataCleared === true) {
-      getFarmersTickets("FILTER", "", 1, 20);
-    }
-    setIsDataCleared(false);
+    // A  if (ChkBRHeadTypeID === "124003") {
+    // A  if (isDataCleared === true) {
+    // A  getFarmersTickets("FILTER", "", 1, 20);
+    // A  }
+    // A  setIsDataCleared(false);
 
-    if (isDataClearedEsclated === true) {
-      getFarmersTickets("ESCAL", "", 1, 20);
-    }
-    setIsDataClearedEsclated(false);
+    // A  if (isDataClearedEsclated === true) {
+    // A  getFarmersTickets("ESCAL", "", 1, 20);
+    // A  }
+    // A  setIsDataClearedEsclated(false);
+    // A }
+   
   }, [formValues]);
 
   const onClickViewManageTickets = () => {
+    
     setshowHideManageTicket(true);
-    const userData = getSessionStorage("user");
-    const ChkBRHeadTypeID = userData && userData.BRHeadTypeID ? userData.BRHeadTypeID.toString() : "0";
-    const ChkAppAccessTypeID = userData && userData.AppAccessTypeID ? userData.AppAccessTypeID.toString() : "0";
-    if (ChkBRHeadTypeID === "124001" && ChkAppAccessTypeID === "503") {
+    if (ChkBRHeadTypeID === "124003") {
       getFarmersTickets("DEFESCAL", "DEFAULTFILTER", 1, 20);
     }
     getTicketSourceListData();

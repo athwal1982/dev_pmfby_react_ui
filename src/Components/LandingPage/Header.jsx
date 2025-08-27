@@ -169,7 +169,7 @@ const Header = ({ handleWhatsAppClick }) => {
 
   return (
     <>
-      <Box>
+      <Box className="header_top_fix">
         <Grid
           className="gridContainer_Header"
           container
@@ -334,6 +334,7 @@ const Header = ({ handleWhatsAppClick }) => {
                             textAlign: "left",
                             fontSize: "14px",
                             backgroundColor: "#086107",
+                            zIndex: "9999999",
                           }}
                         >
                           {subItem.label}

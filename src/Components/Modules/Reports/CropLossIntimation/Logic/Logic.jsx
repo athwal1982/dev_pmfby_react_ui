@@ -116,7 +116,8 @@ function CropLossIntimationReportLogics() {
       const formdata = {
         filterID: pselectedOption,
         filterID1: 0,
-        masterName: "TCKTYP",
+        // A masterName: "TCKTYP",
+        masterName: "TCKTYPRPT",
         searchText: "#ALL",
         searchCriteria: "AW",
       };
