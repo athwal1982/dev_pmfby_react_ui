@@ -24,7 +24,8 @@ import {
   Paper
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
+import CaseHistory from "./CaseHistory";
+
 
 
 function TicketSourceIconWithSwitch(parameter) {
@@ -99,6 +100,17 @@ function ChatList({
     return tempDiv.textContent || tempDiv.innerText || "";
   }
 
+  const [open, setOpen] = useState(false);
+  
+    const handleClickCaseHistory = () => {
+      debugger;
+      setOpen(true);
+    };
+  
+    const handleCloseCaseHistory = () => {
+      setOpen(false);
+    };
+
   return (
     <>
       {isFileViewerModalOpen && <FileViewer toggleFileViewerModal={toggleFileViewerModal} selectedData={selectedData} apiDataAttachment={apiDataAttachment} />}
@@ -134,7 +146,7 @@ function ChatList({
   {selectedData?.TicketStatus || ""}
 </span><br />
 <br />
-<Button type="button"  className={BizClass.buttonTrail} >
+<Button type="button"  className={BizClass.buttonTrail}  onClick={() => handleClickCaseHistory()} >
           Case History
         </Button>
       </div>
@@ -336,6 +348,7 @@ function ChatList({
             )} 
        </div> 
       </div>
+      <CaseHistory open={open} handleCloseCaseHistory={handleCloseCaseHistory} selectedData={selectedData} />
     </>
   );
 }

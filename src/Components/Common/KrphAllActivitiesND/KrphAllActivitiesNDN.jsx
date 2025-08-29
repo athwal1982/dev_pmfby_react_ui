@@ -2083,7 +2083,7 @@ function KrphAllActivitiesNDN() {
   const updateStateForFarmerInfo = (name, value) => {
     setFormValuesForFarmerInfo({ ...formValuesForFarmerInfo, [name]: value });
     formValidationFarmersInfoError[name] = validateFarmersInfoField(name, value);
-
+    debugger;
     //  Aif (name === "txtYearForFarmerInfo") {
     //  A if (value) {
     //  A   if (value.Value < runningCurrentYear) {
@@ -2112,31 +2112,34 @@ function KrphAllActivitiesNDN() {
     //  A }
     // A}
 
-    // A if (name === "txtYearForFarmerInfo") {
-    // A  if (value) {
-    // A    setSelectedOption("1");
-    // A    setSelectedOptionCropStage("1");
-    // A    setTicketCategoryTypeList([]);
-    // A    setTicketCategoryList([]);
-    // A    setLossAtList([]);
-    // A    setCropStageList([]);
-    // A    getTicketCategoryTypeListData("1", 0, "TCKTYP");
-    // A    setFormValuesTicketCreation({
-    // A      ...formValuesTicketCreation,
-    // A      txtTicketCategoryType: null,
-    // A      txtTicketCategory: null,
-    // A      txtCropLossDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
-    // A      txtCropLossIntimation: "On-time",
-    // A      txtCropLossTime: "",
-    // A      txtTicketDescription: "",
-    // A      txtLossAt: null,
-    // A      txtOtherSubCategory: null,
-    // A      txtCropStage: null,
-    // A      txtCropHarvestDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
-    // A      txtCropName: "",
-    // A    });
-    // A  }
-    // A }
+    if (name === "txtYearForFarmerInfo") {
+     if (value) {
+      if (Number(value.Value) <= 2024) {
+       setSelectedOption("1");
+       setSelectedOptionCropStage("1");
+       setTicketCategoryTypeList([]);
+       setTicketCategoryList([]);
+       setLossAtList([]);
+       setCropStageList([]);
+       getTicketCategoryTypeListData("1", 0, "TCKTYP");
+       setFormValuesTicketCreation({
+         ...formValuesTicketCreation,
+         txtTicketCategoryType: null,
+         txtTicketCategory: null,
+         txtCropLossDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
+         txtCropLossIntimation: "On-time",
+         txtCropLossTime: "",
+         txtTicketDescription: "",
+         txtLossAt: null,
+         txtOtherSubCategory: null,
+         txtCropStage: null,
+         txtCropHarvestDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
+         txtCropName: "",
+       });
+      }
+      
+     }
+  }
   };
 
   const validateFarmerOnClick = () => {
@@ -3253,8 +3256,8 @@ function KrphAllActivitiesNDN() {
     setSelectedInsuranceDetails([]);
     setFormValuesForFarmerInfo({
       ...formValuesForFarmerInfo,
-      txtSeasonForFarmerInfo: null,
-      txtYearForFarmerInfo: null,
+      // A txtSeasonForFarmerInfo: null,
+      // A txtYearForFarmerInfo: null,
       txtSchemeForFarmerInfo: null,
     });
     setFormValuesTicketCreation({
@@ -7283,6 +7286,9 @@ function KrphAllActivitiesNDN() {
                             </Box>
                             {selectedOption === "4" ? (
                               <>
+                              {formValuesForFarmerInfo.txtYearForFarmerInfo &&
+                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
+                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null :
                                 <Box className="crop-button-group_agent">
                                   <Button
                                     variant={selectedOptionCropStage === "1" ? "contained" : "outlined"}
@@ -7299,10 +7305,15 @@ function KrphAllActivitiesNDN() {
                                     Harvested Stage
                                   </Button>
                                 </Box>
+                              }
                               </>
                             ) : null}
                           </Box>
                           {selectedOption === "4" ? (
+                            <>
+                            {formValuesForFarmerInfo.txtYearForFarmerInfo &&
+                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
+                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null :
                             <div className="form-group_agent">
                               <label className="ticket-label_agent">
                                 Loss At <span className="asteriskCss">&#42;</span>
@@ -7320,7 +7331,8 @@ function KrphAllActivitiesNDN() {
                                 />
                               </InputGroup>
                               <span className="login_ErrorTxt">{formValidationSupportTicketError["txtLossAt"]}</span>
-                            </div>
+                            </div> }
+                            </>
                           ) : null}
 
                           <div className="container_agent">
@@ -7395,6 +7407,10 @@ function KrphAllActivitiesNDN() {
                           ) : null}
 
                           {selectedOption === "4" ? (
+                            <>
+                            {formValuesForFarmerInfo.txtYearForFarmerInfo &&
+                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
+                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null :
                             <div className="form-group_agent">
                               <label className="ticket-label_agent">
                                 Crop Stage <span className="asteriskCss">&#42;</span>
@@ -7412,10 +7428,15 @@ function KrphAllActivitiesNDN() {
                                 />
                               </InputGroup>
                               <span className="login_ErrorTxt">{formValidationSupportTicketError["txtCropStage"]}</span>
-                            </div>
+                            </div> }
+                            </>
                           ) : null}
                           <div className="container_agentt">
                             {selectedOption === "4" && selectedOptionCropStage === "2" ? (
+                              <>
+                               {formValuesForFarmerInfo.txtYearForFarmerInfo &&
+                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
+                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null :
                               <div className="form-group_agent">
                                 <label className="ticket-label_agent">
                                   Harvest Date <span className="asteriskCss">&#42;</span>
@@ -7432,10 +7453,15 @@ function KrphAllActivitiesNDN() {
                                   />
                                 </InputGroup>
                                 <span className="login_ErrorTxt">{formValidationSupportTicketError["txtCropHarvestDate"]}</span>
-                              </div>
+                              </div> }
+                              </>
                             ) : null}
                             {selectedOption === "4" && (selectedOptionCropStage === "2" || selectedOptionCropStage === "1") ? (
                               <>
+                                {formValuesForFarmerInfo.txtYearForFarmerInfo &&
+                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
+                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null :
+                                <>
                                 <div className="form-group_agent">
                                   <label className="ticket-label_agent">
                                     Loss Date <span className="asteriskCss">&#42;</span>
@@ -7474,11 +7500,15 @@ function KrphAllActivitiesNDN() {
                                       />
                                     </InputGroup>
                                   </div>
-                                </div>{" "}
+                                </div> </>}
                               </>
                             ) : null}
                           </div>
                           {selectedOption === "4" ? (
+                            <>
+                             {formValuesForFarmerInfo.txtYearForFarmerInfo &&
+                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
+                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null :
                             <div className="form-group_agent">
                               <label className="ticket-label_agent">
                                 Crop Name <span className="asteriskCss">&#42;</span>
@@ -7493,7 +7523,8 @@ function KrphAllActivitiesNDN() {
                                 />
                               </InputGroup>
                               <span className="login_ErrorTxt">{formValidationSupportTicketError["txtCropName"]}</span>
-                            </div>
+                            </div> }
+                            </>
                           ) : null}
 
                           <div className="form-group_agent">
