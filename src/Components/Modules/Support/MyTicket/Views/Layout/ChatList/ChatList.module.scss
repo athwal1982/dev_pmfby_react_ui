@@ -366,14 +366,14 @@
 
     /* Status Variants */
 .status.open {
-  background: #ecfdf5;
-  color: #065f46;
-  border-color: #10b981;
+  background: #fffbeb;
+  color: #92400e;
+  border-color: #f59e0b;
 }
 .status.reopen {
-  background: #ecfdf5;
-  color: #4e59f1;
-  border-color: #6e75d6;
+  background: #fef2f2;
+  color: #991b1b;
+  border-color: #ef4444;
 }
 
 .status.inprogress {
@@ -383,9 +383,10 @@
 }
 
 .status.resolved {
-  background: #fef2f2;
-  color: #991b1b;
-  border-color: #ef4444;
+  background: #ecfdf5;
+  color: #065f46;
+  border-color: #10b981;
+
 }
 
     .ticketbody {
@@ -403,3 +404,27 @@
   padding: 10px 0px 5px 12px;         
 }
 
+.buttonTrail {
+  background: linear-gradient(135deg, #4a90e2, #357abd);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* background shadow */
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.buttonTrail:hover {
+  background: linear-gradient(135deg, #5aa0f2, #4688d6);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.buttonTrail:active {
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.25);
+  transform: translateY(1px);
+}

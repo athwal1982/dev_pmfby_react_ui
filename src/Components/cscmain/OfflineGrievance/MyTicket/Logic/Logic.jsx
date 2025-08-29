@@ -671,6 +671,7 @@ function MyTicketLogics() {
     ticketStatusBtn,
     setTicketStatusBtn,
     chatListDetails,
+    setChatListDetails,
     isLoadingchatListDetails,
     getChatListDetailsData,
     ticketData,

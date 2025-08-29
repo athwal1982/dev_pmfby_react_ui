@@ -134,8 +134,8 @@ function ChatList({
   {selectedData?.TicketStatus || ""}
 </span><br />
 <br />
-<Button type="button" varient="primary" >
-          TRAIL
+<Button type="button"  className={BizClass.buttonTrail} >
+          Case History
         </Button>
       </div>
     </div>
@@ -163,7 +163,7 @@ function ChatList({
       <AccordionSummary
         expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
             sx={{
-      backgroundColor: "#21862d",
+      backgroundColor: "#31af40ff",
       color: "white",
       fontWeight: "bold",
       minHeight: 35, 
@@ -249,7 +249,7 @@ function ChatList({
       <AccordionSummary
         expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
            sx={{
-      backgroundColor: "#21862d",
+      backgroundColor: "#31af40ff",
       color: "white",
       fontWeight: "bold",
       minHeight: 35, 

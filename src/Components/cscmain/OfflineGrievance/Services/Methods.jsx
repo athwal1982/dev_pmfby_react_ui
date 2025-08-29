@@ -123,6 +123,40 @@ export const deleteKRPHGrievanceAttachmentData = async (formData) => {
   }
 };
 
+export const deleteKRPHSupportHistoryAttachmentData = async (formData) => {
+  try {
+    const requestData = {
+      main: {
+        ...formData,
+      },
+    };
+    const result = await ApiCalling(requestData, APIEndpoints.OfflineGrievance.DeleteKRPHSupportHistoryAttachment);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return {
+      response: { responseCode: 0, responseData: null, responseMessage: error },
+    };
+  }
+};
+
+export const deleteKRPHGrievanceHistoryAttachmentData = async (formData) => {
+  try {
+    const requestData = {
+      main: {
+        ...formData,
+      },
+    };
+    const result = await ApiCalling(requestData, APIEndpoints.OfflineGrievance.DeleteKRPHGrievanceHistoryAttachment);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return {
+      response: { responseCode: 0, responseData: null, responseMessage: error },
+    };
+  }
+};
+
 export const addKRPHGrievenceTicketHistoryAttachmentData = async (formData) => {
   try {
     const requestData = {

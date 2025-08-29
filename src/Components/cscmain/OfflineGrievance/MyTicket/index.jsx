@@ -16,6 +16,7 @@ function MyTicketPage({ selectedData, showfunc }) {
     getChatListDetailsData,
     ticketData,
     chatListDetails,
+    setChatListDetails,
     isLoadingchatListDetails,
     handleSave,
     btnloaderActive,
@@ -62,6 +63,7 @@ function MyTicketPage({ selectedData, showfunc }) {
     >
       <ChatList
         chatListDetails={chatListDetails}
+        setChatListDetails={setChatListDetails}
         isLoadingchatListDetails={isLoadingchatListDetails}
         selectedData={selectedData}
         apiDataAttachment={apiDataAttachment}

@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { MdOutlineEmail } from "react-icons/md";
-import { FaShareAltSquare, FaPalette, FaEnvelopeOpenText } from "react-icons/fa";
+import { FaShareAltSquare, FaPalette, FaEnvelopeOpenText, FaUpload } from "react-icons/fa";
 import { MdAttachFile, MdOutlineContentCopy } from "react-icons/md";
 import { BsBoxes } from "react-icons/bs";
 import { Loader, Button } from "Framework/Components/Widgets";
@@ -10,8 +10,10 @@ import { PropTypes } from "prop-types";
 import { daysdifference, dateFormatDefault, dateToSpecificFormat, Convert24FourHourAndMinute } from "Configration/Utilities/dateformat";
 import parse from "html-react-parser";
 import { getSessionStorage } from "Components/Common/Login/Auth/auth";
+import {getKRPHGrievenceTicketHistoryAttachmentData} from "../../../../Services/Methods";
 import BizClass from "./ChatList.module.scss";
 import FileViewer from "./FileViewer/FileViewer";
+import FileUploadTicketHistory from "./FileUploadTicketHistory";
 
 function TicketSourceIconWithSwitch(parameter) {
   switch (parameter) {
@@ -28,7 +30,7 @@ function TicketSourceIconWithSwitch(parameter) {
   }
 }
 
-function ChatList({ children, chatListDetails, isLoadingchatListDetails, selectedData, showMoreChatListOnClick, apiDataAttachment, setapiDataAttachment }) {
+function ChatList({ children, chatListDetails, setChatListDetails, isLoadingchatListDetails, selectedData, showMoreChatListOnClick, apiDataAttachment, setapiDataAttachment }) {
   const setAlertMessage = AlertMessage();
   const user = getSessionStorage("user");
 
@@ -56,9 +58,66 @@ function ChatList({ children, chatListDetails, isLoadingchatListDetails, selecte
     return tempDiv.textContent || tempDiv.innerText || "";
   }
 
+    const [isFileUploadModalOpen, setIsFileUploadModalOpen] = useState(false);
+    const [atttachmentcount, setAtttachmentcount] = useState(0);
+    const toggleFileUploadModal = async (data) => {
+      debugger;
+      
+      if (data) {
+        try {
+          setapiDataAttachment({ apiFor: "TCKHIS", GrievenceTicketHistoryID: data.GrievenceTicketHistoryID});
+          const formdata = {
+          grievenceSupportTicketID: data && data.GrievenceSupportTicketID ? data.GrievenceSupportTicketID : 0,
+          grievenceTicketHistoryID: data && data.GrievenceTicketHistoryID ? data.GrievenceTicketHistoryID : 0,
+          };
+          const result = await getKRPHGrievenceTicketHistoryAttachmentData(formdata);
+          if (result.responseCode === 1) {
+            if (result.responseData && result.responseData.attachment && result.responseData.attachment.length > 0) {
+              setAtttachmentcount(result.responseData.attachment.length);
+              if (result.responseData.attachment.length === 5) {
+                setAlertMessage({
+                  type: "error",
+                  message: "You have already uploaded 5 images.",
+                });
+                return;
+              } else {
+                setIsFileUploadModalOpen(!isFileUploadModalOpen);
+              }
+            } else {
+              setIsFileUploadModalOpen(!isFileUploadModalOpen);
+            }
+          } else {
+            setAlertMessage({
+              type: "error",
+              message: result.responseMessage,
+            });
+          }
+        } catch (error) {
+          console.log(error);
+          setAlertMessage({
+            type: "error",
+            message: error,
+          });
+        }
+      } else {
+        setIsFileUploadModalOpen(!isFileUploadModalOpen);
+      }
+    };
+
   return (
     <>
-      {isFileViewerModalOpen && <FileViewer toggleFileViewerModal={toggleFileViewerModal} selectedData={selectedData} apiDataAttachment={apiDataAttachment} />}
+      {isFileViewerModalOpen && <FileViewer toggleFileViewerModal={toggleFileViewerModal} selectedData={selectedData} apiDataAttachment={apiDataAttachment} setChatListDetails={setChatListDetails} chatListDetails={chatListDetails} />}
+       {isFileUploadModalOpen && (
+        <FileUploadTicketHistory
+          toggleFileUploadModal={toggleFileUploadModal}
+          selectedData={selectedData}
+          atttachmentcount={atttachmentcount}
+          setapiDataAttachment={setapiDataAttachment}
+          apiDataAttachment= {apiDataAttachment}
+          setChatListDetails={setChatListDetails}
+          chatListDetails={chatListDetails}
+        />
+      )}
       <div className={BizClass.ChatBox}>
         <div className={classNames(BizClass.Heading, BizClass.urgent)}>
           <div className={BizClass.TickIcon}>{TicketSourceIconWithSwitch(selectedData.GrievenceTicketSourceTypeID)}</div>
@@ -126,6 +185,11 @@ function ChatList({ children, chatListDetails, isLoadingchatListDetails, selecte
                                 style={{ cursor: "pointer", color: "#000000" }}
                               />
                             ) : null}{" "}
+                             <FaUpload
+                                      style={{ fontSize: "14px", color: "#000000", cursor: "pointer" }}
+                                      onClick={() => toggleFileUploadModal(data)}
+                                      title="File Upload"
+                                    />
                           </p>
                           <span>
                             {dateToSpecificFormat(

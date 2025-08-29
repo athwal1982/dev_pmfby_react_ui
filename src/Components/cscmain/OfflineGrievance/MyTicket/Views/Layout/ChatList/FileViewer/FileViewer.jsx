@@ -8,10 +8,11 @@ import { getSessionStorage } from "Components/Common/Login/Auth/auth";
 import {
   getKRPHGrievanceAttachmentData,
   deleteKRPHGrievanceAttachmentData,
+  deleteKRPHGrievanceHistoryAttachmentData,
   getKRPHGrievenceTicketHistoryAttachmentData,
 } from "../../../../../Services/Methods";
 
-function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment, apiDataAttachment }) {
+function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment, apiDataAttachment, setChatListDetails, chatListDetails }) {
   const setAlertMessage = AlertMessage();
   const user = getSessionStorage("user");
   const ChkBRHeadTypeID = user && user.BRHeadTypeID ? user.BRHeadTypeID.toString() : "0";
@@ -67,24 +68,54 @@ function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment
     }
   };
 
-  const deleteFileOnClick = async (pGrievenceTicketAttachmentID) => {
+  const deleteFileOnClick = async (pTicketAttachmentID) => {
     debugger;
     try {
-      const formdata = {
-        grievenceSupportTicketID: selectedData && selectedData.GrievenceSupportTicketID ? selectedData.GrievenceSupportTicketID : 0,
-        grievenceTicketAttachmentID: pGrievenceTicketAttachmentID,
-      };
-      const result = await deleteKRPHGrievanceAttachmentData(formdata);
+      let formdata = null;
+      let result = null;
+      setFileViewerIsLoading(true);
+      if (apiDataAttachment.apiFor === "SPTCKT") {
+        formdata = {
+           grievenceSupportTicketID: selectedData && selectedData.GrievenceSupportTicketID ? selectedData.GrievenceSupportTicketID : 0,
+           grievenceTicketAttachmentID: pTicketAttachmentID,
+        };
+        result = await deleteKRPHGrievanceAttachmentData(formdata);
+      } else if (apiDataAttachment.apiFor === "TCKHIS") {
+        formdata = {
+          grievenceTicketHistoryAttachmentID: pTicketAttachmentID,
+          grievenceTicketHistoryID: apiDataAttachment && apiDataAttachment.GrievenceTicketHistoryID ? apiDataAttachment.GrievenceTicketHistoryID : 0,
+        };
+        result = await deleteKRPHGrievanceHistoryAttachmentData(formdata);
+      }
+      
       setFileViewerIsLoading(false);
       if (result.responseCode === 1) {
         setAlertMessage({
           type: "success",
           message: result.responseMessage,
         });
-        const filteredData = attachmentData.filter((item) => item.GrievenceTicketAttachmentID.toString() !== pGrievenceTicketAttachmentID.toString());
-        setAttachmentData(filteredData);
+        let filteredData = [];
+        if (apiDataAttachment.apiFor === "SPTCKT") {
+         filteredData = attachmentData.filter((item) => item.GrievenceTicketAttachmentID.toString() !== pTicketAttachmentID.toString());
+        setAttachmentData(filteredData); 
+       } else if (apiDataAttachment.apiFor === "TCKHIS") {
+         filteredData = attachmentData.filter((item) => item.GrievenceTicketHistoryAttachmentID.toString() !== pTicketAttachmentID.toString());
+        setAttachmentData(filteredData); 
+         
+        }
+
         if (filteredData.length === 0) {
+          if (apiDataAttachment.apiFor === "SPTCKT") {
           selectedData.HasDocument = 0;
+          } else if (apiDataAttachment.apiFor === "TCKHIS") {
+          for (let i = 0; i < chatListDetails.length; i += 1) {
+          if (apiDataAttachment.GrievenceTicketHistoryID === chatListDetails[i].GrievenceTicketHistoryID) {
+            chatListDetails[i].HasDocument = "0";
+            break;
+          }
+        }
+         setChatListDetails(chatListDetails);
+        }
           // A updateRowOfAttachment(selectedData);
           toggleFileViewerModal();
         }
@@ -103,7 +134,7 @@ function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment
     }
   };
 
-  const handleDeleteFile = (pGrievenceTicketAttachmentID) => {
+  const handleDeleteFile = (pTicketAttachmentID) => {
     // A setConfirmAlert({
     // A  open: true,
     // A  title: "Delete Confirmation",
@@ -111,7 +142,7 @@ function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment
     // A  button: { confirmText: "Yes", abortText: "No", Color: "Danger" },
     // A  onConfirm: () => deleteFileOnClick(pGrievenceTicketAttachmentID),
     // A });
-    deleteFileOnClick(pGrievenceTicketAttachmentID);
+    deleteFileOnClick(pTicketAttachmentID);
   };
 
   useEffect(() => {
@@ -134,7 +165,7 @@ function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment
           <table className="table_bordered table_Height_module_wise_training">
             <thead>
               <tr>
-                {(ChkBRHeadTypeID === "124002" || ChkBRHeadTypeID === "124001") && apiDataAttachment.apiFor === "SPTCKT" ? <th>Action</th> : null}
+                {(ChkBRHeadTypeID === "124002" || ChkBRHeadTypeID === "124001") && apiDataAttachment.apiFor === "SPTCKT" || apiDataAttachment.apiFor === "TCKHIS" ? <th>Action</th> : null}
                 <th>Sr. No.</th>
                 <th>Attachment</th>
               </tr>
@@ -149,7 +180,12 @@ function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment
                         onClick={() => handleDeleteFile(v.GrievenceTicketAttachmentID)}
                       />
                     </td>
-                  ) : null}
+                  ) : (ChkBRHeadTypeID === "124002" || ChkBRHeadTypeID === "124001") && apiDataAttachment.apiFor === "TCKHIS" ? <td>
+                      <FaRegTrashAlt
+                        style={{ fontSize: "22px", color: "#000000", cursor: "pointer" }}
+                        onClick={() => handleDeleteFile(v.GrievenceTicketHistoryAttachmentID)}
+                      />
+                    </td> : null}
                   <td>{i + 1}</td>
                   <td>
                     {v.AttachmentPath && v.AttachmentPath.split(".").pop().split("?")[0] === "pdf" ? (
