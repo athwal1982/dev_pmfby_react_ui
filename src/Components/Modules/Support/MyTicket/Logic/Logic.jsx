@@ -625,6 +625,7 @@ function MyTicketLogics() {
             TicketDescription: value,
             TicketHistoryDate: moment().utcOffset("+05:30").format("YYYY-MM-DDTHH:mm:ss"),
             TicketStatusID: formValuesTicketProperties.txtTicketStatus.CommonMasterValueID,
+            TicketStatus: formValuesTicketProperties.txtTicketStatus.CommonMasterValue,
             AttachmentPath: "",
             IsNewlyAdded: true,
           };
@@ -657,8 +658,13 @@ function MyTicketLogics() {
 
               try {
                 const resultattachment = await gCPFileUploadData(formDataDoc);
-                if (resultattachment.responseCode === 1) {
+               if (resultattachment.responseCode === 1) {
                   pdbAttachmentPath.push({ attachmentPath: `https://pmfby.amnex.co.in/pmfby/public/krph/documents/${pAttachment[i].name}` });
+                } else if (resultattachment.responseCode === 0) {
+                  setAlertMessage({
+                    type: "error",
+                    message: resultattachment.responseMessage,
+                  });
                 }
               } catch (error) {
                 console.log(error);
@@ -671,8 +677,16 @@ function MyTicketLogics() {
                 supportTicketID: ticketData.SupportTicketID,
                 ticketHistoryID: result.response.responseData.TicketHistoryID,
               };
-              await AddKRPHTicketHistoryAttachmentData(formDataattachmentPath);
+             const resultdbAttachmentPath = await AddKRPHTicketHistoryAttachmentData(formDataattachmentPath);
+             if (resultdbAttachmentPath.responseCode === 1) {
               setapiDataAttachment({ apiFor: "TCKHIS", TicketHistoryID: result.response.responseData.TicketHistoryID });
+             } else if (resultdbAttachmentPath.responseCode === 0) {
+                  setAlertMessage({
+                    type: "error",
+                    message: resultattachment.responseMessage,
+                  });
+             }
+             
             } catch (error) {
               console.log(error);
               setAlertMessage({

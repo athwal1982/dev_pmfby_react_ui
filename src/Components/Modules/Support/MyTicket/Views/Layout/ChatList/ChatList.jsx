@@ -69,10 +69,10 @@ function ChatList({
 
   const [isFileViewerModalOpen, setIsFileViewerModalOpen] = useState(false);
 
-  const toggleFileViewerModal = (papiFor, pGrievenceTicketHistoryID) => {
+  const toggleFileViewerModal = (papiFor, pTicketHistoryID) => {
     debugger;
     setIsFileViewerModalOpen(!isFileViewerModalOpen);
-    setapiDataAttachment({ apiFor: papiFor, GrievenceTicketHistoryID: pGrievenceTicketHistoryID });
+    setapiDataAttachment({ apiFor: papiFor, TicketHistoryID: pTicketHistoryID });
   };
   const [isEditTicketCommentModalOpen, setIsEditTicketCommentModalOpen] = useState(false);
   const toggleEditTicketCommentModal = (data) => {
@@ -175,7 +175,7 @@ function ChatList({
       <AccordionSummary
         expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
             sx={{
-      backgroundColor: "#31af40ff",
+      backgroundColor: "#55d464ff",
       color: "white",
       fontWeight: "bold",
       minHeight: 35, 
@@ -261,7 +261,7 @@ function ChatList({
       <AccordionSummary
         expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
            sx={{
-      backgroundColor: "#31af40ff",
+      backgroundColor: "#55d464ff",
       color: "white",
       fontWeight: "bold",
       minHeight: 35, 
@@ -290,7 +290,7 @@ function ChatList({
                             )}</Typography>
           </Grid>
           <Grid item xs={10} md={3}>
-            <Typography variant="body2">{data.UserType}</Typography>
+            <Typography variant="body2">{data.UserType === "CSC" ? `Agent ID : ${data && data.CallingUserID ? data.CallingUserID : ""}`: data.UserType}</Typography>
           </Grid>
           <Grid item xs={10} md={3}>
             <Typography variant="body2">Name: {data.CreatedBY}</Typography>
@@ -311,25 +311,26 @@ function ChatList({
           <Grid container spacing={4} alignItems="center">
             <Grid item xs={12} md={12}>
               <Typography variant="subtitle2" fontWeight="bold">
-                Description : {ChkBRHeadTypeID.toString() === "124003" && selectedData.TicketStatusID.toString() === "109302" && i === 0 ? (
-                            <span>
+                Description : <span>
                               <MdOutlineContentCopy
                                 className="copy-icon"
                                 title="Copy Ticket Comment"
                                 onClick={() => copyToClipboard(stripHtmlTags(data.TicketDescription))}
                               />
-                              &nbsp;
+                              &nbsp; </span>
+                               {ChkBRHeadTypeID.toString() === "124003" && selectedData.TicketStatusID.toString() === "109302" && i === 0 ? 
+                            <span>
                               <FaEdit title="Update Comment" onClick={() => toggleEditTicketCommentModal(data)} />
                             </span>
-                          ) : (
-                            <span>
-                              <MdOutlineContentCopy
-                                className="copy-icon"
-                                title="Copy Ticket Comment"
-                                onClick={() => copyToClipboard(stripHtmlTags(data.TicketDescription))}
-                              />
-                            </span>
+                           : (
+                           null
                           )}
+                          {data.HasDocument && data.HasDocument === "1" ? (
+                                                        <MdAttachFile
+                                                          onClick={() => toggleFileViewerModal("TCKHIS", data.TicketHistoryID)}
+                                                          style={{ cursor: "pointer", color: "#000000" }}
+                                                        />
+                                                      ) : null}
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 {data && data.TicketDescription ? parse(data.TicketDescription) : null}

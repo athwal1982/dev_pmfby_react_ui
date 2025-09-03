@@ -580,20 +580,30 @@ function KrphAllActivitiesNDN() {
   const [districtKRPHDropdownDataList, setDistrictKRPHDropdownDataList] = useState([]);
   const [isLoadingDistrictKRPHDropdownDataList, setIsLoadingDistrictKRPHDropdownDataList] = useState(false);
   const getDistrictByStateKRPHListData = async (pstateAlphaCode) => {
+    debugger;
     try {
       setIsLoadingDistrictKRPHDropdownDataList(true);
+      // A const formdata = {
+      // A  stateAlphaCode: pstateAlphaCode,
+      // A};
+      // A const result = await getDistrictByState(formdata);
       const formdata = {
-        stateAlphaCode: pstateAlphaCode,
+        filterID: 0,
+        filterID1: 0,
+        masterName: "DISTMAST",
+        searchText: pstateAlphaCode,
+        searchCriteria: "AW",
       };
-      const result = await getDistrictByState(formdata);
+      const result = await getMasterDataBindingDataList(formdata);
       setIsLoadingDistrictKRPHDropdownDataList(false);
       if (result.response.responseCode === 1) {
-        if (result.response.responseData) {
-          if (Object.keys(result.response.responseData.data).length === 0) {
-            setDistrictKRPHDropdownDataList([]);
-          } else {
-            setDistrictKRPHDropdownDataList(result.response.responseData.data.hierarchy.level3);
-          }
+        if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
+          // A if (Object.keys(result.response.responseData.data).length === 0) {
+          // A  setDistrictKRPHDropdownDataList([]);
+          // A} else {
+          // A  setDistrictKRPHDropdownDataList(result.response.responseData.data.hierarchy.level3);
+          // A }
+          setDistrictKRPHDropdownDataList(result.response.responseData.masterdatabinding);
         } else {
           setDistrictKRPHDropdownDataList([]);
         }
