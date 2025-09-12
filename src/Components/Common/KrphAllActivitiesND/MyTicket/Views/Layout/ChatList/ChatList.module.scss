@@ -1,13 +1,13 @@
 .ChatBox {
-  display: grid;
-  grid-template-rows: max-content auto;
+  // A display: grid;
+  // A grid-template-rows: max-content auto;
   border-left: 1px solid #d8dcde;
   border-right: 1px solid #d8dcde;
   overflow: auto;
 
   .Heading {
     height: 35px;
-    padding: 5px 14px;
+    padding: 5px 12px;
     display: grid;
     grid-template-columns: max-content max-content minmax(max-content, auto);
     align-items: center;
@@ -149,7 +149,7 @@
   }
 
   .TicketRemarks {
-    height: 55px;
+    height: 65px;
     padding: 2px 5px 0px 65px;
     border-bottom: 1px solid #d8dcde;
     display: flex;
@@ -228,7 +228,7 @@
 
           .ChatBody {
             display: grid;
-            padding: 10px 14px;
+            padding: 6px 14px;
             background: rgb(242, 246, 249);
             border-radius: 0px 10px 10px 10px;
             margin-top: 6px;
@@ -302,4 +302,103 @@
     max-width: calc(100% - 16px);
     max-height: calc(100% - 16px);
   }
+}
+
+.ReplyBox {
+  display: grid;
+  grid-template-rows: auto max-content;
+
+  .SendBox {
+    height: 40px;
+    background: #f5f7f9;
+    border-top: 1px solid #d8dcde;
+    border-bottom: 1px solid #d8dcde;
+    display: grid;
+    grid-template-columns: auto repeat(2, max-content);
+    gap: 10px;
+    align-items: center;
+    padding: 0px 12px;
+
+    p {
+      font-size: 12px;
+      font-weight: 900;
+      font-family: var(--fg-headingsFont);
+    }
+  }
+}
+
+.ticketcard {
+  width: 840px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+.ticketheader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #f9fafb, #ffffff);
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.leftpanel h1 {
+  font-size: 14px;
+  color: #374151;
+}
+
+.leftpanel strong {
+  color: #111827;
+}
+
+.status {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid #10b981;
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+/* Status Variants */
+.status.open {
+  background: #fffbeb;
+  color: #92400e;
+  border-color: #f59e0b;
+}
+.status.reopen {
+  background: #fef2f2;
+  color: #991b1b;
+  border-color: #ef4444;
+}
+
+.status.inprogress {
+  background: #fffbeb;
+  color: #92400e;
+  border-color: #f59e0b;
+}
+
+.status.resolved {
+  background: #ecfdf5;
+  color: #065f46;
+  border-color: #10b981;
+}
+
+.ticketbody {
+  padding: 20px;
+}
+.rightpanel {
+  min-width: 120px;
+  text-align: -webkit-center;
+  display: inline-block;
+}
+
+.Event1panel {
+  display: grid;
+  width: 850px;
+  padding: 10px 0px 5px 12px;
 }

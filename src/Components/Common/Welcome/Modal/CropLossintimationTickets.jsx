@@ -1246,7 +1246,7 @@ function CropLossintimationTickets() {
   useEffect(() => {
     const currentYear = new Date().getFullYear();
     const yearArray = [];
-    for (let i = 2024; i <= currentYear; i += 1) {
+    for (let i = 2025; i <= currentYear; i += 1) {
       yearArray.push({ Name: i.toString(), Value: i.toString() });
     }
 

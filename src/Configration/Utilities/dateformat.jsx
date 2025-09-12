@@ -78,6 +78,16 @@ export const Convert24FourHourAndMinute = (timeString) => {
   return `${formattedHour}:${minute}`;
 };
 
+export const Convert24FourHourAndMinuteNew = (timeString) => {
+  if (!timeString || typeof timeString !== "string") return "";
+
+  const [hour, minute] = timeString.split(":");
+  if (hour === undefined || minute === undefined) return timeString; // Fallback: return original
+
+  const formattedHour = Number(hour);
+  return `${formattedHour}:${minute}`;
+};
+
 export const getCurrentDateTimeTick = () => {
   const DateTime = new Date();
   // A get current date

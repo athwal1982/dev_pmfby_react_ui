@@ -6,6 +6,7 @@ const APIEndpoints = {
     TicketStatusUpdate: "FGMS/TicketStatusUpdate",
     EditSupportTicketReview: "FGMS/EditSupportTicketReview",
     AddCSCSupportTicketReview: "FGMS/AddCSCSupportTicketReview",
+    krphTicketTrail: "FGMS/krphTicketTrail",
   },
 };
 

@@ -27,6 +27,7 @@ function TicketCustomerDetail({
   const userData = getSessionStorage("user");
 
   const copyToClipboard = (id) => {
+    debugger;
     /* Get the text field */
     const copyText = document.getElementById(id);
     /* Copy the text inside the text field */
@@ -67,6 +68,7 @@ function TicketCustomerDetail({
     });
   };
   const excelDownloadFarmerData = () => {
+    debugger;
     const columnOrder = {
       Season: "Season",
       Year: "Year",
@@ -87,11 +89,11 @@ function TicketCustomerDetail({
       policyPremium: "Premium Amount",
       applicationSource: "Source of Enrolment",
       scheme: "Scheme",
-      applicationStatus: "Application Status",
+      applicationStatus:"Application Status",
     };
     const mappedData = [
       {
-        Season: ticketData && ticketData.RequestSeason && ticketData.RequestSeason === 1 ? "Kharif" : ticketData.RequestSeason === 2 ? "Rabi" : "",
+        Season: ticketData && ticketData.RequestSeason && ticketData.RequestSeason === 1 ? "Kharif" :  ticketData.RequestSeason === 2 ? "Rabi" : "",
         Year: ticketData && ticketData.RequestYear ? ticketData.RequestYear : "",
         resState: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].resState : "",
         resDistrict: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].resDistrict : "",
@@ -169,7 +171,7 @@ function TicketCustomerDetail({
             <p>
               Season - Year :
               <span id="spnSeasonYear">
-                {ticketData && ticketData.RequestSeason && ticketData.RequestSeason === 1 ? "Kharif" : ticketData.RequestSeason === 2 ? "Rabi" : ""} -{" "}
+                {ticketData && ticketData.RequestSeason && ticketData.RequestSeason === 1 ? "Kharif" :  ticketData.RequestSeason === 2 ? "Rabi" : ""} -{" "}
                 {ticketData && ticketData.RequestYear ? ticketData.RequestYear : ""}
               </span>
             </p>
@@ -276,11 +278,7 @@ function TicketCustomerDetail({
           <div className={BizClass.SubBox}>
             <RiNewspaperLine />
             <p>
-              Application Status :{" "}
-              <span id="spnApplicationStatus">
-                {" "}
-                {selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].applicationStatus : ""}
-              </span>
+              Application Status : <span id="spnApplicationStatus"> {selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].applicationStatus : ""}</span>
             </p>
             <FiCopy onClick={() => copyToClipboard("spnApplicationStatus")} />
           </div>

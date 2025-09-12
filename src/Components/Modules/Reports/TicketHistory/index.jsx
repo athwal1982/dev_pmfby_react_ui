@@ -20,6 +20,11 @@ function TicketHistoryPage() {
     ticketHistoryListItemSearch,
     onClickClearSearchFilter,
     exportClick,
+    totalPages,
+    currentPage,
+    handlePageChange,
+    toggleDownloadReportModal,
+    columnDefs,
   } = TicketHistoryLogics();
 
   return (
@@ -40,6 +45,11 @@ function TicketHistoryPage() {
       updateState={updateState}
       onClickClearSearchFilter={onClickClearSearchFilter}
       exportClick={exportClick}
+      totalPages={totalPages}
+      currentPage={currentPage}
+      handlePageChange={handlePageChange}
+      toggleDownloadReportModal={toggleDownloadReportModal}
+      columnDefs={columnDefs}
     />
   );
 }

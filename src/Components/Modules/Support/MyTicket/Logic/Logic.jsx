@@ -24,6 +24,43 @@ function MyTicketLogics() {
   const [replyBoxCollapsed, setReplyBoxCollapsed] = useState(true);
   const [wordcount, setWordcount] = useState(0);
 
+    const editableRef =  useRef(null);
+    const editableRef1 =  useRef(null);
+      
+    const [content, setContent] = useState("");
+    const [content1, setContent1] = useState("");
+    const handleInput = () => {
+  
+      if (editableRef.current) {
+        setContent(editableRef.current.innerHTML); // A get updated HTML
+        
+      }
+    };
+
+    const handleInput1 = () => {
+  
+      if (editableRef1.current) {
+        setContent1(editableRef1.current.innerHTML); // A get updated HTML
+        
+      }
+    };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (editableRef.current) {
+        setContent(editableRef.current.innerHTML);
+
+        if (editableRef1.current) {
+        setContent(editableRef1.current.innerHTML);
+      }
+      }
+    }, 500); 
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  
+  
   const resolvedTicketRight = getUserRightCodeAccess("mdh9");
   const setAlertMessage = AlertMessage();
   const fileRef = useRef(null);
@@ -377,6 +414,7 @@ function MyTicketLogics() {
   const [apiDataAttachment, setapiDataAttachment] = useState({ apiFor: "", TicketHistoryID: 0 });
   const [btnLoaderActive1, setBtnLoaderActive1] = useState(false);
   const handleSave = async (e) => {
+    debugger;
     if (e) e.preventDefault();
     let popUpMsg = "";
     if (value === "" || value === "<p></p>") {
@@ -602,7 +640,7 @@ function MyTicketLogics() {
         supportTicketID: ticketData.SupportTicketID,
         agentUserID: ticketData.AgentUserID ? ticketData.AgentUserID : "0",
         ticketStatusID: formValuesTicketProperties.txtTicketStatus.CommonMasterValueID,
-        ticketDescription: value,
+        ticketDescription: ChkBRHeadTypeID === "124003" ? content + value + content1 : value ,
         hasDocument: phasDocument,
         attachmentPath: "",
       };
@@ -622,7 +660,7 @@ function MyTicketLogics() {
             InsertUserID: user && user.LoginID ? user.LoginID.toString() : "0",
             SupportTicketID: ticketData.SupportTicketID,
             TicketHistoryID: result.response.responseData.TicketHistoryID,
-            TicketDescription: value,
+            TicketDescription: ChkBRHeadTypeID === "124003" ? content + value + content1 : value,
             TicketHistoryDate: moment().utcOffset("+05:30").format("YYYY-MM-DDTHH:mm:ss"),
             TicketStatusID: formValuesTicketProperties.txtTicketStatus.CommonMasterValueID,
             TicketStatus: formValuesTicketProperties.txtTicketStatus.CommonMasterValue,
@@ -658,7 +696,7 @@ function MyTicketLogics() {
 
               try {
                 const resultattachment = await gCPFileUploadData(formDataDoc);
-               if (resultattachment.responseCode === 1) {
+                if (resultattachment.responseCode === 1) {
                   pdbAttachmentPath.push({ attachmentPath: `https://pmfby.amnex.co.in/pmfby/public/krph/documents/${pAttachment[i].name}` });
                 } else if (resultattachment.responseCode === 0) {
                   setAlertMessage({
@@ -677,16 +715,15 @@ function MyTicketLogics() {
                 supportTicketID: ticketData.SupportTicketID,
                 ticketHistoryID: result.response.responseData.TicketHistoryID,
               };
-             const resultdbAttachmentPath = await AddKRPHTicketHistoryAttachmentData(formDataattachmentPath);
-             if (resultdbAttachmentPath.responseCode === 1) {
-              setapiDataAttachment({ apiFor: "TCKHIS", TicketHistoryID: result.response.responseData.TicketHistoryID });
-             } else if (resultdbAttachmentPath.responseCode === 0) {
-                  setAlertMessage({
-                    type: "error",
-                    message: resultattachment.responseMessage,
-                  });
-             }
-             
+              const resultdbAttachmentPath = await AddKRPHTicketHistoryAttachmentData(formDataattachmentPath);
+              if (resultdbAttachmentPath.responseCode === 1) {
+                setapiDataAttachment({ apiFor: "TCKHIS", TicketHistoryID: result.response.responseData.TicketHistoryID });
+              } else if (resultdbAttachmentPath.responseCode === 0) {
+                setAlertMessage({
+                  type: "error",
+                  message: resultattachment.responseMessage,
+                });
+              }
             } catch (error) {
               console.log(error);
               setAlertMessage({
@@ -1113,6 +1150,10 @@ function MyTicketLogics() {
     handleAddComment,
     setapiDataAttachment,
     apiDataAttachment,
+    handleInput,
+    editableRef,
+    handleInput1,
+    editableRef1,
   };
 }
 

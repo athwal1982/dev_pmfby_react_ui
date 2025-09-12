@@ -33,18 +33,20 @@ function MyTicketPage({ selectedData, showfunc }) {
     wordcount,
     setWordcount,
     btnLoaderActive1,
-    formValidationSupportTicketReviewError,
+    // A formValidationSupportTicketReviewError,
     valueEditTicketComment,
     setValueEditTicketComment,
     handleSaveEditTicketComment,
     btnLoaderActiveEditTicketComment,
     wordcountEditTicketComment,
     setWordcountEditTicketComment,
-    fileRef,
-    handleResetFile,
+    // A fileRef,
+    // A handleResetFile,
     setSelectedHistoryData,
     btnLoaderActiveComment,
     handleAddComment,
+    setapiDataAttachment,
+    apiDataAttachment,
   } = MyTicketLogics();
 
   useEffect(() => {
@@ -63,7 +65,7 @@ function MyTicketPage({ selectedData, showfunc }) {
       closeSupportTicketOnClick={closeSupportTicketOnClick}
       showfunc={showfunc}
     >
-      <ChatList
+     <ChatList
         chatListDetails={chatListDetails}
         isLoadingchatListDetails={isLoadingchatListDetails}
         selectedData={selectedData}
@@ -74,6 +76,8 @@ function MyTicketPage({ selectedData, showfunc }) {
         wordcountEditTicketComment={wordcountEditTicketComment}
         setWordcountEditTicketComment={setWordcountEditTicketComment}
         setSelectedHistoryData={setSelectedHistoryData}
+        apiDataAttachment={apiDataAttachment}
+        setapiDataAttachment={setapiDataAttachment}
       >
         <ChatBox
           replyBoxCollapsed={replyBoxCollapsed}
@@ -87,9 +91,9 @@ function MyTicketPage({ selectedData, showfunc }) {
           wordcount={wordcount}
           setWordcount={setWordcount}
           btnLoaderActive1={btnLoaderActive1}
-          formValidationSupportTicketReviewError={formValidationSupportTicketReviewError}
-          fileRef={fileRef}
-          handleResetFile={handleResetFile}
+          // A formValidationSupportTicketReviewError={formValidationSupportTicketReviewError}
+          // A fileRef={fileRef}
+          // A handleResetFile={handleResetFile}
           btnLoaderActiveComment={btnLoaderActiveComment}
           handleAddComment={handleAddComment}
         />

@@ -50,6 +50,10 @@ function MyTicketPage({ selectedData, showfunc }) {
     handleAddComment,
     setapiDataAttachment,
     apiDataAttachment,
+    handleInput,
+    handleInput1,
+    editableRef,
+    editableRef1,
   } = MyTicketLogics();
 
   useEffect(() => {
@@ -101,6 +105,11 @@ function MyTicketPage({ selectedData, showfunc }) {
           handleResetFile={handleResetFile}
           btnLoaderActiveComment={btnLoaderActiveComment}
           handleAddComment={handleAddComment}
+          selectedPolicyDetails={selectedPolicyDetails}
+          handleInput={handleInput}
+          handleInput1={handleInput1}
+          editableRef={editableRef}
+          editableRef1={editableRef1}
         />
       </ChatList>
       <TicketCustomerDetail

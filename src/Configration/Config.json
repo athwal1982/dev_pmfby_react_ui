@@ -1,4 +1,5 @@
 {
   "BaseUrl": "http://14.141.50.211:8021/",
-  "MainUrl": "http://14.141.50.211:9011/FGMS/"
+  "MainUrl": "http://14.141.50.211:9011/FGMS/",
+  "ReportBaseUrl": "https://pmfby.gov.in/krphdashboard/"
 }

@@ -327,44 +327,44 @@
   }
 }
 
-    .ticketcard {
-      width: 840px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-      border: 1px solid #e5e7eb;
-      overflow: hidden;
-    }
+.ticketcard {
+  width: 840px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
 
-    .ticketheader {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 6px 12px;
-      background: linear-gradient(135deg, #f9fafb, #ffffff);
-      border-bottom: 1px solid #e5e7eb;
-    }
+.ticketheader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #f9fafb, #ffffff);
+  border-bottom: 1px solid #e5e7eb;
+}
 
-    .leftpanel h1 {
-      font-size: 14px;
-      color: #374151;
-    }
+.leftpanel h1 {
+  font-size: 14px;
+  color: #374151;
+}
 
-    .leftpanel strong {
-      color: #111827;
-    }
+.leftpanel strong {
+  color: #111827;
+}
 
-    .status {
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 600;
-      border: 1px solid #10b981;
-      background: #ecfdf5;
-      color: #065f46;
-    }
+.status {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid #10b981;
+  background: #ecfdf5;
+  color: #065f46;
+}
 
-    /* Status Variants */
+/* Status Variants */
 .status.open {
   background: #fffbeb;
   color: #92400e;
@@ -386,22 +386,21 @@
   background: #ecfdf5;
   color: #065f46;
   border-color: #10b981;
-
 }
 
-    .ticketbody {
-      padding: 20px;
-    }
+.ticketbody {
+  padding: 20px;
+}
 .rightpanel {
-    min-width: 120px;
-    text-align: -webkit-center;
-    display: inline-block;
+  min-width: 120px;
+  text-align: -webkit-center;
+  display: inline-block;
 }
 
 .Event1panel {
   display: grid;
   width: 850px;
-  padding: 10px 0px 5px 12px;         
+  padding: 10px 0px 5px 12px;
 }
 
 .buttonTrail {

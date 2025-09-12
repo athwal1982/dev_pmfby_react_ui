@@ -1,16 +1,16 @@
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { useState } from "react";
 import moment from "moment";
-import { dateToCompanyFormat, dateToSpecificFormat, Convert24FourHourAndMinute, dateFormatDefault, daysdifference } from "Configration/Utilities/dateformat";
+import { dateToCompanyFormat, dateToSpecificFormat, Convert24FourHourAndMinute, dateFormatDefault, daysdifference,Convert24FourHourAndMinuteNew } from "Configration/Utilities/dateformat";
 import * as XLSX from "xlsx";
 import { getSessionStorage } from "Components/Common/Login/Auth/auth";
-import { getSupportTicketDetailReport, getSupportTicketDetailReportMongo } from "../Services/Methods";
+import { getSupportTicketDetailReport, getSupportTicketDetailReportMongo,getSupportTicketHistoryReportViewData , getSupportTicketHistoryData} from "../Services/Methods";
 import { getMasterDataBinding } from "../../../Support/ManageTicket/Services/Methods";
 
 function TicketHistoryLogics() {
   const [formValues, setFormValues] = useState({
-    txtFromDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
-    txtToDate: dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD"),
+    txtFromDate: dateToSpecificFormat(moment().subtract(2, "days"), "YYYY-MM-DD"),
+    txtToDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
     txtInsuranceCompany: null,
     txtState: null,
     txtTicketType: null,
@@ -19,6 +19,7 @@ function TicketHistoryLogics() {
   const [ticketHistoryDataList, setTicketHistoryDataList] = useState(false);
   const [filteredTicketHistoryDataList, setFilteredTicketHistoryDataList] = useState([]);
   const [isLoadingTicketHistoryDataList, setLoadingTicketHistoryDataList] = useState(false);
+  const [columnDefs, setColumnDefs] = useState([]);
   const setAlertMessage = AlertMessage();
 
   const [gridApi, setGridApi] = useState();
@@ -181,7 +182,78 @@ function TicketHistoryLogics() {
     });
   };
 
-  const getTicketHistoryData = async (pType) => {
+     const generateColumns = (data) => {
+    const columnDefinitions = [];
+    if (data.length > 0) {
+      columnDefinitions.push({
+        headerName: "Sr.No.",
+        field: "",
+        valueGetter: "node.rowIndex + 1",
+        width: 80,
+        pinned: "left",
+        lockPosition: true,
+      });
+      Object.entries(data[0]).forEach(([key]) => {
+        let mappedColumn;
+
+        if (key === "Creation Date") {
+          mappedColumn = {
+            headerName: "Creation Date",
+            field: key,
+             valueFormatter: function (params) {
+                          return params && params.value
+                            ? dateToSpecificFormat(`${params.value.split("T")[0]} ${Convert24FourHourAndMinuteNew(params.value.split("T")[1])}`, "DD-MM-YYYY HH:mm")
+                            : "";
+                        },
+          };
+        } else  if (key === "Re-Open Date") {
+  mappedColumn = {
+    headerName: "Re-Open Date",
+    field: key,
+    valueFormatter: function (params) {
+      if (!params || !params.value) return ""; 
+
+      const [datePart, timePart] = params.value.split("T");
+      if (!datePart || !timePart) return params.value;
+
+      const formattedTime = Convert24FourHourAndMinuteNew(timePart);
+      return dateToSpecificFormat(`${datePart} ${formattedTime}`, "DD-MM-YYYY HH:mm");
+    },
+  };
+}
+ else  
+  if (key === "Status Date") {
+  mappedColumn = {
+    headerName: "Status Date",
+    field: key,
+    valueFormatter: function (params) {
+      if (!params || !params.value) return ""; 
+
+      const [datePart, timePart] = params.value.split("T");
+      if (!datePart || !timePart) return params.value;
+
+      const formattedTime = Convert24FourHourAndMinuteNew(timePart);
+      return dateToSpecificFormat(`${datePart} ${formattedTime}`, "DD-MM-YYYY HH:mm");
+    },
+  };
+}
+ else {
+          mappedColumn = {
+            headerName: key,
+            field: key,
+          };
+        }
+
+        if (mappedColumn) columnDefinitions.push(mappedColumn);
+      });
+    }
+    return columnDefinitions;
+  }; 
+
+
+
+  const getTicketHistoryData = async (pType, pageIndex, pageSize) => {
+    debugger;
     try {
       const dateDiffrence = daysdifference(dateFormatDefault(formValues.txtFromDate), dateFormatDefault(formValues.txtToDate));
       if (dateDiffrence > 31) {
@@ -193,27 +265,45 @@ function TicketHistoryLogics() {
       }
       setLoadingTicketHistoryDataList(true);
 
+      // A const formData = {
+      // A  insuranceCompanyID:
+      // A  formValues.txtInsuranceCompany && formValues.txtInsuranceCompany.CompanyID ? formValues.txtInsuranceCompany.CompanyID.toString() : "#ALL",
+      // A  ticketHeaderID: formValues.txtTicketType && formValues.txtTicketType.TicketTypeID ? formValues.txtTicketType.TicketTypeID : 0,
+      // A  stateID: formValues.txtState && formValues.txtState.StateMasterID ? formValues.txtState.StateMasterID.toString() : "#ALL",
+      // A  fromdate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
+      // A  toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
+      // A };
+      const userData = getSessionStorage("user");
       const formData = {
-        insuranceCompanyID:
+        SPFROMDATE: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
+        SPTODATE: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
+        SPInsuranceCompanyID:
           formValues.txtInsuranceCompany && formValues.txtInsuranceCompany.CompanyID ? formValues.txtInsuranceCompany.CompanyID.toString() : "#ALL",
-        ticketHeaderID: formValues.txtTicketType && formValues.txtTicketType.TicketTypeID ? formValues.txtTicketType.TicketTypeID : 0,
-        stateID: formValues.txtState && formValues.txtState.StateMasterID ? formValues.txtState.StateMasterID.toString() : "#ALL",
-        fromdate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
-        toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
+        SPStateID: formValues.txtState && formValues.txtState.StateMasterID ? formValues.txtState.StateMasterID.toString() : "#ALL",
+        SPTicketHeaderID: formValues.txtTicketType && formValues.txtTicketType.TicketTypeID ? Number(formValues.txtTicketType.TicketTypeID) : 0,
+        SPUserID: userData && userData.LoginID ? userData.LoginID : 0,
+        page: pageIndex,
+        limit: pageSize,
+        userEmail: "pradeep.meandev@gmail.com",
       };
       let result = [];
       if (pType === "MONGO") {
         result = await getSupportTicketDetailReportMongo(formData);
       } else {
-        result = await getSupportTicketDetailReport(formData);
+        // A result = await getSupportTicketDetailReport(formData);
+        result = await getSupportTicketHistoryReportViewData(formData);
       }
       setLoadingTicketHistoryDataList(false);
       if (result.responseCode === 1) {
         if (ticketHistoryListItemSearch && ticketHistoryListItemSearch.toLowerCase().includes("#")) {
           onChangeTicketHistoryList("");
         }
-        setTicketHistoryDataList(result.responseData.supportTicket);
-        setFilteredTicketHistoryDataList(result.responseData.supportTicket);
+        // A setTicketHistoryDataList(result.responseData.supportTicket);
+        // A setFilteredTicketHistoryDataList(result.responseData.supportTicket);
+        setTicketHistoryDataList(result.responseData.responseData);
+        setFilteredTicketHistoryDataList(result.responseData.responseData);
+        setColumnDefs(generateColumns(result.responseData.responseData));
+        setTotalPages(Math.ceil(result.responseData.pagination.total / pageSize));
       } else {
         setAlertMessage({
           type: "error",
@@ -231,6 +321,18 @@ function TicketHistoryLogics() {
 
   const updateState = (name, value) => {
     setFormValues({ ...formValues, [name]: value });
+  };
+
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const handlePageChange = (page) => {
+    debugger;
+    setCurrentPage(page);
+    // ... do something with `page`
+    if (page >= 1) {
+      getTicketHistoryData("", page, 100);
+    }
   };
 
   const getTicketHistoryList = (pType) => {
@@ -251,18 +353,27 @@ function TicketHistoryLogics() {
         return;
       }
     }
-    getTicketHistoryData(pType);
+    if (formValues.txtTicketType === null) {
+      setAlertMessage({
+        type: "warning",
+        message: "Plesae select ticket type",
+      });
+      return;
+    }
+    getTicketHistoryData(pType, 1, 100);
   };
 
   const onClickClearSearchFilter = () => {
     setFormValues({
       ...formValues,
-      txtFromDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
-      txtToDate: dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD"),
+      txtFromDate: dateToSpecificFormat(moment().subtract(2, "days"), "YYYY-MM-DD"),
+      txtToDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
       txtInsuranceCompany: null,
       txtState: null,
       txtTicketType: null,
     });
+    setFilteredTicketHistoryDataList([]);
+    setTicketHistoryDataList([]);
   };
 
   const exportClick = () => {
@@ -367,6 +478,50 @@ function TicketHistoryLogics() {
     downloadExcel(rearrangedData);
   };
 
+  const toggleDownloadReportModal = async() => { 
+try {
+          if (ticketHistoryDataList.length === 0) {
+      setAlertMessage({
+        type: "error",
+        message: "Data not found to export.",
+      });
+      return;
+    }
+    
+          setLoadingTicketHistoryDataList(true);
+          const userData = getSessionStorage("user");
+          const formData = {
+           SPFROMDATE: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
+           SPTODATE: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
+           SPInsuranceCompanyID: formValues.txtInsuranceCompany && formValues.txtInsuranceCompany.CompanyID ? formValues.txtInsuranceCompany.CompanyID.toString() : "#ALL",
+           SPStateID: formValues.txtState && formValues.txtState.StateMasterID ? formValues.txtState.StateMasterID.toString() : "#ALL",
+           SPTicketHeaderID: formValues.txtTicketType && formValues.txtTicketType.TicketTypeID ? formValues.txtTicketType.TicketTypeID : 0,
+          SPUserID: userData && userData.LoginID ? userData.LoginID : 0,    
+          userEmail: "pmfbysystems@gmail.com"
+          };
+          const result = await getSupportTicketHistoryData(formData);
+          setLoadingTicketHistoryDataList(false);
+          if (result.responseCode === 1) {
+            setAlertMessage({
+              type: "success",
+              message: result.responseMessage,
+            });
+          } else {
+            setAlertMessage({
+              type: "error",
+              message: result.responseMessage,
+            });
+          }
+        } catch (error) {
+          console.log(error);
+          setAlertMessage({
+            type: "error",
+            message: error,
+          });
+        }
+
+  };
+
   return {
     ticketHistoryDataList,
     filteredTicketHistoryDataList,
@@ -387,6 +542,12 @@ function TicketHistoryLogics() {
     isLoadingTicketHistoryDataList,
     onClickClearSearchFilter,
     exportClick,
+    totalPages,
+    currentPage,
+    handlePageChange,
+    toggleDownloadReportModal,
+    columnDefs,
+    
   };
 }
 export default TicketHistoryLogics;
