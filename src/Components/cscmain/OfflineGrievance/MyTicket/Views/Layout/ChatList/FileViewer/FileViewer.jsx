@@ -76,8 +76,8 @@ function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment
       setFileViewerIsLoading(true);
       if (apiDataAttachment.apiFor === "SPTCKT") {
         formdata = {
-           grievenceSupportTicketID: selectedData && selectedData.GrievenceSupportTicketID ? selectedData.GrievenceSupportTicketID : 0,
-           grievenceTicketAttachmentID: pTicketAttachmentID,
+          grievenceSupportTicketID: selectedData && selectedData.GrievenceSupportTicketID ? selectedData.GrievenceSupportTicketID : 0,
+          grievenceTicketAttachmentID: pTicketAttachmentID,
         };
         result = await deleteKRPHGrievanceAttachmentData(formdata);
       } else if (apiDataAttachment.apiFor === "TCKHIS") {
@@ -87,7 +87,7 @@ function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment
         };
         result = await deleteKRPHGrievanceHistoryAttachmentData(formdata);
       }
-      
+
       setFileViewerIsLoading(false);
       if (result.responseCode === 1) {
         setAlertMessage({
@@ -96,26 +96,25 @@ function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment
         });
         let filteredData = [];
         if (apiDataAttachment.apiFor === "SPTCKT") {
-         filteredData = attachmentData.filter((item) => item.GrievenceTicketAttachmentID.toString() !== pTicketAttachmentID.toString());
-        setAttachmentData(filteredData); 
-       } else if (apiDataAttachment.apiFor === "TCKHIS") {
-         filteredData = attachmentData.filter((item) => item.GrievenceTicketHistoryAttachmentID.toString() !== pTicketAttachmentID.toString());
-        setAttachmentData(filteredData); 
-         
+          filteredData = attachmentData.filter((item) => item.GrievenceTicketAttachmentID.toString() !== pTicketAttachmentID.toString());
+          setAttachmentData(filteredData);
+        } else if (apiDataAttachment.apiFor === "TCKHIS") {
+          filteredData = attachmentData.filter((item) => item.GrievenceTicketHistoryAttachmentID.toString() !== pTicketAttachmentID.toString());
+          setAttachmentData(filteredData);
         }
 
         if (filteredData.length === 0) {
           if (apiDataAttachment.apiFor === "SPTCKT") {
-          selectedData.HasDocument = 0;
+            selectedData.HasDocument = 0;
           } else if (apiDataAttachment.apiFor === "TCKHIS") {
-          for (let i = 0; i < chatListDetails.length; i += 1) {
-          if (apiDataAttachment.GrievenceTicketHistoryID === chatListDetails[i].GrievenceTicketHistoryID) {
-            chatListDetails[i].HasDocument = "0";
-            break;
+            for (let i = 0; i < chatListDetails.length; i += 1) {
+              if (apiDataAttachment.GrievenceTicketHistoryID === chatListDetails[i].GrievenceTicketHistoryID) {
+                chatListDetails[i].HasDocument = "0";
+                break;
+              }
+            }
+            setChatListDetails(chatListDetails);
           }
-        }
-         setChatListDetails(chatListDetails);
-        }
           // A updateRowOfAttachment(selectedData);
           toggleFileViewerModal();
         }
@@ -165,7 +164,10 @@ function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment
           <table className="table_bordered table_Height_module_wise_training">
             <thead>
               <tr>
-                {(ChkBRHeadTypeID === "124002" || ChkBRHeadTypeID === "124001") && apiDataAttachment.apiFor === "SPTCKT" || apiDataAttachment.apiFor === "TCKHIS" ? <th>Action</th> : null}
+                {((ChkBRHeadTypeID === "124002" || ChkBRHeadTypeID === "124001") && apiDataAttachment.apiFor === "SPTCKT") ||
+                apiDataAttachment.apiFor === "TCKHIS" ? (
+                  <th>Action</th>
+                ) : null}
                 <th>Sr. No.</th>
                 <th>Attachment</th>
               </tr>
@@ -180,12 +182,14 @@ function FileViewer({ toggleFileViewerModal, selectedData, updateRowOfAttachment
                         onClick={() => handleDeleteFile(v.GrievenceTicketAttachmentID)}
                       />
                     </td>
-                  ) : (ChkBRHeadTypeID === "124002" || ChkBRHeadTypeID === "124001") && apiDataAttachment.apiFor === "TCKHIS" ? <td>
+                  ) : (ChkBRHeadTypeID === "124002" || ChkBRHeadTypeID === "124001") && apiDataAttachment.apiFor === "TCKHIS" ? (
+                    <td>
                       <FaRegTrashAlt
                         style={{ fontSize: "22px", color: "#000000", cursor: "pointer" }}
                         onClick={() => handleDeleteFile(v.GrievenceTicketHistoryAttachmentID)}
                       />
-                    </td> : null}
+                    </td>
+                  ) : null}
                   <td>{i + 1}</td>
                   <td>
                     {v.AttachmentPath && v.AttachmentPath.split(".").pop().split("?")[0] === "pdf" ? (

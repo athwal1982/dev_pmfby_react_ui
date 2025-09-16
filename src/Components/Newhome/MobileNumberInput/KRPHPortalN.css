@@ -220,37 +220,37 @@
 }
 
 @media (max-width: 1024px) and (min-width: 769px) {
-.sign-in-linkN {
-  color: #007b00;
-  font-weight: 500;
-  text-decoration: none;
-  font-size: 25px;
-}
+  .sign-in-linkN {
+    color: #007b00;
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 25px;
+  }
 }
 
 @media (min-width: 481px) and (max-width: 560px) {
- .sign-in-linkN {
-  font-size: 15px;
-}
+  .sign-in-linkN {
+    font-size: 15px;
+  }
 }
 
 @media (min-width: 561px) and (max-width: 680px) {
-   .sign-in-linkN {
-  font-size: 15px;
-}
+  .sign-in-linkN {
+    font-size: 15px;
+  }
 }
 
 @media (min-width: 681px) and (max-width: 768px) {
   .sign-in-linkN {
-  font-size: 22px;
-}
+    font-size: 22px;
+  }
 }
 
 @media (max-width: 480px) {
-    .sign-in-linkN {
-  font-size: 22px;
-  text-align: center;
-}
+  .sign-in-linkN {
+    font-size: 22px;
+    text-align: center;
+  }
 }
 
 .forgotpassN {
@@ -277,7 +277,6 @@
   font-family: "Open Sans";
 }
 
-
 @media (max-width: 1024px) and (min-width: 769px) {
   .mobile-inputN {
     width: 35vw;
@@ -303,7 +302,7 @@
 }
 
 @media (max-width: 480px) {
-   .mobile-inputN {
+  .mobile-inputN {
     width: 90vw;
   }
 }
@@ -377,21 +376,19 @@
   }
 }
 
-
 @media (max-width: 480px) {
   .helplineN {
-        display: flex;
-        justify-content: flex-start;
-        width: 261px;
-        padding: 4px;
-        border: 1px solid #075307;
-        font-size: 12px !important;
-        border-radius: 5px;
-        color: #075307;
-        font-weight: 500;
+    display: flex;
+    justify-content: flex-start;
+    width: 261px;
+    padding: 4px;
+    border: 1px solid #075307;
+    font-size: 12px !important;
+    border-radius: 5px;
+    color: #075307;
+    font-weight: 500;
   }
 }
-
 
 @media (max-width: 768px) {
   .pmfby-descriptionN {
@@ -406,8 +403,6 @@
     flex-direction: column;
     align-items: flex-start;
   }
-
-  
 }
 
 .queries-txtN {
@@ -452,7 +447,7 @@
   font-family: "Open Sans", sans-serif !important;
 }
 
-.get-otp:hoverN {
+.get-otp:hovern {
   background-color: #003300;
 }
 
@@ -733,6 +728,3 @@
   font-size: 12px;
   margin-top: 5px;
 }
-
-
-

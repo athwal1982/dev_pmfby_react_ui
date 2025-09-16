@@ -60,10 +60,7 @@ export const getSupportTicketHistoryData = async (formData) => {
   }
 };
 
-
-
 export const getTicketHistoryDownloadList = async (formData) => {
-  
   try {
     const requestData = {
       main: {

@@ -101,9 +101,7 @@ function AdminLoginN({ handleOtpSent, setSelectedOption }) {
 
             {/* Captcha Field */}
             <div className="captchaN" style={{ marginTop: "0px" }}>
-              <label htmlFor="captcha" >
-                Security Check
-              </label>
+              <label htmlFor="captcha">Security Check</label>
               <div className="captcha-containerN">
                 <div className="captchafieldN">
                   <span className="bhashini-skip-translation">{captchaCode}</span>
@@ -124,10 +122,7 @@ function AdminLoginN({ handleOtpSent, setSelectedOption }) {
             {loginBtnClick && enteredCaptcha === "" ? <p className="error-text-adminLoginN">Captcha is required</p> : ""}
 
             {/* Login Button */}
-            <button
-              className="get-otpN"
-              onClick={handleClick}
-            >
+            <button className="get-otpN" onClick={handleClick}>
               Login
             </button>
           </>

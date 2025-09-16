@@ -11,7 +11,6 @@ function OnlineOfflineTicketsLogics() {
     txtToDate: dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD"),
   });
 
-
   const [OnlineOfflineTicketsDataList, setOnlineOfflineTicketsDataList] = useState(false);
   const [filteredOnlineOfflineTicketsDataList, setFilteredOnlineOfflineTicketsDataList] = useState([]);
   const [isLoadingOnlineOfflineTicketsDataList, setLoadingOnlineOfflineTicketsDataList] = useState(false);
@@ -49,11 +48,8 @@ function OnlineOfflineTicketsLogics() {
 
     // Append totals row to worksheet
     XLSX.utils.sheet_add_json(worksheet, [totals], { skipHeader: true, origin: -1 });
-    worksheet["!cols"] = [{ width: 25 }, { width: 18 }, { width: 18 }, { width: 15 }, { width: 20 }, { width: 15 }, { width: 18 }, {width: 15}];
-    XLSX.writeFile(
-      workbook,
-      "Online_Offline_Tickets.xlsx",
-    );
+    worksheet["!cols"] = [{ width: 25 }, { width: 18 }, { width: 18 }, { width: 15 }, { width: 20 }, { width: 15 }, { width: 18 }, { width: 15 }];
+    XLSX.writeFile(workbook, "Online_Offline_Tickets.xlsx");
   };
 
   const rearrangeAndRenameColumns = (originalData, columnMapping) => {
@@ -65,7 +61,6 @@ function OnlineOfflineTicketsLogics() {
 
   const getOnlineOfflineTicketsData = async () => {
     try {
-     
       setLoadingOnlineOfflineTicketsDataList(true);
 
       const formData = {
@@ -101,30 +96,30 @@ function OnlineOfflineTicketsLogics() {
 
   const getOnlineOfflineTicketsList = () => {
     if (formValues.txtFromDate) {
-        if (formValues.txtToDate) {
-          if (formValues.txtFromDate > formValues.txtToDate) {
-            setAlertMessage({
-              type: "warning",
-              message: "From date must be less than To Date",
-            });
-            return;
-          }
-        } else {
+      if (formValues.txtToDate) {
+        if (formValues.txtFromDate > formValues.txtToDate) {
           setAlertMessage({
             type: "warning",
-            message: "Please select To Date",
+            message: "From date must be less than To Date",
           });
           return;
         }
-      }
-      const dateDiffrence = daysdifference(dateFormatDefault(formValues.txtFromDate), dateFormatDefault(formValues.txtToDate));
-      if (dateDiffrence > 31) {
+      } else {
         setAlertMessage({
-          type: "error",
-          message: "1 month date range is allowed only",
+          type: "warning",
+          message: "Please select To Date",
         });
         return;
       }
+    }
+    const dateDiffrence = daysdifference(dateFormatDefault(formValues.txtFromDate), dateFormatDefault(formValues.txtToDate));
+    if (dateDiffrence > 31) {
+      setAlertMessage({
+        type: "error",
+        message: "1 month date range is allowed only",
+      });
+      return;
+    }
     getOnlineOfflineTicketsData();
   };
 

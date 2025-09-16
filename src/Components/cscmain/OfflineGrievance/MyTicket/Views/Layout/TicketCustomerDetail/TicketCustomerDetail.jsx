@@ -139,7 +139,7 @@ function TicketCustomerDetail({
             </p>
             <FiCopy onClick={() => copyToClipboard("spnSourceofGrievance")} />
           </div>
-           {ticketData && ticketData.GrievenceTicketSourceTypeID === 132304 ? (
+          {ticketData && ticketData.GrievenceTicketSourceTypeID === 132304 ? (
             <div className={BizClass.SubBox}>
               <RiNewspaperLine />
               <p>

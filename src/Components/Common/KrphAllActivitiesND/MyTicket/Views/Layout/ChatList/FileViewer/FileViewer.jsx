@@ -3,7 +3,10 @@ import { AlertMessage } from "Framework/Components/Widgets/Notification/Notifica
 import { Modal } from "Framework/Components/Layout";
 import { Loader } from "Framework/Components/Widgets";
 import { FaFileImage, FaFilePdf } from "react-icons/fa";
-import { getKRPHSupportAttachmentData, getKRPHTicketHistoryAttachmentData } from "../../../../../../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
+import {
+  getKRPHSupportAttachmentData,
+  getKRPHTicketHistoryAttachmentData,
+} from "../../../../../../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
 
 function FileViewer({ toggleFileViewerModal, selectedData, apiDataAttachment }) {
   const setAlertMessage = AlertMessage();

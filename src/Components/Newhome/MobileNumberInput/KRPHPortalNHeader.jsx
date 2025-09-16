@@ -9,7 +9,7 @@ import qr_app from "../../../assets/img/qr_app.jpg";
 import "../../LandingPage/Header.css";
 
 const KRPHPortalNHeader = ({ handleWhatsAppClick }) => {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const menuItems = [{ value: "home", icon: MdHome, label: "Home", path: "/LandingPage" }];
 
@@ -23,12 +23,11 @@ const KRPHPortalNHeader = ({ handleWhatsAppClick }) => {
     setOpen(false); // A Close the popup
   };
 
-    const handleGotoKrph = (path) => {
-      if (path === "/LandingPage") {
-        navigate("/LandingPage");
-      } 
-
-    };
+  const handleGotoKrph = (path) => {
+    if (path === "/LandingPage") {
+      navigate("/LandingPage");
+    }
+  };
   return (
     <>
       <Box className="header_top_fix">
@@ -152,14 +151,13 @@ const KRPHPortalNHeader = ({ handleWhatsAppClick }) => {
           </Box>
 
           {/* Desktop Menu */}
-          <Box className="menu-container-landing-login" >
+          <Box className="menu-container-landing-login">
             {menuItems.map(({ icon, label, path }, index) => {
-
               return (
                 <Box key={index} className="menu-dropdown-landing">
-                  <Button sx={{ textTransform: "none" }} onClick={() => handleGotoKrph(path)}  >
+                  <Button sx={{ textTransform: "none" }} onClick={() => handleGotoKrph(path)}>
                     <Box className="icon-container-landing-page">
-                      <MdHome style={{ fontSize: "20px", cursor: "pointer", color: "#000000" }}  />
+                      <MdHome style={{ fontSize: "20px", cursor: "pointer", color: "#000000" }} />
                     </Box>
                     <span style={{ color: "#000000" }}>{label}</span>
                   </Button>

@@ -4,7 +4,7 @@ const APIEndpoints = {
     GetSupportTicketDetailReportMongo: "FGMS/GetSupportTicketDetailReportMongo",
     getSupportTicketHistoryReportView: "ticket-dashboard/getSupportTicketHistoryReportView",
     getSupportTicketHistory: "ticket-dashboard/getSupportTicketHistory",
-    getTicketHistoryDownloadList :"ticket-dashboard/getRequestDownloadHistory"
+    getTicketHistoryDownloadList: "ticket-dashboard/getRequestDownloadHistory",
   },
 };
 

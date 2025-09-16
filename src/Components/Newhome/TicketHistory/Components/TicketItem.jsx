@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React from "react";
+import React, { useState } from "react";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import BizClass from "../TicketHistory.module.scss";
@@ -22,6 +22,8 @@ import TataAig from "../../../../assets/ICLogo/TataAig.jpeg";
 import UnitedIndia from "../../../../assets/ICLogo/Unitedindia.jpeg";
 import UnivSompo from "../../../../assets/ICLogo/UnivSompo.png";
 import Orient from "../../../../assets/ICLogo/OrientalInsur.png";
+import { BiUnderline } from "react-icons/bi";
+import FarmerRating from "./FarmerRating";
 
 const TicketItem = ({ item: ticket, isExpanded, onExpand }) => {
   const isResolved = ticket.TicketStatus === "Resolved";
@@ -55,6 +57,8 @@ const TicketItem = ({ item: ticket, isExpanded, onExpand }) => {
   };
 
   const logoPath = getInsuranceLogo(ticket.InsuranceCompany);
+
+
   return (
     <React.Fragment>
       <tr className={BizClass.ticketRow} onClick={onExpand}>
@@ -198,11 +202,11 @@ const TicketItem = ({ item: ticket, isExpanded, onExpand }) => {
                   <strong>{ticket.CategoryName}</strong>
                 </div>
                 <div className={BizClass.detailsCol}>
-                  <span>State Master Name</span>
+                  <span>State Name</span>
                   <strong>{ticket.StateMasterName}</strong>
                 </div>
                 <div className={BizClass.detailsCol}>
-                  <span>District Master Name</span>
+                  <span>District Name</span>
                   <strong>{ticket.District}</strong>
                 </div>
                 <div className={BizClass.detailsCol}>
@@ -221,13 +225,36 @@ const TicketItem = ({ item: ticket, isExpanded, onExpand }) => {
                   <span>Status Changed On</span>
                   <strong>{ticket.StatusChangedOn}</strong>
                 </div>
-                <div className={BizClass.detailsCol}>
+                
+              </div>
+              <div >
+               <div className={BizClass.detailsCol}>
                   <span>Ticket Description</span>
                   <strong>{ticket && ticket.TicketDescription ? parse(ticket.TicketDescription) : null}</strong>
                 </div>
+              </div>
+              <br/>
+               <div className={BizClass.detailsGridcomment}>
                 <div className={BizClass.detailsCol}>
                   <span>Comments</span>
                   <strong>{ticket && ticket.Comments ? parse(ticket.Comments) : null}</strong>
+                 
+                </div>
+                <div className={BizClass.detailsCol}>
+                  <span>Rating</span>
+                  {ticket && ticket.Rating && ticket.Rating !== null ? <div style={{ fontSize: "22px" }}>
+            {Array.from({ length: ticket.Rating }, (i) => (
+              <span
+                key={i}
+                style={{
+                  cursor: "pointer",
+                  color: "#ffcc00",
+                }}
+              >
+                &#9733;
+              </span>
+            ))}
+          </div> :  <FarmerRating ticket={ticket}  /> } 
                 </div>
               </div>
             </div>
@@ -235,6 +262,7 @@ const TicketItem = ({ item: ticket, isExpanded, onExpand }) => {
         </tr>
       )}
     </React.Fragment>
+    
   );
 };
 

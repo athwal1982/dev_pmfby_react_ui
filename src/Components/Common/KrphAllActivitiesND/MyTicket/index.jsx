@@ -65,7 +65,7 @@ function MyTicketPage({ selectedData, showfunc }) {
       closeSupportTicketOnClick={closeSupportTicketOnClick}
       showfunc={showfunc}
     >
-     <ChatList
+      <ChatList
         chatListDetails={chatListDetails}
         isLoadingchatListDetails={isLoadingchatListDetails}
         selectedData={selectedData}

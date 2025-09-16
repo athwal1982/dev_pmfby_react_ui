@@ -191,7 +191,9 @@ function ChatList({
             >
               <Grid container spacing={0.7}>
                 <Grid item xs={10} md={3}>
-                  <Typography variant="subtitle2" fontWeight="bold">Activity 1 : Ticket Generated</Typography>
+                  <Typography variant="subtitle2" fontWeight="bold">
+                    Activity 1 : Ticket Generated
+                  </Typography>
                 </Grid>
                 <Grid item xs={10} md={3}>
                   <Typography variant="subtitle2" fontWeight="bold" textAlign="center">
@@ -202,7 +204,9 @@ function ChatList({
                   </Typography>
                 </Grid>
                 <Grid item xs={10} md={3}>
-                  <Typography variant="subtitle2" fontWeight="bold">Name : {selectedData && selectedData.AgentName ? selectedData.AgentName : null}</Typography>
+                  <Typography variant="subtitle2" fontWeight="bold">
+                    Name : {selectedData && selectedData.AgentName ? selectedData.AgentName.split(" ")[0] : null}
+                  </Typography>
                 </Grid>
                 <Grid item xs={10} md={3}>
                   <Typography variant="subtitle2" fontWeight="bold">
@@ -211,7 +215,6 @@ function ChatList({
                       : selectedData.CreatedBY}
                   </Typography>
                 </Grid>
-                
               </Grid>
             </AccordionSummary>
 
@@ -307,15 +310,16 @@ function ChatList({
                             )}
                           </Typography>
                         </Grid>
-                         <Grid item xs={10} md={3}>
-                          <Typography variant="subtitle2" fontWeight="bold">Name : {data.CreatedBY}</Typography>
+                        <Grid item xs={10} md={3}>
+                          <Typography variant="subtitle2" fontWeight="bold">
+                            Name : {data.CreatedBY ? data.CreatedBY.split(" ")[0] : ""}
+                          </Typography>
                         </Grid>
                         <Grid item xs={10} md={3}>
                           <Typography variant="subtitle2" fontWeight="bold">
                             {data.UserType === "CSC" ? `Agent ID : ${data && data.CallingUserID ? data.CallingUserID : ""}` : data.UserType}
                           </Typography>
                         </Grid>
-                       
                       </Grid>
                     </AccordionSummary>
 

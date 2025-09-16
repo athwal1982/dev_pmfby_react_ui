@@ -49,47 +49,45 @@ function TicketHistory({
     getStateListData();
   }, []);
 
-    // A const [isDownloadReportModalOpen, setIsDownloadReportModalOpen] = useState(false);
-    const [isDownloadHistoryListModalOpen, setisDownloadHistoryListModalOpen] = useState(false);
+  // A const [isDownloadReportModalOpen, setIsDownloadReportModalOpen] = useState(false);
+  const [isDownloadHistoryListModalOpen, setisDownloadHistoryListModalOpen] = useState(false);
 
-  
-    //  A const toggleDownloadReportModal = () => {
-    //  A debugger;
-    //  A setIsDownloadReportModalOpen(!isDownloadReportModalOpen);
-    // A };
+  //  A const toggleDownloadReportModal = () => {
+  //  A debugger;
+  //  A setIsDownloadReportModalOpen(!isDownloadReportModalOpen);
+  // A };
 
-    const toggleDownloadHistoryListModal = ()=>{
-      setisDownloadHistoryListModalOpen(!isDownloadHistoryListModalOpen);
-      
-    };
+  const toggleDownloadHistoryListModal = () => {
+    setisDownloadHistoryListModalOpen(!isDownloadHistoryListModalOpen);
+  };
 
   return (
     <>
-    {/* {isDownloadReportModalOpen && <DownloadReport toggleDownloadReportModal={toggleDownloadReportModal} formValues={formValues} />} */}
-    {isDownloadHistoryListModalOpen && <TicketHistoryDownloadList toggleDownloadHistoryListModal={toggleDownloadHistoryListModal}/>}
+      {/* {isDownloadReportModalOpen && <DownloadReport toggleDownloadReportModal={toggleDownloadReportModal} formValues={formValues} />} */}
+      {isDownloadHistoryListModalOpen && <TicketHistoryDownloadList toggleDownloadHistoryListModal={toggleDownloadHistoryListModal} />}
 
-    <div className={BizClass.PageStart}>
-      <PageBar>
-        <PageBar.Input
-          ControlTxt="From Date"
-          control="input"
-          type="date"
-          name="txtFromDate"
-          value={formValues.txtFromDate}
-          onChange={(e) => updateState("txtFromDate", e.target.value)}
-          max={dateToSpecificFormat(moment().subtract(2, "days"), "YYYY-MM-DD")}
-          style={{ width: "105px" }}
-        />
-        <PageBar.Input
-          ControlTxt="To Date"
-          control="input"
-          type="date"
-          name="txtToDate"
-          value={formValues.txtToDate}
-          onChange={(e) => updateState("txtToDate", e.target.value)}
-          max={dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD")}
-          style={{ width: "105px" }}
-        />
+      <div className={BizClass.PageStart}>
+        <PageBar>
+          <PageBar.Input
+            ControlTxt="From Date"
+            control="input"
+            type="date"
+            name="txtFromDate"
+            value={formValues.txtFromDate}
+            onChange={(e) => updateState("txtFromDate", e.target.value)}
+            max={dateToSpecificFormat(moment().subtract(2, "days"), "YYYY-MM-DD")}
+            style={{ width: "105px" }}
+          />
+          <PageBar.Input
+            ControlTxt="To Date"
+            control="input"
+            type="date"
+            name="txtToDate"
+            value={formValues.txtToDate}
+            onChange={(e) => updateState("txtToDate", e.target.value)}
+            max={dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD")}
+            style={{ width: "105px" }}
+          />
 
           <PageBar.Select
             ControlTxt="State"
@@ -139,22 +137,25 @@ function TicketHistory({
           {/* <PageBar.ExcelButton onClick={() => exportClick()} disabled={filteredTicketHistoryDataList.length === 0}>
           Export
         </PageBar.ExcelButton> */}
-         <PageBar.ExcelButton onClick={() => toggleDownloadReportModal()} disabled={filteredTicketHistoryDataList.length === 0}>
-          Export
-        </PageBar.ExcelButton>
-        <PageBar.ExcelButton onClick={() => toggleDownloadHistoryListModal()} >
-           List
-        </PageBar.ExcelButton>
-      </PageBar>
-      <div className={BizClass.divGridPagination}>
-        <DataGrid rowData={filteredTicketHistoryDataList} loader={isLoadingTicketHistoryDataList ? <Loader /> : null} columnDefs={columnDefs} onGridReady={onGridReady}></DataGrid>
+          <PageBar.ExcelButton onClick={() => toggleDownloadReportModal()} disabled={filteredTicketHistoryDataList.length === 0}>
+            Export
+          </PageBar.ExcelButton>
+          <PageBar.ExcelButton onClick={() => toggleDownloadHistoryListModal()}>List</PageBar.ExcelButton>
+        </PageBar>
+        <div className={BizClass.divGridPagination}>
+          <DataGrid
+            rowData={filteredTicketHistoryDataList}
+            loader={isLoadingTicketHistoryDataList ? <Loader /> : null}
+            columnDefs={columnDefs}
+            onGridReady={onGridReady}
+          ></DataGrid>
 
-       {filteredTicketHistoryDataList.length === 0 ? null : (
-          <ResponsivePagination current={currentPage} total={totalPages} onPageChange={handlePageChange} />
-        )}
-     </div>
-    </div>
-     </>
+          {filteredTicketHistoryDataList.length === 0 ? null : (
+            <ResponsivePagination current={currentPage} total={totalPages} onPageChange={handlePageChange} />
+          )}
+        </div>
+      </div>
+    </>
   );
 }
 

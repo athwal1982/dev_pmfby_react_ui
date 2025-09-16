@@ -262,9 +262,7 @@ const FarmerLoginN = ({ handleOtpSent }) => {
               {isButtonVisible && !otpFieldVisible && (
                 <>
                   <div className="captchaN">
-                    <label htmlFor="captcha" >
-                      Security Check
-                    </label>
+                    <label htmlFor="captcha">Security Check</label>
                     <div className="captcha-containerN">
                       <div className="captchafieldN">
                         <span className="bhashini-skip-translation">{captchaCode}</span>
@@ -285,10 +283,7 @@ const FarmerLoginN = ({ handleOtpSent }) => {
               )}
 
               {isButtonVisible && !otpFieldVisible && (
-                <button
-                  className="get-otpN"
-                  onClick={handleMobileInputSubmission}
-                >
+                <button className="get-otpN" onClick={handleMobileInputSubmission}>
                   Send OTP
                 </button>
               )}
@@ -342,10 +337,7 @@ const FarmerLoginN = ({ handleOtpSent }) => {
                     </div>
                   </> */}
                   <br />
-                  <button
-                    className="get-otpN"
-                    onClick={handleOtpSubmit}
-                  >
+                  <button className="get-otpN" onClick={handleOtpSubmit}>
                     Verify OTP
                   </button>
                 </div>
@@ -389,10 +381,7 @@ const FarmerLoginN = ({ handleOtpSent }) => {
                   className={`radio-buttonN ${value === "ClaimIntimation" ? "selected" : ""}`}
                 />
               </RadioGroup>
-              <button
-                className="get-otpN"
-                onClick={() => handleSubmit5(value)}
-              >
+              <button className="get-otpN" onClick={() => handleSubmit5(value)}>
                 Submit
               </button>
             </FormControl>

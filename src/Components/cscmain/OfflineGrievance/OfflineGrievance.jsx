@@ -60,7 +60,7 @@ const cellActionTemplate = (props) => {
       ) : null}
       {props.data && props.data.IsLegal && props.data.IsLegal === 1 ? (
         <span style={{ fontSize: "18px", cursor: "pointer" }} onClick={() => props.toggleEmergencyCallModal(props.data)}>
-           🏛️
+          🏛️
         </span>
       ) : null}
     </div>
@@ -463,7 +463,7 @@ const OfflineGrievance = () => {
     setRowData(mappedData);
   };
 
-const getRowStyle = (params) => {
+  const getRowStyle = (params) => {
     if (params.data.IsNewlyAdded) {
       return { background: "#d5a10e" };
     }
@@ -513,7 +513,6 @@ const getRowStyle = (params) => {
   const toggleEditInsuranceCompanyModal = (data) => {
     openEditInsuranceCompanyPage(data);
   };
-  
 
   useEffect(() => {
     getStateListData();
@@ -696,16 +695,16 @@ const getRowStyle = (params) => {
     }
   };
 
-    const [openEmegencyCallModal, setOpenEmegencyCallModal] = useState(false);
-    const [ticketRowData, setticketRowData] = useState();
-    const toggleEmergencyCallModal = (data) => {
-      setOpenEmegencyCallModal(!openEmegencyCallModal);
-      setticketRowData(data);
-    };
+  const [openEmegencyCallModal, setOpenEmegencyCallModal] = useState(false);
+  const [ticketRowData, setticketRowData] = useState();
+  const toggleEmergencyCallModal = (data) => {
+    setOpenEmegencyCallModal(!openEmegencyCallModal);
+    setticketRowData(data);
+  };
 
   return (
     <>
-        {openEmegencyCallModal && <SOSEmergencyPopup toggleEmergencyCallModal={toggleEmergencyCallModal} ticketRowData={ticketRowData} />}
+      {openEmegencyCallModal && <SOSEmergencyPopup toggleEmergencyCallModal={toggleEmergencyCallModal} ticketRowData={ticketRowData} />}
       {openAddOfflineGrievanceMdal && <AddOfflineGrievance showfunc={openAddOfflineGrievancePage} updateFarmersTickets={updateFarmersTickets} />}
       {openEditOfflineGrievanceMdal && (
         <EditOfflineGrievance showfunc={openEditOfflineGrievancePage} selectedData={selectedData} updateOfflineGrievance={updateOfflineGrievance} />
@@ -789,7 +788,7 @@ const getRowStyle = (params) => {
                     }
                   />
                   <DataGrid.Column field="GrievenceSupportTicketNo" headerName="Ticket No" width="150px" />
-                    <DataGrid.Column field="CPGramRegistrationNumber" headerName="CPGRAM Registration No" width="200px" />
+                  <DataGrid.Column field="CPGramRegistrationNumber" headerName="CPGRAM Registration No" width="200px" />
                   <DataGrid.Column
                     field="ComplaintDate"
                     headerName="Complaint Date"
@@ -968,7 +967,7 @@ function SOSEmergencyPopup({ toggleEmergencyCallModal, ticketRowData }) {
       <Box sx={{ display: "flex", alignItems: "center", p: 2, borderBottom: "1px solid #ddd" }}>
         <RadioButtonCheckedIcon sx={{ color: "red", mr: 1 }} />
         <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: "bold", color: "red" }}>
-           Legal Cases
+          Legal Cases
         </Typography>
         <IconButton onClick={toggleEmergencyCallModal}>
           <CloseIcon />
@@ -978,14 +977,16 @@ function SOSEmergencyPopup({ toggleEmergencyCallModal, ticketRowData }) {
       {/* Content */}
       <DialogContent>
         <Typography sx={{ mb: 2, color: "#555" }}>
-                 Legal cases involving court notices, FIRs, or ongoing litigation are flagged as high priority and require immediate escalation and resolution for Legal cases.
-               </Typography>
+          Legal cases involving court notices, FIRs, or ongoing litigation are flagged as high priority and require immediate escalation and resolution for
+          Legal cases.
+        </Typography>
 
         {/* Description Field */}
-        <Typography sx={{ fontWeight: "bold", mb: 1 }}>Description <span className="asteriskCss">&#42;</span></Typography>
+        <Typography sx={{ fontWeight: "bold", mb: 1 }}>
+          Description <span className="asteriskCss">&#42;</span>
+        </Typography>
         <TextField value={ticketRowData.LegalRemarks} fullWidth multiline rows={4} variant="outlined" />
       </DialogContent>
     </Dialog>
   );
 }
-

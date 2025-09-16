@@ -7,7 +7,15 @@ import { InputControl, InputGroup } from "Framework/OldFramework/FormComponents/
 import { KrphButton } from "../../../../../../Common/KrphAllActivitiesND/Widgets/KrphButton";
 import { gCPFileUploadData, addKRPHGrievenceTicketHistoryAttachmentData } from "../../../../../OfflineGrievance/Services/Methods";
 
-function FileUploadTicketHistory({ selectedData, toggleFileUploadModal, atttachmentcount,setapiDataAttachment, apiDataAttachment, setChatListDetails, chatListDetails }) {
+function FileUploadTicketHistory({
+  selectedData,
+  toggleFileUploadModal,
+  atttachmentcount,
+  setapiDataAttachment,
+  apiDataAttachment,
+  setChatListDetails,
+  chatListDetails,
+}) {
   const setAlertMessage = AlertMessage();
 
   const fileRef = useRef(null);
@@ -99,9 +107,9 @@ function FileUploadTicketHistory({ selectedData, toggleFileUploadModal, atttachm
         handleResetFile();
         try {
           const formDataattachmentPath = {
-           attachment: pdbAttachmentPath,
-           grievenceSupportTicketID: selectedData.GrievenceSupportTicketID,
-           grievenceTicketHistoryID: apiDataAttachment.GrievenceTicketHistoryID,
+            attachment: pdbAttachmentPath,
+            grievenceSupportTicketID: selectedData.GrievenceSupportTicketID,
+            grievenceTicketHistoryID: apiDataAttachment.GrievenceTicketHistoryID,
           };
           setBtnLoaderActive(true);
           const resultattachmentdb = await addKRPHGrievenceTicketHistoryAttachmentData(formDataattachmentPath);
@@ -111,14 +119,14 @@ function FileUploadTicketHistory({ selectedData, toggleFileUploadModal, atttachm
               type: "success",
               message: resultattachmentdb.responseMessage,
             });
-            setapiDataAttachment({ apiFor: "TCKHIS", GrievenceTicketHistoryID: apiDataAttachment.GrievenceTicketHistoryID});
+            setapiDataAttachment({ apiFor: "TCKHIS", GrievenceTicketHistoryID: apiDataAttachment.GrievenceTicketHistoryID });
             for (let i = 0; i < chatListDetails.length; i += 1) {
-          if (apiDataAttachment.GrievenceTicketHistoryID === chatListDetails[i].GrievenceTicketHistoryID) {
-            chatListDetails[i].HasDocument = "1";
-            break;
-          }
-        }
-         setChatListDetails(chatListDetails);
+              if (apiDataAttachment.GrievenceTicketHistoryID === chatListDetails[i].GrievenceTicketHistoryID) {
+                chatListDetails[i].HasDocument = "1";
+                break;
+              }
+            }
+            setChatListDetails(chatListDetails);
             toggleFileUploadModal();
           } else {
             setAlertMessage({

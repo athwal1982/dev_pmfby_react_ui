@@ -3,17 +3,8 @@ import { Dialog, DialogTitle, DialogContent, TextField, Button, IconButton, Typo
 import CloseIcon from "@mui/icons-material/Close";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 
-const SOSEmergencyOfflineGrievancePopup = ({
-  setShowMessage,
-  setOpenSOS,
-  open,
-  onClose,
-  formValuesGI,
-  updateStateGI,
-  setAlertMessage,
-}) => {
+const SOSEmergencyOfflineGrievancePopup = ({ setShowMessage, setOpenSOS, open, onClose, formValuesGI, updateStateGI, setAlertMessage }) => {
   const handleSubmitEmergencyAlert = () => {
-
     if (formValuesGI.txtLegalDescription === "") {
       setAlertMessage({
         type: "warning",
@@ -30,7 +21,7 @@ const SOSEmergencyOfflineGrievancePopup = ({
       <Box sx={{ display: "flex", alignItems: "center", p: 2, borderBottom: "1px solid #ddd" }}>
         <RadioButtonCheckedIcon sx={{ color: "red", mr: 1 }} />
         <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: "bold", color: "red" }}>
-         Legal Cases
+          Legal Cases
         </Typography>
         <IconButton onClick={onClose}>
           <CloseIcon />
@@ -40,13 +31,14 @@ const SOSEmergencyOfflineGrievancePopup = ({
       {/* Content */}
       <DialogContent>
         <Typography sx={{ mb: 2, color: "#555" }}>
-          Legal cases involving court notices, FIRs, or ongoing litigation are flagged as high priority and require immediate escalation and resolution for Legal cases.
+          Legal cases involving court notices, FIRs, or ongoing litigation are flagged as high priority and require immediate escalation and resolution for
+          Legal cases.
         </Typography>
 
-        
-
         {/* Description Field */}
-        <Typography sx={{ fontWeight: "bold", mb: 1 }}>Description <span className="asteriskCss">&#42;</span></Typography>
+        <Typography sx={{ fontWeight: "bold", mb: 1 }}>
+          Description <span className="asteriskCss">&#42;</span>
+        </Typography>
         <TextField
           value={formValuesGI.txtSosDescription}
           onChange={(e) => updateStateGI("txtLegalDescription", e.target.value)}

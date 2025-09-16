@@ -180,3 +180,15 @@ h2 {
   display: flex;
   flex-direction: column;
 }
+
+.detailsGridcomment {
+ display: grid;
+  grid-template-columns: 3fr 1.5fr;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.detailsGridcomment div {
+  margin-bottom: 8px;
+  flex-direction: column;
+}

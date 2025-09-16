@@ -24,26 +24,22 @@ function MyTicketLogics() {
   const [replyBoxCollapsed, setReplyBoxCollapsed] = useState(true);
   const [wordcount, setWordcount] = useState(0);
 
-    const editableRef =  useRef(null);
-    const editableRef1 =  useRef(null);
-      
-    const [content, setContent] = useState("");
-    const [content1, setContent1] = useState("");
-    const handleInput = () => {
-  
-      if (editableRef.current) {
-        setContent(editableRef.current.innerHTML); // A get updated HTML
-        
-      }
-    };
+  const editableRef = useRef(null);
+  const editableRef1 = useRef(null);
 
-    const handleInput1 = () => {
-  
-      if (editableRef1.current) {
-        setContent1(editableRef1.current.innerHTML); // A get updated HTML
-        
-      }
-    };
+  const [content, setContent] = useState("");
+  const [content1, setContent1] = useState("");
+  const handleInput = () => {
+    if (editableRef.current) {
+      setContent(editableRef.current.innerHTML); // A get updated HTML
+    }
+  };
+
+  const handleInput1 = () => {
+    if (editableRef1.current) {
+      setContent1(editableRef1.current.innerHTML); // A get updated HTML
+    }
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -51,16 +47,14 @@ function MyTicketLogics() {
         setContent(editableRef.current.innerHTML);
 
         if (editableRef1.current) {
-        setContent(editableRef1.current.innerHTML);
+          setContent1(editableRef1.current.innerHTML);
+        }
       }
-      }
-    }, 500); 
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []);
 
-  
-  
   const resolvedTicketRight = getUserRightCodeAccess("mdh9");
   const setAlertMessage = AlertMessage();
   const fileRef = useRef(null);
@@ -428,6 +422,9 @@ function MyTicketLogics() {
     if (!handleValidationSupportTicketReview()) {
       return;
     }
+    const user = getSessionStorage("user");
+    const ChkBRHeadTypeID = user && user.BRHeadTypeID ? user.BRHeadTypeID.toString() : "0";
+    const ChkAppAccessTypeID = user && user.AppAccessTypeID ? user.AppAccessTypeID.toString() : "0";
     if (formValuesTicketProperties.txtTicketStatus !== null) {
       // Anil const chkAccessALL = ticketData && ticketData.AccessALL ? ticketData.AccessALL : "";
 
@@ -475,9 +472,6 @@ function MyTicketLogics() {
           return;
         }
       }
-      const user = getSessionStorage("user");
-      const ChkBRHeadTypeID = user && user.BRHeadTypeID ? user.BRHeadTypeID.toString() : "0";
-      const ChkAppAccessTypeID = user && user.AppAccessTypeID ? user.AppAccessTypeID.toString() : "0";
 
       if (ChkBRHeadTypeID === "124001" || ChkBRHeadTypeID === "124002") {
         if (formValuesTicketProperties.txtTicketStatus.BMCGCode.toString() === "109025") {
@@ -635,12 +629,13 @@ function MyTicketLogics() {
           return;
         }
       }
+
       const formData = {
         ticketHistoryID: 0,
         supportTicketID: ticketData.SupportTicketID,
         agentUserID: ticketData.AgentUserID ? ticketData.AgentUserID : "0",
         ticketStatusID: formValuesTicketProperties.txtTicketStatus.CommonMasterValueID,
-        ticketDescription: ChkBRHeadTypeID === "124003" ? content + value + content1 : value ,
+        ticketDescription: ChkBRHeadTypeID === "124003" ? content + value + content1 : value,
         hasDocument: phasDocument,
         attachmentPath: "",
       };

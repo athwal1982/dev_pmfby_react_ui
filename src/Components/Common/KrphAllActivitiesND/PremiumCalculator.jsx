@@ -85,7 +85,7 @@ function PremiumCalculator({ objStateData, objDistrictData, formValuesGI, dcrypt
 
   const validateFarmersFieldCalculator = (name, value) => {
     let errorsMsg = "";
-    
+
     if (name === "txtCallerMobileNumber") {
       if (!value || typeof value === "undefined") {
         errorsMsg = "Mobile Number is required!";
@@ -267,7 +267,6 @@ function PremiumCalculator({ objStateData, objDistrictData, formValuesGI, dcrypt
       } else {
         setlogoPath();
       }
-
     }
   };
   const [stateForCalculatorDropdownDataList, setStateForCalculatorDropdownDataList] = useState([]);
@@ -497,7 +496,6 @@ function PremiumCalculator({ objStateData, objDistrictData, formValuesGI, dcrypt
   };
 
   const getCalculatorDataOnClick = () => {
-    
     if (!handleFarmersValidationCalculator()) {
       return;
     }
@@ -568,200 +566,200 @@ function PremiumCalculator({ objStateData, objDistrictData, formValuesGI, dcrypt
         INSURANCE PREMIUM CALCULATOR
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
-       <div style={{ width: "65%" }}>
-                         <form>
-                           <div style={{ display: "flex", gap: "20px"}}>
-                             <div className="col-md-6">
-                               <div className="form-group"  style={{width:"320px"}}>
-                                 <label>
-                                   Caller Mobile No. <span className="asteriskCss">&#42;</span>
-                                 </label>
-                                 <InputGroup>
-                                   <InputControl
-                                     Input_type="input"
-                                     name="txtCallerMobileNumber"
-                                     value={formValuesForCalculator.txtCallerMobileNumber}
-                                     maxlength="10"
-                                     minlength="10"
-                                     onChange={(e) => updateStateForCalculator("txtCallerMobileNumber", e.target.value.replace(/\D/g, ""))}
-                                     autoComplete="off"
-                                   />
-                                 </InputGroup>
-                                 <span className="login_ErrorTxt">{formValidationFarmersError["txtCallerMobileNumber"]}</span>
-                               </div>
-                             </div>
-                             <div className="col-md-6">
-                               <div className="form-group" style={{width:"320px"}}>
-                                 <label>
-                                   Season <span className="asteriskCss">&#42;</span>
-                                 </label>
-                                 <InputGroup>
-                                   <InputControl
-                                     Input_type="select"
-                                     name="txtSeasonForCalculator"
-                                     getOptionLabel={(option) => `${option.CropSeasonName}`}
-                                     value={formValuesForCalculator.txtSeasonForCalculator}
-                                     getOptionValue={(option) => `${option}`}
-                                     options={seasonForCalculatorDropdownDataList}
-                                     onChange={(e) => updateStateForCalculator("txtSeasonForCalculator", e)}
-                                     ControlTxt="Season"
-                                     focus="true"
-                                   />
-                                 </InputGroup>
-                                 <span className="login_ErrorTxt">{formValidationFarmersError["txtSeasonForCalculator"]}</span>
-                               </div>
-                             </div>
-                           </div>
-                           <div style={{ display: "flex", gap: "20px"}}>
-                             <div className="col-md-6">
-                               <div className="form-group"  style={{width:"320px"}}>
-                                 <label>
-                                   Year <span className="asteriskCss">&#42;</span>
-                                 </label>
-                                 <InputGroup>
-                                   <InputControl
-                                     Input_type="select"
-                                     name="txtYearForCalculator"
-                                     getOptionLabel={(option) => `${option.Name}`}
-                                     value={formValuesForCalculator.txtYearForCalculator}
-                                     getOptionValue={(option) => `${option}`}
-                                     options={yearList}
-                                     onChange={(e) => updateStateForCalculator("txtYearForCalculator", e)}
-                                     ControlTxt="Year"
-                                   />
-                                 </InputGroup>
-                                 <span className="login_ErrorTxt">{formValidationFarmersError["txtYearForCalculator"]}</span>
-                               </div>
-                             </div>
-                             <div className="col-md-6" >
-                               <div className="form-group" style={{width:"320px"}}>
-                                 <label>
-                                   Scheme <span className="asteriskCss">&#42;</span>
-                                 </label>
-                                 <InputGroup>
-                                   <InputControl
-                                     Input_type="select"
-                                     name="txtSchemeForCalculator"
-                                     getOptionLabel={(option) => `${option.SchemeName}`}
-                                     value={formValuesForCalculator.txtSchemeForCalculator}
-                                     getOptionValue={(option) => `${option}`}
-                                     options={schemeList}
-                                     onChange={(e) => updateStateForCalculator("txtSchemeForCalculator", e)}
-                                     ControlTxt="Scheme"
-                                     focus="true"
-                                   />
-                                 </InputGroup>
-                                 <span className="login_ErrorTxt">{formValidationFarmersError["txtSchemeForCalculator"]}</span>
-                               </div>
-                             </div>
-                           </div>
-                           <div style={{ display: "flex", gap: "20px"}}>
-                             <div className="col-md-6">
-                               <div className="form-group" style={{width:"320px"}}>
-                                 <label>
-                                   State <span className="asteriskCss">&#42;</span>
-                                 </label>
-                                 <InputGroup>
-                                   <InputControl
-                                     Input_type="select"
-                                     name="txtStateForCalculator"
-                                     isLoading={isLoadingStateForCalculatorDropdownDataList}
-                                     getOptionLabel={(option) => `${option.StateMasterName}`}
-                                     value={formValuesForCalculator.txtStateForCalculator}
-                                     getOptionValue={(option) => `${option}`}
-                                     options={stateForCalculatorDropdownDataList}
-                                     ControlTxt="State"
-                                     onChange={(e) => updateStateForCalculator("txtStateForCalculator", e)}
-                                   />
-                                 </InputGroup>
-                                 <span className="login_ErrorTxt">{formValidationFarmersError["txtStateForCalculator"]}</span>
-                               </div>
-                             </div>
-                             <div className="col-md-6">
-                               <div className="form-group" style={{width:"320px"}}>
-                                 <label>
-                                   District <span className="asteriskCss">&#42;</span>
-                                 </label>
-                                 <InputGroup>
-                                   <InputControl
-                                     Input_type="select"
-                                     name="txtDistrictForCalculator"
-                                     isLoading={isLoadingDistrictForCalculatorDropdownDataList}
-                                     getOptionLabel={(option) => `${option.level3Name}`}
-                                     value={formValuesForCalculator.txtDistrictForCalculator}
-                                     getOptionValue={(option) => `${option}`}
-                                     options={districtForCalculatorDropdownDataList}
-                                     ControlTxt="District"
-                                     onChange={(e) => updateStateForCalculator("txtDistrictForCalculator", e)}
-                                   />
-                                 </InputGroup>
-                                 <span className="login_ErrorTxt">{formValidationFarmersError["txtDistrictForCalculator"]}</span>
-                               </div>
-                             </div>
-                           </div>
-                           <div style={{ display: "flex", gap: "20px"}}>
-                             <div className="col-md-6">
-                               <div className="form-group" style={{width:"320px"}}>
-                                 <label>
-                                   Crop <span className="asteriskCss">&#42;</span>
-                                 </label>
-                                 <InputGroup>
-                                   <InputControl
-                                     Input_type="select"
-                                     name="txtCropForCalculator"
-                                     isLoading={isLoadingCropForCalculatorDropdownDataList}
-                                     getOptionLabel={(option) => `${option.cropName}`}
-                                     value={formValuesForCalculator.txtCropForCalculator}
-                                     getOptionValue={(option) => `${option}`}
-                                     options={cropForCalculatorDropdownDataList}
-                                     ControlTxt="Crop"
-                                     onChange={(e) => updateStateForCalculator("txtCropForCalculator", e)}
-                                   />
-                                 </InputGroup>
-                                 <span className="login_ErrorTxt">{formValidationFarmersError["txtCropForCalculator"]}</span>
-                               </div>
-                             </div>
-                             <div className="col-md-6" >
-                               <div className="form-group" style={{width:"320px"}}>
-                                 <label>
-                                   Area in Hectare <span className="asteriskCss">&#42;</span>
-                                 </label>
-                                 <InputGroup>
-                                   <InputControl
-                                     Input_type="input"
-                                     name="txtAreaInHectareForCalculator"
-                                     value={formValuesForCalculator.txtAreaInHectareForCalculator}
-                                     maxlength="3"
-                                     minlength="3"
-                                     onChange={(e) => updateStateForCalculator("txtAreaInHectareForCalculator", e.target.value)}
-                                     autoComplete="off"
-                                   />
-                                 </InputGroup>
-                                 <span className="login_ErrorTxt">{formValidationFarmersError["txtAreaInHectareForCalculator"]}</span>
-                               </div>
-                             </div>
-                           </div>
-                           <div style={{ display: "flex", gap: "20px" }}>
-                             <KrphButton type="button" varient="primary" trigger={btnLoaderActive && "true"} onClick={() => getCalculatorDataOnClick()}>
-                               Calculate
-                             </KrphButton>
-                             <button
-                               type="button"
-                               style={{
-                                 backgroundColor: "white",
-                                 color: "red",
-                                 border: "1px solid #DC2626",
-                                 borderRadius: "15px",
-                                 padding: "10px 35px",
-                                 fontSize: "14px",
-                               }}
-                               onClick={() => clearFormOnClick()}
-                             >
-                               Reset
-                             </button>
-                           </div>
-                         </form>
-                       </div>
+        <div style={{ width: "65%" }}>
+          <form>
+            <div style={{ display: "flex", gap: "20px" }}>
+              <div className="col-md-6">
+                <div className="form-group" style={{ width: "320px" }}>
+                  <label>
+                    Caller Mobile No. <span className="asteriskCss">&#42;</span>
+                  </label>
+                  <InputGroup>
+                    <InputControl
+                      Input_type="input"
+                      name="txtCallerMobileNumber"
+                      value={formValuesForCalculator.txtCallerMobileNumber}
+                      maxlength="10"
+                      minlength="10"
+                      onChange={(e) => updateStateForCalculator("txtCallerMobileNumber", e.target.value.replace(/\D/g, ""))}
+                      autoComplete="off"
+                    />
+                  </InputGroup>
+                  <span className="login_ErrorTxt">{formValidationFarmersError["txtCallerMobileNumber"]}</span>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-group" style={{ width: "320px" }}>
+                  <label>
+                    Season <span className="asteriskCss">&#42;</span>
+                  </label>
+                  <InputGroup>
+                    <InputControl
+                      Input_type="select"
+                      name="txtSeasonForCalculator"
+                      getOptionLabel={(option) => `${option.CropSeasonName}`}
+                      value={formValuesForCalculator.txtSeasonForCalculator}
+                      getOptionValue={(option) => `${option}`}
+                      options={seasonForCalculatorDropdownDataList}
+                      onChange={(e) => updateStateForCalculator("txtSeasonForCalculator", e)}
+                      ControlTxt="Season"
+                      focus="true"
+                    />
+                  </InputGroup>
+                  <span className="login_ErrorTxt">{formValidationFarmersError["txtSeasonForCalculator"]}</span>
+                </div>
+              </div>
+            </div>
+            <div style={{ display: "flex", gap: "20px" }}>
+              <div className="col-md-6">
+                <div className="form-group" style={{ width: "320px" }}>
+                  <label>
+                    Year <span className="asteriskCss">&#42;</span>
+                  </label>
+                  <InputGroup>
+                    <InputControl
+                      Input_type="select"
+                      name="txtYearForCalculator"
+                      getOptionLabel={(option) => `${option.Name}`}
+                      value={formValuesForCalculator.txtYearForCalculator}
+                      getOptionValue={(option) => `${option}`}
+                      options={yearList}
+                      onChange={(e) => updateStateForCalculator("txtYearForCalculator", e)}
+                      ControlTxt="Year"
+                    />
+                  </InputGroup>
+                  <span className="login_ErrorTxt">{formValidationFarmersError["txtYearForCalculator"]}</span>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-group" style={{ width: "320px" }}>
+                  <label>
+                    Scheme <span className="asteriskCss">&#42;</span>
+                  </label>
+                  <InputGroup>
+                    <InputControl
+                      Input_type="select"
+                      name="txtSchemeForCalculator"
+                      getOptionLabel={(option) => `${option.SchemeName}`}
+                      value={formValuesForCalculator.txtSchemeForCalculator}
+                      getOptionValue={(option) => `${option}`}
+                      options={schemeList}
+                      onChange={(e) => updateStateForCalculator("txtSchemeForCalculator", e)}
+                      ControlTxt="Scheme"
+                      focus="true"
+                    />
+                  </InputGroup>
+                  <span className="login_ErrorTxt">{formValidationFarmersError["txtSchemeForCalculator"]}</span>
+                </div>
+              </div>
+            </div>
+            <div style={{ display: "flex", gap: "20px" }}>
+              <div className="col-md-6">
+                <div className="form-group" style={{ width: "320px" }}>
+                  <label>
+                    State <span className="asteriskCss">&#42;</span>
+                  </label>
+                  <InputGroup>
+                    <InputControl
+                      Input_type="select"
+                      name="txtStateForCalculator"
+                      isLoading={isLoadingStateForCalculatorDropdownDataList}
+                      getOptionLabel={(option) => `${option.StateMasterName}`}
+                      value={formValuesForCalculator.txtStateForCalculator}
+                      getOptionValue={(option) => `${option}`}
+                      options={stateForCalculatorDropdownDataList}
+                      ControlTxt="State"
+                      onChange={(e) => updateStateForCalculator("txtStateForCalculator", e)}
+                    />
+                  </InputGroup>
+                  <span className="login_ErrorTxt">{formValidationFarmersError["txtStateForCalculator"]}</span>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-group" style={{ width: "320px" }}>
+                  <label>
+                    District <span className="asteriskCss">&#42;</span>
+                  </label>
+                  <InputGroup>
+                    <InputControl
+                      Input_type="select"
+                      name="txtDistrictForCalculator"
+                      isLoading={isLoadingDistrictForCalculatorDropdownDataList}
+                      getOptionLabel={(option) => `${option.level3Name}`}
+                      value={formValuesForCalculator.txtDistrictForCalculator}
+                      getOptionValue={(option) => `${option}`}
+                      options={districtForCalculatorDropdownDataList}
+                      ControlTxt="District"
+                      onChange={(e) => updateStateForCalculator("txtDistrictForCalculator", e)}
+                    />
+                  </InputGroup>
+                  <span className="login_ErrorTxt">{formValidationFarmersError["txtDistrictForCalculator"]}</span>
+                </div>
+              </div>
+            </div>
+            <div style={{ display: "flex", gap: "20px" }}>
+              <div className="col-md-6">
+                <div className="form-group" style={{ width: "320px" }}>
+                  <label>
+                    Crop <span className="asteriskCss">&#42;</span>
+                  </label>
+                  <InputGroup>
+                    <InputControl
+                      Input_type="select"
+                      name="txtCropForCalculator"
+                      isLoading={isLoadingCropForCalculatorDropdownDataList}
+                      getOptionLabel={(option) => `${option.cropName}`}
+                      value={formValuesForCalculator.txtCropForCalculator}
+                      getOptionValue={(option) => `${option}`}
+                      options={cropForCalculatorDropdownDataList}
+                      ControlTxt="Crop"
+                      onChange={(e) => updateStateForCalculator("txtCropForCalculator", e)}
+                    />
+                  </InputGroup>
+                  <span className="login_ErrorTxt">{formValidationFarmersError["txtCropForCalculator"]}</span>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-group" style={{ width: "320px" }}>
+                  <label>
+                    Area in Hectare <span className="asteriskCss">&#42;</span>
+                  </label>
+                  <InputGroup>
+                    <InputControl
+                      Input_type="input"
+                      name="txtAreaInHectareForCalculator"
+                      value={formValuesForCalculator.txtAreaInHectareForCalculator}
+                      maxlength="3"
+                      minlength="3"
+                      onChange={(e) => updateStateForCalculator("txtAreaInHectareForCalculator", e.target.value)}
+                      autoComplete="off"
+                    />
+                  </InputGroup>
+                  <span className="login_ErrorTxt">{formValidationFarmersError["txtAreaInHectareForCalculator"]}</span>
+                </div>
+              </div>
+            </div>
+            <div style={{ display: "flex", gap: "20px" }}>
+              <KrphButton type="button" varient="primary" trigger={btnLoaderActive && "true"} onClick={() => getCalculatorDataOnClick()}>
+                Calculate
+              </KrphButton>
+              <button
+                type="button"
+                style={{
+                  backgroundColor: "white",
+                  color: "red",
+                  border: "1px solid #DC2626",
+                  borderRadius: "15px",
+                  padding: "10px 35px",
+                  fontSize: "14px",
+                }}
+                onClick={() => clearFormOnClick()}
+              >
+                Reset
+              </button>
+            </div>
+          </form>
+        </div>
 
         <div
           style={{
@@ -881,9 +879,7 @@ function PremiumCalculator({ objStateData, objDistrictData, formValuesGI, dcrypt
               </tr>
               <tr style={{ borderBottom: "1px solid #ddd" }}>
                 <td style={{ padding: "8px" }}>Area(Hectare)</td>
-                <td style={{ padding: "8px" }}>
-                  {selectedCalculation && selectedCalculation.AreaInhectare ? selectedCalculation.AreaInhectare : "0"}
-                </td>
+                <td style={{ padding: "8px" }}>{selectedCalculation && selectedCalculation.AreaInhectare ? selectedCalculation.AreaInhectare : "0"}</td>
               </tr>
               <tr style={{ borderBottom: "1px solid #ddd" }}>
                 <td style={{ padding: "8px" }}>Premium Paid By Govt(Rs)</td>

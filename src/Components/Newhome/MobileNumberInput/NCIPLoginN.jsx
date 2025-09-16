@@ -89,9 +89,7 @@ function NCIPLoginN() {
             </div>
 
             <div className="captchaN" style={{ marginTop: "0px" }}>
-              <label htmlFor="captcha" >
-                Security Check
-              </label>
+              <label htmlFor="captcha">Security Check</label>
               <div className="captcha-containerN">
                 <div className="captchafieldN">
                   <span className="bhashini-skip-translation">{captchaCode}</span>
@@ -109,11 +107,7 @@ function NCIPLoginN() {
               </div>
             </div>
 
-            <button
-              type="button"
-              className="get-otpN"
-              onClick={handleLogin}
-            >
+            <button type="button" className="get-otpN" onClick={handleLogin}>
               Login
               <span />
             </button>

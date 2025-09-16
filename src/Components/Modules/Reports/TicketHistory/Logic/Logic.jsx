@@ -1,10 +1,22 @@
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { useState } from "react";
 import moment from "moment";
-import { dateToCompanyFormat, dateToSpecificFormat, Convert24FourHourAndMinute, dateFormatDefault, daysdifference,Convert24FourHourAndMinuteNew } from "Configration/Utilities/dateformat";
+import {
+  dateToCompanyFormat,
+  dateToSpecificFormat,
+  Convert24FourHourAndMinute,
+  dateFormatDefault,
+  daysdifference,
+  Convert24FourHourAndMinuteNew,
+} from "Configration/Utilities/dateformat";
 import * as XLSX from "xlsx";
 import { getSessionStorage } from "Components/Common/Login/Auth/auth";
-import { getSupportTicketDetailReport, getSupportTicketDetailReportMongo,getSupportTicketHistoryReportViewData , getSupportTicketHistoryData} from "../Services/Methods";
+import {
+  getSupportTicketDetailReport,
+  getSupportTicketDetailReportMongo,
+  getSupportTicketHistoryReportViewData,
+  getSupportTicketHistoryData,
+} from "../Services/Methods";
 import { getMasterDataBinding } from "../../../Support/ManageTicket/Services/Methods";
 
 function TicketHistoryLogics() {
@@ -182,7 +194,7 @@ function TicketHistoryLogics() {
     });
   };
 
-     const generateColumns = (data) => {
+  const generateColumns = (data) => {
     const columnDefinitions = [];
     if (data.length > 0) {
       columnDefinitions.push({
@@ -200,44 +212,41 @@ function TicketHistoryLogics() {
           mappedColumn = {
             headerName: "Creation Date",
             field: key,
-             valueFormatter: function (params) {
-                          return params && params.value
-                            ? dateToSpecificFormat(`${params.value.split("T")[0]} ${Convert24FourHourAndMinuteNew(params.value.split("T")[1])}`, "DD-MM-YYYY HH:mm")
-                            : "";
-                        },
+            valueFormatter: function (params) {
+              return params && params.value
+                ? dateToSpecificFormat(`${params.value.split("T")[0]} ${Convert24FourHourAndMinuteNew(params.value.split("T")[1])}`, "DD-MM-YYYY HH:mm")
+                : "";
+            },
           };
-        } else  if (key === "Re-Open Date") {
-  mappedColumn = {
-    headerName: "Re-Open Date",
-    field: key,
-    valueFormatter: function (params) {
-      if (!params || !params.value) return ""; 
+        } else if (key === "Re-Open Date") {
+          mappedColumn = {
+            headerName: "Re-Open Date",
+            field: key,
+            valueFormatter: function (params) {
+              if (!params || !params.value) return "";
 
-      const [datePart, timePart] = params.value.split("T");
-      if (!datePart || !timePart) return params.value;
+              const [datePart, timePart] = params.value.split("T");
+              if (!datePart || !timePart) return params.value;
 
-      const formattedTime = Convert24FourHourAndMinuteNew(timePart);
-      return dateToSpecificFormat(`${datePart} ${formattedTime}`, "DD-MM-YYYY HH:mm");
-    },
-  };
-}
- else  
-  if (key === "Status Date") {
-  mappedColumn = {
-    headerName: "Status Date",
-    field: key,
-    valueFormatter: function (params) {
-      if (!params || !params.value) return ""; 
+              const formattedTime = Convert24FourHourAndMinuteNew(timePart);
+              return dateToSpecificFormat(`${datePart} ${formattedTime}`, "DD-MM-YYYY HH:mm");
+            },
+          };
+        } else if (key === "Status Date") {
+          mappedColumn = {
+            headerName: "Status Date",
+            field: key,
+            valueFormatter: function (params) {
+              if (!params || !params.value) return "";
 
-      const [datePart, timePart] = params.value.split("T");
-      if (!datePart || !timePart) return params.value;
+              const [datePart, timePart] = params.value.split("T");
+              if (!datePart || !timePart) return params.value;
 
-      const formattedTime = Convert24FourHourAndMinuteNew(timePart);
-      return dateToSpecificFormat(`${datePart} ${formattedTime}`, "DD-MM-YYYY HH:mm");
-    },
-  };
-}
- else {
+              const formattedTime = Convert24FourHourAndMinuteNew(timePart);
+              return dateToSpecificFormat(`${datePart} ${formattedTime}`, "DD-MM-YYYY HH:mm");
+            },
+          };
+        } else {
           mappedColumn = {
             headerName: key,
             field: key,
@@ -248,9 +257,7 @@ function TicketHistoryLogics() {
       });
     }
     return columnDefinitions;
-  }; 
-
-
+  };
 
   const getTicketHistoryData = async (pType, pageIndex, pageSize) => {
     debugger;
@@ -478,48 +485,48 @@ function TicketHistoryLogics() {
     downloadExcel(rearrangedData);
   };
 
-  const toggleDownloadReportModal = async() => { 
-try {
-          if (ticketHistoryDataList.length === 0) {
+  const toggleDownloadReportModal = async () => {
+    try {
+      if (ticketHistoryDataList.length === 0) {
+        setAlertMessage({
+          type: "error",
+          message: "Data not found to export.",
+        });
+        return;
+      }
+
+      setLoadingTicketHistoryDataList(true);
+      const userData = getSessionStorage("user");
+      const formData = {
+        SPFROMDATE: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
+        SPTODATE: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
+        SPInsuranceCompanyID:
+          formValues.txtInsuranceCompany && formValues.txtInsuranceCompany.CompanyID ? formValues.txtInsuranceCompany.CompanyID.toString() : "#ALL",
+        SPStateID: formValues.txtState && formValues.txtState.StateMasterID ? formValues.txtState.StateMasterID.toString() : "#ALL",
+        SPTicketHeaderID: formValues.txtTicketType && formValues.txtTicketType.TicketTypeID ? formValues.txtTicketType.TicketTypeID : 0,
+        SPUserID: userData && userData.LoginID ? userData.LoginID : 0,
+        userEmail: "pmfbysystems@gmail.com",
+      };
+      const result = await getSupportTicketHistoryData(formData);
+      setLoadingTicketHistoryDataList(false);
+      if (result.responseCode === 1) {
+        setAlertMessage({
+          type: "success",
+          message: result.responseMessage,
+        });
+      } else {
+        setAlertMessage({
+          type: "error",
+          message: result.responseMessage,
+        });
+      }
+    } catch (error) {
+      console.log(error);
       setAlertMessage({
         type: "error",
-        message: "Data not found to export.",
+        message: error,
       });
-      return;
     }
-    
-          setLoadingTicketHistoryDataList(true);
-          const userData = getSessionStorage("user");
-          const formData = {
-           SPFROMDATE: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
-           SPTODATE: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
-           SPInsuranceCompanyID: formValues.txtInsuranceCompany && formValues.txtInsuranceCompany.CompanyID ? formValues.txtInsuranceCompany.CompanyID.toString() : "#ALL",
-           SPStateID: formValues.txtState && formValues.txtState.StateMasterID ? formValues.txtState.StateMasterID.toString() : "#ALL",
-           SPTicketHeaderID: formValues.txtTicketType && formValues.txtTicketType.TicketTypeID ? formValues.txtTicketType.TicketTypeID : 0,
-          SPUserID: userData && userData.LoginID ? userData.LoginID : 0,    
-          userEmail: "pmfbysystems@gmail.com"
-          };
-          const result = await getSupportTicketHistoryData(formData);
-          setLoadingTicketHistoryDataList(false);
-          if (result.responseCode === 1) {
-            setAlertMessage({
-              type: "success",
-              message: result.responseMessage,
-            });
-          } else {
-            setAlertMessage({
-              type: "error",
-              message: result.responseMessage,
-            });
-          }
-        } catch (error) {
-          console.log(error);
-          setAlertMessage({
-            type: "error",
-            message: error,
-          });
-        }
-
   };
 
   return {
@@ -547,7 +554,6 @@ try {
     handlePageChange,
     toggleDownloadReportModal,
     columnDefs,
-    
   };
 }
 export default TicketHistoryLogics;

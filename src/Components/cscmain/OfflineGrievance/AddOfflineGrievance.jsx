@@ -761,7 +761,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                 formValuesGI.txtSourceOfReceipt && formValuesGI.txtSourceOfReceipt.CommonMasterValue ? formValuesGI.txtSourceOfReceipt.CommonMasterValue : "",
               IsLegal: showMessage ? 1 : 0,
               LegalRemarks: showMessage === true && formValuesGI.txtLegalDescription ? formValuesGI.txtLegalDescription : "",
-              CPGramRegistrationNumber: formValuesGI && formValuesGI.txtCPGramRegistrationNumber ? formValuesGI.txtCPGramRegistrationNumber : "", 
+              CPGramRegistrationNumber: formValuesGI && formValuesGI.txtCPGramRegistrationNumber ? formValuesGI.txtCPGramRegistrationNumber : "",
               IsNewlyAdded: true,
             },
           ];
@@ -822,24 +822,23 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
     setFormValidationKRPHError({});
   };
 
-  
-    const [openSOS, setOpenSOS] = useState(false);
-    const [showMessage, setShowMessage] = useState(false);
-  
-    const handleSOSPopup = () => {
-      if (showMessage === true) {
-        setShowMessage(false);
-      }
-  
-      if (showMessage === false) {
-        setOpenSOS(true);
-        setShowMessage(true);
-      }
-    };
-    const handleCloseSOSPopup = () => {
-      setOpenSOS(false);
+  const [openSOS, setOpenSOS] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
+
+  const handleSOSPopup = () => {
+    if (showMessage === true) {
       setShowMessage(false);
-    };
+    }
+
+    if (showMessage === false) {
+      setOpenSOS(true);
+      setShowMessage(true);
+    }
+  };
+  const handleCloseSOSPopup = () => {
+    setOpenSOS(false);
+    setShowMessage(false);
+  };
 
   useEffect(() => {
     const currentYear = new Date().getFullYear();
@@ -1111,33 +1110,33 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                         </InputGroup>
                         {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtSourceOfGrievance"]}</span> */}
                       </Typography>
-                       {formValuesGI &&
-                          formValuesGI.txtSourceOfGrievance &&
-                          formValuesGI.txtSourceOfGrievance.CommonMasterValueID &&
-                          formValuesGI.txtSourceOfGrievance.CommonMasterValueID === 132304 ? (
-                            <Typography
-                              sx={{
-                                fontFamily: "Quicksand, sans-serif",
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: "2px",
-                                fontSize: "14px",
-                              }}
-                            >
-                              <span>
-                                CPGRAM Registration Number<span className="asteriskCss">&#42;</span>
-                              </span>{" "}
-                              <InputGroup ErrorMsg={formValidationKRPHError["txtCPGramRegistrationNumber"]}>
-                                <InputControl
-                                  Input_type="input"
-                                  name="txtCPGramRegistrationNumber"
-                                  value={formValuesGI.txtCPGramRegistrationNumber}
-                                  onChange={(e) => updateStateGI("txtCPGramRegistrationNumber", e.target.value)}
-                                />
-                              </InputGroup>
-                              {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtCPGramRegistrationNumber"]}</span> */}
-                            </Typography>
-                          ) : null}
+                      {formValuesGI &&
+                      formValuesGI.txtSourceOfGrievance &&
+                      formValuesGI.txtSourceOfGrievance.CommonMasterValueID &&
+                      formValuesGI.txtSourceOfGrievance.CommonMasterValueID === 132304 ? (
+                        <Typography
+                          sx={{
+                            fontFamily: "Quicksand, sans-serif",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "2px",
+                            fontSize: "14px",
+                          }}
+                        >
+                          <span>
+                            CPGRAM Registration Number<span className="asteriskCss">&#42;</span>
+                          </span>{" "}
+                          <InputGroup ErrorMsg={formValidationKRPHError["txtCPGramRegistrationNumber"]}>
+                            <InputControl
+                              Input_type="input"
+                              name="txtCPGramRegistrationNumber"
+                              value={formValuesGI.txtCPGramRegistrationNumber}
+                              onChange={(e) => updateStateGI("txtCPGramRegistrationNumber", e.target.value)}
+                            />
+                          </InputGroup>
+                          {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtCPGramRegistrationNumber"]}</span> */}
+                        </Typography>
+                      ) : null}
                       {formValuesGI &&
                       formValuesGI.txtSourceOfGrievance &&
                       formValuesGI.txtSourceOfGrievance.CommonMasterValueID &&
@@ -1396,52 +1395,54 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                           {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtInsuranceCompany"]}</span> */}
                         </Typography>
                       ) : null}
-                              
                     </Box>
                     <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
-                                <div style={{ display: "flex", alignItems: "flex-start", padding: "0px 0px 0px 15px" }}>
-                                             
-                                           </div>
-                                <div style={{ display: "flex", alignItems: "flex-end" }}>
-                                    <>
-                                      <Tooltip title="Use LEGAL button only for legal cases" arrow disablePortal PopperProps={{
-    modifiers: [
-      {
-        name: "zIndex",
-        enabled: true,
-        phase: "write",
-        fn: ({ state }) => {
-          state.styles.popper.zIndex = 99999999999; // A ensure above dialog
-        },
-      },
-    ],
-  }}>
-                                        <IconButton color="primary" >
-                                          <InfoIcon />
-                                        </IconButton>
-                                      </Tooltip>
-                    
-                                      <Button
-                                        onClick={() => {
-                                          handleSOSPopup();
-                                        }}
-                                        variant={showMessage ? "contained" : "outlined"}
-                                        color={showMessage ? "error" : "error"}
-                                      >
-                                        Legal
-                                      </Button>
-                                      <SOSEmergencyOfflineGrievancePopup
-                                        setOpenSOS={setOpenSOS}
-                                        setShowMessage={setShowMessage}
-                                        open={openSOS}
-                                        onClose={handleCloseSOSPopup}
-                                        formValuesGI={formValuesGI}
-                                        updateStateGI={updateStateGI}
-                                        setAlertMessage={setAlertMessage}
-                                      />
-                                    </>
-                                </div>
-                              </Box>  
+                      <div style={{ display: "flex", alignItems: "flex-start", padding: "0px 0px 0px 15px" }}></div>
+                      <div style={{ display: "flex", alignItems: "flex-end" }}>
+                        <>
+                          <Tooltip
+                            title="Use LEGAL button only for legal cases"
+                            arrow
+                            disablePortal
+                            PopperProps={{
+                              modifiers: [
+                                {
+                                  name: "zIndex",
+                                  enabled: true,
+                                  phase: "write",
+                                  fn: ({ state }) => {
+                                    state.styles.popper.zIndex = 99999999999; // A ensure above dialog
+                                  },
+                                },
+                              ],
+                            }}
+                          >
+                            <IconButton color="primary">
+                              <InfoIcon />
+                            </IconButton>
+                          </Tooltip>
+
+                          <Button
+                            onClick={() => {
+                              handleSOSPopup();
+                            }}
+                            variant={showMessage ? "contained" : "outlined"}
+                            color={showMessage ? "error" : "error"}
+                          >
+                            Legal
+                          </Button>
+                          <SOSEmergencyOfflineGrievancePopup
+                            setOpenSOS={setOpenSOS}
+                            setShowMessage={setShowMessage}
+                            open={openSOS}
+                            onClose={handleCloseSOSPopup}
+                            formValuesGI={formValuesGI}
+                            updateStateGI={updateStateGI}
+                            setAlertMessage={setAlertMessage}
+                          />
+                        </>
+                      </div>
+                    </Box>
                   </Card>
                 </motion.div>
               </AnimatePresence>

@@ -2123,33 +2123,32 @@ function KrphAllActivitiesNDN() {
     // A}
 
     if (name === "txtYearForFarmerInfo") {
-     if (value) {
-      if (Number(value.Value) <= 2024) {
-       setSelectedOption("1");
-       setSelectedOptionCropStage("1");
-       setTicketCategoryTypeList([]);
-       setTicketCategoryList([]);
-       setLossAtList([]);
-       setCropStageList([]);
-       getTicketCategoryTypeListData("1", 0, "TCKTYP");
-       setFormValuesTicketCreation({
-         ...formValuesTicketCreation,
-         txtTicketCategoryType: null,
-         txtTicketCategory: null,
-         txtCropLossDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
-         txtCropLossIntimation: "On-time",
-         txtCropLossTime: "",
-         txtTicketDescription: "",
-         txtLossAt: null,
-         txtOtherSubCategory: null,
-         txtCropStage: null,
-         txtCropHarvestDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
-         txtCropName: "",
-       });
+      if (value) {
+        if (Number(value.Value) <= 2024) {
+          setSelectedOption("1");
+          setSelectedOptionCropStage("1");
+          setTicketCategoryTypeList([]);
+          setTicketCategoryList([]);
+          setLossAtList([]);
+          setCropStageList([]);
+          getTicketCategoryTypeListData("1", 0, "TCKTYP");
+          setFormValuesTicketCreation({
+            ...formValuesTicketCreation,
+            txtTicketCategoryType: null,
+            txtTicketCategory: null,
+            txtCropLossDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
+            txtCropLossIntimation: "On-time",
+            txtCropLossTime: "",
+            txtTicketDescription: "",
+            txtLossAt: null,
+            txtOtherSubCategory: null,
+            txtCropStage: null,
+            txtCropHarvestDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
+            txtCropName: "",
+          });
+        }
       }
-      
-     }
-  }
+    }
   };
 
   const validateFarmerOnClick = () => {
@@ -7296,52 +7295,53 @@ function KrphAllActivitiesNDN() {
                             </Box>
                             {selectedOption === "4" ? (
                               <>
-                              {formValuesForFarmerInfo.txtYearForFarmerInfo &&
-                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
-                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null :
-                                <Box className="crop-button-group_agent">
-                                  <Button
-                                    variant={selectedOptionCropStage === "1" ? "contained" : "outlined"}
-                                    onClick={() => selectedOptionOnClickCropStage("SCS")}
-                                    className={selectedOptionCropStage === "1" ? "buttons_agent_active" : "buttons_agent"}
-                                  >
-                                    Standing Crop Stage
-                                  </Button>
-                                  <Button
-                                    variant={selectedOptionCropStage === "2" ? "contained" : "outlined"}
-                                    onClick={() => selectedOptionOnClickCropStage("HS")}
-                                    className={selectedOptionCropStage === "2" ? "buttons_agent_active" : "buttons_agent"}
-                                  >
-                                    Harvested Stage
-                                  </Button>
-                                </Box>
-                              }
+                                {formValuesForFarmerInfo.txtYearForFarmerInfo &&
+                                formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
+                                formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null : (
+                                  <Box className="crop-button-group_agent">
+                                    <Button
+                                      variant={selectedOptionCropStage === "1" ? "contained" : "outlined"}
+                                      onClick={() => selectedOptionOnClickCropStage("SCS")}
+                                      className={selectedOptionCropStage === "1" ? "buttons_agent_active" : "buttons_agent"}
+                                    >
+                                      Standing Crop Stage
+                                    </Button>
+                                    <Button
+                                      variant={selectedOptionCropStage === "2" ? "contained" : "outlined"}
+                                      onClick={() => selectedOptionOnClickCropStage("HS")}
+                                      className={selectedOptionCropStage === "2" ? "buttons_agent_active" : "buttons_agent"}
+                                    >
+                                      Harvested Stage
+                                    </Button>
+                                  </Box>
+                                )}
                               </>
                             ) : null}
                           </Box>
                           {selectedOption === "4" ? (
                             <>
-                            {formValuesForFarmerInfo.txtYearForFarmerInfo &&
+                              {formValuesForFarmerInfo.txtYearForFarmerInfo &&
                               formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
-                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null :
-                            <div className="form-group_agent">
-                              <label className="ticket-label_agent">
-                                Loss At <span className="asteriskCss">&#42;</span>
-                              </label>
-                              <InputGroup>
-                                <InputControl
-                                  Input_type="select"
-                                  name="txtLossAt"
-                                  getOptionLabel={(option) => `${option.CropStageSelection}`}
-                                  value={formValuesTicketCreation.txtLossAt}
-                                  getOptionValue={(option) => `${option}`}
-                                  options={lossAtList}
-                                  ControlTxt="Loss At"
-                                  onChange={(e) => updateStateTicketCreation("txtLossAt", e)}
-                                />
-                              </InputGroup>
-                              <span className="login_ErrorTxt">{formValidationSupportTicketError["txtLossAt"]}</span>
-                            </div> }
+                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null : (
+                                <div className="form-group_agent">
+                                  <label className="ticket-label_agent">
+                                    Loss At <span className="asteriskCss">&#42;</span>
+                                  </label>
+                                  <InputGroup>
+                                    <InputControl
+                                      Input_type="select"
+                                      name="txtLossAt"
+                                      getOptionLabel={(option) => `${option.CropStageSelection}`}
+                                      value={formValuesTicketCreation.txtLossAt}
+                                      getOptionValue={(option) => `${option}`}
+                                      options={lossAtList}
+                                      ControlTxt="Loss At"
+                                      onChange={(e) => updateStateTicketCreation("txtLossAt", e)}
+                                    />
+                                  </InputGroup>
+                                  <span className="login_ErrorTxt">{formValidationSupportTicketError["txtLossAt"]}</span>
+                                </div>
+                              )}
                             </>
                           ) : null}
 
@@ -7418,122 +7418,127 @@ function KrphAllActivitiesNDN() {
 
                           {selectedOption === "4" ? (
                             <>
-                            {formValuesForFarmerInfo.txtYearForFarmerInfo &&
+                              {formValuesForFarmerInfo.txtYearForFarmerInfo &&
                               formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
-                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null :
-                            <div className="form-group_agent">
-                              <label className="ticket-label_agent">
-                                Crop Stage <span className="asteriskCss">&#42;</span>
-                              </label>
-                              <InputGroup>
-                                <InputControl
-                                  Input_type="select"
-                                  name="txtCropStage"
-                                  getOptionLabel={(option) => `${option.CropStageMaster}`}
-                                  value={formValuesTicketCreation.txtCropStage}
-                                  getOptionValue={(option) => `${option}`}
-                                  options={cropStageList}
-                                  ControlTxt="Crop Stage"
-                                  onChange={(e) => updateStateTicketCreation("txtCropStage", e)}
-                                />
-                              </InputGroup>
-                              <span className="login_ErrorTxt">{formValidationSupportTicketError["txtCropStage"]}</span>
-                            </div> }
+                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null : (
+                                <div className="form-group_agent">
+                                  <label className="ticket-label_agent">
+                                    Crop Stage <span className="asteriskCss">&#42;</span>
+                                  </label>
+                                  <InputGroup>
+                                    <InputControl
+                                      Input_type="select"
+                                      name="txtCropStage"
+                                      getOptionLabel={(option) => `${option.CropStageMaster}`}
+                                      value={formValuesTicketCreation.txtCropStage}
+                                      getOptionValue={(option) => `${option}`}
+                                      options={cropStageList}
+                                      ControlTxt="Crop Stage"
+                                      onChange={(e) => updateStateTicketCreation("txtCropStage", e)}
+                                    />
+                                  </InputGroup>
+                                  <span className="login_ErrorTxt">{formValidationSupportTicketError["txtCropStage"]}</span>
+                                </div>
+                              )}
                             </>
                           ) : null}
                           <div className="container_agentt">
                             {selectedOption === "4" && selectedOptionCropStage === "2" ? (
                               <>
-                               {formValuesForFarmerInfo.txtYearForFarmerInfo &&
-                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
-                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null :
-                              <div className="form-group_agent">
-                                <label className="ticket-label_agent">
-                                  Harvest Date <span className="asteriskCss">&#42;</span>
-                                </label>
-                                <InputGroup>
-                                  <InputControl
-                                    Input_type="input"
-                                    type="date"
-                                    name="txtCropHarvestDate"
-                                    value={formValuesTicketCreation.txtCropHarvestDate}
-                                    onChange={(e) => updateStateTicketCreation("txtCropHarvestDate", e.target.value)}
-                                    max={dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD")}
-                                    onKeyDown={(e) => e.preventDefault()}
-                                  />
-                                </InputGroup>
-                                <span className="login_ErrorTxt">{formValidationSupportTicketError["txtCropHarvestDate"]}</span>
-                              </div> }
+                                {formValuesForFarmerInfo.txtYearForFarmerInfo &&
+                                formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
+                                formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null : (
+                                  <div className="form-group_agent">
+                                    <label className="ticket-label_agent">
+                                      Harvest Date <span className="asteriskCss">&#42;</span>
+                                    </label>
+                                    <InputGroup>
+                                      <InputControl
+                                        Input_type="input"
+                                        type="date"
+                                        name="txtCropHarvestDate"
+                                        value={formValuesTicketCreation.txtCropHarvestDate}
+                                        onChange={(e) => updateStateTicketCreation("txtCropHarvestDate", e.target.value)}
+                                        max={dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD")}
+                                        onKeyDown={(e) => e.preventDefault()}
+                                      />
+                                    </InputGroup>
+                                    <span className="login_ErrorTxt">{formValidationSupportTicketError["txtCropHarvestDate"]}</span>
+                                  </div>
+                                )}
                               </>
                             ) : null}
                             {selectedOption === "4" && (selectedOptionCropStage === "2" || selectedOptionCropStage === "1") ? (
                               <>
                                 {formValuesForFarmerInfo.txtYearForFarmerInfo &&
-                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
-                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null :
-                                <>
-                                <div className="form-group_agent">
-                                  <label className="ticket-label_agent">
-                                    Loss Date <span className="asteriskCss">&#42;</span>
-                                  </label>
-                                  <InputGroup>
-                                    <InputControl
-                                      Input_type="input"
-                                      type="date"
-                                      name="txtCropLossDate"
-                                      value={formValuesTicketCreation.txtCropLossDate}
-                                      onChange={(e) => updateStateTicketCreation("txtCropLossDate", e.target.value)}
-                                      min={dateToSpecificFormat(moment().subtract(1, "months"), "YYYY-MM-DD")}
-                                      max={dateToSpecificFormat(moment(), "YYYY-MM-DD")}
-                                      onKeyDown={(e) => e.preventDefault()}
-                                    />
-                                  </InputGroup>
-                                  <span className="login_ErrorTxt">{formValidationSupportTicketError["txtCropLossDate"]}</span>
-                                </div>
-                                <div className="col-md-4">
-                                  <div className="form-group">
-                                    <label htmlFor="onTime" style={{ color: "white", padding: "0px 0 2px 0" }}>
-                                      .
-                                    </label>
-                                    <InputGroup>
-                                      <InputControl
-                                        Input_type="input"
-                                        name="txtCropLossIntimation"
-                                        value={formValuesTicketCreation.txtCropLossIntimation}
-                                        onChange={(e) => updateStateTicketCreation("txtCropLossIntimation", e.target.value)}
-                                        style={
-                                          stateCropLossIntimation === "YES" || stateCropLossIntimation === "NA"
-                                            ? { color: "#3f4254", background: "#ffffff" }
-                                            : { color: "#ffffff", background: "#f30722" }
-                                        }
-                                        readOnly={true}
-                                      />
-                                    </InputGroup>
-                                  </div>
-                                </div> </>}
+                                formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
+                                formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null : (
+                                  <>
+                                    <div className="form-group_agent">
+                                      <label className="ticket-label_agent">
+                                        Loss Date <span className="asteriskCss">&#42;</span>
+                                      </label>
+                                      <InputGroup>
+                                        <InputControl
+                                          Input_type="input"
+                                          type="date"
+                                          name="txtCropLossDate"
+                                          value={formValuesTicketCreation.txtCropLossDate}
+                                          onChange={(e) => updateStateTicketCreation("txtCropLossDate", e.target.value)}
+                                          min={dateToSpecificFormat(moment().subtract(1, "months"), "YYYY-MM-DD")}
+                                          max={dateToSpecificFormat(moment(), "YYYY-MM-DD")}
+                                          onKeyDown={(e) => e.preventDefault()}
+                                        />
+                                      </InputGroup>
+                                      <span className="login_ErrorTxt">{formValidationSupportTicketError["txtCropLossDate"]}</span>
+                                    </div>
+                                    <div className="col-md-4">
+                                      <div className="form-group">
+                                        <label htmlFor="onTime" style={{ color: "white", padding: "0px 0 2px 0" }}>
+                                          .
+                                        </label>
+                                        <InputGroup>
+                                          <InputControl
+                                            Input_type="input"
+                                            name="txtCropLossIntimation"
+                                            value={formValuesTicketCreation.txtCropLossIntimation}
+                                            onChange={(e) => updateStateTicketCreation("txtCropLossIntimation", e.target.value)}
+                                            style={
+                                              stateCropLossIntimation === "YES" || stateCropLossIntimation === "NA"
+                                                ? { color: "#3f4254", background: "#ffffff" }
+                                                : { color: "#ffffff", background: "#f30722" }
+                                            }
+                                            readOnly={true}
+                                          />
+                                        </InputGroup>
+                                      </div>
+                                    </div>{" "}
+                                  </>
+                                )}
                               </>
                             ) : null}
                           </div>
                           {selectedOption === "4" ? (
                             <>
-                             {formValuesForFarmerInfo.txtYearForFarmerInfo &&
+                              {formValuesForFarmerInfo.txtYearForFarmerInfo &&
                               formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
-                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null :
-                            <div className="form-group_agent">
-                              <label className="ticket-label_agent">
-                                Crop Name <span className="asteriskCss">&#42;</span>
-                              </label>
-                              <InputGroup>
-                                <InputControl
-                                  Input_type="input"
-                                  name="txtCropName"
-                                  value={formValuesTicketCreation.txtCropName}
-                                  onChange={(e) => updateStateTicketCreation("txtCropName", e.target.value)}
-                                  autoComplete="off"
-                                />
-                              </InputGroup>
-                              <span className="login_ErrorTxt">{formValidationSupportTicketError["txtCropName"]}</span>
-                            </div> }
+                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null : (
+                                <div className="form-group_agent">
+                                  <label className="ticket-label_agent">
+                                    Crop Name <span className="asteriskCss">&#42;</span>
+                                  </label>
+                                  <InputGroup>
+                                    <InputControl
+                                      Input_type="input"
+                                      name="txtCropName"
+                                      value={formValuesTicketCreation.txtCropName}
+                                      onChange={(e) => updateStateTicketCreation("txtCropName", e.target.value)}
+                                      autoComplete="off"
+                                    />
+                                  </InputGroup>
+                                  <span className="login_ErrorTxt">{formValidationSupportTicketError["txtCropName"]}</span>
+                                </div>
+                              )}
                             </>
                           ) : null}
 

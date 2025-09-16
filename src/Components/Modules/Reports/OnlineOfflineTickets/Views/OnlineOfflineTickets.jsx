@@ -36,25 +36,25 @@ function OnlineOfflineTickets({
   return (
     <div className={BizClass.PageStart}>
       <PageBar>
-       <PageBar.Input
-                 ControlTxt="From Date"
-                 control="input"
-                 type="date"
-                 name="txtFromDate"
-                 value={formValues.txtFromDate}
-                 onChange={(e) => updateState("txtFromDate", e.target.value)}
-                 style={{ width: "100px" }}
-               />
-               <PageBar.Input
-                 ControlTxt="To Date"
-                 control="input"
-                 type="date"
-                 name="txtToDate"
-                 value={formValues.txtToDate}
-                 onChange={(e) => updateState("txtToDate", e.target.value)}
-                 max={dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD")}
-                 style={{ width: "100px" }}
-               />
+        <PageBar.Input
+          ControlTxt="From Date"
+          control="input"
+          type="date"
+          name="txtFromDate"
+          value={formValues.txtFromDate}
+          onChange={(e) => updateState("txtFromDate", e.target.value)}
+          style={{ width: "100px" }}
+        />
+        <PageBar.Input
+          ControlTxt="To Date"
+          control="input"
+          type="date"
+          name="txtToDate"
+          value={formValues.txtToDate}
+          onChange={(e) => updateState("txtToDate", e.target.value)}
+          max={dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD")}
+          style={{ width: "100px" }}
+        />
 
         <PageBar.Search
           value={OnlineOfflineTicketsListItemSearch}
@@ -76,63 +76,63 @@ function OnlineOfflineTickets({
       >
         {/* <DataGrid.Column valueGetter="node.rowIndex + 1" field="#" headerName="Sr No." width={80} pinned="left"  /> */}
         <DataGrid.Column field="StateMasterName" headerName="State" width="160px" />
-        <DataGrid.ColumnGroup headerName="Online Tickets" >
-        <DataGrid.Column
-          field="GrievenceCreated"
-          headerName="Grievance Created"
-          width="160px"
-          cellStyle={{ "text-align": "right" }}
-          valueGetter={(node) => {
-            return node.data.GrievenceCreated ? node.data.GrievenceCreated : 0;
-          }}
-        />
-        <DataGrid.Column
-          field="GrievenceResolved"
-          headerName="Grievance Resolved"
-          width="160px"
-          cellStyle={{ "text-align": "right" }}
-          valueGetter={(node) => {
-            return node.data.GrievenceResolved ? node.data.GrievenceResolved : 0;
-          }}
-        />
-        <DataGrid.Column
-          field="ClaimCreated"
-          headerName="Claim Created"
-          width="135px"
-          cellStyle={{ "text-align": "right" }}
-          valueGetter={(node) => {
-            return node.data.ClaimCreated ? node.data.ClaimCreated : 0;
-          }}
-        />
-        <DataGrid.Column
-          field="ClaimResolved"
-          headerName="Claim Resolved"
-          width="145px"
-          cellStyle={{ "text-align": "right" }}
-          valueGetter={(node) => {
-            return node.data.ClaimResolved ? node.data.ClaimResolved : 0;
-          }}
-        />
+        <DataGrid.ColumnGroup headerName="Online Tickets">
+          <DataGrid.Column
+            field="GrievenceCreated"
+            headerName="Grievance Created"
+            width="160px"
+            cellStyle={{ "text-align": "right" }}
+            valueGetter={(node) => {
+              return node.data.GrievenceCreated ? node.data.GrievenceCreated : 0;
+            }}
+          />
+          <DataGrid.Column
+            field="GrievenceResolved"
+            headerName="Grievance Resolved"
+            width="160px"
+            cellStyle={{ "text-align": "right" }}
+            valueGetter={(node) => {
+              return node.data.GrievenceResolved ? node.data.GrievenceResolved : 0;
+            }}
+          />
+          <DataGrid.Column
+            field="ClaimCreated"
+            headerName="Claim Created"
+            width="135px"
+            cellStyle={{ "text-align": "right" }}
+            valueGetter={(node) => {
+              return node.data.ClaimCreated ? node.data.ClaimCreated : 0;
+            }}
+          />
+          <DataGrid.Column
+            field="ClaimResolved"
+            headerName="Claim Resolved"
+            width="145px"
+            cellStyle={{ "text-align": "right" }}
+            valueGetter={(node) => {
+              return node.data.ClaimResolved ? node.data.ClaimResolved : 0;
+            }}
+          />
         </DataGrid.ColumnGroup>
         <DataGrid.ColumnGroup headerName="Offline Tickets" headerStyle={{ textAlign: "center" }}>
-        <DataGrid.Column
-          field="OfflineCreated"
-          headerName="Offline Created"
-          width="140px"
-          cellStyle={{ "text-align": "right" }}
-          valueGetter={(node) => {
-            return node.data.OfflineCreated ? node.data.OfflineCreated : 0;
-          }}
-        />
-        <DataGrid.Column
-          field="OfflineResolved"
-          headerName="Offline Resolved"
-          width="140px"
-          cellStyle={{ "text-align": "right" }}
-          valueGetter={(node) => {
-            return node.data.OfflineResolved ? node.data.OfflineResolved : 0;
-          }}
-        />
+          <DataGrid.Column
+            field="OfflineCreated"
+            headerName="Offline Created"
+            width="140px"
+            cellStyle={{ "text-align": "right" }}
+            valueGetter={(node) => {
+              return node.data.OfflineCreated ? node.data.OfflineCreated : 0;
+            }}
+          />
+          <DataGrid.Column
+            field="OfflineResolved"
+            headerName="Offline Resolved"
+            width="140px"
+            cellStyle={{ "text-align": "right" }}
+            valueGetter={(node) => {
+              return node.data.OfflineResolved ? node.data.OfflineResolved : 0;
+            }}
+          />
         </DataGrid.ColumnGroup>
         <DataGrid.Column
           field="total"
