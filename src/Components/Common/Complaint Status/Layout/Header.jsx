@@ -2,7 +2,8 @@ import React from "react";
 import { AppBar, Toolbar, Typography, Box, Button, Avatar, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import cs_img from "../../../../assets/img_cs.svg";
-import logo from "../../../../assets/logo3.svg";
+// A import logo from "../../../../assets/logo3.svg";
+import { ReactComponent as LogoPMFBY } from "../../../../assets/img/Group 161806.svg";
 import { getSessionStorage } from "Components/Common/Login/Auth/auth";
 import { logout } from "../../../Common/Login/Services/Methods";
 const Header = ({ title, showComplaintButton, onComplaintClick, showClaimButton, onComplaintStatus }) => {
@@ -31,7 +32,10 @@ const Header = ({ title, showComplaintButton, onComplaintClick, showClaimButton,
     <AppBar position="static" sx={{ backgroundColor: "#ffffff" }}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", padding: 0 }}>
         <Box sx={{ display: "flex", marginLeft: "30px", alignItems: "center" }}>
-          <img src={logo} alt="Logo" style={{ height: "45px", marginRight: 2 }} />
+          {/* <img src={logo} alt="Logo" style={{ height: "45px", marginRight: 2 }} /> */}
+           <a href="https://pmfby.gov.in/" target="_blank">
+                        <LogoPMFBY style={{ width: "85%" }} />
+           </a>
         </Box>
         <Box sx={{ textAlign: "right" }}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1, marginRight: "30px" }}>
