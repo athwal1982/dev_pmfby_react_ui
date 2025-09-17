@@ -237,7 +237,7 @@ const TicketItem = ({ item: ticket, isExpanded, onExpand }) => {
                   <strong>Comments</strong>
                   <span>{ticket && ticket.Comments ? parse(ticket.Comments) : "--"}</span>
                 </div>
-                <div className={BizClass.detailsCol}>
+                <div className={BizClass.detailsCol} style={{paddingTop:"110px"}}>
                   {ticket.TicketStatus === "Resolved" ? <strong>Rating</strong> : null}
                   {ticket.TicketStatus === "Resolved" ? (
                     ticket && ticket.Rating && ticket.Rating !== null ? (

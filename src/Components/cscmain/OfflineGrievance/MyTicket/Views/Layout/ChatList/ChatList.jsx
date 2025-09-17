@@ -10,7 +10,7 @@ import { PropTypes } from "prop-types";
 import { daysdifference, dateFormatDefault, dateToSpecificFormat, Convert24FourHourAndMinute } from "Configration/Utilities/dateformat";
 import parse from "html-react-parser";
 import { getSessionStorage } from "Components/Common/Login/Auth/auth";
-import { getKRPHGrievenceTicketHistoryAttachmentData } from "../../../../Services/Methods";
+import {getKRPHGrievenceTicketHistoryAttachmentData} from "../../../../Services/Methods";
 import BizClass from "./ChatList.module.scss";
 import { Accordion, AccordionSummary, AccordionDetails, Typography, Grid, Paper } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -32,16 +32,7 @@ function TicketSourceIconWithSwitch(parameter) {
   }
 }
 
-function ChatList({
-  children,
-  chatListDetails,
-  setChatListDetails,
-  isLoadingchatListDetails,
-  selectedData,
-  showMoreChatListOnClick,
-  apiDataAttachment,
-  setapiDataAttachment,
-}) {
+function ChatList({ children, chatListDetails, setChatListDetails, isLoadingchatListDetails, selectedData, showMoreChatListOnClick, apiDataAttachment, setapiDataAttachment }) {
   const setAlertMessage = AlertMessage();
   const user = getSessionStorage("user");
 
@@ -69,70 +60,68 @@ function ChatList({
     return tempDiv.textContent || tempDiv.innerText || "";
   }
 
-  const [isFileUploadModalOpen, setIsFileUploadModalOpen] = useState(false);
-  const [atttachmentcount, setAtttachmentcount] = useState(0);
-  const toggleFileUploadModal = async (data) => {
-    debugger;
-
-    if (data) {
-      try {
-        setapiDataAttachment({ apiFor: "TCKHIS", GrievenceTicketHistoryID: data.GrievenceTicketHistoryID });
-        const formdata = {
+    const [isFileUploadModalOpen, setIsFileUploadModalOpen] = useState(false);
+    const [atttachmentcount, setAtttachmentcount] = useState(0);
+    const toggleFileUploadModal = async (data) => {
+      debugger;
+      
+      if (data) {
+        try {
+          setapiDataAttachment({ apiFor: "TCKHIS", GrievenceTicketHistoryID: data.GrievenceTicketHistoryID});
+          const formdata = {
           grievenceSupportTicketID: data && data.GrievenceSupportTicketID ? data.GrievenceSupportTicketID : 0,
           grievenceTicketHistoryID: data && data.GrievenceTicketHistoryID ? data.GrievenceTicketHistoryID : 0,
-        };
-        const result = await getKRPHGrievenceTicketHistoryAttachmentData(formdata);
-        if (result.responseCode === 1) {
-          if (result.responseData && result.responseData.attachment && result.responseData.attachment.length > 0) {
-            setAtttachmentcount(result.responseData.attachment.length);
-            if (result.responseData.attachment.length === 5) {
-              setAlertMessage({
-                type: "error",
-                message: "You have already uploaded 5 images.",
-              });
-              return;
+          };
+          const result = await getKRPHGrievenceTicketHistoryAttachmentData(formdata);
+          if (result.responseCode === 1) {
+            if (result.responseData && result.responseData.attachment && result.responseData.attachment.length > 0) {
+              setAtttachmentcount(result.responseData.attachment.length);
+              if (result.responseData.attachment.length === 5) {
+                setAlertMessage({
+                  type: "error",
+                  message: "You have already uploaded 5 images.",
+                });
+                return;
+              } else {
+                setIsFileUploadModalOpen(!isFileUploadModalOpen);
+              }
             } else {
               setIsFileUploadModalOpen(!isFileUploadModalOpen);
             }
           } else {
-            setIsFileUploadModalOpen(!isFileUploadModalOpen);
+            setAlertMessage({
+              type: "error",
+              message: result.responseMessage,
+            });
           }
-        } else {
+        } catch (error) {
+          console.log(error);
           setAlertMessage({
             type: "error",
-            message: result.responseMessage,
+            message: error,
           });
         }
-      } catch (error) {
-        console.log(error);
-        setAlertMessage({
-          type: "error",
-          message: error,
-        });
+      } else {
+        setIsFileUploadModalOpen(!isFileUploadModalOpen);
       }
-    } else {
-      setIsFileUploadModalOpen(!isFileUploadModalOpen);
-    }
-  };
+    };
+
+    const [expanded, setExpanded] = useState("");
+    
+    const handleChange = (panel) => (_, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+    };
 
   return (
     <>
-      {isFileViewerModalOpen && (
-        <FileViewer
-          toggleFileViewerModal={toggleFileViewerModal}
-          selectedData={selectedData}
-          apiDataAttachment={apiDataAttachment}
-          setChatListDetails={setChatListDetails}
-          chatListDetails={chatListDetails}
-        />
-      )}
-      {isFileUploadModalOpen && (
+      {isFileViewerModalOpen && <FileViewer toggleFileViewerModal={toggleFileViewerModal} selectedData={selectedData} apiDataAttachment={apiDataAttachment} setChatListDetails={setChatListDetails} chatListDetails={chatListDetails} />}
+       {isFileUploadModalOpen && (
         <FileUploadTicketHistory
           toggleFileUploadModal={toggleFileUploadModal}
           selectedData={selectedData}
           atttachmentcount={atttachmentcount}
           setapiDataAttachment={setapiDataAttachment}
-          apiDataAttachment={apiDataAttachment}
+          apiDataAttachment= {apiDataAttachment}
           setChatListDetails={setChatListDetails}
           chatListDetails={chatListDetails}
         />
@@ -164,6 +153,7 @@ function ChatList({
                   >
                     {selectedData?.TicketStatus || ""}
                   </span>
+                 
                 </div>
               </div>
             </div>
@@ -180,7 +170,7 @@ function ChatList({
             <span> {selectedData && selectedData.GrievenceDescription ? parse(selectedData.GrievenceDescription) : null} </span>
           </p> */}
         </div>
-        <div className={BizClass.Event1panel}>{children}</div>
+         <div className={BizClass.Event1panel}>{children}</div>
         <div className={BizClass.Event1panel}>
           <Accordion defaultExpanded sx={{ borderRadius: 2, boxShadow: 3, overflow: "hidden" }}>
             <AccordionSummary
@@ -206,9 +196,7 @@ function ChatList({
             >
               <Grid container spacing={0.7}>
                 <Grid item xs={10} md={3}>
-                  <Typography variant="subtitle2" fontWeight="bold">
-                    Activity 1 : Ticket Generated
-                  </Typography>
+                  <Typography variant="subtitle2" fontWeight="bold">Activity 1 : Ticket Generated</Typography>
                 </Grid>
                 <Grid item xs={10} md={3}>
                   <Typography variant="subtitle2" fontWeight="bold" textAlign="center">
@@ -219,15 +207,16 @@ function ChatList({
                   </Typography>
                 </Grid>
                 <Grid item xs={10} md={3}>
-                  <Typography variant="subtitle2" fontWeight="bold">
-                    {selectedData && selectedData.CreatedBY ? selectedData.CreatedBY : ""}
-                  </Typography>
+                  <Typography variant="subtitle2" fontWeight="bold">{selectedData && selectedData.CreatedBY
+                      ? selectedData.CreatedBY : ""}</Typography>
                 </Grid>
                 <Grid item xs={10} md={3}>
                   <Typography variant="subtitle2" fontWeight="bold">
-                    {selectedData && selectedData.UserType ? selectedData.UserType : ""}
+                    {selectedData && selectedData.UserType
+                      ? selectedData.UserType : ""}
                   </Typography>
                 </Grid>
+                
               </Grid>
             </AccordionSummary>
 
@@ -269,7 +258,9 @@ function ChatList({
             chatListDetails && chatListDetails.length > 0 ? (
               chatListDetails.map((data, i) => {
                 return (
-                  <Accordion sx={{ borderRadius: 2, boxShadow: 3, mb: 1, overflow: "hidden" }}>
+                  <Accordion sx={{ borderRadius: 2, boxShadow: 3, mb: 1, overflow: "hidden" }}  key={i}
+          expanded={expanded === i}
+          onChange={handleChange(i)}>
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
                       sx={{
@@ -305,16 +296,15 @@ function ChatList({
                             )}
                           </Typography>
                         </Grid>
-                        <Grid item xs={10} md={3}>
-                          <Typography variant="subtitle2" fontWeight="bold">
-                            {data.CreatedBY}
-                          </Typography>
+                         <Grid item xs={10} md={3}>
+                          <Typography variant="subtitle2" fontWeight="bold">{data.CreatedBY}</Typography>
                         </Grid>
                         <Grid item xs={10} md={3}>
                           <Typography variant="subtitle2" fontWeight="bold">
                             {data.UserType ? data.UserType : ""}
                           </Typography>
                         </Grid>
+                       
                       </Grid>
                     </AccordionSummary>
 
@@ -348,10 +338,10 @@ function ChatList({
                                 />
                               ) : null}
                               <FaUpload
-                                onClick={() => toggleFileUploadModal(data)}
-                                title="File Upload"
-                                style={{ color: "#000000", fontSize: "18px", cursor: "pointer" }}
-                              />
+                                      onClick={() => toggleFileUploadModal(data)}
+                                      title="File Upload"
+                                      style={{ color: "#000000", fontSize: "18px", cursor: "pointer" }}
+                                    />
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                               {data && data.TicketDescription ? parse(data.TicketDescription) : null}

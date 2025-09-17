@@ -88,6 +88,12 @@ function ChatList({
     tempDiv.innerHTML = html;
     return tempDiv.textContent || tempDiv.innerText || "";
   }
+  
+  const [expanded, setExpanded] = useState("");
+    
+  const handleChange = (panel) => (_, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+  };
 
   return (
     <>
@@ -237,7 +243,9 @@ function ChatList({
             chatListDetails && chatListDetails.length > 0 ? (
               chatListDetails.map((data, i) => {
                 return (
-                  <Accordion sx={{ borderRadius: 2, boxShadow: 3, mb: 1, overflow: "hidden" }}>
+                  <Accordion sx={{ borderRadius: 2, boxShadow: 3, mb: 1, overflow: "hidden" }} key={i}
+          expanded={expanded === i}
+          onChange={handleChange(i)}>
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
                       sx={{
