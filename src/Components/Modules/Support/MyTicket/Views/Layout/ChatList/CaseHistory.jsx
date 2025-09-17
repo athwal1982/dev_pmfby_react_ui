@@ -38,7 +38,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
 
   const [stepsTATJourneyGrv] = useState([
     {
-      tat:"TAT 1",
+      tat: "TAT 1",
       color: "#0f99ef",
       text: "(3 Days) to respond the ticket missed ticket type changed to escalated ticket",
       date: "",
@@ -52,7 +52,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
       ageing: "0-3 days",
     },
     {
-      tat:"TAT 2",
+      tat: "TAT 2",
       color: "#eb0c7b",
       text: "(7 Days) to respond the ticket missed ticket type changed to escalated ticket",
       date: "",
@@ -66,7 +66,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
       ageing: "4-7 days",
     },
     {
-      tat:"TAT 3",
+      tat: "TAT 3",
       color: "#b94e00",
       text: "(12 Days) to respond the ticket missed ticket type changed to escalated ticket",
       date: "",
@@ -80,7 +80,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
       ageing: "8-12 days",
     },
     {
-      tat:"TAT 4",
+      tat: "TAT 4",
       color: "#6908b1",
       text: "(15 Days) to respond the ticket missed ticket type changed to escalated ticket",
       date: "",
@@ -94,7 +94,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
       ageing: "13-15 days",
     },
     {
-      tat:"TAT 5",
+      tat: "TAT 5",
       color: "#f06d1a",
       text: "(16 > Days) to respond the ticket missed ticket type changed to escalated ticket",
       date: "",
@@ -109,9 +109,9 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
     },
   ]);
 
-    const [stepsTATJourneyCrpLs] = useState([
+  const [stepsTATJourneyCrpLs] = useState([
     {
-      tat:"TAT 1",
+      tat: "TAT 1",
       color: "#0f99ef",
       text: "(10 Days) to respond the ticket missed ticket type changed to escalated ticket",
       date: "",
@@ -125,7 +125,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
       ageing: "0-10 days",
     },
     {
-      tat:"TAT 2",
+      tat: "TAT 2",
       color: "#eb0c7b",
       text: "(15 Days) to respond the ticket missed ticket type changed to escalated ticket",
       date: "",
@@ -139,7 +139,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
       ageing: "11-15 days",
     },
     {
-      tat:"TAT 3",
+      tat: "TAT 3",
       color: "#b94e00",
       text: "(20 Days) to respond the ticket missed ticket type changed to escalated ticket",
       date: "",
@@ -152,9 +152,9 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
       smsText: "",
       ageing: "16-20 days",
     },
-    
+
     {
-      tat:"TAT 4",
+      tat: "TAT 4",
       color: "#f06d1a",
       text: "(20 > Days) to respond the ticket missed ticket type changed to escalated ticket",
       date: "",
@@ -205,7 +205,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
       case 109301:
         rtnStatusWiseTemplate = [
           {
-            tat:"",
+            tat: "",
             id: 1,
             color: "#f06d1a",
             text: `Farmer request received from  ( ${pData && pData.CreatedBY ? pData.CreatedBY : ""} )`,
@@ -222,7 +222,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
             ageing: "",
           },
           {
-            tat:"",
+            tat: "",
             id: 2,
             color: "#0f99ef",
             text: "Farmer ticket created",
@@ -239,7 +239,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
             ageing: "",
           },
           {
-            tat:"",
+            tat: "",
             id: 3,
             color: "#6908b1",
             text: "SMS sent to farmer with ticket number",
@@ -260,7 +260,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
       case 109302:
         rtnStatusWiseTemplate = [
           {
-            tat:"",
+            tat: "",
             id: 4,
             color: "#dd5c9cff",
             text: "Ticket responded by IC User",
@@ -310,7 +310,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
               break;
             }
           }
-        } else if(pselectedData.TicketHeaderID === 4) {
+        } else if (pselectedData.TicketHeaderID === 4) {
           for (let i = 0; i < stepsTATJourneyCrpLs.length; i++) {
             if (stepsTATJourneyCrpLs[i].ageing.replace(" days", "") !== pAgeiing) {
               rtnStatusWiseTemplate.push(stepsTATJourneyCrpLs[i]);
@@ -319,8 +319,9 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
             }
           }
         }
-        rtnStatusWiseTemplate.push({
-           tat:"",
+        rtnStatusWiseTemplate.push(
+          {
+            tat: "",
             id: 5,
             color: "#eb0c7b",
             text: "Ticket responded by IC User",
@@ -340,7 +341,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
             ageing: `(${pAgeiing} days)`,
           },
           {
-            tat:"",
+            tat: "",
             id: 6,
             color: "#01b981",
             text: "Notification sent to farmer with ticket status & link to see the IC Response",
@@ -354,14 +355,15 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
               pStatusID === 109301 ? "Open" : pStatusID === 109302 ? "In-Progress" : pStatusID === 109303 ? "Resolved" : pStatusID === 109304 ? "Re-Open" : "",
             smsText: `प्रिय किसान , प्रधानमंत्री फसल बीमा योजना की सहायक सेवा से सम्पर्क करने के लिए आपका धन्यवाद । आपकी शिकायत - ${pselectedData.SupportTicketNo} का समाधान कर दिया गया है । यदि आप संतुष्ट नहीं है तो कृपया 14447 पे कॉल करे । आपका दिन शुभ हो । PMFBY सुरक्षित फसल, निश्चिंत किसान । फसल बीमा है सबका समाधान ॥`,
             ageing: "",
-          });
-          
+          },
+        );
+
         break;
 
       case 109304:
         rtnStatusWiseTemplate = [
           {
-            tat:"",
+            tat: "",
             id: 7,
             color: "#b94e00",
             text: "Ticket reponed by farmer",
@@ -381,7 +383,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
             ageing: "",
           },
           {
-            tat:"",
+            tat: "",
             id: 8,
             color: "#f06d1a",
             text: "SMS sent to farmer with ticket number and reopened notification",
@@ -512,7 +514,8 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
           }}
         >
           <span style={{ flex: 1, textAlign: "center" }}>
-         Ticket Type :  {selectedData && selectedData.TicketHeadName ? selectedData.TicketHeadName : null}   - KRPH Ticket No : {selectedData && selectedData.SupportTicketNo ? selectedData.SupportTicketNo : null} - CASE HISTORY
+            Ticket Type : {selectedData && selectedData.TicketHeadName ? selectedData.TicketHeadName : null} - KRPH Ticket No :{" "}
+            {selectedData && selectedData.SupportTicketNo ? selectedData.SupportTicketNo : null} - CASE HISTORY
           </span>
           <span style={{ cursor: "pointer" }}>
             <Close onClick={() => handleCloseCaseHistory()} />
@@ -588,7 +591,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
 
                     {/* Text */}
                     <div className="text-part text-top">
-                      <strong>{step.tat ? step.tat: ""}</strong>
+                      <strong>{step.tat ? step.tat : ""}</strong>
                       <p>{step.text}</p>
                       <strong style={{ fontSize: "12px" }}>{step.ticketStatus}</strong>
                       <p>

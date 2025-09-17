@@ -58,7 +58,6 @@ const TicketItem = ({ item: ticket, isExpanded, onExpand }) => {
 
   const logoPath = getInsuranceLogo(ticket.InsuranceCompany);
 
-
   return (
     <React.Fragment>
       <tr className={BizClass.ticketRow} onClick={onExpand}>
@@ -84,11 +83,11 @@ const TicketItem = ({ item: ticket, isExpanded, onExpand }) => {
               <h3>Ticket Details #{ticket.SupportTicketNo}</h3>
               {/* <div className={BizClass.detailsCol}>
                   <span>Caller Contact Number</span>
-                  <strong>{ticket.CallerMobileNo}</strong>
+                  <span>{ticket.CallerMobileNo}</span>
                   </div> */}
               {/* <div className={BizClass.detailsCol}>
                   <span>Support Ticket No</span>
-                  <strong>{ticket.SupportTicketNo}</strong>
+                  <span>{ticket.SupportTicketNo}</span>
                   </div> */}
               <div className={BizClass.detailsGrid} style={{ background: "white", borderRadius: "10px", paddingLeft: "20px", marginBottom: "10px" }}>
                 <div className={BizClass.detailsCol}>
@@ -103,158 +102,162 @@ const TicketItem = ({ item: ticket, isExpanded, onExpand }) => {
                       objectFit: "contain",
                     }}
                   />
-                  <strong>{ticket.InsuranceCompany}</strong>
+                  <span>{ticket.InsuranceCompany}</span>
                 </div>
                 <div className={BizClass.detailsCol}>
-                  <span>Requestor Name</span>
-                  <strong>{ticket.RequestorName}</strong>
+                  <strong>Requestor Name</strong>
+                  <span>{ticket.RequestorName}</span>
                 </div>
                 <div className={BizClass.detailsCol}>
-                  <span>Requestor Mobile No</span>
-                  <strong>{ticket.RequestorMobileNo}</strong>
+                  <strong>Requestor Mobile No</strong>
+                  <span>{ticket.RequestorMobileNo}</span>
                 </div>
                 <div className={BizClass.detailsCol}>
-                  <span>Application Number</span>
-                  <strong>{ticket.ApplicationNo ?? "--"}</strong>
+                  <strong>Application Number</strong>
+                  <span>{ticket.ApplicationNo ?? "--"}</span>
                 </div>
               </div>
               <div className={BizClass.detailsGrid}>
                 <div className={BizClass.detailsCol}>
-                  <span>Crop Category Others</span>
-                  <strong>{ticket.CropCategoryOthers ? ticket.CropCategoryOthers : "--"}</strong>
+                  <strong>Crop Category Others</strong>
+                  <span>{ticket.CropCategoryOthers ? ticket.CropCategoryOthers : "--"}</span>
                 </div>
                 <div className={BizClass.detailsCol}>
-                  <span>Request Year</span>
-                  <strong>{ticket.RequestYear}</strong>
+                  <strong>Request Year</strong>
+                  <span>{ticket.RequestYear}</span>
                 </div>
                 {/* <div className={BizClass.detailsCol}>
                   <span>Request Season</span>
-                  <strong>{ticket.RequestSeason}</strong>
+                  <span>{ticket.RequestSeason}</span>
                 </div> */}
                 <div className={BizClass.detailsCol}>
-                  <span>Loss Date</span>
-                  <strong>{ticket.LossDate ? moment(ticket.LossDate).format("YYYY-MM-DD") : "--"}</strong>
+                  <strong>Loss Date</strong>
+                  <span>{ticket.LossDate ? moment(ticket.LossDate).format("DD-YYYY-MM") : "--"}</span>
                 </div>
                 {/* <div className={BizClass.detailsCol}>
                   <span>Loss Time</span>
-                  <strong>{ticket.LossTime ?? "--"}</strong>
+                  <span>{ticket.LossTime ?? "--"}</span>
                 </div> */}
                 {/* <div className={BizClass.detailsCol}>
                   <span>On Time Intimation Flag</span>
-                  <strong>{ticket.OnTimeIntimationFlag}</strong>
+                  <span>{ticket.OnTimeIntimationFlag}</span>
                 </div> */}
                 <div className={BizClass.detailsCol}>
-                  <span>Village Name</span>
-                  <strong>{ticket.VillageName}</strong>
+                  <strong>Village Name</strong>
+                  <span>{ticket.VillageName}</span>
                 </div>
                 <div className={BizClass.detailsCol}>
-                  <span>Application Crop Name</span>
-                  <strong>{ticket.ApplicationCropName}</strong>
+                  <strong>Application Crop Name</strong>
+                  <span>{ticket.ApplicationCropName}</span>
                 </div>
                 {/* <div className={BizClass.detailsCol}>
                   <span>Crop Name</span>
-                  <strong>{ticket.CropName ? ticket.CropName : "--"}</strong>
+                  <span>{ticket.CropName ? ticket.CropName : "--"}</span>
                 </div> */}
                 <div className={BizClass.detailsCol}>
-                  <span>Area</span>
-                  <strong>{ticket.AREA}</strong>
+                  <strong>Area</strong>
+                  <span>{ticket.AREA}</span>
                 </div>
                 <div className={BizClass.detailsCol}>
-                  <span>Post Harvest Date</span>
-                  <strong>{ticket.PostHarvestDate ?? "--"}</strong>
+                  <strong>Post Harvest Date</strong>
+                  <span>{ticket.PostHarvestDate ? moment(ticket.PostHarvestDate).format("DD-MM-YYYY") : "--"}</span>
                 </div>
 
                 {/* <div className={BizClass.detailsCol}>
                   <span>Insurance Policy Number</span>
-                  <strong>{ticket.InsurancePolicyNo ?? "--"}</strong>
+                  <span>{ticket.InsurancePolicyNo ?? "--"}</span>
                 </div> */}
                 <div className={BizClass.detailsCol}>
-                  <span>Insurance Expiry Date</span>
-                  <strong>{ticket.InsurancePolicyDate ?? "--"}</strong>
+                  <strong>Insurance Expiry Date</strong>
+                  <span>{ticket.InsurancePolicyDate ?? "--"}</span>
                 </div>
                 <div className={BizClass.detailsCol}>
-                  <span>Farmer Share</span>
-                  <strong>{ticket.FarmerShare ?? "--"}</strong>
+                  <strong>Farmer Share</strong>
+                  <span>{ticket.FarmerShare ?? "--"}</span>
                 </div>
                 <div className={BizClass.detailsCol}>
-                  <span>Sowing Date/Seeding Date</span>
-                  <strong>{ticket.SowingDate ? moment(ticket.SowingDate).format("YYYY-MM-DD") : "--"}</strong>
+                  <strong>Sowing Date/Seeding Date</strong>
+                  <span>{ticket.SowingDate ? moment(ticket.SowingDate).format("DD-MM-YYYY") : "--"}</span>
                 </div>
                 <div className={BizClass.detailsCol}>
-                  <span>Crop Season Name</span>
-                  <strong>{ticket.CropSeasonName}</strong>
+                  <strong>Crop Season Name</strong>
+                  <span>{ticket.CropSeasonName}</span>
                 </div>
                 {/* <div className={BizClass.detailsCol}>
                   <span>Ticket Source Name</span>
-                  <strong>{ticket.TicketSourceName}</strong>
+                  <span>{ticket.TicketSourceName}</span>
                 </div> */}
                 <div className={BizClass.detailsCol}>
-                  <span>Ticket Category Name</span>
-                  <strong>{ticket.CategoryName}</strong>
+                  <strong>Ticket Category Name</strong>
+                  <span>{ticket.CategoryName}</span>
                 </div>
                 {/* <div className={BizClass.detailsCol}>
                   <span>Ticket Status</span>
-                  <strong>{ticket.TicketStatus}</strong>
+                  <span>{ticket.TicketStatus}</span>
                 </div> */}
 
                 <div className={BizClass.detailsCol}>
-                  <span>Ticket Type Name</span>
-                  <strong>{ticket.CategoryName}</strong>
+                  <strong>Ticket Type Name</strong>
+                  <span>{ticket.CategoryName}</span>
                 </div>
                 <div className={BizClass.detailsCol}>
-                  <span>State Name</span>
-                  <strong>{ticket.StateMasterName}</strong>
+                  <strong>State Name</strong>
+                  <span>{ticket.StateMasterName}</span>
                 </div>
                 <div className={BizClass.detailsCol}>
-                  <span>District Name</span>
-                  <strong>{ticket.District}</strong>
+                  <strong>District Name</strong>
+                  <span>{ticket.District}</span>
                 </div>
                 <div className={BizClass.detailsCol}>
-                  <span>Ticket Head Name</span>
-                  <strong>{ticket.TicketHeadName}</strong>
+                  <strong>Ticket Head Name</strong>
+                  <span>{ticket.TicketHeadName}</span>
                 </div>
                 <div className={BizClass.detailsCol}>
-                  <span>Scheme Name</span>
-                  <strong>{ticket.SchemeName}</strong>
+                  <strong>Scheme Name</strong>
+                  <span>{ticket.SchemeName}</span>
                 </div>
                 {/* <div className={BizClass.detailsCol}>
                   <span>Created At</span>
-                  <strong>{ticket.CreatedAt}</strong>
+                  <span>{ticket.CreatedAt}</span>
                 </div> */}
                 <div className={BizClass.detailsCol}>
-                  <span>Status Changed On</span>
-                  <strong>{ticket.StatusChangedOn}</strong>
-                </div>
-                
-              </div>
-              <div >
-               <div className={BizClass.detailsCol}>
-                  <span>Ticket Description</span>
-                  <strong>{ticket && ticket.TicketDescription ? parse(ticket.TicketDescription) : null}</strong>
+                  <strong>Status Changed On</strong>
+                  <span>{ticket.StatusChangedOn ? moment(ticket.StatusChangedOn).format("DD-MM-YYYY") : "--"}</span>
                 </div>
               </div>
-              <br/>
-               <div className={BizClass.detailsGridcomment}>
+              <div className={BizClass.detailsGrid}>
                 <div className={BizClass.detailsCol}>
-                  <span>Comments</span>
-                  <strong>{ticket && ticket.Comments ? parse(ticket.Comments) : null}</strong>
-                 
+                  <strong>Ticket Description</strong>
+                  <span>{ticket && ticket.TicketDescription ? parse(ticket.TicketDescription) : null}</span>
+                </div>
+              </div>
+              <br />
+              <div className={BizClass.detailsGridcomment}>
+                <div className={BizClass.detailsCol}>
+                  <strong>Comments</strong>
+                  <span>{ticket && ticket.Comments ? parse(ticket.Comments) : "--"}</span>
                 </div>
                 <div className={BizClass.detailsCol}>
-                  <span>Rating</span>
-                  {ticket && ticket.Rating && ticket.Rating !== null ? <div style={{ fontSize: "22px" }}>
-            {Array.from({ length: ticket.Rating }, (i) => (
-              <span
-                key={i}
-                style={{
-                  cursor: "pointer",
-                  color: "#ffcc00",
-                }}
-              >
-                &#9733;
-              </span>
-            ))}
-          </div> :  <FarmerRating ticket={ticket}  /> } 
+                  {ticket.TicketStatus === "Resolved" ? <strong>Rating</strong> : null}
+                  {ticket.TicketStatus === "Resolved" ? (
+                    ticket && ticket.Rating && ticket.Rating !== null ? (
+                      <div style={{ fontSize: "22px" }}>
+                        {Array.from({ length: ticket.Rating }, (i) => (
+                          <span
+                            key={i}
+                            style={{
+                              cursor: "pointer",
+                              color: "#ffcc00",
+                            }}
+                          >
+                            &#9733;
+                          </span>
+                        ))}
+                      </div>
+                    ) : (
+                      <FarmerRating ticket={ticket} />
+                    )
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -262,7 +265,6 @@ const TicketItem = ({ item: ticket, isExpanded, onExpand }) => {
         </tr>
       )}
     </React.Fragment>
-    
   );
 };
 

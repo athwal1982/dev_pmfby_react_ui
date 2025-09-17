@@ -72,7 +72,7 @@ export const sendOtpMessage = async (mobileNumber) => {
   }
 };
 
-export const krphSupportTicketRatingUpdate = async (psupportTicketID,pticketHistoryID,prating) => {
+export const krphSupportTicketRatingUpdate = async (psupportTicketID, pticketHistoryID, prating) => {
   try {
     const ip = await publicIp.v4();
     const user = getSessionStorage("user");
@@ -82,12 +82,12 @@ export const krphSupportTicketRatingUpdate = async (psupportTicketID,pticketHist
         supportTicketID: psupportTicketID,
         ticketHistoryID: pticketHistoryID,
         rating: prating,
-         objCommon: {
-        insertedUserID: user && user.LoginID ? user.LoginID.toString() : "1",
-        insertedIPAddress: ip,
-        dateShort: "yyyy-MM-dd",
-        dateLong: "yyyy-MM-dd HH:mm:ss",
-      },
+        objCommon: {
+          insertedUserID: user && user.LoginID ? user.LoginID.toString() : "1",
+          insertedIPAddress: ip,
+          dateShort: "yyyy-MM-dd",
+          dateLong: "yyyy-MM-dd HH:mm:ss",
+        },
       },
       {
         headers: {

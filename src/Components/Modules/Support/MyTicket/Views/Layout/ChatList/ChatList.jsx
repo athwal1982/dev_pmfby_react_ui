@@ -211,7 +211,7 @@ function ChatList({
                 <Grid item xs={10} md={3}>
                   <Typography variant="subtitle2" fontWeight="bold">
                     {selectedData && selectedData.CreatedBY === "Agent"
-                      ? `Agent ID: ${selectedData && selectedData.CallingUserID ? selectedData.CallingUserID : null}`
+                      ? `Agent ID: ${selectedData && selectedData.CallingUserID ? selectedData.CallingUserID : "NA"}`
                       : selectedData.CreatedBY}
                   </Typography>
                 </Grid>
@@ -317,7 +317,7 @@ function ChatList({
                         </Grid>
                         <Grid item xs={10} md={3}>
                           <Typography variant="subtitle2" fontWeight="bold">
-                            {data.UserType === "CSC" ? `Agent ID : ${data && data.CallingUserID ? data.CallingUserID : ""}` : data.UserType}
+                            {data.UserType === "CSC" ? `Agent ID : ${data && data.CallingUserID ? data.CallingUserID : "NA"}` : data.UserType}
                           </Typography>
                         </Grid>
                       </Grid>
