@@ -21,7 +21,7 @@ import { getMasterDataBinding } from "../../../Support/ManageTicket/Services/Met
 
 function TicketHistoryLogics() {
   const [formValues, setFormValues] = useState({
-    txtFromDate: dateToSpecificFormat(moment().subtract(2, "days"), "YYYY-MM-DD"),
+    txtFromDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
     txtToDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
     txtInsuranceCompany: null,
     txtState: null,
@@ -373,7 +373,7 @@ function TicketHistoryLogics() {
   const onClickClearSearchFilter = () => {
     setFormValues({
       ...formValues,
-      txtFromDate: dateToSpecificFormat(moment().subtract(2, "days"), "YYYY-MM-DD"),
+      txtFromDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
       txtToDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
       txtInsuranceCompany: null,
       txtState: null,

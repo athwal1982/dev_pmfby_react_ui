@@ -75,7 +75,7 @@ function TicketHistory({
             name="txtFromDate"
             value={formValues.txtFromDate}
             onChange={(e) => updateState("txtFromDate", e.target.value)}
-            max={dateToSpecificFormat(moment().subtract(2, "days"), "YYYY-MM-DD")}
+            max={dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD")}
             style={{ width: "105px" }}
           />
           <PageBar.Input
