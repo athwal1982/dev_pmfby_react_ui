@@ -2136,6 +2136,7 @@ function KrphAllActivitiesNDN() {
             ...formValuesTicketCreation,
             txtTicketCategoryType: null,
             txtTicketCategory: null,
+            txtTicketCategoryDescription: null,
             txtCropLossDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
             txtCropLossIntimation: "On-time",
             txtCropLossTime: "",
@@ -2471,6 +2472,7 @@ function KrphAllActivitiesNDN() {
       ...formValuesTicketCreation,
       txtTicketCategory: null,
       txtTicketCategoryType: null,
+      txtTicketCategoryDescription: null,
       txtCropLossDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
       txtCropLossIntimation: "On-Time",
       txtCropLossTime: "",
@@ -2590,6 +2592,7 @@ function KrphAllActivitiesNDN() {
       ...formValuesTicketCreation,
       txtTicketCategory: null,
       txtTicketCategoryType: null,
+      txtTicketCategoryDescription: null,
       txtCropLossDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
       txtCropLossIntimation: "On-time",
       txtCropLossTime: "",
@@ -3010,6 +3013,7 @@ function KrphAllActivitiesNDN() {
       ...formValuesTicketCreation,
       txtTicketCategoryType: null,
       txtTicketCategory: null,
+      txtTicketCategoryDescription: null,
       txtCropLossDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
       txtCropLossIntimation: "On-time",
       txtCropLossTime: "",
@@ -3039,6 +3043,7 @@ function KrphAllActivitiesNDN() {
       ...formValuesTicketCreation,
       txtTicketCategoryType: null,
       txtTicketCategory: null,
+      txtTicketCategoryDescription: null,
       txtCropLossDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
       txtCropLossIntimation: "On-time",
       txtCropLossTime: "",
@@ -3056,6 +3061,7 @@ function KrphAllActivitiesNDN() {
     // A txtDocumentUpload: "",
     txtTicketCategory: null,
     txtTicketCategoryType: null,
+    txtTicketCategoryDescription: null,
     txtCropLossDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
     txtCropLossIntimation: "On-time",
     txtCropLossTime: "",
@@ -3091,6 +3097,11 @@ function KrphAllActivitiesNDN() {
     if (name === "txtTicketCategoryType") {
       if (!value || typeof value === "undefined") {
         errorsMsg = "Please select Ticket Category!";
+      }
+    }
+    if (name === "txtTicketCategoryDescription") {
+      if (!value || typeof value === "undefined") {
+        errorsMsg = "Please select Ticket Category Description!";
       }
     }
     if (name === "txtOtherSubCategory") {
@@ -3152,7 +3163,7 @@ function KrphAllActivitiesNDN() {
       errors["txtSchemeForFarmerInfo"] = validateFieldSupportTicket("txtSchemeForFarmerInfo", formValuesForFarmerInfo.txtSchemeForFarmerInfo);
       errors["txtTicketCategoryType"] = validateFieldSupportTicket("txtTicketCategoryType", formValuesTicketCreation.txtTicketCategoryType);
       errors["txtTicketCategory"] = validateFieldSupportTicket("txtTicketCategory", formValuesTicketCreation.txtTicketCategory);
-
+       errors["txtTicketCategoryDescription"] = validateFieldSupportTicket("txtTicketCategoryDescription", formValuesTicketCreation.txtTicketCategoryDescription);
       if (selectedOption === "4") {
         errors["txtCropLossDate"] = validateFieldSupportTicket("txtCropLossDate", formValuesTicketCreation.txtCropLossDate);
         // A errors["txtCropLossTime"] = validateFieldSupportTicket("txtCropLossTime", formValuesTicketCreation.txtCropLossTime);
@@ -3203,8 +3214,11 @@ function KrphAllActivitiesNDN() {
         ...formValuesTicketCreation,
         txtTicketCategoryType: value,
         txtTicketCategory: null,
+        txtOtherSubCategory: null,
+        txtTicketCategoryDescription: null
       });
       setTicketCategoryList([]);
+      setTicketCategoryDescriptionList([]);
       if (value) {
         getTicketCategoryListData(value.SupportTicketTypeID, value);
       }
@@ -3215,10 +3229,13 @@ function KrphAllActivitiesNDN() {
         ...formValuesTicketCreation,
         txtTicketCategory: value,
         txtOtherSubCategory: null,
+        txtTicketCategoryDescription: null
       });
       setTicketCategoryOtherList([]);
+      setTicketCategoryDescriptionList([]);
       if (value) {
         getTicketCategoryOtherListData(value.SupportTicketTypeID, value);
+        getTicketCategoryDescriptionListData(value.TicketCategoryID);
       }
     }
 
@@ -3233,6 +3250,7 @@ function KrphAllActivitiesNDN() {
         txtLossAt: value,
         txtTicketCategoryType: null,
         txtTicketCategory: null,
+        txtTicketCategoryDescription: null,
       });
       setTicketCategoryTypeList([]);
       setTicketCategoryList([]);
@@ -3432,6 +3450,10 @@ function KrphAllActivitiesNDN() {
           formValuesTicketCreation.txtTicketCategoryType && formValuesTicketCreation.txtTicketCategoryType.SupportTicketTypeID
             ? formValuesTicketCreation.txtTicketCategoryType.SupportTicketTypeID
             : 0,
+        ticketCategoryDescriptionID:
+          formValuesTicketCreation.txtTicketCategoryDescription && formValuesTicketCreation.txtTicketCategoryDescription.CategoryDescriptionID
+            ? formValuesTicketCreation.txtTicketCategoryDescription.CategoryDescriptionID
+            : 0,    
         // A cropCategoryOthers: formValuesTicketCreation.txtOtherSubCategory ? formValuesTicketCreation.txtOtherSubCategory : "",
         cropCategoryOthers:
           formValuesTicketCreation.txtOtherSubCategory && formValuesTicketCreation.txtOtherSubCategory.OtherCategoryName
@@ -3684,7 +3706,7 @@ function KrphAllActivitiesNDN() {
         ticketCategoryID:
           formValuesTicketCreation.txtTicketCategoryType && formValuesTicketCreation.txtTicketCategoryType.SupportTicketTypeID
             ? formValuesTicketCreation.txtTicketCategoryType.SupportTicketTypeID
-            : 0,
+            : 0,     
         // A cropCategoryOthers: formValuesTicketCreation.txtOtherSubCategory ? formValuesTicketCreation.txtOtherSubCategory : "",
         cropCategoryOthers:
           formValuesTicketCreation.txtOtherSubCategory && formValuesTicketCreation.txtOtherSubCategory.OtherCategoryName
@@ -4879,6 +4901,42 @@ function KrphAllActivitiesNDN() {
         setIsTicketCategoryOtherList(false);
       } else {
         setTicketCategoryOtherList([]);
+      }
+    } catch (error) {
+      console.log(error);
+      setAlertMessage({
+        type: "error",
+        message: error,
+      });
+    }
+  };
+
+  const [ticketCategoryDescriptionList, setTicketCategoryDescriptionList] = useState([]);
+  const [isLoadingTicketCategoryDescriptionList, setIsTicketCategoryDescriptionList] = useState(false);
+  const getTicketCategoryDescriptionListData = async (pTicketCategoryID) => {
+    try {
+      debugger;
+      setIsTicketCategoryDescriptionList(true);
+      const formdata = {
+        filterID: pTicketCategoryID,
+        filterID1: 0,
+        masterName: "CTZDSC",
+        searchText: "#ALL",
+        searchCriteria: "AW",
+      };
+      const result = await getMasterDataBinding(formdata);
+      setIsTicketCategoryDescriptionList(false);
+      if (result.response.responseCode === 1) {
+        if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
+          setTicketCategoryDescriptionList(result.response.responseData.masterdatabinding);
+        } else {
+          setTicketCategoryDescriptionList([]);
+        }
+      } else {
+        setAlertMessage({
+          type: "error",
+          message: result.response.responseMessage,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -7383,7 +7441,25 @@ function KrphAllActivitiesNDN() {
                               </InputGroup>
                               <span className="login_ErrorTxt">{formValidationSupportTicketError["txtTicketCategory"]}</span>
                             </div>
-                          </div>
+                          </div>  
+                            <div className="form-group_agent">
+                                  <label className="ticket-label_agent">
+                                    Category Description <span className="asteriskCss">&#42;</span>
+                                  </label>
+                              <InputGroup>
+                                <InputControl
+                                  Input_type="select"
+                                  name="txtTicketCategoryDescription"
+                                  getOptionLabel={(option) => `${option.CategoryDescription}`}
+                                  value={formValuesTicketCreation.txtTicketCategoryDescription}
+                                  getOptionValue={(option) => `${option}`}
+                                  options={ticketCategoryDescriptionList}
+                                  ControlTxt="Category Description"
+                                  onChange={(e) => updateStateTicketCreation("txtTicketCategoryDescription", e)}
+                                />
+                              </InputGroup>
+                              <span className="login_ErrorTxt">{formValidationSupportTicketError["txtTicketCategoryDescription"]}</span>
+                            </div>
                           {(formValuesTicketCreation.txtTicketCategory && formValuesTicketCreation.txtTicketCategory.TicketCategoryID
                             ? formValuesTicketCreation.txtTicketCategory.TicketCategoryID === 51
                             : 0) ||

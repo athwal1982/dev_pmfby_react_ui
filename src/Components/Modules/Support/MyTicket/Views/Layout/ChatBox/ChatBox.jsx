@@ -29,6 +29,7 @@ function ChatBox({
   editableRef,
   handleInput1,
   editableRef1,
+  selectedData,
 }) {
   const sizeLimit = 2000;
 
@@ -56,8 +57,7 @@ function ChatBox({
             <div ref={editableRef} contentEditable suppressContentEditableWarning onInput={handleInput} style={{ fontSize: "0.8rem", lineHeight: 1.4 }}>
               <p>Dear Mr./Ms {selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].farmerName : ""}</p>
               <p>
-                The {selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].insuranceCompanyName : ""} has examined your grievance
-                relating to
+                The {selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].insuranceCompanyName : ""} has examined your {selectedData && selectedData.TicketHeadName ? selectedData.TicketHeadName.toLowerCase() : null} relating to
               </p>
             </div>
           </CardContent>

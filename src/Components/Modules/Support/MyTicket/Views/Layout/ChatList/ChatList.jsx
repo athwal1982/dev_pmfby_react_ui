@@ -261,6 +261,7 @@ function ChatList({
                     {selectedData.CallingAudioFile && selectedData.CallingAudioFile ? (
                       <audio
                         controls
+                        controlsList="nodownload"
                         style={{ width: "250px", height: "28px", backgroundColor: "#21862" }}
                         src={selectedData.CallingAudioFile && selectedData.CallingAudioFile ? selectedData.CallingAudioFile : null}
                       ></audio>

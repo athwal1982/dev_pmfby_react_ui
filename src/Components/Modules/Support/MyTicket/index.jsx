@@ -57,7 +57,7 @@ function MyTicketPage({ selectedData, showfunc }) {
   } = MyTicketLogics();
 
   useEffect(() => {
-    getChatListDetailsData(selectedData, 1, 5);
+    getChatListDetailsData(selectedData, 1, -1);
     getPolicyDetailsOfFarmer(selectedData);
     getTicketStatusListData();
     getBankListData();
@@ -110,6 +110,7 @@ function MyTicketPage({ selectedData, showfunc }) {
           handleInput1={handleInput1}
           editableRef={editableRef}
           editableRef1={editableRef1}
+          selectedData={selectedData}
         />
       </ChatList>
       <TicketCustomerDetail

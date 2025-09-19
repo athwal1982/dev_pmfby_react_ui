@@ -46,7 +46,7 @@ function MyTicketPage({ selectedData, showfunc }) {
 
   useEffect(() => {
     debugger;
-    getChatListDetailsData(selectedData, 1, 5);
+    getChatListDetailsData(selectedData, 1, -1);
     getTicketStatusListData(selectedData);
     getBankListData();
   }, []);
