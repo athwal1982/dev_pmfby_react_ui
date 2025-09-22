@@ -63,6 +63,7 @@ const KRPHPortal = () => {
       setCurrentSelectedOption("Support-IC");
     } else if (getSessionStorage("Links") === "GOI") {
       setSelectedOption("Support-GOI");
+      setCurrentSelectedOption("Support-GOI");
     } else if (getSessionStorage("Links") === "ST") {
       setSelectedOption("NCIP-ST");
     } else if (getSessionStorage("Links") === "BNK") {
@@ -337,11 +338,11 @@ const KRPHPortal = () => {
               </Suspense>
             )}
 
-            {isForgotPassword && (selectedOption === "Support-CSC" || selectedOption === "Support-IC") ? (
+            {isForgotPassword && (selectedOption === "Support-CSC" || selectedOption === "Support-IC" || selectedOption === "Support-GOI") ? (
               <a
                 type="button"
                 style={{ cursor: "pointer" }}
-                className={selectedOption === "Support-CSC" || selectedOption === "Support-IC" ? "backForgot" : ""}
+                className={selectedOption === "Support-CSC" || selectedOption === "Support-IC" || selectedOption === "Support-GOI" ? "backForgot" : ""}
                 onClick={handlebackOption}
               >
                 Login from here

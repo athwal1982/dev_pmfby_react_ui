@@ -31,6 +31,7 @@ const KRPHPortalN = () => {
   const handleWhatsAppClick = () => {
     window.open("https://api.whatsapp.com/send/?phone=917065514447&text&type=phone_number&app_absent=0", "_blank", "noopener,noreferrer");
   };
+  
 
   const generateCaptcha = () => {
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -63,6 +64,7 @@ const KRPHPortalN = () => {
       setCurrentSelectedOption("Support-IC");
     } else if (getSessionStorage("Links") === "GOI") {
       setSelectedOption("Support-GOI");
+      setCurrentSelectedOption("Support-GOI");
     } else if (getSessionStorage("Links") === "ST") {
       setSelectedOption("NCIP-ST");
     } else if (getSessionStorage("Links") === "BNK") {
@@ -161,32 +163,31 @@ const KRPHPortalN = () => {
                 <div className="box_loginSectionN">
                   <img className="main-imageN" src={farmer_login_inner} alt="Login Inner Image" />
                 </div>
-                <div className="content-left-sectionN">
-                  <div className="pmfby-descriptionN">
-                    <>
-                      Pradhan Mantri Fasal Bima Yojana (PMFBY) is a crop insurance scheme that provides financial assistance to farmers in the event of crop
-                      loss or damage due to unforeseen events like natural calamities, pests, and diseases.
-                      <br />
-                      <br />
-                      <br />
-                      <div className="queries-txtN">For all queries, concerns, and grievances related to PMFBY, Please call us at</div>
-                      <div className="helplineN">
-                        <Headphones />
-                        <span style={{ paddingTop: "3px" }}>
-                          <span> Krishi Rakshak Portal Helpline -</span> <span style={{ fontWeight: "bold" }}>14447</span>
-                        </span>
-                      </div>
-                      <br />
-                    </>
-                  </div>
-                </div>
+                 <div className="content-left-sectionN">
+                               
+                                <div className="pmfby-descriptionN">
+                                    <>
+                                      Pradhan Mantri Fasal Bima Yojana (PMFBY) is a crop insurance scheme that provides financial assistance to farmers in the event of crop
+                                      loss or damage due to unforeseen events like natural calamities, pests, and diseases.
+                                      <br />
+                                      <br />
+                                      <br />
+                                      <div className="queries-txtN">For all queries, concerns, and grievances related to PMFBY, Please call us at</div>
+                                      <div className="helplineN">
+                                        <Headphones />
+                                        <span style={{ paddingTop: "3px" }}>
+                                          <span> Krishi Rakshak Portal Helpline -</span> <span style={{ fontWeight: "bold" }}>14447</span>
+                                        </span>
+                                      </div>
+                                      <br/>
+                                    </>
+                                  </div>
+                              </div>
               </div>
               <div className="right-sectionN">
                 {!isForgotPassword && (
                   <>
-                    <h2>
-                      Welcome to <span style={{ color: "#ffac12", fontWeight: "600" }}>KRPH</span> Portal
-                    </h2>
+                    <h2>Welcome to <span style={{color:"#ffac12", fontWeight:"600"}}>KRPH</span> Portal</h2>
                     {selectedOption === "Farmer-CLI" ? (
                       <>
                         <a className="sign-in-linkN">Sign in for Crop loss intimation</a>
@@ -281,11 +282,11 @@ const KRPHPortalN = () => {
                   </Suspense>
                 )}
 
-                {isForgotPassword && (selectedOption === "Support-CSC" || selectedOption === "Support-IC") ? (
+                {isForgotPassword && (selectedOption === "Support-CSC" || selectedOption === "Support-IC" || selectedOption === "Support-GOI") ? (
                   <a
                     type="button"
                     style={{ cursor: "pointer" }}
-                    className={selectedOption === "Support-CSC" || selectedOption === "Support-IC" ? "backForgot" : ""}
+                    className={selectedOption === "Support-CSC" || selectedOption === "Support-IC" || selectedOption === "Support-GOI" ? "backForgot" : ""}
                     onClick={handlebackOption}
                   >
                     Login from here
