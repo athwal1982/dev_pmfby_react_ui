@@ -131,7 +131,7 @@ const PageRouter = () => {
         <Route exact path="/CropLossIntimationReport" element={<Page component={<CropLossIntimationReportPage />} title="Loss Intimation Report" />} />
         <Route exact path="/TicketsByFarmerReport" element={<Page component={<TicketsByFarmerReportPage />} title="Tickets By Farmer" />} />
         <Route exact path="/AgeingReport" element={<Page component={<AgeingReportPage />} title="Ageing(Grievance) Report" />} />
-        <Route exact path="/AgeingCropReport" element={<Page component={<AgeingCropReportPage />} title="Ageing(Crop) Report" />} />
+        <Route exact path="/AgeingCropReport" element={<Page component={<AgeingCropReportPage />} title="Ageing(Crop Loss Intimation) Report" />} />
         <Route exact path="/TicketHistory" element={<Page component={<TicketHistoryPage />} title="Ticket History" />} />
         <Route exact path="/PremiumCalculatorReport" element={<Page component={<PremiumCalculatorReportPage />} title="Premium Calculator" />} />
         <Route exact path="/IrdaiEscalation" element={<Page component={<IrdaiEscalationPage />} title="Irdai Escalation" />} />

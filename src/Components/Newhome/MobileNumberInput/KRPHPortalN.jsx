@@ -262,7 +262,7 @@ const KRPHPortalN = () => {
                   </>
                 )}
 
-                {(selectedOption === "Support-CSC" || selectedOption === "Support-IC") && !isForgotPassword && (
+                {(selectedOption === "Support-CSC" || selectedOption === "Support-IC" || selectedOption === "Support-GOI") && !isForgotPassword && (
                   <span
                     className="forgotpassN"
                     style={{ cursor: "pointer" }}

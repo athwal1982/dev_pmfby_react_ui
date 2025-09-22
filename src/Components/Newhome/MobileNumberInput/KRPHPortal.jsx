@@ -318,7 +318,7 @@ const KRPHPortal = () => {
               </>
             )}
 
-            {(selectedOption === "Support-CSC" || selectedOption === "Support-IC") && !isForgotPassword && (
+            {(selectedOption === "Support-CSC" || selectedOption === "Support-IC" || selectedOption === "Support-GOI") && !isForgotPassword && (
               <span
                 className="sign-in-link"
                 style={{ cursor: "pointer" }}
