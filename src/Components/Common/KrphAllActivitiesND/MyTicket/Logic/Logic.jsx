@@ -392,6 +392,9 @@ function MyTicketLogics() {
     // A if (!handleValidationSupportTicketReview()) {
     // A  return;
     // A }
+    const user = getSessionStorage("user");
+    const ChkBRHeadTypeID = user && user.BRHeadTypeID ? user.BRHeadTypeID.toString() : "0";
+    const ChkAppAccessTypeID = user && user.AppAccessTypeID ? user.AppAccessTypeID.toString() : "0";
     if (formValuesTicketProperties.txtTicketStatus !== null) {
       // Anil const chkAccessALL = ticketData && ticketData.AccessALL ? ticketData.AccessALL : "";
 
@@ -425,7 +428,7 @@ function MyTicketLogics() {
       if (ticketData.TicketStatusID === formValuesTicketProperties.txtTicketStatus.CommonMasterValueID) {
         setAlertMessage({
           type: "warning",
-          message: "Same status is not allowed to change the ticket status",
+          message: "The system does not allow updating a ticket to the same status. To change the status, please select a different option.",
         });
         return;
       }
@@ -434,34 +437,31 @@ function MyTicketLogics() {
         if (resolvedTicketRight === false) {
           setAlertMessage({
             type: "warning",
-            message: "You do not have right to resolve the ticket!",
+            message: "Users without the required permissions will not be able to resolve tickets.",
           });
           return;
         }
       }
-      const user = getSessionStorage("user");
-      const ChkBRHeadTypeID = user && user.BRHeadTypeID ? user.BRHeadTypeID.toString() : "0";
-      const ChkAppAccessTypeID = user && user.AppAccessTypeID ? user.AppAccessTypeID.toString() : "0";
 
       if (ChkBRHeadTypeID === "124001" || ChkBRHeadTypeID === "124002") {
         if (formValuesTicketProperties.txtTicketStatus.BMCGCode.toString() === "109025") {
           setAlertMessage({
             type: "warning",
-            message: "CSC user can not resolved the ticket ",
+            message: "CSC users are not authorized to resolve tickets.",
           });
           return;
         }
         if (formValuesTicketProperties.txtTicketStatus.BMCGCode.toString() === "109019") {
           setAlertMessage({
             type: "warning",
-            message: "CSC user can not change the ticket status(Open)",
+            message: "CSC users are not allowed to change the ticket status from Open.",
           });
           return;
         }
         if (formValuesTicketProperties.txtTicketStatus.BMCGCode.toString() === "109014") {
           setAlertMessage({
             type: "warning",
-            message: "CSC user can not change the ticket status(In-Progress)",
+            message: "CSC users are not allowed to change the ticket status from In-Progress.",
           });
           return;
         }
@@ -469,7 +469,7 @@ function MyTicketLogics() {
           if (formValuesTicketProperties.txtTicketStatus.BMCGCode.toString() === "109026") {
             setAlertMessage({
               type: "warning",
-              message: "CSC user can not Re-Open the ticket if status is Open",
+              message: "CSC users cannot Re-open a ticket if the status is Open.",
             });
             return;
           }
@@ -478,7 +478,7 @@ function MyTicketLogics() {
           if (formValuesTicketProperties.txtTicketStatus.BMCGCode.toString() === "109026") {
             setAlertMessage({
               type: "warning",
-              message: "CSC user can not Re-Open the ticket if status is In-Progress",
+              message: "CSC users cannot Re-open a ticket if the status is In-Progress.",
             });
             return;
           }
@@ -490,7 +490,7 @@ function MyTicketLogics() {
           ) {
             setAlertMessage({
               type: "warning",
-              message: "CSC user can not change the status(In-Progress or Open) or  if status is resolved ",
+              message: "CSC users cannot change the ticket status to In-Progress or Open when the status is Resolved.",
             });
             return;
           }
@@ -499,7 +499,7 @@ function MyTicketLogics() {
             if (ticketData.TicketHeaderID.toString() === "2") {
               setAlertMessage({
                 type: "warning",
-                message: "CSC user can not Re-Open the ticket with ticket type(Information) ",
+                message: " CSC users are not authorised to Re-open a ticket if the ticket type is Information.",
               });
               return;
             }
@@ -512,7 +512,7 @@ function MyTicketLogics() {
           if (formValuesTicketProperties.txtTicketStatus.BMCGCode.toString() === "109019") {
             setAlertMessage({
               type: "warning",
-              message: "Insurance admin user can not Open the ticket ",
+              message: "Insurance Admin users cannot Open a ticket.",
             });
             return;
           }
@@ -520,7 +520,7 @@ function MyTicketLogics() {
           if (formValuesTicketProperties.txtTicketStatus.BMCGCode.toString() === "109026") {
             setAlertMessage({
               type: "warning",
-              message: "Insurance admin user can not Re-Open the ticket ",
+              message: " Insurance Admin users are not authorised to Re-Open tickets.",
             });
             return;
           }
@@ -529,7 +529,7 @@ function MyTicketLogics() {
           if (formValuesTicketProperties.txtTicketStatus.BMCGCode.toString() === "109019") {
             setAlertMessage({
               type: "warning",
-              message: "Insurance user can not Open the ticket ",
+              message: "Insurance users cannot Open a ticket.",
             });
             return;
           }
@@ -537,7 +537,7 @@ function MyTicketLogics() {
           if (formValuesTicketProperties.txtTicketStatus.BMCGCode.toString() === "109026") {
             setAlertMessage({
               type: "warning",
-              message: "Insurance user can not Re-Open the ticket ",
+              message: "Insurance users are not authorised to Re-Open tickets.",
             });
             return;
           }
@@ -545,7 +545,7 @@ function MyTicketLogics() {
           if (formValuesTicketProperties.txtTicketStatus.BMCGCode.toString() === "109025") {
             setAlertMessage({
               type: "warning",
-              message: "Insurance user can not Resolved the ticket ",
+              message: "Insurance users are not allowed to Resolve tickets.",
             });
             return;
           }

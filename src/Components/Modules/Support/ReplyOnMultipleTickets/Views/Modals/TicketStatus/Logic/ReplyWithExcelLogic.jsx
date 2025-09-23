@@ -328,7 +328,7 @@ function ReplyWithExcelLogic() {
             setAlertMessage({
               open: true,
               type: "warning",
-              message: `Same status is not allowed to change the ticket status at row no.${i + 1}`,
+              message: `The system does not allow updating a ticket to the same status at row no.${i + 1}`,
             });
             rtnval = false;
             break;
@@ -337,7 +337,7 @@ function ReplyWithExcelLogic() {
             if (resolvedTicketRight === false) {
               setAlertMessage({
                 type: "warning",
-                message: `You do not have right to resolve the ticket at row no.${i + 1}`,
+                message: `Users without the required permissions will not be able to resolve tickets at row no.${i + 1}`,
               });
               rtnval = false;
               break;
@@ -347,7 +347,7 @@ function ReplyWithExcelLogic() {
             if (dataForUpload[i].ticketStatusID === 109303) {
               setAlertMessage({
                 type: "warning",
-                message: `CSC user can not resolve the ticket at row no.${i + 1}`,
+                message: `CSC users are not authorized to resolve tickets at row no.${i + 1}`,
               });
               rtnval = false;
               break;
@@ -355,7 +355,7 @@ function ReplyWithExcelLogic() {
             if (dataForUpload[i].ticketStatusID === 109019) {
               setAlertMessage({
                 type: "warning",
-                message: `CSC user can not change the ticket status(Open) at row no.${i + 1}`,
+                message: `CSC users are not allowed to change the ticket status from Open at row no.${i + 1}`,
               });
               rtnval = false;
               break;
@@ -363,7 +363,7 @@ function ReplyWithExcelLogic() {
             if (dataForUpload[i].ticketStatusID === 109014) {
               setAlertMessage({
                 type: "warning",
-                message: `CSC user can not change the ticket status(In-Progress) at row no.${i + 1}`,
+                message: `CSC users are not allowed to change the ticket status from In-Progress at row no.${i + 1}`,
               });
               rtnval = false;
               break;
@@ -374,7 +374,7 @@ function ReplyWithExcelLogic() {
               if (dataForUpload[i].ticketStatusID === 109301) {
                 setAlertMessage({
                   type: "warning",
-                  message: `Insurance admin user can not Open the ticket at row no.${i + 1}`,
+                  message: ` Insurance Admin users cannot Open a ticket at row no.${i + 1}`,
                 });
                 rtnval = false;
                 break;
@@ -382,7 +382,7 @@ function ReplyWithExcelLogic() {
               if (dataForUpload[i].ticketStatusID === 109304) {
                 setAlertMessage({
                   type: "warning",
-                  message: `Insurance admin user can not Re-Open the ticket at row no.${i + 1}`,
+                  message: `Insurance Admin users are not authorised to Re-Open tickets at row no.${i + 1}`,
                 });
                 rtnval = false;
                 break;
@@ -392,7 +392,7 @@ function ReplyWithExcelLogic() {
               if (dataForUpload[i].ticketStatusID === 109301) {
                 setAlertMessage({
                   type: "warning",
-                  message: `Insurance user can not Open the ticket at row no.${i + 1}`,
+                  message: `Insurance users cannot Open a ticket at row no.${i + 1}`,
                 });
                 rtnval = false;
                 break;
@@ -400,7 +400,7 @@ function ReplyWithExcelLogic() {
               if (dataForUpload[i].ticketStatusID === 109304) {
                 setAlertMessage({
                   type: "warning",
-                  message: `Insurance user can not Re-Open the ticket t row no.${i + 1}`,
+                  message: `Insurance users are not authorised to Re-Open tickets row no.${i + 1}`,
                 });
                 rtnval = false;
                 break;
@@ -408,7 +408,7 @@ function ReplyWithExcelLogic() {
               if (dataForUpload[i].ticketStatusID === 109303) {
                 setAlertMessage({
                   type: "warning",
-                  message: `Insurance user can not resolve the ticket t row no.${i + 1}`,
+                  message: `Insurance users are not allowed to Resolve tickets row no.${i + 1}`,
                 });
                 rtnval = false;
                 break;
@@ -419,7 +419,7 @@ function ReplyWithExcelLogic() {
             if (dataForUpload[i].ticketStatusID === 109304) {
               setAlertMessage({
                 type: "warning",
-                message: `CSC user can not change the status(Re-Open) if status is Open at row no.${i + 1}`,
+                message: `CSC users cannot Re-open a ticket if the status is Open at row no.${i + 1}`,
               });
               rtnval = false;
               break;
@@ -429,7 +429,7 @@ function ReplyWithExcelLogic() {
             if (dataForUpload[i].ticketStatusID === 109304) {
               setAlertMessage({
                 type: "warning",
-                message: `CSC user can not change the status(Re-Open) if status is In-Progress at row no.${i + 1}`,
+                message: `CSC users cannot Re-open a ticket if the status is In-Progress at row no.${i + 1}`,
               });
               rtnval = false;
               break;
@@ -439,7 +439,7 @@ function ReplyWithExcelLogic() {
             if (dataForUpload[i].ticketStatusID === 109302 || dataForUpload[i].ticketStatusID === 109301) {
               setAlertMessage({
                 type: "warning",
-                message: `CSC user can not change the status(In-Progress or Open) or  if status is resolved at row no.${i + 1}`,
+                message: `CSC users cannot change the ticket status to In-Progress or Open when the status is Resolved at row no.${i + 1}`,
               });
               rtnval = false;
               break;
@@ -449,7 +449,7 @@ function ReplyWithExcelLogic() {
             if (dataForUpload[i].ticketHeaderID === 2) {
               setAlertMessage({
                 type: "warning",
-                message: `CSC user can not Re-Open the ticket with ticket type(Information) at row no.${i + 1}`,
+                message: `CSC users are not authorised to Re-open a ticket if the ticket type is Information at row no.${i + 1}`,
               });
               rtnval = false;
               break;
