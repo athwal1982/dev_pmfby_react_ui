@@ -33,8 +33,8 @@ function ManageTicketLogics() {
     txtInsuranceCompany: null,
     txtState: null,
     txtDistrict: null,
-    txtFromDate: "",
-    txtToDate: "",
+    txtFromDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
+    txtToDate: dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD"),
     txtScheme: null,
   });
 
@@ -75,6 +75,7 @@ function ManageTicketLogics() {
       { width: 18 },
       { width: 22 },
       { width: 22 },
+      { width: 32 },
       { width: 30 },
       { width: 12 },
       { width: 12 },
@@ -292,6 +293,7 @@ function ManageTicketLogics() {
                   TicketHeadName: "Type",
                   TicketTypeName: "Category",
                   TicketCategoryName: "Sub Category",
+                  CategoryDescription: "Category Description",
                   SchemeName: "Scheme",
                   RequestSeason: "Season",
                   RequestYear: "Year",
@@ -332,6 +334,7 @@ function ManageTicketLogics() {
                     TicketHeadName: value.TicketHeadName,
                     TicketTypeName: value.TicketTypeName,
                     TicketCategoryName: value.TicketCategoryName,
+                    CategoryDescription: value.CategoryDescription,
                     SchemeName: value.SchemeName,
                     RequestSeason: value.RequestSeason && value.RequestSeason === 1 ? "Kharif" : value.RequestSeason === 2 ? "Rabi" : "",
                     RequestYear: value.RequestYear,
@@ -1122,8 +1125,8 @@ function ManageTicketLogics() {
       txtState: null,
       txtDistrict: null,
       txtScheme: null,
-      txtFromDate: "",
-      txtToDate: "",
+      txtFromDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
+      txtToDate: dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD"),
       txtScheme: null,
     });
     setTicketCategoryTypeList([]);
@@ -1144,8 +1147,8 @@ function ManageTicketLogics() {
       txtState: null,
       txtDistrict: null,
       txtScheme: null,
-      txtFromDate: "",
-      txtToDate: "",
+      txtFromDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
+      txtToDate: dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD"),
       txtScheme: null,
     });
     setTicketCategoryTypeList([]);
@@ -1166,8 +1169,8 @@ function ManageTicketLogics() {
       txtState: null,
       txtDistrict: null,
       txtScheme: null,
-      txtFromDate: "",
-      txtToDate: "",
+      txtFromDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
+      txtToDate: dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD"),
       txtScheme: null,
     });
     setTicketCategoryTypeList([]);

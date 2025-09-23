@@ -14,6 +14,7 @@ import { getMasterDataBindingDataList } from "../../Modules/Support/ManageTicket
 import { getGrievenceTicketsListData } from "./Services/Methods";
 import { getMasterDataBinding } from "../../Modules/Support/ManageTicket/Services/Methods";
 import { getKRPHGrievanceAttachmentData } from "./Services/Methods";
+import { getSessionStorage } from "Components/Common/Login/Auth/auth";
 import BizClass from "./OfflineGrievance.module.scss";
 import AddOfflineGrievance from "./AddOfflineGrievance";
 import EditOfflineGrievance from "./EditOfflineGrievance";
@@ -72,6 +73,9 @@ const OfflineGrievance = () => {
   const viewTicketRight = getUserRightCodeAccess("ofg2");
   const addTicketRight = getUserRightCodeAccess("ofg1");
 
+  const userData = getSessionStorage("user");
+  const ChkBRHeadTypeID = userData && userData.BRHeadTypeID ? userData.BRHeadTypeID.toString() : "0";
+
   const [openMyTicketModal, setOpenMyTicketModal] = useState(false);
 
   const [formValues, setFormValues] = useState({
@@ -117,9 +121,10 @@ const OfflineGrievance = () => {
   const [isLoadingMaster, setIsLoadingMaster] = useState(false);
   const [rowData, setRowData] = useState([]);
 
-  const getGrievenceTicketsDataList = async () => {
+  const getGrievenceTicketsDataList = async (pType) => {
     try {
-      if (formValues.txtFromDate) {
+      if(pType === "Click") {
+        if (formValues.txtFromDate) {
         if (formValues.txtToDate) {
           if (formValues.txtFromDate > formValues.txtToDate) {
             setAlertMessage({
@@ -144,11 +149,13 @@ const OfflineGrievance = () => {
         });
         return;
       }
+      }
+     
       setIsLoadingMaster(true);
 
       const requestData = {
-        fromDate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
-        toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
+        fromDate: pType === "Click" ? formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "" : "",
+        toDate:   pType === "Click" ? formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "" : "",
         requestorMobileNo: "",
         grievenceSupportTicketNo: "",
         applicationNo: "",
@@ -183,6 +190,10 @@ const OfflineGrievance = () => {
       setAlertMessage({ open: true, type: "error", message: error });
       console.log(error);
     }
+  };
+
+  const getGrievenceTicketsDataListOnClick = (pType) =>{
+       getGrievenceTicketsDataList(pType);
   };
 
   const [stateList, setStateList] = useState([]);
@@ -517,6 +528,9 @@ const OfflineGrievance = () => {
   useEffect(() => {
     getStateListData();
     getTicketStatusListData();
+    if (ChkBRHeadTypeID === "124003") {
+    getGrievenceTicketsDataList("PageLand");
+    }
   }, []);
 
   const [isFileViewerModalOpen, setIsFileViewerModalOpen] = useState(false);
@@ -856,6 +870,7 @@ const OfflineGrievance = () => {
                           name="txtFromDate"
                           value={formValues.txtFromDate}
                           onChange={(e) => updateState("txtFromDate", e.target.value)}
+                          max={dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD")}
                         />
                       </Form.InputGroup>
                       <Form.InputGroup label="To Date" req="false" errorMsg="">
@@ -865,6 +880,7 @@ const OfflineGrievance = () => {
                           name="txtToDate"
                           value={formValues.txtToDate}
                           onChange={(e) => updateState("txtToDate", e.target.value)}
+                          max={dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD")}
                         />
                       </Form.InputGroup>
                       <Form.InputGroup label="Source Of Grievance" req="false" errorMsg="">
@@ -939,7 +955,7 @@ const OfflineGrievance = () => {
                   </Form>
                 </div>
                 <div className={BizClass.Footer}>
-                  <button type="button" onClick={() => getGrievenceTicketsDataList()}>
+                  <button type="button" onClick={() => getGrievenceTicketsDataListOnClick("Click")}>
                     Apply
                   </button>
                   &nbsp;

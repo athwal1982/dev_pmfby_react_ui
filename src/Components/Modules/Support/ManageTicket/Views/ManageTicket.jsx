@@ -4,7 +4,7 @@ import { DataGrid, PageBar, Form } from "Framework/Components/Layout";
 import PropTypes from "prop-types";
 import { Loader, Button } from "Framework/Components/Widgets";
 import { getUserRightCodeAccess, getSessionStorage } from "Components/Common/Login/Auth/auth";
-// A import moment from "moment";
+import moment from "moment";
 import { Convert24FourHourAndMinute, dateToSpecificFormat } from "Configration/Utilities/dateformat";
 import { FcViewDetails } from "react-icons/fc";
 import { MdComment } from "react-icons/md";
@@ -305,11 +305,12 @@ function ManageTicket({
                       <DataGrid.Column field="CallerContactNumber" headerName="Caller Mobile No." width="140px" />
                       <DataGrid.Column field="RequestorName" headerName="Farmer Name" width="210px" />
                       <DataGrid.Column field="RequestorMobileNo" headerName="Mobile No" width="110px" />
-                      <DataGrid.Column field="StateMasterName" headerName="State" width="160px" />
+                      <DataGrid.Column field="PlotStateName" headerName="State" width="160px" />
                       <DataGrid.Column field="InsuranceCompany" headerName="Insurance Company" width="290px" />
                       <DataGrid.Column field="TicketHeadName" headerName="Type" width="150px" />
                       <DataGrid.Column field="TicketTypeName" headerName="Category" width="180px" />
                       <DataGrid.Column field="TicketCategoryName" headerName="Sub Category" width="200px" />
+                      <DataGrid.Column field="CategoryDescription" headerName="Category Description" width="350px" />
                       <DataGrid.Column field="SchemeName" headerName="Scheme" width="220px" />
                       <DataGrid.Column
                         field="RequestSeason"
@@ -384,6 +385,7 @@ function ManageTicket({
                               name="txtFromDate"
                               value={formValues.txtFromDate}
                               onChange={(e) => updateState("txtFromDate", e.target.value)}
+                              max={dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD")}
                             />
                           </Form.InputGroup>
                           <Form.InputGroup label="To Date" req="false" errorMsg="">
@@ -393,6 +395,7 @@ function ManageTicket({
                               name="txtToDate"
                               value={formValues.txtToDate}
                               onChange={(e) => updateState("txtToDate", e.target.value)}
+                              max={dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD")}
                             />
                           </Form.InputGroup>
                           <Form.InputGroup label="Type" req="false" errorMsg="">

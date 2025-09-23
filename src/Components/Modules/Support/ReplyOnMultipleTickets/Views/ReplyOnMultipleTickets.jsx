@@ -268,7 +268,7 @@ function ReplyOnMultipleTickets({
               <DataGrid.Column field="CallerContactNumber" headerName="Caller Mobile No." width="140px" />
               <DataGrid.Column field="RequestorName" headerName="Farmer Name" width="210px" />
               <DataGrid.Column field="RequestorMobileNo" headerName="Mobile No" width="110px" />
-              <DataGrid.Column field="StateMasterName" headerName="State" width="160px" />
+              <DataGrid.Column field="PlotStateName" headerName="State" width="160px" />
               <DataGrid.Column field="InsuranceCompany" headerName="Insurance Company" width="290px" />
               <DataGrid.Column field="TicketHeadName" headerName="Type" width="150px" />
               <DataGrid.Column field="TicketTypeName" headerName="Category" width="180px" />

@@ -131,7 +131,7 @@ function AddLoginLogics() {
         setBtnLoaderActive(false);
         if (result.responseCode === 1) {
           if (!(result.responseData.token && result.responseData.token.Token && result.responseData.token.expirationTime)) {
-            createCaptcha();
+            setCaptchaCode(generateCaptcha());
             setAlertMessage({
               type: "error",
               message: "Token is missing in the response",
@@ -145,7 +145,7 @@ function AddLoginLogics() {
           console.log(user);
           navigate("/welcome");
         } else {
-          createCaptcha();
+          setCaptchaCode(generateCaptcha());
           setAlertMessage({
             type: "error",
             message: result.responseMessage,
@@ -153,7 +153,7 @@ function AddLoginLogics() {
         }
       } else {
         setBtnLoaderActive(false);
-        createCaptcha();
+        setCaptchaCode(generateCaptcha());
         setAlertMessage({
           type: "error",
           message: resultSaltVal.responseMessage,
@@ -222,6 +222,7 @@ function AddLoginLogics() {
       console.log(result, "result");
       if (result.responseCode === 1) {
         if (!(result.responseData.token && result.responseData.token.Token && result.responseData.token.expirationTime)) {
+         setCaptchaCode(generateCaptcha());
           setAlertMessage({
             type: "error",
             message: "Token is missing in the response",
