@@ -609,13 +609,13 @@
     padding: 8px 25px;
   }
 
-  .download-button .icon {
+  .download-button .icon-download {
     width: 14px;
     height: 14px;
   }
 }
 
-.download-button .icon {
+.download-button .icon-download {
   margin-right: 8px;
   fill: white;
 }
