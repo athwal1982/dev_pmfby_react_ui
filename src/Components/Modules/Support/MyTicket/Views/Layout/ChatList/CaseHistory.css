@@ -126,16 +126,15 @@
   width: 100%;
   position: absolute;
   text-wrap: wrap;
+  top: 315px
 }
 .details-bottom {
-  bottom: -95%;
-
+  /* bottom: -95%; */
   width: 100%;
   left: 5%;
 }
 .details-top {
   width: 100%;
-
   top: -95%;
   left: 5%;
 }
