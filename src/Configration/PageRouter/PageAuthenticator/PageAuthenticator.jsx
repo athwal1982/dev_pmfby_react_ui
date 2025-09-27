@@ -1,5 +1,5 @@
 import React from "react";
-import { checkAuthExist, getSessionStorage } from "Components/Common/Login/Auth/auth";
+import { checkAuthExist, getSessionStorage,setSessionStorage } from "Components/Common/Login/Auth/auth";
 import { Navigate } from "react-router-dom";
 
 function PageAuthenticator() {
@@ -27,6 +27,10 @@ function PageAuthenticator() {
   }
   if (pathUrl.indexOf("ImportantInstructions") !== -1) {
     return <Navigate to="/ImportantInstructions" />;
+  }
+  if (pathUrl.indexOf("FarmerLogin") !== -1) {
+    setSessionStorage("Links", "CS");
+    return <Navigate to="/krphloginN" />;
   }
   //  Areturn <Navigate to="/login" />;
 
