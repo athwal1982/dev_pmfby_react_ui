@@ -54,6 +54,14 @@ function MyTicketPage({ selectedData, showfunc }) {
     handleInput1,
     editableRef,
     editableRef1,
+    updateStateSatifation,
+    formValuesSatifation,
+    formValidationSatisfyError,
+    IsSatisfyList,
+    btnLoaderActiveSatisfaction,
+    handleSatisfaction,
+    btnLoaderActiveAudit,
+    handleAudit,
   } = MyTicketLogics();
 
   useEffect(() => {
@@ -86,6 +94,14 @@ function MyTicketPage({ selectedData, showfunc }) {
         setSelectedHistoryData={setSelectedHistoryData}
         apiDataAttachment={apiDataAttachment}
         setapiDataAttachment={setapiDataAttachment}
+        updateStateSatifation={updateStateSatifation}
+        formValuesSatifation={formValuesSatifation}
+        formValidationSatisfyError={formValidationSatisfyError}
+        IsSatisfyList={IsSatisfyList}
+        btnLoaderActiveSatisfaction={btnLoaderActiveSatisfaction}
+        handleSatisfaction={handleSatisfaction}
+        btnLoaderActiveAudit={btnLoaderActiveAudit}
+        handleAudit={handleAudit}
       >
         <ChatBox
           replyBoxCollapsed={replyBoxCollapsed}

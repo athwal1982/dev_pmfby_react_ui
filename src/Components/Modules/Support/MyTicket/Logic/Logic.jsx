@@ -10,6 +10,8 @@ import {
   ticketStatusUpdate,
   editSupportTicketReview,
   addCSCSupportTicketReview,
+  KrphSupportTicketAuditUpdateData,
+  KrphSupportTicketSatisfiedUpdateData
 } from "../Services/Services";
 import {
   getFarmerPolicyDetail,
@@ -1098,6 +1100,126 @@ function MyTicketLogics() {
     } catch (error) {}
   };
 
+  const [formValidationSatisfyError, setFormValidationSatisfyError] = useState({});
+
+  const [formValuesSatifation, setFormValuesSatifation] = useState({
+    txtIsSatisfy: null,
+  });
+  const updateStateSatifation = (name, value) => {
+    setFormValuesSatifation({ ...formValuesSatifation, [name]: value });
+    formValidationSatisfyError[name] = validateFieldSatifation(name, value);
+  };
+
+    const validateFieldSatifation = (name, value) => {
+    let errorsMsg = "";
+    if (name === "txtIsSatisfy") {
+      if (!value || typeof value === "undefined") {
+        errorsMsg = "Is Satisfied is required!";
+      }
+    }
+    return errorsMsg;
+  };
+
+    const handleValidationSatifation = () => {
+    try {
+      const errors = {};
+      let formIsValid = true;
+      errors["txtIsSatisfy"] = validateFieldSatifation("txtIsSatisfy", formValuesSatifation.txtIsSatisfy);
+      if (Object.values(errors).join("").toString()) {
+        formIsValid = false;
+      }
+      setFormValidationSupportTicketReviewError(errors);
+      return formIsValid;
+    } catch (error) {
+      setAlertMessage({
+        type: "error",
+        message: "Something Went Wrong",
+      });
+      return false;
+    }
+  };
+
+   const [IsSatisfyList] = useState([{label: "Yes",value : 1},{label: "No",value : 0}]);
+  
+  const [btnLoaderActiveAudit, setbtnLoaderActiveAudit] = useState(false);
+  const handleAudit = async (data) => {
+    debugger;
+    try {
+      const formData = {
+        ticketHistoryID: data.TicketHistoryID,
+        isAudit:  1,
+      };
+      setbtnLoaderActiveAudit(true);
+      const result = await KrphSupportTicketAuditUpdateData(formData);
+      setbtnLoaderActiveAudit(false);
+      if (result.response.responseCode === 1) {
+        for (let i = 0; i < chatListDetails.length; i += 1) {
+          if (data.TicketHistoryID === chatListDetails[i].TicketHistoryID) {
+            chatListDetails[i].isAudit = 1;
+            break;
+          }
+        }
+        setChatListDetails(chatListDetails);
+        setAlertMessage({
+          type: "success",
+          message: result.response.responseMessage,
+        });
+      } else {
+        setAlertMessage({
+          type: "error",
+          message: result.response.responseMessage,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      setAlertMessage({
+        type: "error",
+        message: error,
+      });
+    }
+  };
+
+  const [btnLoaderActiveSatisfaction, setbtnLoaderActiveSatisfaction] = useState(false);
+  const handleSatisfaction = async (data) => {
+    if (!handleValidationSatifation()) {
+        return;
+      }
+
+     try {
+      const formData = {
+        ticketHistoryID: data.TicketHistoryID,
+        isSatisfied:  formValuesSatifation && formValuesSatifation.txtIsSatisfy && formValuesSatifation.txtIsSatisfy.value ? formValuesSatifation.txtIsSatisfy.value : 0,
+      };
+      setbtnLoaderActiveSatisfaction(true);
+      const result = await KrphSupportTicketSatisfiedUpdateData(formData);
+      setbtnLoaderActiveSatisfaction(false);
+      if (result.response.responseCode === 1) {
+        for (let i = 0; i < chatListDetails.length; i += 1) {
+          if (data.TicketHistoryID === chatListDetails[i].TicketHistoryID) {
+            chatListDetails[i].isSatisfied = formValuesSatifation.txtIsSatisfy.value;
+            break;
+          }
+        }
+        setChatListDetails(chatListDetails);
+        setAlertMessage({
+          type: "success",
+          message: result.response.responseMessage,
+        });
+      } else {
+        setAlertMessage({
+          type: "error",
+          message: result.response.responseMessage,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      setAlertMessage({
+        type: "error",
+        message: error,
+      });
+    }
+  };
+
   return {
     value,
     setValue,
@@ -1149,6 +1271,14 @@ function MyTicketLogics() {
     editableRef,
     handleInput1,
     editableRef1,
+    updateStateSatifation,
+    formValuesSatifation,
+    formValidationSatisfyError,
+    IsSatisfyList,
+    btnLoaderActiveSatisfaction,
+    handleSatisfaction,
+    btnLoaderActiveAudit,
+    handleAudit,
   };
 }
 

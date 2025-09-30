@@ -9,7 +9,7 @@
     height: 35px;
     padding: 5px 12px;
     display: grid;
-    grid-template-columns: max-content max-content minmax(max-content, auto);
+    // A grid-template-columns: max-content max-content minmax(max-content, auto);
     align-items: center;
     column-gap: 12px;
 
@@ -328,7 +328,7 @@
 }
 
 .ticketcard {
-  width: 840px;
+  width: 100%;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
@@ -399,6 +399,6 @@
 
 .Event1panel {
   display: grid;
-  width: 850px;
-  padding: 10px 0px 5px 12px;
+  width: 100%;
+  padding: 10px 12px 5px 12px;
 }

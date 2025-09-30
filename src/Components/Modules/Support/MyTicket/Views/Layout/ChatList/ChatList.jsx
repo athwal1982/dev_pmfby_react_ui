@@ -1,4 +1,5 @@
 import { React, useState } from "react";
+import { Form } from "Framework/Components/Layout";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import Config from "Configration/Config.json";
 import { BsTelephoneOutbound, BsBank2 } from "react-icons/bs";
@@ -11,32 +12,14 @@ import { PropTypes } from "prop-types";
 import { daysdifference, dateFormatDefault, dateToSpecificFormat, Convert24FourHourAndMinute } from "Configration/Utilities/dateformat";
 import parse from "html-react-parser";
 import AudioFile from "Framework/Assets/Images/audio-file.png";
-import { getSessionStorage } from "Components/Common/Login/Auth/auth";
+import { getSessionStorage, getUserRightCodeAccess } from "Components/Common/Login/Auth/auth";
 import FileViewer from "./FileViewer/FileViewer";
 import EditTicketComment from "./EditTicketComment";
 import BizClass from "./ChatList.module.scss";
-import { Accordion, AccordionSummary, AccordionDetails, Typography, Grid, Paper } from "@mui/material";
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Grid, Paper,FormControl } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CaseHistory from "./CaseHistory";
 
-function TicketSourceIconWithSwitch(parameter) {
-  switch (parameter) {
-    case 1:
-      return <BsTelephoneOutbound title="Toll Free" />;
-    case 2:
-      return <CgWebsite title="DOA Website" />;
-    case 3:
-      return <MdOutlineWeb title="CSC Portal" />;
-    case 4:
-      return <FaTwitterSquare title="Twitter" />;
-    case 5:
-      return <BsBank2 title="Bank" />;
-    case 6:
-      return <MdOutlineWeb title="CSC" />;
-    default:
-      return <MdOutlineDisabledByDefault />;
-  }
-}
 
 function ChatList({
   children,
@@ -53,10 +36,19 @@ function ChatList({
   setSelectedHistoryData,
   apiDataAttachment,
   setapiDataAttachment,
+  updateStateSatifation,
+  formValuesSatifation,
+  formValidationSatisfyError,
+  IsSatisfyList,
+  btnLoaderActiveSatisfaction,
+  handleSatisfaction,
+  btnLoaderActiveAudit,
+  handleAudit,
 }) {
   const setAlertMessage = AlertMessage();
   const user = getSessionStorage("user");
   const ChkBRHeadTypeID = user && user.BRHeadTypeID ? user.BRHeadTypeID.toString() : "0";
+  const auditTicketRight = getUserRightCodeAccess("adt5");
 
   const [isFileViewerModalOpen, setIsFileViewerModalOpen] = useState(false);
 
@@ -343,35 +335,95 @@ function ChatList({
                           backgroundColor: "white",
                         }}
                       >
-                        <Grid container spacing={4} alignItems="center">
-                          <Grid item xs={12} md={12}>
-                            <Typography variant="subtitle2" fontWeight="bold">
-                              Description :{" "}
-                              <span>
-                                <MdOutlineContentCopy
-                                  className="copy-icon"
-                                  title="Copy Ticket Comment"
-                                  onClick={() => copyToClipboard(stripHtmlTags(data.TicketDescription))}
-                                />
-                                &nbsp;{" "}
-                              </span>
-                              {ChkBRHeadTypeID.toString() === "124003" && selectedData.TicketStatusID.toString() === "109302" && i === 0 ? (
-                                <span>
-                                  <FaEdit title="Update Comment" onClick={() => toggleEditTicketCommentModal(data)} />
-                                </span>
-                              ) : null}
-                              {data.HasDocument && data.HasDocument === "1" ? (
-                                <MdAttachFile
-                                  onClick={() => toggleFileViewerModal("TCKHIS", data.TicketHistoryID)}
-                                  style={{ cursor: "pointer", color: "#000000" }}
-                                />
-                              ) : null}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                              {data && data.TicketDescription ? parse(data.TicketDescription) : null}
-                            </Typography>
-                          </Grid>
-                        </Grid>
+                       <Grid container spacing={4} alignItems="center">
+  <Grid item xs={12} md={12}>
+    {/* Header row: Description + Audit button */}
+    <Grid container justifyContent="space-between" alignItems="center">
+      <Grid item>
+        <Typography variant="subtitle2" fontWeight="bold">
+          Description :{" "}
+          <span>
+            <MdOutlineContentCopy
+              className="copy-icon"
+              title="Copy Ticket Comment"
+              onClick={() => copyToClipboard(stripHtmlTags(data.TicketDescription))}
+            />
+            &nbsp;{" "}
+          </span>
+          {ChkBRHeadTypeID.toString() === "124003" &&
+          selectedData.TicketStatusID.toString() === "109302" &&
+          i === 0 ? (
+            <span>
+              <FaEdit
+                title="Update Comment"
+                onClick={() => toggleEditTicketCommentModal(data)}
+              />
+            </span>
+          ) : null}
+          {data.HasDocument && data.HasDocument === "1" ? (
+            <MdAttachFile
+              onClick={() =>
+                toggleFileViewerModal("TCKHIS", data.TicketHistoryID)
+              }
+              style={{ cursor: "pointer", color: "#000000" }}
+            />
+          ) : null}
+        </Typography>
+      </Grid>
+
+      {/* Audit Button */}
+      {(auditTicketRight === true && selectedData && selectedData.TicketStatusID ===  109303 && data && data.TicketStatusID ===  109303 && data && data.isAudit === 0) ?  <Grid item>
+        <Button
+          variant="contained"
+          color="error"
+          trigger={btnLoaderActiveAudit && "true"}
+          onClick={() => handleAudit(data)}
+        >
+          Audit
+        </Button>
+      </Grid> : null }
+      
+    </Grid>
+
+    {/* Description Text */}
+    <Typography variant="body2" color="text.secondary" mt={1}>
+      {data && data.TicketDescription ? parse(data.TicketDescription) : null}
+    </Typography>
+
+    {/* Dropdown aligned right */}
+    <Grid container justifyContent="flex-end" >
+      <Grid item>
+        <FormControl size="small" sx={{ maxWidth: 340 }}>
+          {data && data.isAudit === 1 && data && data.isSatisfied === null ?  <Form>
+                       <Form.Group column="2" controlwidth="300px">
+                        <Form.InputGroup label="Is Satisfied" column={2} errorMsg={formValidationSatisfyError["txtIsSatisfy"]}>
+                                        <Form.InputControl
+                                          control="select"
+                                          name="txtIsSatisfy"
+                                          onChange={(e) => updateStateSatifation("txtIsSatisfy", e)}
+                                          value={formValuesSatifation.txtIsSatisfy}
+                                          options={IsSatisfyList}
+                                          getOptionLabel={(option) => `${option.label}`}
+                                          getOptionValue={(option) => `${option}`}
+                                        />
+                                      </Form.InputGroup>
+                    <Form.InputGroup column={1}>
+                                        <Button type="button" varient="primary" trigger={btnLoaderActiveSatisfaction && "true"}
+          onClick={() => handleSatisfaction(data)}>
+                                          Submit
+                                        </Button>
+                                      </Form.InputGroup>                  
+                                           
+                      </Form.Group>
+          </Form> : data && data.isSatisfied === 1 ? <strong>Satisfied</strong> : data && data.isSatisfied === 0 ? <strong>Unsatisfied</strong> : "" }
+            
+             
+        </FormControl>
+      </Grid>
+    </Grid>
+  </Grid>
+</Grid>
+
                       </Paper>
                     </AccordionDetails>
                   </Accordion>
