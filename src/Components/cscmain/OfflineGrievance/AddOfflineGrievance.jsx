@@ -215,8 +215,8 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
       } else if (value.trim().length === 0) {
         errorsMsg = "Ticket Description cannot be only spaces!";
       } else if (value) {
-        if (value.length > 500) {
-          errorsMsg = "Ticket Description can not exceed more than 500 characters!";
+        if (value.length > 2000) {
+          errorsMsg = "Ticket Description can not exceed more than 2000 characters!";
         }
       }
     }
@@ -324,7 +324,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
     }
 
     if (name === "txtTicketDescription") {
-      formValidationCounter[name] = value ? 500 - value.length : 500;
+      formValidationCounter[name] = value ? 2000 - value.length : 2000;
       setFormValidationCounter({ ...formValidationCounter });
     }
 
@@ -614,10 +614,10 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
         for (let i = 0; i < pAttachment.length; i++) {
           pAttachmentSize = +pAttachment[i].size;
         }
-        if (pAttachmentSize > 10485760) {
+        if (pAttachmentSize > 26214400) {
           setAlertMessage({
             type: "error",
-            message: "Please upload less than 10MB or 10MB attachment!",
+            message: "Please upload less than 25MB or 25MB attachment!",
           });
           return;
         }
@@ -1513,7 +1513,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                       <div className="form-group_agent">
                         <label className="ticket-label_agent">
                           {" "}
-                          Attachment <b>(File Size : 10MB , File Type: .pdf, .jpg, .jpeg, .png)</b>
+                          Attachment <b>(File Size : 25MB , File Type: .pdf, .jpg, .jpeg, .png)</b>
                         </label>
                         <InputGroup>
                           <InputControl
@@ -1537,18 +1537,18 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
                       <label htmlFor="Description" className="ticket-label_agent">
                         Description <span className="asteriskCss">&#42;</span>
                       </label>
-                      <InputGroup Row="4" ErrorMsg={formValidationKRPHError["txtTicketDescription"]}>
+                      <InputGroup Row="6" ErrorMsg={formValidationKRPHError["txtTicketDescription"]}>
                         <InputControl
                           Input_type="textarea"
                           name="txtTicketDescription"
                           value={formValuesGI.txtTicketDescription}
-                          maxLength="500"
-                          rows="4"
+                          maxLength="2000"
+                          rows="10"
                           onChange={(e) => updateStateGI("txtTicketDescription", e.target.value)}
                         />
                       </InputGroup>
                       <p className={BizClass.CounterDescKRPH}>
-                        {formValuesGI.txtTicketDescription && formValuesGI.txtTicketDescription.length ? formValuesGI.txtTicketDescription.length : 0} / {500}
+                        {formValuesGI.txtTicketDescription && formValuesGI.txtTicketDescription.length ? formValuesGI.txtTicketDescription.length : 0} / {2000}
                       </p>
                       {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtTicketDescription"]}</span> */}
                     </div>

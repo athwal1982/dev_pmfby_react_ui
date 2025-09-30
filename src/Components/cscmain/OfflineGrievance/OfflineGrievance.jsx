@@ -870,7 +870,7 @@ const OfflineGrievance = () => {
                           name="txtFromDate"
                           value={formValues.txtFromDate}
                           onChange={(e) => updateState("txtFromDate", e.target.value)}
-                          max={dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD")}
+                          max={dateToSpecificFormat(moment(), "YYYY-MM-DD")} // A today or past only
                         />
                       </Form.InputGroup>
                       <Form.InputGroup label="To Date" req="false" errorMsg="">
@@ -880,7 +880,8 @@ const OfflineGrievance = () => {
                           name="txtToDate"
                           value={formValues.txtToDate}
                           onChange={(e) => updateState("txtToDate", e.target.value)}
-                          max={dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD")}
+                          min={formValues.txtFromDate || ""}                  // A not before From Date
+                          max={dateToSpecificFormat(moment(), "YYYY-MM-DD")}  // A today or past only
                         />
                       </Form.InputGroup>
                       <Form.InputGroup label="Source Of Grievance" req="false" errorMsg="">

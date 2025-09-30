@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 // Anil import { useNavigate } from "react-router-dom";
 import { DataGrid, PageBar, Form } from "Framework/Components/Layout";
+import { Loader } from "Framework/Components/Widgets";
 import PropTypes from "prop-types";
-import { Loader, Button } from "Framework/Components/Widgets";
 import { getUserRightCodeAccess, getSessionStorage } from "Components/Common/Login/Auth/auth";
 import moment from "moment";
 import { Convert24FourHourAndMinute, dateToSpecificFormat } from "Configration/Utilities/dateformat";
@@ -24,11 +24,7 @@ const cellActionTemplate = (props) => {
         onClick={() => props.toggleSupportTicketDetailsModal(props.data)}
         title="Ticket Details"
       />
-      {props.data && props.data.IsSos && props.data.IsSos === 1 ? (
-        <span style={{ fontSize: "22px", cursor: "pointer" }} onClick={() => props.toggleEmergencyCallModal(props.data)}>
-          🆘
-        </span>
-      ) : null}
+      {props.data && props.data.IsSos && props.data.IsSos === 1 ? <span  style={{ fontSize: "22px", cursor: "pointer" }}  onClick={() => props.toggleEmergencyCallModal(props.data)} >🆘</ span> : null}
     </div>
   );
 };
@@ -46,7 +42,6 @@ function ManageTicket({
   farmersTicketData,
   isLoadingTicketCategoryTypeList,
   refereshFarmerTicket,
-  handleBackButtonClick,
   ClearTicketFilters,
   getTicketSourceListData,
   ticketSourceList,
@@ -114,7 +109,7 @@ function ManageTicket({
     debugger;
     if (esclationTicketRight) {
       getFarmersTickets("ESCAL", "", 1, 20);
-      getFarmersTickets("DEFESCAL", "", 1, 20);
+      // A getFarmersTickets("DEFESCAL", "", 1, 20);
     } else {
       if (ChkBRHeadTypeID === "124001" && ChkAppAccessTypeID === "503" && showHideManageTicket === false) {
         console.log(showHideManageTicket);
@@ -149,10 +144,12 @@ function ManageTicket({
         return { background: "#ff9500" };
       }
     }
-
+   
+     
     return { background: "#f3f6f9" };
   };
 
+  
   const [openEmegencyCallModal, setOpenEmegencyCallModal] = useState(false);
   const [ticketRowData, setticketRowData] = useState();
   const toggleEmergencyCallModal = (data) => {
@@ -162,31 +159,32 @@ function ManageTicket({
 
   return (
     <>
-      {openEmegencyCallModal && <SOSEmergencyPopup toggleEmergencyCallModal={toggleEmergencyCallModal} ticketRowData={ticketRowData} />}
-      <div className={BizClass.Box}>
-        <div className={BizClass.PageBar}>
-          {viewTicketRight ? (
-            <>
-              {ChkBRHeadTypeID === "124001" && ChkAppAccessTypeID === "503" && showHideManageTicket === false ? null : (
-                <div className={BizClass.ticketCounterBar}>
-                  <span>Open :</span>
-                  <p>{satatusCount && satatusCount.length > 0 ? satatusCount[0].Open : 0}</p>
-                  <span>In-Progress :</span>
-                  <p>{satatusCount && satatusCount.length > 0 ? satatusCount[0].InProgress : 0}</p>
-                  <span>Resolved :</span>
-                  <p>{satatusCount && satatusCount.length > 0 ? satatusCount[0].Resolved : 0}</p>
-                  <span>Resolved(Information) :</span>
-                  <p>{satatusCount && satatusCount.length > 0 ? satatusCount[0].ResolvedInformation : 0}</p>
-                  <span>Re-Open :</span>
-                  <p>{satatusCount && satatusCount.length > 0 ? satatusCount[0].ReOpen : 0}</p>
-                  <span>Total :</span>
-                  <p>{totalSatatusCount}</p>
-                </div>
-              )}
-            </>
-          ) : null}
+    {openEmegencyCallModal && (
+      <SOSEmergencyPopup
+        toggleEmergencyCallModal={toggleEmergencyCallModal}
+        ticketRowData={ticketRowData}
+      />
+    )}
+    <div className={BizClass.Box}>
+      <div className={BizClass.PageBar}>
+        {viewTicketRight ? <>{ChkBRHeadTypeID === "124001" && ChkAppAccessTypeID === "503" && showHideManageTicket === false  ? null : <div className={BizClass.ticketCounterBar}>
+            <span>Open :</span>
+            <p>{satatusCount && satatusCount.length > 0 ? satatusCount[0].Open : 0}</p>
+            <span>In-Progress :</span>
+            <p>{satatusCount && satatusCount.length > 0 ? satatusCount[0].InProgress : 0}</p>
+            <span>Resolved :</span>
+            <p>{satatusCount && satatusCount.length > 0 ? satatusCount[0].Resolved : 0}</p>
+            <span>Resolved(Information) :</span>
+            <p>{satatusCount && satatusCount.length > 0 ? satatusCount[0].ResolvedInformation : 0}</p>
+            <span>Re-Open :</span>
+            <p>{satatusCount && satatusCount.length > 0 ? satatusCount[0].ReOpen : 0}</p>
+            <span>Total :</span>
+            <p>{totalSatatusCount}</p>
+          </div>}</>
+          
+         : null}
 
-          {/* {userData.BRHeadTypeID.toString() === "124003" || userData.BRHeadTypeID.toString() === "0" ? null : (
+        {/* {userData.BRHeadTypeID.toString() === "124003" || userData.BRHeadTypeID.toString() === "0" ? null : (
           <div className={BizClass.ticketCounterBar}>
             <span>Open :</span>
             <p>{satatusCount && satatusCount.length > 0 ? satatusCount[0].Open : 0}</p>
@@ -202,125 +200,108 @@ function ManageTicket({
             <p>{totalSatatusCount}</p>
           </div>
         )} */}
-          <HeaderPortal>
-            {/* {userData.BRHeadTypeID.toString() === "124003" || userData.BRHeadTypeID.toString() === "0" ? null : ( */}
-
-            {viewTicketRight ? (
-              <>
-                {ChkBRHeadTypeID === "124001" && ChkAppAccessTypeID === "503" && showHideManageTicket === false ? null : (
-                  <>
-                    <PageBar.Select
-                      ControlTxt="Search By"
-                      name="SearchByFilter"
-                      getOptionLabel={(option) => `${option.label}`}
-                      getOptionValue={(option) => `${option}`}
-                      options={searchByoptions}
-                      value={filterValues.SearchByFilter}
-                      onChange={(e) => updateFilterState("SearchByFilter", e)}
-                    />
-                    <PageBar.Search
-                      placeholder="Search "
-                      name="txtSearchFilter"
-                      value={filterValues.txtSearchFilter}
-                      onChange={(e) => updateFilterState(e.target.name, e.target.value)}
-                      onClick={() => searchByMobileTicketsOnClick(1, 5000)}
-                      style={{ width: "158px" }}
-                    />
-                  </>
-                )}
-              </>
-            ) : null}
-
-            {/* )} */}
-            {addTicketRight ? <PageBar.Button onClick={() => openAddTicketPage()}>Add Ticket</PageBar.Button> : null}
-            {/* {userData.BRHeadTypeID.toString() === "124003" || userData.BRHeadTypeID.toString() === "0" ? null : (
-            <PageBar.Button onClick={() => openAddTicketPage()}>Add Ticket</PageBar.Button>
-          )} */}
-            {viewTicketRight ? (
-              <>
-                {ChkBRHeadTypeID === "124001" && ChkAppAccessTypeID === "503" ? (
-                  <>
-                    <PageBar.Button onClick={() => onClickViewManageTickets()} title="View Tickets" style={{ display: "flex", alignItems: "center" }}>
-                      View Tickets
-                    </PageBar.Button>
-                  </>
-                ) : null}
-              </>
-            ) : null}
-            {esclationTicketRight ? (
-              <PageBar.Button onClick={() => onClickEscalation()} title="Escalated Tickets" style={{ display: "flex", alignItems: "center" }}>
-                Escalated (<p style={{ minWidth: "22px" }}>{esclatedCount}</p>)
-              </PageBar.Button>
-            ) : null}
-            {/* {esclationTicketRight && userData.EscalationFlag && userData.EscalationFlag === "Y" ? (
-            <PageBar.Button onClick={() => onClickEscalation()} title="Escalated Tickets" style={{ display: "flex", alignItems: "center" }}>
-              Escalated (<p style={{ minWidth: "22px" }}>{esclatedCount}</p>)
-            </PageBar.Button>
-          ) : null} */}
-            {/* {userData && userData.EscalationFlag && userData.EscalationFlag === "Y" ? (
-            <PageBar.Button onClick={() => onClickEscalation()} title="Escalated Tickets" style={{ display: "flex", alignItems: "center" }}>
-              Escalated (<p style={{ minWidth: "22px" }}>{esclatedCount}</p>)
-            </PageBar.Button>
-          ) : null} */}
-          </HeaderPortal>
-        </div>
-        <div className={BizClass.MainBox}>
-          {/* {userData.BRHeadTypeID.toString() === "124003" || userData.BRHeadTypeID.toString() === "0" ? (
-          <div style={{ "text-align": "center" }}>You are not authorized to view this page</div>
-        ) : null} */}
+        <HeaderPortal>
+          {/* {userData.BRHeadTypeID.toString() === "124003" || userData.BRHeadTypeID.toString() === "0" ? null : ( */}
 
           {viewTicketRight ? (
             <>
-              {ChkBRHeadTypeID === "124001" && ChkAppAccessTypeID === "503" && showHideManageTicket === false ? (
-                <div style={{ "text-align": "center" }}>Click on View Tickets button to view ticket listing</div>
-              ) : (
-                <>
-                  <div className={BizClass.divGridPagination}>
-                    <DataGrid
-                      rowData={farmersTicketData}
-                      loader={isLoadingFarmersticket ? <Loader /> : null}
-                      components={{
-                        actionTemplate: cellActionTemplate,
-                      }}
-                      getRowStyle={getRowStyle}
-                      onGridReady={onGridReady}
-                      suppressContextMenu={true}
-                    >
-                      <DataGrid.Column
-                        headerName="Action"
-                        lockPosition="1"
-                        pinned="left"
-                        width={80}
-                        cellRenderer="actionTemplate"
-                        cellRendererParams={{
-                          toggleSupportTicketDetailsModal,
-                          toggleEmergencyCallModal,
-                        }}
-                      />
-                      <DataGrid.Column valueGetter="node.rowIndex + 1" field="#" headerName="Sr No." width={80} pinned="left" />
-                      <DataGrid.Column field="SupportTicketNo" headerName="Ticket No" width="150px" />
-                      <DataGrid.Column field="ApplicationNo" headerName="Application No" width="180px" useValueFormatterForExport={true} />
-                      <DataGrid.Column field="InsurancePolicyNo" headerName="Policy No" width="170px" />
-                      <DataGrid.Column field="TicketStatus" headerName="Ticket Status" width="120px" />
-                      <DataGrid.Column field="CallerContactNumber" headerName="Caller Mobile No." width="140px" />
-                      <DataGrid.Column field="RequestorName" headerName="Farmer Name" width="210px" />
-                      <DataGrid.Column field="RequestorMobileNo" headerName="Mobile No" width="110px" />
-                      <DataGrid.Column field="PlotStateName" headerName="State" width="160px" />
-                      <DataGrid.Column field="InsuranceCompany" headerName="Insurance Company" width="290px" />
-                      <DataGrid.Column field="TicketHeadName" headerName="Type" width="150px" />
-                      <DataGrid.Column field="TicketTypeName" headerName="Category" width="180px" />
-                      <DataGrid.Column field="TicketCategoryName" headerName="Sub Category" width="200px" />
-                      <DataGrid.Column field="CategoryDescription" headerName="Category Description" width="350px" />
-                      <DataGrid.Column field="SchemeName" headerName="Scheme" width="220px" />
-                      <DataGrid.Column
-                        field="RequestSeason"
-                        headerName="Season"
-                        width="100px"
-                        valueFormatter={(param) => (param.value && param.value === 1 ? "Kharif" : param.value === 2 ? "Rabi" : "")}
-                      />
-                      <DataGrid.Column field="RequestYear" headerName="Year" width="100px" />
-                      <DataGrid.Column field="ApplicationCropName" headerName="Crop Name" width="150px" />
-                      {/* <DataGrid.Column
+            {ChkBRHeadTypeID === "124001" && ChkAppAccessTypeID === "503" && showHideManageTicket === false  ? null : <><PageBar.Select
+                ControlTxt="Search By"
+                name="SearchByFilter"
+                getOptionLabel={(option) => `${option.label}`}
+                getOptionValue={(option) => `${option}`}
+                options={searchByoptions}
+                value={filterValues.SearchByFilter}
+                onChange={(e) => updateFilterState("SearchByFilter", e)}
+              />
+              <PageBar.Search
+                placeholder="Search "
+                name="txtSearchFilter"
+                value={filterValues.txtSearchFilter}
+                onChange={(e) => updateFilterState(e.target.name, e.target.value)}
+                onClick={() => searchByMobileTicketsOnClick(1, 5000)}
+                style={{ width: "158px" }}
+              /></>}
+            </>
+          ) : null}
+
+          {/* )} */}
+          {addTicketRight ? <PageBar.Button onClick={() => openAddTicketPage()}>Add Ticket</PageBar.Button> : null}
+          {/* {userData.BRHeadTypeID.toString() === "124003" || userData.BRHeadTypeID.toString() === "0" ? null : (
+            <PageBar.Button onClick={() => openAddTicketPage()}>Add Ticket</PageBar.Button>
+          )} */}
+          {viewTicketRight ? 
+          <>
+          {(ChkBRHeadTypeID === "124001" && ChkAppAccessTypeID === "503")  ? <PageBar.Button onClick={() => onClickViewManageTickets()} title="View Tickets" style={{ display: "flex", alignItems: "center" }}>
+          View Tickets
+        </PageBar.Button>  : null }</>
+          : null}
+          {esclationTicketRight ? (
+            <PageBar.Button onClick={() => onClickEscalation()} title="Escalated Tickets" style={{ display: "flex"}}>
+              Escalated (<p style={{ minWidth: "45px" }}>{esclatedCount}</p>)
+            </PageBar.Button>
+          ) : null}
+          {/* {esclationTicketRight && userData.EscalationFlag && userData.EscalationFlag === "Y" ? (
+            <PageBar.Button onClick={() => onClickEscalation()} title="Escalated Tickets" style={{ display: "flex", alignItems: "center" }}>
+              Escalated (<p style={{ minWidth: "22px" }}>{esclatedCount}</p>)
+            </PageBar.Button>
+          ) : null} */}
+          {/* {userData && userData.EscalationFlag && userData.EscalationFlag === "Y" ? (
+            <PageBar.Button onClick={() => onClickEscalation()} title="Escalated Tickets" style={{ display: "flex", alignItems: "center" }}>
+              Escalated (<p style={{ minWidth: "22px" }}>{esclatedCount}</p>)
+            </PageBar.Button>
+          ) : null} */}
+        </HeaderPortal>
+      </div>
+      <div className={BizClass.MainBox}>
+        {/* {userData.BRHeadTypeID.toString() === "124003" || userData.BRHeadTypeID.toString() === "0" ? (
+          <div style={{ "text-align": "center" }}>You are not authorized to view this page</div>
+        ) : null} */}
+
+        {viewTicketRight ? (
+          <>
+            {ChkBRHeadTypeID === "124001" && ChkAppAccessTypeID === "503" && showHideManageTicket === false ? <div style={{ "text-align": "center" }}>Click on View Tickets button to view ticket listing</div>
+             :  <>
+             <div className={BizClass.divGridPagination}>
+               <DataGrid
+                 rowData={farmersTicketData}
+                 loader={isLoadingFarmersticket ? <Loader /> : null}
+                 components={{
+                   actionTemplate: cellActionTemplate,
+                 }}
+                 getRowStyle={getRowStyle}
+                 onGridReady={onGridReady}
+                 suppressContextMenu={true}
+               >
+                 <DataGrid.Column
+                   headerName="Action"
+                   lockPosition="1"
+                   pinned="left"
+                   width={80}
+                   cellRenderer="actionTemplate"
+                   cellRendererParams={{
+                     toggleSupportTicketDetailsModal,
+                     toggleEmergencyCallModal,
+                   }}
+                 />
+                 <DataGrid.Column valueGetter="node.rowIndex + 1" field="#" headerName="Sr No." width={80} pinned="left" />
+                 <DataGrid.Column field="SupportTicketNo" headerName="Ticket No" width="150px" />
+                 <DataGrid.Column field="ApplicationNo" headerName="Application No" width="180px" useValueFormatterForExport={true} />
+                 <DataGrid.Column field="InsurancePolicyNo" headerName="Policy No" width="170px" />
+                 <DataGrid.Column field="TicketStatus" headerName="Ticket Status" width="120px" />
+                 <DataGrid.Column field="CallerContactNumber" headerName="Caller Mobile No." width="140px" />
+                 <DataGrid.Column field="RequestorName" headerName="Farmer Name" width="210px" />
+                 <DataGrid.Column field="RequestorMobileNo" headerName="Mobile No" width="110px" />
+                 <DataGrid.Column field="PlotStateName" headerName="State" width="160px" />
+                 <DataGrid.Column field="InsuranceCompany" headerName="Insurance Company" width="290px" />
+                 <DataGrid.Column field="TicketHeadName" headerName="Type" width="150px" />
+                 <DataGrid.Column field="TicketTypeName" headerName="Category" width="180px" />
+                 <DataGrid.Column field="TicketCategoryName" headerName="Sub Category" width="200px" />
+                 <DataGrid.Column field="SchemeName" headerName="Scheme" width="220px" />
+                 <DataGrid.Column field="RequestSeason" headerName="Season" width="100px" valueFormatter={(param) => (param.value && param.value === 1 ? "Kharif" : param.value=== 2 ? "Rabi" : "" )} />
+                 <DataGrid.Column field="RequestYear" headerName="Year" width="100px" />
+                 <DataGrid.Column field="ApplicationCropName" headerName="Crop Name" width="150px" />
+                 {/* <DataGrid.Column
              field="LossDate"
              headerName="Crop Loss Date"
              width="130px"
@@ -334,217 +315,212 @@ function ManageTicket({
                return node.data.LossTime ? Convert24FourHourAndMinute(node.data.LossTime) : null;
              }}
            /> */}
-                      <DataGrid.Column field="TicketNCIPDocketNo" headerName="NCIP Docket No" width="160px" />
-                      <DataGrid.Column field="CreatedBY" headerName="Created By" width="160px" />
-                      <DataGrid.Column
-                        field="#"
-                        headerName="Created At"
-                        width="145px"
-                        valueGetter={(node) => {
-                          // A return node.data.CreatedAt ? `${dateFormat(node.data.CreatedAt.split("T")[0])} ${tConvert(node.data.CreatedAt.split("T")[1])}` : null;
-                          return node.data.CreatedAt
-                            ? dateToSpecificFormat(
-                                `${node.data.CreatedAt.split("T")[0]} ${Convert24FourHourAndMinute(node.data.CreatedAt.split("T")[1])}`,
-                                "DD-MM-YYYY HH:mm",
-                              )
-                            : null;
-                        }}
-                      />
-                    </DataGrid>
-                    {showHideDownload === false || farmersTicketData.length === 0 ? null : (
-                      <ResponsivePagination current={currentPage} total={totalPages} onPageChange={handlePageChange} />
-                    )}
-                  </div>
-                  <div className={BizClass.FilterBox}>
-                    <div className={BizClass.Header}>
-                      {/* <h4>Filters Tickets </h4> */}
-                      <button type="button" className={BizClass.FilterTicketButton} onClick={() => getFilterTicketsClick()}>
-                        {" "}
-                        Filters Tickets
-                      </button>
-                      <span />
+                 <DataGrid.Column field="TicketNCIPDocketNo" headerName="NCIP Docket No" width="160px" />
+                 <DataGrid.Column field="CreatedBY" headerName="Created By" width="160px" />
+                 <DataGrid.Column
+                   field="#"
+                   headerName="Created At"
+                   width="145px"
+                   valueGetter={(node) => {
+                     // A return node.data.CreatedAt ? `${dateFormat(node.data.CreatedAt.split("T")[0])} ${tConvert(node.data.CreatedAt.split("T")[1])}` : null;
+                     return node.data.CreatedAt
+                       ? dateToSpecificFormat(
+                           `${node.data.CreatedAt.split("T")[0]} ${Convert24FourHourAndMinute(node.data.CreatedAt.split("T")[1])}`,
+                           "DD-MM-YYYY HH:mm",
+                         )
+                       : null;
+                   }}
+                 />
+               </DataGrid>
+               {showHideDownload === false || farmersTicketData.length === 0 ? null : (
+                 <ResponsivePagination current={currentPage} total={totalPages} onPageChange={handlePageChange} />
+               )}
+             </div>
+             <div className={BizClass.FilterBox}>
+               <div className={BizClass.Header}>
+                 {/* <h4>Filters Tickets </h4> */}
+                 <button type="button" className={BizClass.FilterTicketButton} onClick={() => getFilterTicketsClick()}>
+                   {" "}
+                   Filters Tickets
+                 </button>
+                 <span />
 
-                      <button type="button" className={BizClass.ExportButton} onClick={() => getOneDayTicketData()}>
-                        {" "}
-                        Download
-                      </button>
-                      <span />
-                      {ChkBRHeadTypeID === "124003" ? (
-                        <div className={BizClass.CommentIcon}>
-                          <MdComment title="Reply on Multiple Tickets" onClick={() => OpenReplyOnMultipleTiketsForm()} />
-                        </div>
-                      ) : null}
-                    </div>
-                    <div className={BizClass.Content}>
-                      <Form>
-                        <div className={BizClass.FormContent}>
-                          <Form.InputGroup label="From Date" req="false" errorMsg="">
-                            <Form.InputControl
-                              control="input"
-                              type="date"
-                              name="txtFromDate"
-                              value={formValues.txtFromDate}
-                              onChange={(e) => updateState("txtFromDate", e.target.value)}
-                              max={dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD")}
-                            />
-                          </Form.InputGroup>
-                          <Form.InputGroup label="To Date" req="false" errorMsg="">
-                            <Form.InputControl
-                              control="input"
-                              type="date"
-                              name="txtToDate"
-                              value={formValues.txtToDate}
-                              onChange={(e) => updateState("txtToDate", e.target.value)}
-                              max={dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD")}
-                            />
-                          </Form.InputGroup>
-                          <Form.InputGroup label="Type" req="false" errorMsg="">
+                 <button type="button" className={BizClass.ExportButton} onClick={() => getOneDayTicketData()}>
+                   {" "}
+                   Download
+                 </button>
+                 <span />
+                 {ChkBRHeadTypeID === "124003" ? (
+                   <div className={BizClass.CommentIcon}>
+                     <MdComment title="Reply on Multiple Tickets" onClick={() => OpenReplyOnMultipleTiketsForm()} />
+                   </div>
+                 ) : null}
+               </div>
+               <div className={BizClass.Content}>
+                 <Form>
+                 <div className={BizClass.FormContent}>
+                        <Form.InputGroup label="From Date" req="false" errorMsg="">
+                          <Form.InputControl
+                          control="input"
+                          type="date"
+                          name="txtFromDate"
+                          value={formValues.txtFromDate}
+                          onChange={(e) => updateState("txtFromDate", e.target.value)}
+                          max={dateToSpecificFormat(moment(), "YYYY-MM-DD")} // A today or past only
+                        />
+                      </Form.InputGroup>
+                      <Form.InputGroup label="To Date" req="false" errorMsg="">
+                        <Form.InputControl
+                          control="input"
+                          type="date"
+                          name="txtToDate"
+                          value={formValues.txtToDate}
+                          onChange={(e) => updateState("txtToDate", e.target.value)}
+                          min={formValues.txtFromDate || ""}                  // A not before From Date
+                          max={dateToSpecificFormat(moment(), "YYYY-MM-DD")}  // A today or past only
+                        />
+                        </Form.InputGroup>
+                        <Form.InputGroup label="Type" req="false" errorMsg="">
+                          <Form.InputControl
+                            control="select"
+                            name="txtTicketType"
+                            value={formValues.txtTicketType}
+                            options={ticketTypeList}
+                            getOptionLabel={(option) => `${option.TicketTypeName}`}
+                            getOptionValue={(option) => `${option}`}
+                            onChange={(e) => updateState("txtTicketType", e)}
+                          />
+                        </Form.InputGroup>
+                        <Form.InputGroup label="Category" req="false" errorMsg="">
+                          <Form.InputControl
+                            control="select"
+                            name="txtTicketCategoryType"
+                            value={formValues.txtTicketCategoryType}
+                            // A loader={isLoadingTicketCategoryTypeList ? <Loader /> : null}
+                            isLoading={isLoadingTicketCategoryTypeList}
+                            options={ticketCategoryTypeList}
+                            getOptionLabel={(option) => `${option.SupportTicketTypeName}`}
+                            getOptionValue={(option) => `${option}`}
+                            onChange={(e) => updateState("txtTicketCategoryType", e)}
+                          />
+                        </Form.InputGroup>
+                        <Form.InputGroup label="Sub Category" req="false" errorMsg="">
+                          <Form.InputControl
+                            control="select"
+                            name="txtTicketCategory"
+                            options={ticketCategoryList}
+                            // A loader={isLoadingTicketCategoryList ? <Loader /> : null}
+                            isLoading={isLoadingTicketCategoryList}
+                            getOptionLabel={(option) => `${option.TicketCategoryName}`}
+                            getOptionValue={(option) => `${option}`}
+                            value={formValues.txtTicketCategory}
+                            onChange={(e) => updateState("txtTicketCategory", e)}
+                          />
+                        </Form.InputGroup>
+                        {showHideDownload ? (
+                          <Form.InputGroup label="Source" req="false" errorMsg="">
                             <Form.InputControl
                               control="select"
-                              name="txtTicketType"
-                              value={formValues.txtTicketType}
-                              options={ticketTypeList}
-                              getOptionLabel={(option) => `${option.TicketTypeName}`}
+                              name="txtTicketSource"
+                              options={ticketSourceList}
+                              // A loader={isLoadingTicketSourceList ? <Loader /> : null}
+                              isLoading={isLoadingTicketSourceList}
+                              value={formValues.txtTicketSource}
+                              getOptionLabel={(option) => `${option.TicketSourceName}`}
                               getOptionValue={(option) => `${option}`}
-                              onChange={(e) => updateState("txtTicketType", e)}
+                              onChange={(e) => updateState("txtTicketSource", e)}
                             />
                           </Form.InputGroup>
-                          <Form.InputGroup label="Category" req="false" errorMsg="">
-                            <Form.InputControl
-                              control="select"
-                              name="txtTicketCategoryType"
-                              value={formValues.txtTicketCategoryType}
-                              // A loader={isLoadingTicketCategoryTypeList ? <Loader /> : null}
-                              isLoading={isLoadingTicketCategoryTypeList}
-                              options={ticketCategoryTypeList}
-                              getOptionLabel={(option) => `${option.SupportTicketTypeName}`}
-                              getOptionValue={(option) => `${option}`}
-                              onChange={(e) => updateState("txtTicketCategoryType", e)}
-                            />
-                          </Form.InputGroup>
-                          <Form.InputGroup label="Sub Category" req="false" errorMsg="">
-                            <Form.InputControl
-                              control="select"
-                              name="txtTicketCategory"
-                              options={ticketCategoryList}
-                              // A loader={isLoadingTicketCategoryList ? <Loader /> : null}
-                              isLoading={isLoadingTicketCategoryList}
-                              getOptionLabel={(option) => `${option.TicketCategoryName}`}
-                              getOptionValue={(option) => `${option}`}
-                              value={formValues.txtTicketCategory}
-                              onChange={(e) => updateState("txtTicketCategory", e)}
-                            />
-                          </Form.InputGroup>
-                          {showHideDownload ? (
-                            <Form.InputGroup label="Source" req="false" errorMsg="">
+                        ) : null}
+                        <Form.InputGroup label="Status" req="false" errorMsg="">
+                          <Form.InputControl
+                            control="select"
+                            name="txtStatus"
+                            options={ticketStatusList}
+                            // A loader={isLoadingTicketStatusList ? <Loader /> : null}
+                            isLoading={isLoadingTicketStatusList}
+                            value={formValues.txtStatus}
+                            getOptionLabel={(option) => `${option.CommonMasterValue}`}
+                            getOptionValue={(option) => `${option}`}
+                            onChange={(e) => updateState("txtStatus", e)}
+                          />
+                        </Form.InputGroup>
+                        {showHideDownload ? (
+                          <>
+                            <Form.InputGroup label="Scheme" req="false" errorMsg="">
                               <Form.InputControl
                                 control="select"
-                                name="txtTicketSource"
-                                options={ticketSourceList}
-                                // A loader={isLoadingTicketSourceList ? <Loader /> : null}
-                                isLoading={isLoadingTicketSourceList}
-                                value={formValues.txtTicketSource}
-                                getOptionLabel={(option) => `${option.TicketSourceName}`}
+                                name="txtScheme"
+                                value={formValues.txtScheme}
+                                options={schemeList}
+                                // A loader={isLoadingSchemeListDropdownDataList ? <Loader /> : null}
+                                isLoading={isLoadingSchemeListDropdownDataList}
+                                getOptionLabel={(option) => `${option.SchemeName}`}
                                 getOptionValue={(option) => `${option}`}
-                                onChange={(e) => updateState("txtTicketSource", e)}
+                                onChange={(e) => updateState("txtScheme", e)}
                               />
                             </Form.InputGroup>
-                          ) : null}
-                          <Form.InputGroup label="Status" req="false" errorMsg="">
-                            <Form.InputControl
-                              control="select"
-                              name="txtStatus"
-                              options={ticketStatusList}
-                              // A loader={isLoadingTicketStatusList ? <Loader /> : null}
-                              isLoading={isLoadingTicketStatusList}
-                              value={formValues.txtStatus}
-                              getOptionLabel={(option) => `${option.CommonMasterValue}`}
-                              getOptionValue={(option) => `${option}`}
-                              onChange={(e) => updateState("txtStatus", e)}
-                            />
-                          </Form.InputGroup>
-                          {showHideDownload ? (
-                            <>
-                              <Form.InputGroup label="Scheme" req="false" errorMsg="">
-                                <Form.InputControl
-                                  control="select"
-                                  name="txtScheme"
-                                  value={formValues.txtScheme}
-                                  options={schemeList}
-                                  // A loader={isLoadingSchemeListDropdownDataList ? <Loader /> : null}
-                                  isLoading={isLoadingSchemeListDropdownDataList}
-                                  getOptionLabel={(option) => `${option.SchemeName}`}
-                                  getOptionValue={(option) => `${option}`}
-                                  onChange={(e) => updateState("txtScheme", e)}
-                                />
-                              </Form.InputGroup>
-                              <Form.InputGroup label="Insurance Comp." req="false" errorMsg="">
-                                <Form.InputControl
-                                  control="select"
-                                  name="txtInsuranceCompany"
-                                  options={insuranceCompanyList}
-                                  // A loader={isLoadingInsuranceCompanyList ? <Loader /> : null}
-                                  isLoading={isLoadingInsuranceCompanyList}
-                                  getOptionLabel={(option) => `${option.CompanyName}`}
-                                  getOptionValue={(option) => `${option}`}
-                                  value={formValues.txtInsuranceCompany}
-                                  onChange={(e) => updateState("txtInsuranceCompany", e)}
-                                />
-                              </Form.InputGroup>
-                            </>
-                          ) : null}
-                          <Form.InputGroup label="State" req="false" errorMsg="">
+                            <Form.InputGroup label="Insurance Comp." req="false" errorMsg="">
+                              <Form.InputControl
+                                control="select"
+                                name="txtInsuranceCompany"
+                                options={insuranceCompanyList}
+                                // A loader={isLoadingInsuranceCompanyList ? <Loader /> : null}
+                                isLoading={isLoadingInsuranceCompanyList}
+                                getOptionLabel={(option) => `${option.CompanyName}`}
+                                getOptionValue={(option) => `${option}`}
+                                value={formValues.txtInsuranceCompany}
+                                onChange={(e) => updateState("txtInsuranceCompany", e)}
+                              />
+                            </Form.InputGroup>
+                          </>
+                        ) : null}
+                        <Form.InputGroup label="State" req="false" errorMsg="">
+                          <Form.InputControl
+                            control="multiselect"
+                            name="txtState"
+                            options={stateList}
+                            // A loader={isLoadingStateList ? <Loader /> : null}
+                            isLoading={isLoadingStateList}
+                            value={formValues.txtState}
+                            onChange={(e) => updateState("txtState", e)}
+                          />
+                        </Form.InputGroup>
+                        {showHideDownload ? null : (
+                          <Form.InputGroup label="District" req="false" errorMsg="">
                             <Form.InputControl
                               control="multiselect"
-                              name="txtState"
-                              options={stateList}
-                              // A loader={isLoadingStateList ? <Loader /> : null}
-                              isLoading={isLoadingStateList}
-                              value={formValues.txtState}
-                              onChange={(e) => updateState("txtState", e)}
+                              name="txtDistrict"
+                              options={districtList}
+                              isLoading={isLoadingDistrictList}
+                              value={formValues.txtDistrict}
+                              onChange={(e) => updateState("txtDistrict", e)}
                             />
                           </Form.InputGroup>
-                          {showHideDownload ? null : (
-                            <Form.InputGroup label="District" req="false" errorMsg="">
-                              <Form.InputControl
-                                control="multiselect"
-                                name="txtDistrict"
-                                options={districtList}
-                                isLoading={isLoadingDistrictList}
-                                value={formValues.txtDistrict}
-                                onChange={(e) => updateState("txtDistrict", e)}
-                              />
-                            </Form.InputGroup>
-                          )}
-                        </div>
-                      </Form>
-                    </div>
-                    <div className={BizClass.Footer}>
-                      <button type="button" onClick={() => refereshFarmerTicket()}>
-                        Apply
-                      </button>
-                      &nbsp;
-                      {showHideDownload ? (
-                        <button type="button" onClick={() => ClearTicketFilters()}>
-                          Clear
-                        </button>
-                      ) : null}
-                      &nbsp;
-                      {ChkBRHeadTypeID === "124001" && ChkAppAccessTypeID === "503" ? (
-                        <button type="button" onClick={() => handleBackButtonClick()}>
-                          Back
-                        </button>
-                      ) : null}
-                    </div>
-                  </div>{" "}
-                </>
-              )}
-            </>
-          ) : (
-            <div style={{ "text-align": "center" }}>You are not authorized to view ticket list</div>
-          )}
-        </div>
+                        )}
+                      </div>
+                 </Form>
+               </div>
+               <div className={BizClass.Footer}>
+                 <button type="button" onClick={() => refereshFarmerTicket()}>
+                   Apply
+                 </button>
+                 &nbsp;
+                 {showHideDownload ? (
+                   <button type="button" onClick={() => ClearTicketFilters()}>
+                     Clear
+                   </button>
+                 ) : null}
+               </div>
+             </div>{" "}
+           </>
+             }
+          </>
+        ) : (
+          <div style={{ "text-align": "center" }}>You are not authorized to view ticket list</div>
+        )}
       </div>
+    </div>
     </>
   );
 }
@@ -564,7 +540,6 @@ ManageTicket.propTypes = {
   farmersTicketData: PropTypes.array.isRequired,
   isLoadingTicketCategoryTypeList: PropTypes.bool,
   refereshFarmerTicket: PropTypes.func.isRequired,
-  handleBackButtonClick: PropTypes.func.isRequired,
   ClearTicketFilters: PropTypes.func.isRequired,
   getTicketSourceListData: PropTypes.func.isRequired,
   ticketSourceList: PropTypes.array.isRequired,
@@ -602,7 +577,8 @@ ManageTicket.propTypes = {
   onClickViewManageTickets: PropTypes.func.isRequired,
 };
 
-function SOSEmergencyPopup({ toggleEmergencyCallModal, ticketRowData }) {
+function SOSEmergencyPopup({toggleEmergencyCallModal,ticketRowData}) {
+  
   return (
     <Dialog open={toggleEmergencyCallModal} onClose={toggleEmergencyCallModal} maxWidth="sm" fullWidth>
       {/* Header Section */}
@@ -626,8 +602,10 @@ function SOSEmergencyPopup({ toggleEmergencyCallModal, ticketRowData }) {
 
         {/* Description Field */}
         <Typography sx={{ fontWeight: "bold", mb: 1 }}>Description *</Typography>
-        <TextField value={ticketRowData.Sos} fullWidth multiline rows={4} variant="outlined" />
+        <TextField  value={ticketRowData.Sos} fullWidth multiline rows={4}  variant="outlined" />
+
+       
       </DialogContent>
     </Dialog>
   );
-}
+};

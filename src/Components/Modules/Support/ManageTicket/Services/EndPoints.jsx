@@ -9,6 +9,7 @@ const APIEndpoints = {
     GetFarmerTicketDetailsInsurance: "FGMS/GetSupportTicketView_Insurance",
     GetFarmerTicketDetailsPagging: "FGMS/GetSupportTicketView_CSC_Index",
     GetAssignedTicketList: "FGMS/GetAssignedTicketList",
+    SupportTicketListing: "ticket-dashboard/SupportTicketListing",
   },
 };
 

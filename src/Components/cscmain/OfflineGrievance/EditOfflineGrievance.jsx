@@ -258,8 +258,8 @@ const EditOfflineGrievance = ({ showfunc, selectedData, updateOfflineGrievance }
       } else if (value.trim().length === 0) {
         errorsMsg = "Ticket Description cannot be only spaces!";
       } else if (value) {
-        if (value.length > 500) {
-          errorsMsg = "Ticket Description can not exceed more than 500 characters!";
+        if (value.length > 2000) {
+          errorsMsg = "Ticket Description can not exceed more than 2000 characters!";
         }
       }
     }
@@ -368,7 +368,7 @@ const EditOfflineGrievance = ({ showfunc, selectedData, updateOfflineGrievance }
     }
 
     if (name === "txtTicketDescription") {
-      formValidationCounter[name] = value ? 500 - value.length : 500;
+      formValidationCounter[name] = value ? 2000 - value.length : 2000;
       setFormValidationCounter({ ...formValidationCounter });
     }
 
@@ -1499,18 +1499,18 @@ const EditOfflineGrievance = ({ showfunc, selectedData, updateOfflineGrievance }
                       <label htmlFor="Description" className="ticket-label_agent">
                         Description <span className="asteriskCss">&#42;</span>
                       </label>
-                      <InputGroup Row="4" ErrorMsg={formValidationKRPHError["txtTicketDescription"]}>
+                      <InputGroup Row="6" ErrorMsg={formValidationKRPHError["txtTicketDescription"]}>
                         <InputControl
                           Input_type="textarea"
                           name="txtTicketDescription"
                           value={formValuesGI.txtTicketDescription}
-                          maxLength="500"
-                          rows="4"
+                          maxLength="2000"
+                          rows="10"
                           onChange={(e) => updateStateGI("txtTicketDescription", e.target.value)}
                         />
                       </InputGroup>
                       <p className={BizClass.CounterDescKRPH}>
-                        {formValuesGI.txtTicketDescription && formValuesGI.txtTicketDescription.length ? formValuesGI.txtTicketDescription.length : 0} / {500}
+                        {formValuesGI.txtTicketDescription && formValuesGI.txtTicketDescription.length ? formValuesGI.txtTicketDescription.length : 0} / {2000}
                       </p>
                       {/* <span className="login_ErrorTxt">{formValidationKRPHError["txtTicketDescription"]}</span> */}
                     </div>

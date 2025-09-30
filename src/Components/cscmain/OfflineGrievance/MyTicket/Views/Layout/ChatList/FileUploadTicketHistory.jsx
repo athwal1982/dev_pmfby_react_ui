@@ -73,10 +73,10 @@ function FileUploadTicketHistory({
       for (let i = 0; i < pAttachment.length; i++) {
         pAttachmentSize = +pAttachment[i].size;
       }
-      if (pAttachmentSize > 10485760) {
+      if (pAttachmentSize > 26214400) {
         setAlertMessage({
           type: "error",
-          message: "Please upload less than 10MB or 10MB attachment!",
+          message: "Please upload less than 25MB or 25MB attachment!",
         });
         return;
       }
@@ -166,7 +166,7 @@ function FileUploadTicketHistory({
             <div className="form-group_agent">
               <label className="ticket-label_agent">
                 {" "}
-                Attachment <b>(File Size : 10MB , File Type: .pdf, .jpg, .jpeg, .png)</b>
+                Attachment <b>(File Size : 25MB , File Type: .pdf, .jpg, .jpeg, .png)</b>
               </label>
               <InputGroup>
                 <InputControl

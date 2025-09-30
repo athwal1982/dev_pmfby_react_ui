@@ -16,10 +16,6 @@ function ManageTicketLogics() {
   const [isDataCleared, setIsDataCleared] = useState(false);
   const [isDataClearedEsclated, setIsDataClearedEsclated] = useState(false);
 
-  const userData = getSessionStorage("user");
-  const ChkBRHeadTypeID = userData && userData.BRHeadTypeID ? userData.BRHeadTypeID.toString() : "0";
-  const ChkAppAccessTypeID = userData && userData.AppAccessTypeID ? userData.AppAccessTypeID.toString() : "0";
-
   const [filterValues, setFilterValues] = useState({
     SearchByFilter: null,
     txtSearchFilter: "",
@@ -75,7 +71,6 @@ function ManageTicketLogics() {
       { width: 18 },
       { width: 22 },
       { width: 22 },
-      { width: 32 },
       { width: 30 },
       { width: 12 },
       { width: 12 },
@@ -121,6 +116,7 @@ function ManageTicketLogics() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const handlePageChange = (page) => {
+    debugger;
     setCurrentPage(page);
     // ... do something with `page`
     if (viewTypeMode === "FILTER" && page >= 1) {
@@ -142,6 +138,7 @@ function ManageTicketLogics() {
   const [showHideDownload, setshowHideDownload] = useState(true);
   const [showHideManageTicket, setshowHideManageTicket] = useState(false);
   const getFarmersTickets = async (pviewTYP, pType, pageIndex, pageSize) => {
+    debugger;
     setViewTypeMode(pviewTYP);
     let TicketStatusID = 0;
     if (pType === "") {
@@ -165,6 +162,15 @@ function ManageTicketLogics() {
         });
         return;
       }
+    }
+    if (pviewTYP === "FILTER") {
+    if (formValues.txtTicketType === null) {
+          setAlertMessage({
+            type: "error",
+            message: "Plesae Select Ticket Tpe",
+          });
+          return;
+     }
     }
     if (showHideDownload === false) {
       const dateDiffrence = daysdifference(dateFormatDefault(formValues.txtFromDate), dateFormatDefault(formValues.txtToDate));
@@ -200,6 +206,13 @@ function ManageTicketLogics() {
         });
         return;
       }
+      if (formValues.txtTicketType === null) {
+          setAlertMessage({
+            type: "error",
+            message: "Plesae Select Ticket Tpe",
+          });
+          return;
+     }
     }
 
     try {
@@ -218,12 +231,12 @@ function ManageTicketLogics() {
           formValues.txtTicketCategoryType && formValues.txtTicketCategoryType.SupportTicketTypeID ? formValues.txtTicketCategoryType.SupportTicketTypeID : 0,
         supportTicketNo: "",
         applicationNo: "",
-        docketNo: "",
+        docketNo:"",
         statusID: TicketStatusID,
         fromdate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
         toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
         RequestorMobileNo: "",
-        schemeID: 0,
+        schemeID: formValues.txtScheme && formValues.txtScheme.SchemeID ? formValues.txtScheme.SchemeID : 0,
         ticketHeaderID: formValues.txtTicketType && formValues.txtTicketType.TicketTypeID ? formValues.txtTicketType.TicketTypeID : 0,
         pageIndex: showHideDownload === false ? -1 : pageIndex,
         pageSize: pageSize,
@@ -241,9 +254,9 @@ function ManageTicketLogics() {
       const jsonStatusCnt = { Open: "0", InProgress: "0", Resolved: "0", ResolvedInformation: "0", ReOpen: "0" };
       if (result.responseCode === 1) {
         if (result.responseData && result.responseData.supportTicket && result.responseData.status) {
-          if (pviewTYP === "ESCAL") {
-            setEsclatedCount(result.responseData.supportTicket.length);
-          }
+          // A if (pviewTYP === "ESCAL") {
+          // A  setEsclatedCount(result.responseData.supportTicket.length);
+          // A }
           setFarmersTicketData(result.responseData.supportTicket);
 
           result.responseData.status.forEach((v) => {
@@ -265,7 +278,9 @@ function ManageTicketLogics() {
             totalStsCnt += Number(v.Total);
           });
           if (pviewTYP === "ESCAL") {
-            setTotalPages(Math.ceil(result.responseData.supportTicket.length / 20));
+            // A setTotalPages(Math.ceil(result.responseData.supportTicket.length / 20));
+            setEsclatedCount(totalStsCnt);
+            setTotalPages(Math.ceil(totalStsCnt / 20));
           } else {
             setTotalPages(Math.ceil(totalStsCnt / 20));
           }
@@ -293,7 +308,6 @@ function ManageTicketLogics() {
                   TicketHeadName: "Type",
                   TicketTypeName: "Category",
                   TicketCategoryName: "Sub Category",
-                  CategoryDescription: "Category Description",
                   SchemeName: "Scheme",
                   RequestSeason: "Season",
                   RequestYear: "Year",
@@ -334,7 +348,6 @@ function ManageTicketLogics() {
                     TicketHeadName: value.TicketHeadName,
                     TicketTypeName: value.TicketTypeName,
                     TicketCategoryName: value.TicketCategoryName,
-                    CategoryDescription: value.CategoryDescription,
                     SchemeName: value.SchemeName,
                     RequestSeason: value.RequestSeason && value.RequestSeason === 1 ? "Kharif" : value.RequestSeason === 2 ? "Rabi" : "",
                     RequestYear: value.RequestYear,
@@ -360,7 +373,7 @@ function ManageTicketLogics() {
                         )
                       : "",
                     LossDate: value.LossDate ? dateToSpecificFormat(value.LossDate.split("T")[0], "DD-MM-YYYY") : "",
-                    TicketNCIPDocketNo: value.TicketNCIPDocketNo,
+                    TicketNCIPDocketNo:value.TicketNCIPDocketNo,
                     CreatedBY: value.CreatedBY,
                     CreatedAt: value.CreatedAt
                       ? dateToSpecificFormat(
@@ -378,11 +391,13 @@ function ManageTicketLogics() {
                 type: "error",
                 message: "Data not found to download",
               });
+              setFarmersTicketData([]);
             }
           }
         } else {
           settotalSatatusCount(totalStsCnt.toString());
           setSatatusCount([jsonStatusCnt]);
+          setFarmersTicketData([]);
         }
       } else {
         setAlertMessage({
@@ -391,6 +406,7 @@ function ManageTicketLogics() {
         });
         settotalSatatusCount(totalStsCnt.toString());
         setSatatusCount([jsonStatusCnt]);
+        setFarmersTicketData([]);
       }
     } catch (error) {
       console.log(error);
@@ -547,6 +563,7 @@ function ManageTicketLogics() {
   };
 
   const searchByMobileTicketsOnClick = async (pageIndex, pageSize) => {
+    debugger;
     try {
       let ticketNoVal = "";
       let mobileNoVal = "";
@@ -668,8 +685,8 @@ function ManageTicketLogics() {
         pageSize: pageSize,
       };
       setIsLoadingFarmersticket(true);
-      // A const result = await getfarmerTicketsListPagging(formData);
-      // A  let result = [];
+     // A const result = await getfarmerTicketsListPagging(formData);
+    // A  let result = [];
       // A if (ChkBRHeadTypeID === "124003" && ChkAppAccessTypeID === "503") {
       // A  result = await getAssignedTicketList(formData);
       // A} else {
@@ -712,6 +729,7 @@ function ManageTicketLogics() {
         } else {
           settotalSatatusCount(totalStsCnt.toString());
           setSatatusCount([jsonStatusCnt]);
+          setFarmersTicketData([]);
         }
       } else {
         setAlertMessage({
@@ -720,6 +738,7 @@ function ManageTicketLogics() {
         });
         settotalSatatusCount(totalStsCnt.toString());
         setSatatusCount([jsonStatusCnt]);
+        setFarmersTicketData([]);
       }
     } catch (error) {
       console.log(error);
@@ -989,6 +1008,7 @@ function ManageTicketLogics() {
   const [districtList, setDistrictList] = useState([]);
   const [isLoadingDistrictList, setIsLoadingDistrictList] = useState(false);
   const getDistrictByStateListData = async (statemasterid) => {
+    debugger;
     try {
       setIsLoadingDistrictList(true);
       const userData = getSessionStorage("user");
@@ -1066,7 +1086,7 @@ function ManageTicketLogics() {
 
   const updateState = (name, value) => {
     setFormValues({ ...formValues, [name]: value });
-
+    debugger;
     if (name === "txtTicketCategoryType") {
       setFormValues({
         ...formValues,
@@ -1088,7 +1108,9 @@ function ManageTicketLogics() {
       });
       setTicketCategoryTypeList([]);
       setTicketCategoryList([]);
+      if (value) {
       getTicketCategoryTypeListData(value.TicketTypeID);
+      }
     }
 
     if (showHideDownload === false) {
@@ -1184,6 +1206,7 @@ function ManageTicketLogics() {
   };
 
   const getOneDayTicketData = async () => {
+    debugger;
     setshowHideDownload(false);
     SetTicketFiltersTab();
     settotalSatatusCount("0");
@@ -1192,6 +1215,7 @@ function ManageTicketLogics() {
   };
 
   const getFilterTicketsClick = async () => {
+    debugger;
     setshowHideDownload(true);
     SetTicketFiltersTab();
     settotalSatatusCount("0");
@@ -1209,11 +1233,14 @@ function ManageTicketLogics() {
     // A  getFarmersTickets("FILTER", "", 1, 20);
     // A  }
     // A  setIsDataCleared(false);
+
     // A  if (isDataClearedEsclated === true) {
     // A  getFarmersTickets("ESCAL", "", 1, 20);
     // A  }
     // A  setIsDataClearedEsclated(false);
-    // A }
+    // A  }
+    console.log("checking");
+   
   }, [formValues]);
 
   const onClickViewManageTickets = () => {

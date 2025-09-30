@@ -1,4 +1,4 @@
-import { ApiCalling } from "Services/Utilities/ApiCalling/ApiCalling";
+import { ApiCalling, ApiCallingListing } from "Services/Utilities/ApiCalling/ApiCalling";
 import APIEndpoints from "./EndPoints";
 
 export const getfarmerTicketsList = async (formData) => {
@@ -59,7 +59,8 @@ export const getfarmerTicketsListPagging = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(requestData, APIEndpoints.ManageTicket.GetFarmerTicketDetailsPagging);
+   // A  const result = await ApiCalling(requestData, APIEndpoints.ManageTicket.GetFarmerTicketDetailsPagging);
+    const result = await ApiCallingListing(requestData, APIEndpoints.ManageTicket.SupportTicketListing);
     return result;
   } catch (error) {
     console.log(error);

@@ -241,10 +241,10 @@ function MyTicketLogics() {
       for (let i = 0; i < pAttachment.length; i++) {
         pAttachmentSize = +pAttachment[i].size;
       }
-      if (pAttachmentSize > 10485760) {
+      if (pAttachmentSize > 26214400) {
         setAlertMessage({
           type: "error",
-          message: "Please upload less than 10MB or 10MB attachment!",
+          message: "Please upload less than 25MB or 25MB attachment!",
         });
         return;
       }
