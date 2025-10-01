@@ -251,7 +251,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
             status: "SMS sent successfully",
             ticketStatus:
               pStatusID === 109301 ? "Open" : pStatusID === 109302 ? "In-Progress" : pStatusID === 109303 ? "Resolved" : pStatusID === 109304 ? "Re-Open" : "",
-            smsText: `प्रिय किसान , प्रधानमंत्री फसल बीमा योजना की सहायक सेवा से सम्पर्क करने के लिए आपका धन्यवाद । आपके द्वारा दर्ज करायी गयी शिकायत का क्रमांक है - ${pData.SupportTicketNo} "PMFBY सुरक्षित फसल, निश्चिंत किसान । फसल बीमा है सबका समाधान ॥`,
+            smsText: `प्रिय किसान , प्रधानमंत्री फसल बीमा योजना की सहायक सेवा से सम्पर्क करने के लिए आपका धन्यवाद । आपके द्वारा दर्ज करायी गयी शिकायत का क्रमांक है - ${pData.SupportTicketNo} "PMFBY सुरक्षित फसल, निश्चिंत किसान । फसल बीमा है सबका समाधान । CSC SPV`,
             ageing: "",
           },
         ];
@@ -352,8 +352,8 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
             ticket: "",
             status: "SMS sent successfully",
             ticketStatus:
-              pStatusID === 109301 ? "Open" : pStatusID === 109302 ? "In-Progress" : pStatusID === 109303 ? "Resolved" : pStatusID === 109304 ? "Re-Open" : "",
-            smsText: `प्रिय किसान , प्रधानमंत्री फसल बीमा योजना की सहायक सेवा से सम्पर्क करने के लिए आपका धन्यवाद । आपकी शिकायत - ${pselectedData.SupportTicketNo} का समाधान कर दिया गया है । यदि आप संतुष्ट नहीं है तो कृपया 14447 पे कॉल करे । आपका दिन शुभ हो । PMFBY सुरक्षित फसल, निश्चिंत किसान । फसल बीमा है सबका समाधान ॥`,
+            pStatusID === 109301 ? "Open" : pStatusID === 109302 ? "In-Progress" : pStatusID === 109303 ? "Resolved" : pStatusID === 109304 ? "Re-Open" : "",
+            smsText: `प्रिय किसान , प्रधानमंत्री फसल बीमा योजना की सहायक सेवा से सम्पर्क करने के लिए आपका धन्यवाद । आपकी शिकायत - ${pselectedData.SupportTicketNo} का समाधान कर दिया गया है । लॉगइन कर अपनी शिकायत का समाधान देखने के लिए <a href="https://pmfby.gov.in/krph/FarmerLogin" target="_blank">pmfby.gov.in/krph/FarmerLogin</a> पर क्लिक करें। यदि आप संतुष्ट नहीं है तो कृपया 14447 पे कॉल करे । आपका दिन शुभ हो । PMFBY सुरक्षित फसल, निश्चिंत किसान । फसल बीमा है सबका समाधान । CSC SPV`,
             ageing: "",
           },
         );
@@ -395,7 +395,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
             status: "SMS sent successfully",
             ticketStatus:
               pStatusID === 109301 ? "Open" : pStatusID === 109302 ? "In-Progress" : pStatusID === 109303 ? "Resolved" : pStatusID === 109304 ? "Re-Open" : "",
-            smsText: `प्रियकिसान , प्रधानमंत्री फसल बीमा योजना की सहायकसेवा से सम्पर्क करने के लिए आपका धन्यवाद। आपकी शिकायत - ${pselectedData.SupportTicketNo} को पुनःजाँच एवं विचार के लिए भेज दिया गया है। आपका दिन शुभ हो। PMFBY सुरक्षित फसल, निश्चिंत किसान । फसल बीमा है सबका समाधान॥`,
+            smsText: `प्रियकिसान , प्रधानमंत्री फसल बीमा योजना की सहायकसेवा से सम्पर्क करने के लिए आपका धन्यवाद। आपकी शिकायत - ${pselectedData.SupportTicketNo} को पुनःजाँच एवं विचार के लिए भेज दिया गया है। आपका दिन शुभ हो। PMFBY सुरक्षित फसल, निश्चिंत किसान । फसल बीमा है सबका समाधान । CSC SPV`,
             ageing: "",
           },
         ];
@@ -617,10 +617,10 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
 
                   {/* Hover card (summary info only) */}
                   {step.smsText !== "" ? (
-                    <div className="hover-card">
-                      <p>{step.smsText}</p>
-                    </div>
-                  ) : null}
+                   <div className="hover-card">
+                   <p dangerouslySetInnerHTML={{ __html: step.smsText }} />
+                   </div>
+                   ) : null}
                 </div>
               ))}
             </div>

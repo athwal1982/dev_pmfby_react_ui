@@ -373,14 +373,36 @@ function ChatList({
 
       {/* Audit Button */}
       {(auditTicketRight === true && selectedData && selectedData.TicketStatusID ===  109303 && data && data.TicketStatusID ===  109303 && data && data.isAudit === 0) ?  <Grid item>
-        <Button
-          variant="contained"
-          color="error"
+       <button
+          style={{
+                            backgroundColor: "#85929e",
+                            color: "#ffffff",
+                            border: "1px solid #85929e",
+                            borderRadius: "10px",
+                            padding: "5px 15px",
+                            fontSize: "14px",
+                            fontWeight: "400"
+                          }}
           trigger={btnLoaderActiveAudit && "true"}
           onClick={() => handleAudit(data)}
         >
           Audit
-        </Button>
+        </button>
+      </Grid> : null }
+      {data && data.isAudit === 1 ?  <Grid item>
+        <button
+          style={{
+                            backgroundColor: "#55d464ff",
+                            color: "#ffffff",
+                            border: "1px solid #1ce447ff",
+                            borderRadius: "10px",
+                            padding: "5px 15px",
+                            fontSize: "14px",
+                            fontWeight: "400"
+                          }}
+        >
+          Audited
+        </button>
       </Grid> : null }
       
     </Grid>
@@ -394,7 +416,7 @@ function ChatList({
     <Grid container justifyContent="flex-end" >
       <Grid item>
         <FormControl size="small" sx={{ maxWidth: 340 }}>
-          {data && data.isAudit === 1 && data && data.isSatisfied === null ?  <Form>
+          {auditTicketRight === true && data && data.isAudit === 1 && data && data.isSatisfied === null ?  <Form>
                        <Form.Group column="2" controlwidth="300px">
                         <Form.InputGroup label="Is Satisfied" column={2} errorMsg={formValidationSatisfyError["txtIsSatisfy"]}>
                                         <Form.InputControl
@@ -415,8 +437,8 @@ function ChatList({
                                       </Form.InputGroup>                  
                                            
                       </Form.Group>
-          </Form> : data && data.isSatisfied === 1 ? <strong>Satisfied</strong> : data && data.isSatisfied === 0 ? <strong>Unsatisfied</strong> : "" }
-            
+          </Form> : null }
+          {data && data.isSatisfied === 1 ? <strong>Satisfactory Response</strong> : data && data.isSatisfied === 0 ? <strong>Unsatisfactory Response</strong> : ""}            
              
         </FormControl>
       </Grid>
