@@ -1,4 +1,5 @@
 import { checkStatus } from "Components/Newhome/Services/Methods";
+import { farmerTicketSummaryKRPH } from "../KrphAllActivitiesND/Services/Methods";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { AlertMessage } from "Framework/Components/Widgets";
 import { useEffect, useMemo, useState } from "react";
@@ -72,31 +73,38 @@ const ComplaintStatus = () => {
   };
 
   useEffect(() => {
-    fetchHistory();
+    //  A fetchHistory();
+    getfarmersTicketData();
   }, []);
 
   const requestorDetails = useMemo(() => {
-    if (data && data.responseDynamic) {
-      const item = data.responseDynamic.resolved?.[0];
-      if (item) {
+    // A if (data && data.responseDynamic) {
+    // A  const item = data.responseDynamic.resolved?.[0];
+    // A  if (item) {
+    // A    return {
+    // A      requestorMobileNo: item.RequestorMobileNo,
+    // A      requestorName: item.RequestorName,
+    // A      requestorDistrict: item.DistrictMasterName,
+    // A      requestorState: item.StateMasterName,
+    // A    };
+    // A  } else {
+    // A    const item = data.responseDynamic.unresolved?.[0];
+    // A    if (item) {
+    // A      return {
+    // A        requestorMobileNo: item.RequestorMobileNo,
+    // A        requestorName: item.RequestorName,
+    // A        requestorDistrict: item.DistrictMasterName,
+    // A        requestorState: item.StateMasterName,
+    // A      };
+    // A    }
+    // A  }
+    // A }
         return {
-          requestorMobileNo: item.RequestorMobileNo,
-          requestorName: item.RequestorName,
-          requestorDistrict: item.DistrictMasterName,
-          requestorState: item.StateMasterName,
-        };
-      } else {
-        const item = data.responseDynamic.unresolved?.[0];
-        if (item) {
-          return {
-            requestorMobileNo: item.RequestorMobileNo,
-            requestorName: item.RequestorName,
-            requestorDistrict: item.DistrictMasterName,
-            requestorState: item.StateMasterName,
-          };
-        }
-      }
-    }
+          requestorMobileNo: userData && userData.data && userData.data.data && userData.data.data.result && userData.data.data.result.mobile ? userData.data.data.result.mobile : "",
+          requestorName: userData && userData.data && userData.data.data && userData.data.data.result && userData.data.data.result.farmerName ? userData.data.data.result.farmerName : "",
+          requestorDistrict: userData && userData.data && userData.data.data && userData.data.data.result && userData.data.data.result.district ? userData.data.data.result.district : "",
+          requestorState: userData && userData.data && userData.data.data && userData.data.data.result && userData.data.data.result.state ? userData.data.data.result.state : "",
+      };
   }, [data]);
 
   function maskText(text) {
@@ -110,6 +118,36 @@ const ComplaintStatus = () => {
       })
       .join("");
   }
+
+    const getfarmersTicketData = async () => {
+      debugger;
+      try {
+        let result = "";
+        let formData = "";
+  
+        formData = {
+          viewMode: "RQSTLST",
+          ticketRequestorID: userData && userData.data && userData.data.data && userData.data.data.result && userData.data.data.result.farmerID ? userData.data.data.result.farmerID : "",
+          mobilenumber: "",
+          aadharNumber: "",
+          accountNumber: "",
+        };
+        result = await farmerTicketSummaryKRPH(formData);
+        if (result.response.responseCode.toString() === "1") {
+          const farmersTicketData = Object.values(result.response.responseData.data.result);
+          if (farmersTicketData && farmersTicketData.length > 0) {
+           setData(farmersTicketData);
+           
+          } else {
+             console.log(farmersTicketData); 
+          }
+        } else {
+           console.log("farmersTicketData"); 
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
   return (
     <div className="new-home">
@@ -201,7 +239,7 @@ const ComplaintStatus = () => {
                       </tr>
                     </thead>
                     <tbody style={{ fontSize: "14px" }}>
-                      {data &&
+                      {/* {data &&
                         data.responseDynamic?.resolved?.map((item) => (
                           <TicketItem
                             key={item.SupportTicketNo}
@@ -213,6 +251,15 @@ const ComplaintStatus = () => {
 
                       {data &&
                         data.responseDynamic?.unresolved?.map((item) => (
+                          <TicketItem
+                            key={item.SupportTicketNo}
+                            item={item}
+                            isExpanded={expandedTicketId === item.SupportTicketNo}
+                            onExpand={() => handleOnExpand(item.SupportTicketNo)}
+                          />
+                        ))} */}
+                        {data &&
+                        data?.map((item) => (
                           <TicketItem
                             key={item.SupportTicketNo}
                             item={item}

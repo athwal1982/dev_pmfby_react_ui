@@ -38,6 +38,8 @@
     "framer-motion": "^12.7.3",
     "html-react-parser": "^1.4.14",
     "html-to-text": "^9.0.5",
+    "html2pdf.js": "^0.12.1",
+    "jspdf": "^3.0.3",
     "metismenujs": "^1.4.0",
     "moment": "^2.29.3",
     "pako": "^2.1.0",

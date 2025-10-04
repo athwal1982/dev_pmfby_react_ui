@@ -44,6 +44,8 @@ function ChatList({
   handleSatisfaction,
   btnLoaderActiveAudit,
   handleAudit,
+  expanded,
+  handleChange,
 }) {
   const setAlertMessage = AlertMessage();
   const user = getSessionStorage("user");
@@ -92,13 +94,6 @@ function ChatList({
   const handleCloseCaseHistory = () => {
     setOpen(false);
   };
-
-  const [expanded, setExpanded] = useState("");
-
-  const handleChange = (panel) => (_, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
-  
 
   return (
     <>
@@ -275,8 +270,8 @@ function ChatList({
               chatListDetails.map((data, i) => {
                 return (
                   <Accordion sx={{ borderRadius: 2, boxShadow: 3, mb: 1, overflow: "hidden" }} key={i}
-          expanded={expanded === i}
-          onChange={handleChange(i)}>
+                    expanded={expanded === i || expanded === "ALL"}
+                    onChange={handleChange(i)}>
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
                       sx={{
@@ -372,7 +367,7 @@ function ChatList({
       </Grid>
 
       {/* Audit Button */}
-      {(auditTicketRight === true && selectedData && selectedData.TicketStatusID ===  109303 && data && data.TicketStatusID ===  109303 && data && data.isAudit === 0) ?  <Grid item>
+      {(auditTicketRight === true && i + 1 === chatListDetails.length && selectedData && selectedData.TicketStatusID ===  109303 && data && data.TicketStatusID ===  109303 && data && data.isAudit === 0) ?  <Grid item>
        <button
           style={{
                             backgroundColor: "#85929e",

@@ -167,7 +167,7 @@ function ManageTicketLogics() {
     if (formValues.txtTicketType === null) {
           setAlertMessage({
             type: "error",
-            message: "Plesae Select Ticket Tpe",
+            message: "Please Select Ticket Type",
           });
           return;
      }

@@ -1,10 +1,13 @@
-import { useEffect, React } from "react";
+import { useEffect, React, useState, useRef } from "react";
 import { PropTypes } from "prop-types";
 import TicketCustomerDetail from "./Views/Layout/TicketCustomerDetail/TicketCustomerDetail";
 import MyTicket from "./Views/MyTicket";
 import ChatBox from "./Views/Layout/ChatBox/ChatBox";
 import ChatList from "./Views/Layout/ChatList/ChatList";
 import MyTicketLogics from "./Logic/Logic";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import html2pdf from "html2pdf.js";
 
 function MyTicketPage({ selectedData, showfunc }) {
   const {
@@ -71,6 +74,54 @@ function MyTicketPage({ selectedData, showfunc }) {
     getBankListData();
   }, []);
 
+    const [expanded, setExpanded] = useState("");
+  
+    const handleChange = (panel) => (_, isExpanded) => {
+      setExpanded(isExpanded ? panel : false);
+    };
+    const pageRef = useRef();
+    const [isLoadingDownloadpdf, setIsLoadingDownloadpdf] = useState(false);
+    const downloadPDF = async () => {
+    if (!pageRef.current) return;
+    setIsLoadingDownloadpdf(true);
+
+    const prevExpanded = expanded;
+
+    // A Force open all panels
+    setExpanded("ALL");
+
+    // A Wait for React to render expanded content
+    await new Promise((resolve) => setTimeout(resolve, 1200));
+
+    const element = pageRef.current;
+
+    const opt = {
+      margin: [10, 10, 10, 10],
+      filename: `Ticket_Details_${selectedData && selectedData.SupportTicketNo ? selectedData.SupportTicketNo : null}.pdf`,
+      image: { type: "jpeg", quality: 0.7 },
+      html2canvas: {
+        scale: 1,
+        useCORS: true,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: element.scrollWidth,
+        windowHeight: element.scrollHeight,
+      },
+      jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
+      pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+    };
+
+    try {
+      await html2pdf().set(opt).from(element).save();
+    } catch (err) {
+      console.error("PDF generation error:", err);
+    } finally {
+      // A Restore previous accordion state
+      setExpanded(prevExpanded);
+      setIsLoadingDownloadpdf(false);
+    }
+  };
+
   return (
     <MyTicket
       replyBoxCollapsed={replyBoxCollapsed}
@@ -80,6 +131,9 @@ function MyTicketPage({ selectedData, showfunc }) {
       btnloaderCloseTicketActive={btnloaderCloseTicketActive}
       closeSupportTicketOnClick={closeSupportTicketOnClick}
       showfunc={showfunc}
+      downloadPDF={downloadPDF}
+      pageRef={pageRef}
+      isLoadingDownloadpdf={isLoadingDownloadpdf}
     >
       <ChatList
         chatListDetails={chatListDetails}
@@ -102,6 +156,8 @@ function MyTicketPage({ selectedData, showfunc }) {
         handleSatisfaction={handleSatisfaction}
         btnLoaderActiveAudit={btnLoaderActiveAudit}
         handleAudit={handleAudit}
+        expanded={expanded}
+        handleChange={handleChange}
       >
         <ChatBox
           replyBoxCollapsed={replyBoxCollapsed}

@@ -20,6 +20,8 @@ import {
   AddKRPHTicketHistoryAttachmentData,
 } from "../../ManageTicket/Views/Modals/AddTicket/Services/Methods";
 import { FaLaptopHouse } from "react-icons/fa";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 function MyTicketLogics() {
   const [value, setValue] = useState("<p></p>");
@@ -1219,6 +1221,7 @@ function MyTicketLogics() {
       });
     }
   };
+
 
   return {
     value,

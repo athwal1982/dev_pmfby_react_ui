@@ -64,7 +64,7 @@ const TicketItem = ({ item: ticket, isExpanded, onExpand }) => {
         <td>{ticket.SupportTicketNo}</td>
         <td>{ticket.InsurancePolicyNo}</td>
         <td>{ticket.SchemeName ?? "--"}</td>
-        <td>{ticket.CategoryName}</td>
+        <td>{ticket.TicketTypeName}</td>
         <td className={classNames(BizClass.status, isResolved ? BizClass.resolved : BizClass.unresolved)}>
           {ticket.TicketStatus}
           {isExpanded ? (
