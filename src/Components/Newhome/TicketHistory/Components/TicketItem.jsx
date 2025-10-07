@@ -167,6 +167,13 @@ const TicketItem = ({ item: ticket, isExpanded, onExpand,chatListDetails,isLoadi
         });
         return;
       }
+      if (formValuesTicketProperties.txtTicketStatus === null) {
+        setAlertMessage({
+          type: "warning",
+          message: "Please select status",
+        });
+        return;
+       }
       if (!handleValidationSupportTicketReview()) {
         return;
       }
