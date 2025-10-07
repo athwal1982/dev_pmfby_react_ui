@@ -11,12 +11,15 @@ import Header from "./Layout/Header";
 import { AppBar, Toolbar, Typography, Box, Button, Avatar } from "@mui/material";
 import Footer from "./Layout/Footer";
 import logo_croploss from "../../../assets/img_croploss.svg";
+import {
+  getSupportTicketReview,
+} from "../../Modules/Support/MyTicket/Services/Services";
 
 const ComplaintStatus = () => {
   const alertMessage = AlertMessage();
   const location = useLocation();
   const userData = getSessionStorage("user");
-  const mobileNum = userData && userData.UserMobileNumber ? userData.UserMobileNumber : "";
+  const mobileNum = userData && userData.data && userData.data.data && userData.data.data.result && userData.data.data.result.mobile ? userData.data.data.result.mobile : "" ;// A userData && userData.UserMobileNumber ? userData.UserMobileNumber : "";
 
   const [data, setData] = useState(null);
   const [errorMsg, setErrorMsg] = useState(true);
@@ -45,13 +48,59 @@ const ComplaintStatus = () => {
     };
   }, []);
 
+  const [expanded, setExpanded] = useState("");
   const handleOnExpand = (ticketId) => {
+    debugger;
     if (expandedTicketId === ticketId) {
       setExpandedTicketId(null);
     } else {
       setExpandedTicketId(ticketId);
+      setExpanded("");
+      getChatListDetailsData(ticketId,1,-1);
     }
   };
+    const [chatListDetails, setChatListDetails] = useState([]);
+    const [isLoadingchatListDetails, setIsLoadingchatListDetails] = useState(false);
+    const getChatListDetailsData = async (pSupportTicketID, pPageIndex, pPageSize) => {
+      try {
+       
+        setIsLoadingchatListDetails(true);
+        const formdata = {
+          supportTicketID: pSupportTicketID,
+          pageIndex: pPageIndex,
+          pageSize: pPageSize,
+        };
+        const result = await getSupportTicketReview(formdata);
+        console.log(result, "chat List");
+        setIsLoadingchatListDetails(false);
+        if (result.responseCode === 1) {
+          if (result.responseData.supportTicket && result.responseData.supportTicket.length > 0) {
+            setChatListDetails(result.responseData.supportTicket);
+          } else {
+            setChatListDetails([]);
+          }
+        } else {
+          alertMessage({
+            type: "error",
+            message: result.responseMessage,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+        alertMessage({
+          type: "error",
+          message: error,
+        });
+      }
+    };
+      const updateTicketHistorytData = (addedData) => {
+      if (addedData.IsNewlyAdded === true) {
+        chatListDetails.unshift(addedData);
+      }
+      console.log(addedData);
+      setChatListDetails([]);
+      setChatListDetails(chatListDetails);
+    };  
   const fetchHistory = async () => {
     if (!mobileNum) return;
     try {
@@ -263,8 +312,13 @@ const ComplaintStatus = () => {
                           <TicketItem
                             key={item.SupportTicketNo}
                             item={item}
-                            isExpanded={expandedTicketId === item.SupportTicketNo}
-                            onExpand={() => handleOnExpand(item.SupportTicketNo)}
+                            isExpanded={expandedTicketId === item.SupportTicketID}
+                            onExpand={() => handleOnExpand(item.SupportTicketID)}
+                            chatListDetails={chatListDetails}
+                            isLoadingchatListDetails={isLoadingchatListDetails}
+                            expanded={expanded}
+                            setExpanded={setExpanded}
+                            updateTicketHistorytData={updateTicketHistorytData}
                           />
                         ))}
                     </tbody>

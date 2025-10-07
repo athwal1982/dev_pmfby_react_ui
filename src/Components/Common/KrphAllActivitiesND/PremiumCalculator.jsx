@@ -9,7 +9,8 @@ import { getCropListDistrictWiseDataList, AddCalculatedPremiumData } from "Compo
 import { krphFarmerCallingHistorydata } from "./Services/Methods";
 import BizClass from "./PremiumCalculator.module.scss";
 import DummyImage from "../../../assets/ICLogo/dummy-thumbnail.jpg";
-import FutureGeneraliLogo from "../../../assets/ICLogo/FutureGen.jpeg";
+// A import FutureGeneraliLogo from "../../../assets/ICLogo/FutureGen.jpeg";
+import FutureGeneraliLogo from "../../../assets/ICLogo/FutureGen.png";
 import Aic from "../../../assets/ICLogo/Aic.png";
 import BajajAl from "../../../assets/ICLogo/BajajAllianza.jpeg";
 import CholaMS from "../../../assets/ICLogo/CholaMS.png";
@@ -35,7 +36,7 @@ function PremiumCalculator({ objStateData, objDistrictData, formValuesGI, dcrypt
   const [logoPath, setlogoPath] = useState();
 
   const insuranceLogos = [
-    { compName: "FUTURE GENERALI INDIA INSURANCE CO. LTD.", complog: FutureGeneraliLogo },
+    { compName: "GENERALI CENTRAL INSURANCE COMPANY LTD.", complog: FutureGeneraliLogo },
     { compName: "AGRICULTURE INSURANCE COMPANY", complog: Aic },
     { compName: "BAJAJ ALLIANZ GENERAL INSURANCE CO. LTD", complog: BajajAl },
     { compName: "CHOLAMANDALAM MS GENERAL INSURANCE COMPANY LIMITED", complog: CholaMS },

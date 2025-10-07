@@ -3,7 +3,8 @@ import { AlertMessage } from "Framework/Components/Widgets/Notification/Notifica
 import { getSessionStorage } from "Components/Common/Login/Auth/auth";
 import { getMasterDataBindingDataList, getDistrictByState } from "../../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
 import { getCropListDistrictWiseDataList, AddCalculatedPremiumData } from "../Service/Method";
-import FutureGeneraliLogo from "../../../../assets/ICLogo/FutureGen.jpeg";
+// A import FutureGeneraliLogo from "../../../../assets/ICLogo/FutureGen.jpeg";
+import FutureGeneraliLogo from "../../../../assets/ICLogo/FutureGen.png";
 import Aic from "../../../../assets/ICLogo/Aic.png";
 import BajajAl from "../../../../assets/ICLogo/BajajAllianza.jpeg";
 import CholaMS from "../../../../assets/ICLogo/CholaMS.png";
@@ -27,7 +28,7 @@ function CalculatorLogics() {
   const [logoPath, setlogoPath] = useState();
 
   const insuranceLogos = [
-    { compName: "FUTURE GENERALI INDIA INSURANCE CO. LTD.", complog: FutureGeneraliLogo },
+    { compName: "GENERALI CENTRAL INSURANCE COMPANY LTD.", complog: FutureGeneraliLogo },
     { compName: "AGRICULTURE INSURANCE COMPANY", complog: Aic },
     { compName: "BAJAJ ALLIANZ GENERAL INSURANCE CO. LTD", complog: BajajAl },
     { compName: "CHOLAMANDALAM MS GENERAL INSURANCE COMPANY LIMITED", complog: CholaMS },

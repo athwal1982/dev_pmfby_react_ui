@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart, ArcElement, Tooltip } from "chart.js";
-import FutureGeneraliLogo from "assets/ICLogo/FutureGen.jpeg";
+// A import FutureGeneraliLogo from "assets/ICLogo/FutureGen.jpeg";
+import FutureGeneraliLogo from "assets/ICLogo/FutureGen.png";
 import Aic from "assets/ICLogo/Aic.png";
 import BajajAl from "assets/ICLogo/BajajAllianza.jpeg";
 import CholaMS from "assets/ICLogo/CholaMS.png";
@@ -105,7 +106,7 @@ const Halfcirclechart = ({ yearMonth, fromDate, toDate, data, total, logo, setlo
     [normalizeKey("AGRICULTURE INSURANCE COMPANY")]: Aic,
     [normalizeKey("BAJAJ ALLIANZ GENERAL INSURANCE CO. LTD")]: BajajAl,
     [normalizeKey("CHOLAMANDALAM MS GENERAL INSURANCE COMPANY LIMITED")]: CholaMS,
-    [normalizeKey("FUTURE GENERALI INDIA INSURANCE CO. LTD.")]: FutureGeneraliLogo,
+    [normalizeKey("GENERALI CENTRAL INSURANCE COMPANY LTD.")]: FutureGeneraliLogo,
     [normalizeKey("HDFC ERGO GENERAL INSURANCE CO. LTD.")]: HdfcErgo,
     [normalizeKey("ICICI LOMBARD GENERAL INSURANCE CO. LTD.")]: IciciLom,
     [normalizeKey("IFFCO TOKIO GENERAL INSURANCE CO. LTD.")]: IfcoTokia,

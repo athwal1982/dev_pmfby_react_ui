@@ -77,7 +77,8 @@ import Feedback from "./Feedback/FarmerFeedback";
 import BizClass from "./KrphAllActivitiesND.module.scss";
 import "./KrphAllActivitiesNDN.css";
 import DummyImage from "../../../assets/ICLogo/dummy-thumbnail.jpg";
-import FutureGeneraliLogo from "../../../assets/ICLogo/FutureGen.jpeg";
+// A import FutureGeneraliLogo from "../../../assets/ICLogo/FutureGen.jpeg";
+import FutureGeneraliLogo from "../../../assets/ICLogo/FutureGen.png";
 import Aic from "../../../assets/ICLogo/Aic.png";
 import BajajAl from "../../../assets/ICLogo/BajajAllianza.jpeg";
 import CholaMS from "../../../assets/ICLogo/CholaMS.png";
@@ -5117,7 +5118,7 @@ function KrphAllActivitiesNDN() {
   };
 
   const insuranceLogos = {
-    "FUTURE GENERALI INDIA INSURANCE CO. LTD.": FutureGeneraliLogo,
+    "GENERALI CENTRAL INSURANCE COMPANY LTD.": FutureGeneraliLogo,
     "AGRICULTURE INSURANCE COMPANY": Aic,
     "BAJAJ ALLIANZ GENERAL INSURANCE CO. LTD": BajajAl,
     "CHOLAMANDALAM MS GENERAL INSURANCE COMPANY LIMITED": CholaMS,
