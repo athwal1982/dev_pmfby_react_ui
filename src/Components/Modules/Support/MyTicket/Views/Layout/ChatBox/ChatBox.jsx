@@ -145,9 +145,12 @@ function ChatBox({
                 </a>{" "}
                 or PMFBY WhatsApp Chat Bot (+91 70655 14447) or Crop Insurance App.
               </p>
+              <div className={BizClass.compacttext}>
               <p>Thanking You :</p>
               <p>{user && user.UserDisplayName ? user.UserDisplayName.toString() : ""}</p>
+              <p>{user && user.Designation ? user.Designation.toString() : ""}</p>
               <p>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].insuranceCompanyName : ""}</p>
+              </div> 
             </div>
           </CardContent>
         </Card>

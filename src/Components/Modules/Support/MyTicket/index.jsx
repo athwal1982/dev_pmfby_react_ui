@@ -1,12 +1,11 @@
 import { useEffect, React, useState, useRef } from "react";
 import { PropTypes } from "prop-types";
 import TicketCustomerDetail from "./Views/Layout/TicketCustomerDetail/TicketCustomerDetail";
+import { getCurrentDateTimeTick } from "Configration/Utilities/dateformat";
 import MyTicket from "./Views/MyTicket";
 import ChatBox from "./Views/Layout/ChatBox/ChatBox";
 import ChatList from "./Views/Layout/ChatList/ChatList";
 import MyTicketLogics from "./Logic/Logic";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import html2pdf from "html2pdf.js";
 
 function MyTicketPage({ selectedData, showfunc }) {
@@ -81,46 +80,113 @@ function MyTicketPage({ selectedData, showfunc }) {
     };
     const pageRef = useRef();
     const [isLoadingDownloadpdf, setIsLoadingDownloadpdf] = useState(false);
-    const downloadPDF = async () => {
-    if (!pageRef.current) return;
-    setIsLoadingDownloadpdf(true);
+  // A   const downloadPDF = async () => {
+  // A  if (!pageRef.current) return;
+  // A  setIsLoadingDownloadpdf(true);
 
-    const prevExpanded = expanded;
+  // A  const prevExpanded = expanded;
 
-    // A Force open all panels
-    setExpanded("ALL");
+  // A  // A Force open all panels
+  // A  setExpanded("ALL");
 
-    // A Wait for React to render expanded content
-    await new Promise((resolve) => setTimeout(resolve, 1200));
+  // A  // A Wait for React to render expanded content
+  // A  await new Promise((resolve) => setTimeout(resolve, 1200));
 
-    const element = pageRef.current;
+  // A  const element = pageRef.current;
 
-    const opt = {
-      margin: [10, 10, 10, 10],
-      filename: `Ticket_Details_${selectedData && selectedData.SupportTicketNo ? selectedData.SupportTicketNo : null}.pdf`,
-      image: { type: "jpeg", quality: 0.7 },
-      html2canvas: {
-        scale: 1,
-        useCORS: true,
-        scrollX: 0,
-        scrollY: 0,
-        windowWidth: element.scrollWidth,
-        windowHeight: element.scrollHeight,
-      },
-      jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
-      pagebreak: { mode: ["avoid-all", "css", "legacy"] },
-    };
+  // A  const opt = {
+  // A    margin: [10, 10, 10, 10],
+  // A    filename: `Ticket_Details_${selectedData && selectedData.SupportTicketNo ? selectedData.SupportTicketNo : null}.pdf`,
+  // A    image: { type: "jpeg", quality: 0.7 },
+  // A    html2canvas: {
+  // A      scale: 1,
+  // A      useCORS: true,
+  // A      scrollX: 0,
+  // A      scrollY: 0,
+  // A      windowWidth: element.scrollWidth,
+  // A      windowHeight: element.scrollHeight,
+  // A    },
+  // A    jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
+  // A    pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+  // A  };
 
-    try {
-      await html2pdf().set(opt).from(element).save();
-    } catch (err) {
-      console.error("PDF generation error:", err);
-    } finally {
-      // A Restore previous accordion state
-      setExpanded(prevExpanded);
-      setIsLoadingDownloadpdf(false);
+  // A  try {
+  // A    await html2pdf().set(opt).from(element).save();
+  // A  } catch (err) {
+  // A    console.error("PDF generation error:", err);
+  // A  } finally {
+  // A    // A Restore previous accordion state
+  // A    setExpanded(prevExpanded);
+  // A    setIsLoadingDownloadpdf(false);
+  // A  }
+  // A};
+const downloadPDF = async () => {
+  if (!pageRef.current) return;
+  setIsLoadingDownloadpdf(true);
+
+  const prevExpanded = expanded;
+
+  setExpanded("ALL");
+
+  await new Promise((resolve) => setTimeout(resolve, 1200));
+
+  const element = pageRef.current;
+
+  const clonedElement = element.cloneNode(true);
+
+  const pdfLastSection = clonedElement.querySelector("#pdf-last-section");
+  const targetSection = clonedElement.querySelector("#three_part_ticket_details");
+  const flexContainer = clonedElement.querySelector("#iwant_flex");
+
+ 
+ if (flexContainer) {
+
+  flexContainer.style.display = "grid";
+  flexContainer.style.gridTemplateColumns = "repeat(2, 1fr)";
+  flexContainer.style.gap = "1px"; 
+  flexContainer.style.alignItems = "start";
+  flexContainer.style.justifyItems = "stretch";
+
+  flexContainer.childNodes.forEach((child) => {
+    if (child.nodeType === 1) {
+      const el = child;
+      el.style.margin = "2px 0";
     }
+  });
+}
+
+  if (pdfLastSection && targetSection) {
+    targetSection.parentNode.insertBefore(pdfLastSection, targetSection);
+  }
+  const UniqueDateTimeTick = getCurrentDateTimeTick();
+  const opt = {
+    margin: [10, 10, 10, 10],
+    filename: `Ticket_Details_${selectedData?.SupportTicketNo || "File"}_${UniqueDateTimeTick}.pdf`,
+    image: { type: "jpeg", quality: 0.9 },
+    html2canvas: {
+      scale: 1.2, 
+      useCORS: true,
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: element.scrollWidth,
+      windowHeight: element.scrollHeight,
+    },
+    jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
+    pagebreak: { mode: ["avoid-all", "css", "legacy"] },
   };
+
+  try {
+    await html2pdf().set(opt).from(clonedElement).save();
+  } catch (err) {
+    console.error("PDF generation error:", err);
+  } finally {
+    setExpanded(prevExpanded);
+    setIsLoadingDownloadpdf(false);
+  }
+};
+
+
+
 
   return (
     <MyTicket

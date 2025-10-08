@@ -21,4 +21,9 @@
       font-family: var(--fg-headingsFont);
     }
   }
+
+ .compacttext p {
+  margin: 0;
+  line-height: 1.6; 
+}
 }

@@ -143,7 +143,7 @@ function TicketCustomerDetail({
     downloadExcel(rearrangedData, workSheetColumnWidth, `Farmer_Information${UniqueDateTimeTick}`);
   };
   return (
-    <div className={BizClass.CustomerBox}>
+    <div className={BizClass.CustomerBox} id="pdf-last-section">
       <div className={BizClass.Heading}>
         <div className={BizClass.ReqInfo}>
           <img src={CustomerAvatar} alt="Customer" />
@@ -156,8 +156,8 @@ function TicketCustomerDetail({
           <BsFillArrowDownCircleFill title="Download Farmer Information" style={{ cursor: "pointer" }} onClick={() => excelDownloadFarmerData()} />
         </div>
       </div>
-      <div className={BizClass.MainBox}>
-        <div className={BizClass.InfoBox}>
+      <div className={BizClass.MainBox} >
+        <div className={BizClass.InfoBox} id="iwant_flex">
           {/* <div className={BizClass.SubBox}>
             <BsTelephone />
             <p>

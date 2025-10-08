@@ -160,7 +160,8 @@ function ChatList({
           </p> */}
         </div>
         <div className={BizClass.Event1panel}>{children}</div>
-        <div className={BizClass.Event1panel}>
+        <div className={BizClass.Event1panel} id="three_part_ticket_details">
+
           <Accordion defaultExpanded sx={{ borderRadius: 2, boxShadow: 3, overflow: "hidden" }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}

@@ -54,7 +54,7 @@ function MyTicketLogics() {
           setContent1(editableRef1.current.innerHTML);
         }
       }
-    }, 500);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -643,6 +643,7 @@ function MyTicketLogics() {
         hasDocument: phasDocument,
         attachmentPath: "",
       };
+
       setBtnLoaderActive1(true);
       const result = await addSupportTicketReview(formData);
       setBtnLoaderActive1(false);
