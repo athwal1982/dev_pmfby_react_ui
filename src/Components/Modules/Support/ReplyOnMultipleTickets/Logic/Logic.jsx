@@ -2,10 +2,13 @@ import { useState } from "react";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { getMasterDataBinding } from "../Services/Methods";
 // A import { getSessionStorage } from "Components/Common/Login/Auth/auth";
+import { dateFormatDefault, daysdifference } from "Configration/Utilities/dateformat";
 import { getfarmerTicketsListPagging, getAssignedTicketList } from "../../ManageTicket/Services/Methods";
+import { useLocation } from "react-router-dom";
 
 function ReplyOnMultipleTicketsLogics() {
   const setAlertMessage = AlertMessage();
+  const location = useLocation();
 
   const [filterValues, setFilterValues] = useState({
     txtTicketType: null,
@@ -133,12 +136,23 @@ function ReplyOnMultipleTicketsLogics() {
       });
       setTicketCategoryTypeList([]);
       setTicketCategoryList([]);
+      if (value) {
       getTicketCategoryTypeListData(value.TicketTypeID);
+      }
     }
   };
 
   const searchTicketListOnClick = async () => {
+    debugger;
     try {
+      const dateDiffrence = daysdifference(dateFormatDefault(location.state && location.state.fromdate ? location.state.fromdate : ""), dateFormatDefault(location.state && location.state.toDate ? location.state.toDate : ""));
+          if (dateDiffrence > 31) {
+            setAlertMessage({
+              type: "error",
+              message: "1 month date range is allowed only",
+            });
+            return;
+          }
       if (filterValues.txtTicketType !== null) {
         if (filterValues.txtTicketType.TicketTypeID === "2") {
           setAlertMessage({
@@ -187,8 +201,8 @@ function ReplyOnMultipleTicketsLogics() {
         applicationNo: "",
         docketNo: "",
         statusID: filterValues.txtStatus && filterValues.txtStatus.CommonMasterValueID ? filterValues.txtStatus.CommonMasterValueID : 0,
-        fromdate: "",
-        toDate: "",
+        fromdate: location.state && location.state.fromdate ? location.state.fromdate : "" ,
+        toDate: location.state && location.state.toDate ? location.state.toDate : "" ,
         RequestorMobileNo: "",
         schemeID: 0,
         ticketHeaderID: filterValues.txtTicketType && filterValues.txtTicketType.TicketTypeID ? filterValues.txtTicketType.TicketTypeID : 0,

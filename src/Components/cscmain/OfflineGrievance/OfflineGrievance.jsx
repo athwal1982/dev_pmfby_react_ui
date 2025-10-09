@@ -123,39 +123,39 @@ const OfflineGrievance = () => {
 
   const getGrievenceTicketsDataList = async (pType) => {
     try {
-      if(pType === "Click") {
+      if (pType === "Click") {
         if (formValues.txtFromDate) {
-        if (formValues.txtToDate) {
-          if (formValues.txtFromDate > formValues.txtToDate) {
+          if (formValues.txtToDate) {
+            if (formValues.txtFromDate > formValues.txtToDate) {
+              setAlertMessage({
+                type: "warning",
+                message: "From date must be less than To Date",
+              });
+              return;
+            }
+          } else {
             setAlertMessage({
               type: "warning",
-              message: "From date must be less than To Date",
+              message: "Please select To Date",
             });
             return;
           }
-        } else {
+        }
+        const dateDiffrence = daysdifference(dateFormatDefault(formValues.txtFromDate), dateFormatDefault(formValues.txtToDate));
+        if (dateDiffrence > 31) {
           setAlertMessage({
-            type: "warning",
-            message: "Please select To Date",
+            type: "error",
+            message: "1 month date range is allowed only",
           });
           return;
         }
       }
-      const dateDiffrence = daysdifference(dateFormatDefault(formValues.txtFromDate), dateFormatDefault(formValues.txtToDate));
-      if (dateDiffrence > 31) {
-        setAlertMessage({
-          type: "error",
-          message: "1 month date range is allowed only",
-        });
-        return;
-      }
-      }
-     
+
       setIsLoadingMaster(true);
 
       const requestData = {
-        fromDate: pType === "Click" ? formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "" : "",
-        toDate:   pType === "Click" ? formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "" : "",
+        fromDate: pType === "Click" ? (formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "") : "",
+        toDate: pType === "Click" ? (formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "") : "",
         requestorMobileNo: "",
         grievenceSupportTicketNo: "",
         applicationNo: "",
@@ -192,8 +192,8 @@ const OfflineGrievance = () => {
     }
   };
 
-  const getGrievenceTicketsDataListOnClick = (pType) =>{
-       getGrievenceTicketsDataList(pType);
+  const getGrievenceTicketsDataListOnClick = (pType) => {
+    getGrievenceTicketsDataList(pType);
   };
 
   const [stateList, setStateList] = useState([]);
@@ -529,7 +529,7 @@ const OfflineGrievance = () => {
     getStateListData();
     getTicketStatusListData();
     if (ChkBRHeadTypeID === "124003") {
-    getGrievenceTicketsDataList("PageLand");
+      getGrievenceTicketsDataList("PageLand");
     }
   }, []);
 
@@ -880,8 +880,8 @@ const OfflineGrievance = () => {
                           name="txtToDate"
                           value={formValues.txtToDate}
                           onChange={(e) => updateState("txtToDate", e.target.value)}
-                          min={formValues.txtFromDate || ""}                  // A not before From Date
-                          max={dateToSpecificFormat(moment(), "YYYY-MM-DD")}  // A today or past only
+                          min={formValues.txtFromDate || ""} // A not before From Date
+                          max={dateToSpecificFormat(moment(), "YYYY-MM-DD")} // A today or past only
                         />
                       </Form.InputGroup>
                       <Form.InputGroup label="Source Of Grievance" req="false" errorMsg="">

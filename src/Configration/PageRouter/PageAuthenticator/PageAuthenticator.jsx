@@ -1,5 +1,5 @@
 import React from "react";
-import { checkAuthExist, getSessionStorage,setSessionStorage } from "Components/Common/Login/Auth/auth";
+import { checkAuthExist, getSessionStorage, setSessionStorage } from "Components/Common/Login/Auth/auth";
 import { Navigate } from "react-router-dom";
 
 function PageAuthenticator() {

@@ -57,7 +57,8 @@ function ChatBox({
             <div ref={editableRef} contentEditable suppressContentEditableWarning onInput={handleInput} style={{ fontSize: "0.8rem", lineHeight: 1.4 }}>
               <p>Dear Mr./Ms {selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].farmerName : ""}</p>
               <p>
-                The {selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].insuranceCompanyName : ""} has examined your {selectedData && selectedData.TicketHeadName ? selectedData.TicketHeadName.toLowerCase() : null} relating to
+                The {selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].insuranceCompanyName : ""} has examined your{" "}
+                {selectedData && selectedData.TicketHeadName ? selectedData.TicketHeadName.toLowerCase() : null} relating to
               </p>
             </div>
           </CardContent>
@@ -146,11 +147,11 @@ function ChatBox({
                 or PMFBY WhatsApp Chat Bot (+91 70655 14447) or Crop Insurance App.
               </p>
               <div className={BizClass.compacttext}>
-              <p>Thanking You :</p>
-              <p>{user && user.UserDisplayName ? user.UserDisplayName.toString() : ""}</p>
-              <p>{user && user.Designation ? user.Designation.toString() : ""}</p>
-              <p>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].insuranceCompanyName : ""}</p>
-              </div> 
+                <p>Thanking You :</p>
+                <p>{user && user.UserDisplayName ? user.UserDisplayName.toString() : ""}</p>
+                <p>{user && user.Designation ? user.Designation.toString() : ""}</p>
+                <p>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].insuranceCompanyName : ""}</p>
+              </div>
             </div>
           </CardContent>
         </Card>

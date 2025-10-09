@@ -11,15 +11,14 @@ import Header from "./Layout/Header";
 import { AppBar, Toolbar, Typography, Box, Button, Avatar } from "@mui/material";
 import Footer from "./Layout/Footer";
 import logo_croploss from "../../../assets/img_croploss.svg";
-import {
-  getSupportTicketReview,
-} from "../../Modules/Support/MyTicket/Services/Services";
+import { getSupportTicketReview } from "../../Modules/Support/MyTicket/Services/Services";
 
 const ComplaintStatus = () => {
   const alertMessage = AlertMessage();
   const location = useLocation();
   const userData = getSessionStorage("user");
-  const mobileNum = userData && userData.data && userData.data.data && userData.data.data.result && userData.data.data.result.mobile ? userData.data.data.result.mobile : "" ;// A userData && userData.UserMobileNumber ? userData.UserMobileNumber : "";
+  const mobileNum =
+    userData && userData.data && userData.data.data && userData.data.data.result && userData.data.data.result.mobile ? userData.data.data.result.mobile : ""; // A userData && userData.UserMobileNumber ? userData.UserMobileNumber : "";
 
   const [data, setData] = useState(null);
   const [errorMsg, setErrorMsg] = useState(true);
@@ -56,51 +55,50 @@ const ComplaintStatus = () => {
     } else {
       setExpandedTicketId(ticketId);
       setExpanded("");
-      getChatListDetailsData(ticketId,1,-1);
+      getChatListDetailsData(ticketId, 1, -1);
     }
   };
-    const [chatListDetails, setChatListDetails] = useState([]);
-    const [isLoadingchatListDetails, setIsLoadingchatListDetails] = useState(false);
-    const getChatListDetailsData = async (pSupportTicketID, pPageIndex, pPageSize) => {
-      try {
-       
-        setIsLoadingchatListDetails(true);
-        const formdata = {
-          supportTicketID: pSupportTicketID,
-          pageIndex: pPageIndex,
-          pageSize: pPageSize,
-        };
-        const result = await getSupportTicketReview(formdata);
-        console.log(result, "chat List");
-        setIsLoadingchatListDetails(false);
-        if (result.responseCode === 1) {
-          if (result.responseData.supportTicket && result.responseData.supportTicket.length > 0) {
-            setChatListDetails(result.responseData.supportTicket);
-          } else {
-            setChatListDetails([]);
-          }
+  const [chatListDetails, setChatListDetails] = useState([]);
+  const [isLoadingchatListDetails, setIsLoadingchatListDetails] = useState(false);
+  const getChatListDetailsData = async (pSupportTicketID, pPageIndex, pPageSize) => {
+    try {
+      setIsLoadingchatListDetails(true);
+      const formdata = {
+        supportTicketID: pSupportTicketID,
+        pageIndex: pPageIndex,
+        pageSize: pPageSize,
+      };
+      const result = await getSupportTicketReview(formdata);
+      console.log(result, "chat List");
+      setIsLoadingchatListDetails(false);
+      if (result.responseCode === 1) {
+        if (result.responseData.supportTicket && result.responseData.supportTicket.length > 0) {
+          setChatListDetails(result.responseData.supportTicket);
         } else {
-          alertMessage({
-            type: "error",
-            message: result.responseMessage,
-          });
+          setChatListDetails([]);
         }
-      } catch (error) {
-        console.log(error);
+      } else {
         alertMessage({
           type: "error",
-          message: error,
+          message: result.responseMessage,
         });
       }
-    };
-      const updateTicketHistorytData = (addedData) => {
-      if (addedData.IsNewlyAdded === true) {
-        chatListDetails.unshift(addedData);
-      }
-      console.log(addedData);
-      setChatListDetails([]);
-      setChatListDetails(chatListDetails);
-    };  
+    } catch (error) {
+      console.log(error);
+      alertMessage({
+        type: "error",
+        message: error,
+      });
+    }
+  };
+  const updateTicketHistorytData = (addedData) => {
+    if (addedData.IsNewlyAdded === true) {
+      chatListDetails.unshift(addedData);
+    }
+    console.log(addedData);
+    setChatListDetails([]);
+    setChatListDetails(chatListDetails);
+  };
   const fetchHistory = async () => {
     if (!mobileNum) return;
     try {
@@ -148,12 +146,22 @@ const ComplaintStatus = () => {
     // A    }
     // A  }
     // A }
-        return {
-          requestorMobileNo: userData && userData.data && userData.data.data && userData.data.data.result && userData.data.data.result.mobile ? userData.data.data.result.mobile : "",
-          requestorName: userData && userData.data && userData.data.data && userData.data.data.result && userData.data.data.result.farmerName ? userData.data.data.result.farmerName : "",
-          requestorDistrict: userData && userData.data && userData.data.data && userData.data.data.result && userData.data.data.result.district ? userData.data.data.result.district : "",
-          requestorState: userData && userData.data && userData.data.data && userData.data.data.result && userData.data.data.result.state ? userData.data.data.result.state : "",
-      };
+    return {
+      requestorMobileNo:
+        userData && userData.data && userData.data.data && userData.data.data.result && userData.data.data.result.mobile
+          ? userData.data.data.result.mobile
+          : "",
+      requestorName:
+        userData && userData.data && userData.data.data && userData.data.data.result && userData.data.data.result.farmerName
+          ? userData.data.data.result.farmerName
+          : "",
+      requestorDistrict:
+        userData && userData.data && userData.data.data && userData.data.data.result && userData.data.data.result.district
+          ? userData.data.data.result.district
+          : "",
+      requestorState:
+        userData && userData.data && userData.data.data && userData.data.data.result && userData.data.data.result.state ? userData.data.data.result.state : "",
+    };
   }, [data]);
 
   function maskText(text) {
@@ -168,35 +176,37 @@ const ComplaintStatus = () => {
       .join("");
   }
 
-    const getfarmersTicketData = async () => {
-      debugger;
-      try {
-        let result = "";
-        let formData = "";
-  
-        formData = {
-          viewMode: "RQSTLST",
-          ticketRequestorID: userData && userData.data && userData.data.data && userData.data.data.result && userData.data.data.result.farmerID ? userData.data.data.result.farmerID : "",
-          mobilenumber: "",
-          aadharNumber: "",
-          accountNumber: "",
-        };
-        result = await farmerTicketSummaryKRPH(formData);
-        if (result.response.responseCode.toString() === "1") {
-          const farmersTicketData = Object.values(result.response.responseData.data.result);
-          if (farmersTicketData && farmersTicketData.length > 0) {
-           setData(farmersTicketData);
-           
-          } else {
-             console.log(farmersTicketData); 
-          }
+  const getfarmersTicketData = async () => {
+    debugger;
+    try {
+      let result = "";
+      let formData = "";
+
+      formData = {
+        viewMode: "RQSTLST",
+        ticketRequestorID:
+          userData && userData.data && userData.data.data && userData.data.data.result && userData.data.data.result.farmerID
+            ? userData.data.data.result.farmerID
+            : "",
+        mobilenumber: "",
+        aadharNumber: "",
+        accountNumber: "",
+      };
+      result = await farmerTicketSummaryKRPH(formData);
+      if (result.response.responseCode.toString() === "1") {
+        const farmersTicketData = Object.values(result.response.responseData.data.result);
+        if (farmersTicketData && farmersTicketData.length > 0) {
+          setData(farmersTicketData);
         } else {
-           console.log("farmersTicketData"); 
+          console.log(farmersTicketData);
         }
-      } catch (error) {
-        console.log(error);
+      } else {
+        console.log("farmersTicketData");
       }
-    };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="new-home">
@@ -307,7 +317,7 @@ const ComplaintStatus = () => {
                             onExpand={() => handleOnExpand(item.SupportTicketNo)}
                           />
                         ))} */}
-                        {data &&
+                      {data &&
                         data?.map((item) => (
                           <TicketItem
                             key={item.SupportTicketNo}

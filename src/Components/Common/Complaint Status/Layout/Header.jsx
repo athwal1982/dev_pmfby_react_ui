@@ -33,9 +33,9 @@ const Header = ({ title, showComplaintButton, onComplaintClick, showClaimButton,
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", padding: 0 }}>
         <Box sx={{ display: "flex", marginLeft: "30px", alignItems: "center" }}>
           {/* <img src={logo} alt="Logo" style={{ height: "45px", marginRight: 2 }} /> */}
-           <a href="https://pmfby.gov.in/" target="_blank">
-                        <LogoPMFBY style={{ width: "85%" }} />
-           </a>
+          <a href="https://pmfby.gov.in/" target="_blank">
+            <LogoPMFBY style={{ width: "85%" }} />
+          </a>
         </Box>
         <Box sx={{ textAlign: "right" }}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1, marginRight: "30px" }}>

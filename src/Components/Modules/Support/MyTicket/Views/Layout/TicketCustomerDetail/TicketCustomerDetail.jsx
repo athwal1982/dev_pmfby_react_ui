@@ -156,7 +156,7 @@ function TicketCustomerDetail({
           <BsFillArrowDownCircleFill title="Download Farmer Information" style={{ cursor: "pointer" }} onClick={() => excelDownloadFarmerData()} />
         </div>
       </div>
-      <div className={BizClass.MainBox} >
+      <div className={BizClass.MainBox}>
         <div className={BizClass.InfoBox} id="iwant_flex">
           {/* <div className={BizClass.SubBox}>
             <BsTelephone />

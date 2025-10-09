@@ -7,7 +7,7 @@ const APIEndpoints = {
     EditSupportTicketReview: "FGMS/EditSupportTicketReview",
     AddCSCSupportTicketReview: "FGMS/AddCSCSupportTicketReview",
     krphTicketTrail: "FGMS/krphTicketTrail",
-    KrphSupportTicketAuditUpdate:"FGMS/KrphSupportTicketAuditUpdate",
+    KrphSupportTicketAuditUpdate: "FGMS/KrphSupportTicketAuditUpdate",
     KrphSupportTicketSatisfiedUpdate: "FGMS/KrphSupportTicketSatisfiedUpdate",
   },
 };

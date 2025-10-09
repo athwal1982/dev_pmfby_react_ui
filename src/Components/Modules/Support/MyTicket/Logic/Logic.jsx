@@ -11,7 +11,7 @@ import {
   editSupportTicketReview,
   addCSCSupportTicketReview,
   KrphSupportTicketAuditUpdateData,
-  KrphSupportTicketSatisfiedUpdateData
+  KrphSupportTicketSatisfiedUpdateData,
 } from "../Services/Services";
 import {
   getFarmerPolicyDetail,
@@ -1113,7 +1113,7 @@ function MyTicketLogics() {
     formValidationSatisfyError[name] = validateFieldSatifation(name, value);
   };
 
-    const validateFieldSatifation = (name, value) => {
+  const validateFieldSatifation = (name, value) => {
     let errorsMsg = "";
     if (name === "txtIsSatisfy") {
       if (!value || typeof value === "undefined") {
@@ -1123,7 +1123,7 @@ function MyTicketLogics() {
     return errorsMsg;
   };
 
-    const handleValidationSatifation = () => {
+  const handleValidationSatifation = () => {
     try {
       const errors = {};
       let formIsValid = true;
@@ -1142,15 +1142,18 @@ function MyTicketLogics() {
     }
   };
 
-   const [IsSatisfyList] = useState([{label: "Yes",value : 1},{label: "No",value : 0}]);
-  
+  const [IsSatisfyList] = useState([
+    { label: "Yes", value: 1 },
+    { label: "No", value: 0 },
+  ]);
+
   const [btnLoaderActiveAudit, setbtnLoaderActiveAudit] = useState(false);
   const handleAudit = async (data) => {
     debugger;
     try {
       const formData = {
         ticketHistoryID: data.TicketHistoryID,
-        isAudit:  1,
+        isAudit: 1,
       };
       setbtnLoaderActiveAudit(true);
       const result = await KrphSupportTicketAuditUpdateData(formData);
@@ -1185,13 +1188,14 @@ function MyTicketLogics() {
   const [btnLoaderActiveSatisfaction, setbtnLoaderActiveSatisfaction] = useState(false);
   const handleSatisfaction = async (data) => {
     if (!handleValidationSatifation()) {
-        return;
-      }
+      return;
+    }
 
-     try {
+    try {
       const formData = {
         ticketHistoryID: data.TicketHistoryID,
-        isSatisfied:  formValuesSatifation && formValuesSatifation.txtIsSatisfy && formValuesSatifation.txtIsSatisfy.value ? formValuesSatifation.txtIsSatisfy.value : 0,
+        isSatisfied:
+          formValuesSatifation && formValuesSatifation.txtIsSatisfy && formValuesSatifation.txtIsSatisfy.value ? formValuesSatifation.txtIsSatisfy.value : 0,
       };
       setbtnLoaderActiveSatisfaction(true);
       const result = await KrphSupportTicketSatisfiedUpdateData(formData);
@@ -1222,7 +1226,6 @@ function MyTicketLogics() {
       });
     }
   };
-
 
   return {
     value,

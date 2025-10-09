@@ -222,7 +222,7 @@ function AddLoginLogics() {
       console.log(result, "result");
       if (result.responseCode === 1) {
         if (!(result.responseData.token && result.responseData.token.Token && result.responseData.token.expirationTime)) {
-         setCaptchaCode(generateCaptcha());
+          setCaptchaCode(generateCaptcha());
           setAlertMessage({
             type: "error",
             message: "Token is missing in the response",

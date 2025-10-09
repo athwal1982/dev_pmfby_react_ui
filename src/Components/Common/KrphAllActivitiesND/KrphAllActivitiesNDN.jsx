@@ -3164,7 +3164,10 @@ function KrphAllActivitiesNDN() {
       errors["txtSchemeForFarmerInfo"] = validateFieldSupportTicket("txtSchemeForFarmerInfo", formValuesForFarmerInfo.txtSchemeForFarmerInfo);
       errors["txtTicketCategoryType"] = validateFieldSupportTicket("txtTicketCategoryType", formValuesTicketCreation.txtTicketCategoryType);
       errors["txtTicketCategory"] = validateFieldSupportTicket("txtTicketCategory", formValuesTicketCreation.txtTicketCategory);
-       errors["txtTicketCategoryDescription"] = validateFieldSupportTicket("txtTicketCategoryDescription", formValuesTicketCreation.txtTicketCategoryDescription);
+      errors["txtTicketCategoryDescription"] = validateFieldSupportTicket(
+        "txtTicketCategoryDescription",
+        formValuesTicketCreation.txtTicketCategoryDescription,
+      );
       if (selectedOption === "4") {
         errors["txtCropLossDate"] = validateFieldSupportTicket("txtCropLossDate", formValuesTicketCreation.txtCropLossDate);
         // A errors["txtCropLossTime"] = validateFieldSupportTicket("txtCropLossTime", formValuesTicketCreation.txtCropLossTime);
@@ -3216,7 +3219,7 @@ function KrphAllActivitiesNDN() {
         txtTicketCategoryType: value,
         txtTicketCategory: null,
         txtOtherSubCategory: null,
-        txtTicketCategoryDescription: null
+        txtTicketCategoryDescription: null,
       });
       setTicketCategoryList([]);
       setTicketCategoryDescriptionList([]);
@@ -3230,7 +3233,7 @@ function KrphAllActivitiesNDN() {
         ...formValuesTicketCreation,
         txtTicketCategory: value,
         txtOtherSubCategory: null,
-        txtTicketCategoryDescription: null
+        txtTicketCategoryDescription: null,
       });
       setTicketCategoryOtherList([]);
       setTicketCategoryDescriptionList([]);
@@ -3454,7 +3457,7 @@ function KrphAllActivitiesNDN() {
         ticketCategoryDescriptionID:
           formValuesTicketCreation.txtTicketCategoryDescription && formValuesTicketCreation.txtTicketCategoryDescription.CategoryDescriptionID
             ? formValuesTicketCreation.txtTicketCategoryDescription.CategoryDescriptionID
-            : 0,    
+            : 0,
         // A cropCategoryOthers: formValuesTicketCreation.txtOtherSubCategory ? formValuesTicketCreation.txtOtherSubCategory : "",
         cropCategoryOthers:
           formValuesTicketCreation.txtOtherSubCategory && formValuesTicketCreation.txtOtherSubCategory.OtherCategoryName
@@ -3707,7 +3710,7 @@ function KrphAllActivitiesNDN() {
         ticketCategoryID:
           formValuesTicketCreation.txtTicketCategoryType && formValuesTicketCreation.txtTicketCategoryType.SupportTicketTypeID
             ? formValuesTicketCreation.txtTicketCategoryType.SupportTicketTypeID
-            : 0,     
+            : 0,
         // A cropCategoryOthers: formValuesTicketCreation.txtOtherSubCategory ? formValuesTicketCreation.txtOtherSubCategory : "",
         cropCategoryOthers:
           formValuesTicketCreation.txtOtherSubCategory && formValuesTicketCreation.txtOtherSubCategory.OtherCategoryName
@@ -7442,25 +7445,25 @@ function KrphAllActivitiesNDN() {
                               </InputGroup>
                               <span className="login_ErrorTxt">{formValidationSupportTicketError["txtTicketCategory"]}</span>
                             </div>
-                          </div>  
-                            <div className="form-group_agent">
-                                  <label className="ticket-label_agent">
-                                    Category Description <span className="asteriskCss">&#42;</span>
-                                  </label>
-                              <InputGroup>
-                                <InputControl
-                                  Input_type="select"
-                                  name="txtTicketCategoryDescription"
-                                  getOptionLabel={(option) => `${option.CategoryDescription}`}
-                                  value={formValuesTicketCreation.txtTicketCategoryDescription}
-                                  getOptionValue={(option) => `${option}`}
-                                  options={ticketCategoryDescriptionList}
-                                  ControlTxt="Category Description"
-                                  onChange={(e) => updateStateTicketCreation("txtTicketCategoryDescription", e)}
-                                />
-                              </InputGroup>
-                              <span className="login_ErrorTxt">{formValidationSupportTicketError["txtTicketCategoryDescription"]}</span>
-                            </div>
+                          </div>
+                          <div className="form-group_agent">
+                            <label className="ticket-label_agent">
+                              Category Description <span className="asteriskCss">&#42;</span>
+                            </label>
+                            <InputGroup>
+                              <InputControl
+                                Input_type="select"
+                                name="txtTicketCategoryDescription"
+                                getOptionLabel={(option) => `${option.CategoryDescription}`}
+                                value={formValuesTicketCreation.txtTicketCategoryDescription}
+                                getOptionValue={(option) => `${option}`}
+                                options={ticketCategoryDescriptionList}
+                                ControlTxt="Category Description"
+                                onChange={(e) => updateStateTicketCreation("txtTicketCategoryDescription", e)}
+                              />
+                            </InputGroup>
+                            <span className="login_ErrorTxt">{formValidationSupportTicketError["txtTicketCategoryDescription"]}</span>
+                          </div>
                           {(formValuesTicketCreation.txtTicketCategory && formValuesTicketCreation.txtTicketCategory.TicketCategoryID
                             ? formValuesTicketCreation.txtTicketCategory.TicketCategoryID === 51
                             : 0) ||

@@ -164,13 +164,13 @@ function ManageTicketLogics() {
       }
     }
     if (pviewTYP === "FILTER") {
-    if (formValues.txtTicketType === null) {
-          setAlertMessage({
-            type: "error",
-            message: "Please Select Ticket Type",
-          });
-          return;
-     }
+      if (formValues.txtTicketType === null) {
+        setAlertMessage({
+          type: "error",
+          message: "Please Select Ticket Type",
+        });
+        return;
+      }
     }
     if (showHideDownload === false) {
       const dateDiffrence = daysdifference(dateFormatDefault(formValues.txtFromDate), dateFormatDefault(formValues.txtToDate));
@@ -207,12 +207,12 @@ function ManageTicketLogics() {
         return;
       }
       if (formValues.txtTicketType === null) {
-          setAlertMessage({
-            type: "error",
-            message: "Plesae Select Ticket Tpe",
-          });
-          return;
-     }
+        setAlertMessage({
+          type: "error",
+          message: "Plesae Select Ticket Tpe",
+        });
+        return;
+      }
     }
 
     try {
@@ -231,7 +231,7 @@ function ManageTicketLogics() {
           formValues.txtTicketCategoryType && formValues.txtTicketCategoryType.SupportTicketTypeID ? formValues.txtTicketCategoryType.SupportTicketTypeID : 0,
         supportTicketNo: "",
         applicationNo: "",
-        docketNo:"",
+        docketNo: "",
         statusID: TicketStatusID,
         fromdate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
         toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
@@ -373,7 +373,7 @@ function ManageTicketLogics() {
                         )
                       : "",
                     LossDate: value.LossDate ? dateToSpecificFormat(value.LossDate.split("T")[0], "DD-MM-YYYY") : "",
-                    TicketNCIPDocketNo:value.TicketNCIPDocketNo,
+                    TicketNCIPDocketNo: value.TicketNCIPDocketNo,
                     CreatedBY: value.CreatedBY,
                     CreatedAt: value.CreatedAt
                       ? dateToSpecificFormat(
@@ -685,8 +685,8 @@ function ManageTicketLogics() {
         pageSize: pageSize,
       };
       setIsLoadingFarmersticket(true);
-     // A const result = await getfarmerTicketsListPagging(formData);
-    // A  let result = [];
+      // A const result = await getfarmerTicketsListPagging(formData);
+      // A  let result = [];
       // A if (ChkBRHeadTypeID === "124003" && ChkAppAccessTypeID === "503") {
       // A  result = await getAssignedTicketList(formData);
       // A} else {
@@ -1109,7 +1109,7 @@ function ManageTicketLogics() {
       setTicketCategoryTypeList([]);
       setTicketCategoryList([]);
       if (value) {
-      getTicketCategoryTypeListData(value.TicketTypeID);
+        getTicketCategoryTypeListData(value.TicketTypeID);
       }
     }
 
@@ -1222,9 +1222,12 @@ function ManageTicketLogics() {
     setSatatusCount([{ Open: "0", InProgress: "0", Resolved: "0", ResolvedInformation: "0", ReOpen: "0" }]);
     setFarmersTicketData([]);
   };
-
+  const dataToSend = {
+      fromdate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
+      toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
+    };
   const OpenReplyOnMultipleTiketsForm = () => {
-    navigate("/ReplyOnMultipleTikets");
+    navigate("/ReplyOnMultipleTikets", { state: dataToSend });
   };
 
   useEffect(() => {
@@ -1240,7 +1243,6 @@ function ManageTicketLogics() {
     // A  setIsDataClearedEsclated(false);
     // A  }
     console.log("checking");
-   
   }, [formValues]);
 
   const onClickViewManageTickets = () => {

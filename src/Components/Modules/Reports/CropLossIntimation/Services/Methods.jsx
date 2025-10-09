@@ -8,7 +8,8 @@ export const getSupportTicketCropLossView = async (formData) => {
         ...formData,
       },
     };
-    const result = await ApiCalling(requestData, APIEndpoints.Reports.GetSupportTicketCropLossView);
+    // A const result = await ApiCalling(requestData, APIEndpoints.Reports.GetSupportTicketCropLossView);
+    const result = await ApiCalling(requestData, APIEndpoints.Reports.GetCropLossIntimationReport);
     return result;
   } catch (error) {
     console.log(error);

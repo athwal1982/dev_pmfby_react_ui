@@ -1,4 +1,4 @@
-import {React} from "react";
+import { React } from "react";
 // Anil import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { PropTypes } from "prop-types";
 import { PageBar } from "Framework/Components/Layout";
@@ -7,7 +7,7 @@ import { Button } from "Framework/Components/Widgets";
 import { getUserRightCodeAccess } from "Components/Common/Login/Auth/auth";
 import BizClass from "./MyTicket.module.scss";
 
-function MyTicket({ children, replyBoxCollapsed, setReplyBoxCollapsed, setTicketStatusBtn, ticketData, showfunc, downloadPDF, pageRef,isLoadingDownloadpdf }) {
+function MyTicket({ children, replyBoxCollapsed, setReplyBoxCollapsed, setTicketStatusBtn, ticketData, showfunc, downloadPDF, pageRef, isLoadingDownloadpdf }) {
   // Anil const setAlertMessage = AlertMessage();
   // Anil const navigate = useNavigate();
   const replyTicketRight = getUserRightCodeAccess("mgif");
@@ -57,10 +57,8 @@ function MyTicket({ children, replyBoxCollapsed, setReplyBoxCollapsed, setTicket
     setReplyBoxCollapsed(!replyBoxCollapsed);
   };
 
-
-
   return (
-    <div className={BizClass.Box} >
+    <div className={BizClass.Box}>
       <div className={BizClass.ActionDiv}>
         {/* <PageBar.Button onClick={() => navigate("/ManageTicket")}>Back</PageBar.Button>
          */}
@@ -75,9 +73,14 @@ function MyTicket({ children, replyBoxCollapsed, setReplyBoxCollapsed, setTicket
             <PageBar.Button onClick={() => toggelReOpenButton()}>Re-Open</PageBar.Button>
           ) : null
         ) : null}
-        <Button type="button" varient="title"  trigger={isLoadingDownloadpdf} onClick={() => downloadPDF()} > Export To PDF </Button>
+        <Button type="button" varient="title" trigger={isLoadingDownloadpdf} onClick={() => downloadPDF()}>
+          {" "}
+          Export To PDF{" "}
+        </Button>
       </div>
-      <div className={BizClass.ContentDiv} ref={pageRef}>{children}</div>
+      <div className={BizClass.ContentDiv} ref={pageRef}>
+        {children}
+      </div>
     </div>
   );
 }
