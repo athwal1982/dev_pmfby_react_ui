@@ -586,7 +586,7 @@ const TicketItem = ({ item: ticket, isExpanded, onExpand, chatListDetails, isLoa
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
                     sx={{
-                      backgroundColor: "#55d464ff",
+                      backgroundColor: "#4a90e2",
                       color: "white",
                       fontWeight: "bold",
                       minHeight: 35,
@@ -670,7 +670,7 @@ const TicketItem = ({ item: ticket, isExpanded, onExpand, chatListDetails, isLoa
                           <AccordionSummary
                             expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
                             sx={{
-                              backgroundColor: "#55d464ff",
+                              backgroundColor: "#4a90e2",
                               color: "white",
                               fontWeight: "bold",
                               minHeight: 35,
