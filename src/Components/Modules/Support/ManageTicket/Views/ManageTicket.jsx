@@ -303,6 +303,7 @@ function ManageTicket({
                       <DataGrid.Column field="RequestorName" headerName="Farmer Name" width="210px" />
                       <DataGrid.Column field="RequestorMobileNo" headerName="Mobile No" width="110px" />
                       <DataGrid.Column field="PlotStateName" headerName="State" width="160px" />
+                       <DataGrid.Column field="PlotDistrictName" headerName="District" width="160px" />
                       <DataGrid.Column field="InsuranceCompany" headerName="Insurance Company" width="290px" />
                       <DataGrid.Column field="TicketHeadName" headerName="Type" width="150px" />
                       <DataGrid.Column field="TicketTypeName" headerName="Category" width="180px" />
@@ -432,7 +433,6 @@ function ManageTicket({
                               onChange={(e) => updateState("txtTicketCategory", e)}
                             />
                           </Form.InputGroup>
-                          {showHideDownload ? (
                             <Form.InputGroup label="Source" req="false" errorMsg="">
                               <Form.InputControl
                                 control="select"
@@ -446,7 +446,6 @@ function ManageTicket({
                                 onChange={(e) => updateState("txtTicketSource", e)}
                               />
                             </Form.InputGroup>
-                          ) : null}
                           <Form.InputGroup label="Status" req="false" errorMsg="">
                             <Form.InputControl
                               control="select"
@@ -460,8 +459,7 @@ function ManageTicket({
                               onChange={(e) => updateState("txtStatus", e)}
                             />
                           </Form.InputGroup>
-                          {showHideDownload ? (
-                            <>
+                         
                               <Form.InputGroup label="Scheme" req="false" errorMsg="">
                                 <Form.InputControl
                                   control="select"
@@ -488,8 +486,6 @@ function ManageTicket({
                                   onChange={(e) => updateState("txtInsuranceCompany", e)}
                                 />
                               </Form.InputGroup>
-                            </>
-                          ) : null}
                           <Form.InputGroup label="State" req="false" errorMsg="">
                             <Form.InputControl
                               control="multiselect"
@@ -501,7 +497,6 @@ function ManageTicket({
                               onChange={(e) => updateState("txtState", e)}
                             />
                           </Form.InputGroup>
-                          {showHideDownload ? null : (
                             <Form.InputGroup label="District" req="false" errorMsg="">
                               <Form.InputControl
                                 control="multiselect"
@@ -512,7 +507,6 @@ function ManageTicket({
                                 onChange={(e) => updateState("txtDistrict", e)}
                               />
                             </Form.InputGroup>
-                          )}
                         </div>
                       </Form>
                     </div>

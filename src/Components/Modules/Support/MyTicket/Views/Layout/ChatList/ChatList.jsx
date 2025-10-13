@@ -7,6 +7,7 @@ import { CgWebsite } from "react-icons/cg";
 import { MdOutlineWeb, MdOutlineDisabledByDefault, MdAttachFile, MdOutlineContentCopy } from "react-icons/md";
 import { FaTwitterSquare, FaEdit } from "react-icons/fa";
 import { Loader, Button } from "Framework/Components/Widgets";
+import { InputControl, InputGroup } from "Framework/OldFramework/FormComponents/FormComponents";
 import classNames from "classnames";
 import { PropTypes } from "prop-types";
 import { daysdifference, dateFormatDefault, dateToSpecificFormat, Convert24FourHourAndMinute } from "Configration/Utilities/dateformat";
@@ -45,6 +46,7 @@ function ChatList({
   handleAudit,
   expanded,
   handleChange,
+  pdfDownlaodStatus,
 }) {
   const setAlertMessage = AlertMessage();
   const user = getSessionStorage("user");
@@ -164,7 +166,7 @@ function ChatList({
             <AccordionSummary
               expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
               sx={{
-                backgroundColor: "#55d464ff",
+                backgroundColor: "#4a90e2",
                 color: "white",
                 fontWeight: "bold",
                 minHeight: 35,
@@ -277,7 +279,7 @@ function ChatList({
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
                       sx={{
-                        backgroundColor: "#55d464ff",
+                        backgroundColor: "#4a90e2",
                         color: "white",
                         fontWeight: "bold",
                         minHeight: 35,
@@ -441,6 +443,7 @@ function ChatList({
                                           </Button>
                                         </Form.InputGroup>
                                       </Form.Group>
+                                     
                                     </Form>
                                   ) : null}
                                   {data && data.isSatisfied === 1 ? (
@@ -450,9 +453,38 @@ function ChatList({
                                   ) : (
                                     ""
                                   )}
+                                  
                                 </FormControl>
+                                
                               </Grid>
                             </Grid>
+                             {formValuesSatifation && formValuesSatifation.txtIsSatisfy &&  formValuesSatifation.txtIsSatisfy.value === 0  && data.isSatisfied === null ?  <>
+                                         <Typography variant="subtitle2" fontWeight="bold">
+                                                      Reason :{" "}
+                                                    </Typography>
+                                                    <Typography variant="body2" color="text.secondary">
+                                                       <InputGroup Row="5"  ErrorMsg={formValidationSatisfyError["txtunUnstatisfactoryReason"]}>
+                                                                              <InputControl
+                                                                                Input_type="textarea"
+                                                                                name="txtunUnstatisfactoryReason"
+                                                                                value={formValuesSatifation.txtunUnstatisfactoryReason}
+                                                                                maxLength="500"
+                                                                                rows="5"
+                                                                                onChange={(e) => updateStateSatifation("txtunUnstatisfactoryReason", e.target.value)}
+                                                                              />
+                                                                            </InputGroup>
+                                                                            <p className={BizClass.CounterDescKRPH}>
+                                                                              {formValuesSatifation.txtunUnstatisfactoryReason && formValuesSatifation.txtunUnstatisfactoryReason.length ? formValuesSatifation.txtunUnstatisfactoryReason.length : 0} / {500}
+                                                                            </p>
+                                                    </Typography> </>
+                                        : null } 
+                                   {data && data.isSatisfied === 0 && data.AuditRemarks !== "" ? <><Typography variant="subtitle2" fontWeight="bold">
+                                                      Reason :{" "}
+                                                     
+                                                    </Typography>
+                                                    <Typography variant="body2" color="text.secondary">
+                                                      {data && data.AuditRemarks ? data.AuditRemarks : null}
+                                                    </Typography> </> : "" }     
                           </Grid>
                         </Grid>
                       </Paper>
@@ -466,7 +498,8 @@ function ChatList({
           )}
         </div>
       </div>
-      {open && <CaseHistory handleCloseCaseHistory={handleCloseCaseHistory} selectedData={selectedData} />}
+      {open && <CaseHistory handleCloseCaseHistory={handleCloseCaseHistory} selectedData={selectedData} pdfDownlaodStatus="PDFDN"  />}
+      
     </>
   );
 }

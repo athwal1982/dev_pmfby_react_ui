@@ -91,6 +91,13 @@ function Page(props) {
     setIsSidebarCollapsed((prev) => !prev);
   };
 
+  useEffect(() => {
+  const bhashiniDiv = document.getElementById("bhashini-translation");
+    if (bhashiniDiv) {
+      bhashiniDiv.style.display = "none";
+    }
+}, []);
+
   return (
     <>
       {openSearchModal && <SearchModal setOpenSearchModal={setOpenSearchModal} />}

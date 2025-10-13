@@ -82,6 +82,7 @@ function MyTicketPage({ selectedData, showfunc }) {
     };
     const pageRef = useRef();
     const [isLoadingDownloadpdf, setIsLoadingDownloadpdf] = useState(false);
+    const [pdfDownlaodStatus] = useState("PDFD");
   // A   const downloadPDF = async () => {
   // A  if (!pageRef.current) return;
   // A  setIsLoadingDownloadpdf(true);
@@ -135,9 +136,11 @@ const downloadPDF = async () => {
   const element = pageRef.current;
   const clonedElement = element.cloneNode(true);
 
+
   const pdfLastSection = clonedElement.querySelector("#pdf-last-section");
   const targetSection = clonedElement.querySelector("#three_part_ticket_details");
   const flexContainer = clonedElement.querySelector("#iwant_flex");
+  const flexCaseHistory = clonedElement.querySelector("#case_history_ticket_details");
 
   // A Add two logos on top of the first page
   const logoHeader = document.createElement("div");
@@ -181,10 +184,25 @@ const downloadPDF = async () => {
       }
     });
   }
+  if (flexCaseHistory) {
+    flexCaseHistory.style.display = "flex";
+    flexCaseHistory.style.alignItems = "flex-start";
+    flexCaseHistory.style.justifyItems = "center";
+    flexCaseHistory.style.flexWrap = "wrap";
+  }
+  
 
   if (pdfLastSection && targetSection) {
     targetSection.parentNode.insertBefore(pdfLastSection, targetSection);
   }
+
+  if (flexCaseHistory) {
+  // A Remove it from its current position if needed
+  flexCaseHistory.parentNode?.removeChild(flexCaseHistory);
+  flexCaseHistory.style.pageBreakBefore = "always";
+  // A Append at the very end of the clonedElement
+  clonedElement.appendChild(flexCaseHistory);
+}
 
   const UniqueDateTimeTick = getCurrentDateTimeTick();
   const opt = {
@@ -243,6 +261,8 @@ const downloadPDF = async () => {
       downloadPDF={downloadPDF}
       pageRef={pageRef}
       isLoadingDownloadpdf={isLoadingDownloadpdf}
+      selectedData={selectedData}
+      pdfDownlaodStatus={pdfDownlaodStatus}
     >
       <ChatList
         chatListDetails={chatListDetails}
@@ -267,6 +287,8 @@ const downloadPDF = async () => {
         handleAudit={handleAudit}
         expanded={expanded}
         handleChange={handleChange}
+        pdfDownlaodStatus={pdfDownlaodStatus}
+        formValidationSupportTicketReviewError={formValidationSupportTicketReviewError}
       >
         <ChatBox
           replyBoxCollapsed={replyBoxCollapsed}

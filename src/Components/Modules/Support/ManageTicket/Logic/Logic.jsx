@@ -1113,7 +1113,6 @@ function ManageTicketLogics() {
       }
     }
 
-    if (showHideDownload === false) {
       if (name === "txtState") {
         setFormValues({
           ...formValues,
@@ -1128,7 +1127,6 @@ function ManageTicketLogics() {
           }
         }
       }
-    }
   };
 
   const refereshFarmerTicket = () => {

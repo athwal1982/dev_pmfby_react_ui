@@ -9,8 +9,9 @@ import Ticket from "../../../../../../../assets/img/ticket_band.png";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Loader } from "Framework/Components/Widgets";
 import { getkrphTicketTrailData } from "../../../../MyTicket/Services/Services";
-const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
+const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData,pdfDownlaodStatus }) => {
   const setAlertMessage = AlertMessage();
+
 
   const [steps, setsetps] = useState([]);
 
@@ -25,7 +26,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [animating, setAnimating] = useState(false);
 
-  const stepChunks = chunkArray(steps, 7);
+  const stepChunks = chunkArray(steps, pdfDownlaodStatus === "PDFD" ? steps.length : 7);
 
   const changePage = (nextPage) => {
     if (nextPage < 0 || nextPage >= stepChunks.length) return;
@@ -209,7 +210,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
             id: 1,
             color: "#f06d1a",
             text: `Farmer request received from  ( ${pData && pData.CreatedBY ? pData.CreatedBY : ""} )`,
-            date: dateToSpecificFormat(`${pData.CreatedAt.split("T")[0]} ${Convert24FourHourAndMinute(pData.CreatedAt.split("T")[1])}`, "DD-MM-YYYY HH:mm"),
+            date:  pData && pData.CreatedAt ? dateToSpecificFormat(`${pData.CreatedAt.split("T")[0]} ${Convert24FourHourAndMinute(pData.CreatedAt.split("T")[1])}`, "DD-MM-YYYY HH:mm") : null,
             icon: <img src={Ticket} width="24px" height="24px" />,
             textId: "",
             agentName:
@@ -226,7 +227,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
             id: 2,
             color: "#0f99ef",
             text: "Farmer ticket created",
-            date: dateToSpecificFormat(`${pData.CreatedAt.split("T")[0]} ${Convert24FourHourAndMinute(pData.CreatedAt.split("T")[1])}`, "DD-MM-YYYY HH:mm"),
+            date:  pData && pData.CreatedAt ? dateToSpecificFormat(`${pData.CreatedAt.split("T")[0]} ${Convert24FourHourAndMinute(pData.CreatedAt.split("T")[1])}`, "DD-MM-YYYY HH:mm") : null,
             icon: <img src={Ticket} width="24px" height="24px" />,
             textId: "",
             agentName:
@@ -264,10 +265,10 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
             id: 4,
             color: "#dd5c9cff",
             text: "Ticket responded by IC User",
-            date: dateToSpecificFormat(
+            date:  pData && pData.TicketHistoryDate ? dateToSpecificFormat(
               `${pData.TicketHistoryDate.split("T")[0]} ${Convert24FourHourAndMinute(pData.TicketHistoryDate.split("T")[1])}`,
               "DD-MM-YYYY HH:mm",
-            ),
+            ) : null,
             icon: <img src={Ticket} width="24px" height="24px" />,
             textId: "",
             agentName:
@@ -327,10 +328,10 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
             id: 5,
             color: "#eb0c7b",
             text: "Ticket responded by IC User",
-            date: dateToSpecificFormat(
+            date: pData && pData.TicketHistoryDate ? dateToSpecificFormat(
               `${pData.TicketHistoryDate.split("T")[0]} ${Convert24FourHourAndMinute(pData.TicketHistoryDate.split("T")[1])}`,
               "DD-MM-YYYY HH:mm",
-            ),
+            ): null,
             icon: <img src={Ticket} width="24px" height="24px" />,
             textId: "",
             agentName:
@@ -369,10 +370,10 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
             id: 7,
             color: "#b94e00",
             text: "Ticket reponed by farmer",
-            date: dateToSpecificFormat(
+            date:  pData && pData.TicketHistoryDate ? dateToSpecificFormat(
               `${pData.TicketHistoryDate.split("T")[0]} ${Convert24FourHourAndMinute(pData.TicketHistoryDate.split("T")[1])}`,
               "DD-MM-YYYY HH:mm",
-            ),
+            ) : null,
             icon: <img src={Ticket} width="24px" height="24px" />,
             textId: "",
             agentName:
@@ -534,50 +535,10 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
                 opacity: animating ? 0 : 1,
               }}
             >
-              {/* {stepChunks[currentPage].map((step, index) => (
-               
-                <div
-                  
-                  className="pill top "
-                  style={{
-                    borderColor: step.color,
-                    background: `linear-gradient(to bottom, ${step.color} 25%, #fff 20%)`,
-                    marginBottom: "250px",
-                  }}
-                >
-                  
-
-                  
               
-                  <div className="circle circle-top" style={{ borderColor: step.color }}>
-                    <p className="icon">{step.icon}</p>
-                  </div>
-
-                
-                  <div className="text-part text-top">
-                    <p>{step.text}</p>
-                    <strong style={{fontSize: "12px"}}>{step.ticketStatus}</strong>
-                  </div>
-
-                 
-                  <div className="connector connector-bottom">
-                    <span className="dot" style={{ background: step.color }}></span>
-                  </div>
-
-                
-                  <div className="details details-bottom">
-                    <p>{step.textId}</p>
-                    <p>{step.agentName}</p>
-                    <p>{step.date}</p>
-                     <strong>{step.ticket}</strong> 
-                    <p className="success">{step.status}</p>
-                  </div>
-                </div>
-              
-              ))} */}
-
+              <div id="case_history_ticket_details">
               {stepChunks[currentPage].map((step, index) => (
-                <div className="card-tooltip" key={`${step.id}-${index}`}>
+                <div className="card-tooltip" key={`${step.id}-${index}`} >
                   <div
                     className="pill top"
                     style={{
@@ -625,6 +586,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData }) => {
                   ) : null}
                 </div>
               ))}
+              </div>
             </div>
             {/* Left Arrow */}
             {currentPage >= 0 && (

@@ -1107,6 +1107,7 @@ function MyTicketLogics() {
 
   const [formValuesSatifation, setFormValuesSatifation] = useState({
     txtIsSatisfy: null,
+    txtReason: "",
   });
   const updateStateSatifation = (name, value) => {
     setFormValuesSatifation({ ...formValuesSatifation, [name]: value });
@@ -1120,6 +1121,11 @@ function MyTicketLogics() {
         errorsMsg = "Is Satisfied is required!";
       }
     }
+    if (name === "txtunUnstatisfactoryReason") {
+      if (!value || typeof value === "undefined") {
+        errorsMsg = "Unstatisfactory Reason is required!";
+      }
+    }
     return errorsMsg;
   };
 
@@ -1128,10 +1134,14 @@ function MyTicketLogics() {
       const errors = {};
       let formIsValid = true;
       errors["txtIsSatisfy"] = validateFieldSatifation("txtIsSatisfy", formValuesSatifation.txtIsSatisfy);
+      if(formValuesSatifation && formValuesSatifation.txtIsSatisfy &&  formValuesSatifation.txtIsSatisfy.value === 0) {
+        errors["txtunUnstatisfactoryReason"] = validateFieldSatifation("txtunUnstatisfactoryReason", formValuesSatifation.txtunUnstatisfactoryReason);
+      }
+     
       if (Object.values(errors).join("").toString()) {
         formIsValid = false;
       }
-      setFormValidationSupportTicketReviewError(errors);
+      setFormValidationSatisfyError(errors);
       return formIsValid;
     } catch (error) {
       setAlertMessage({
@@ -1187,6 +1197,7 @@ function MyTicketLogics() {
 
   const [btnLoaderActiveSatisfaction, setbtnLoaderActiveSatisfaction] = useState(false);
   const handleSatisfaction = async (data) => {
+    debugger;
     if (!handleValidationSatifation()) {
       return;
     }
@@ -1196,7 +1207,8 @@ function MyTicketLogics() {
         ticketHistoryID: data.TicketHistoryID,
         isSatisfied:
           formValuesSatifation && formValuesSatifation.txtIsSatisfy && formValuesSatifation.txtIsSatisfy.value ? formValuesSatifation.txtIsSatisfy.value : 0,
-      };
+        auditRemarks: formValuesSatifation && formValuesSatifation.txtunUnstatisfactoryReason ? formValuesSatifation.txtunUnstatisfactoryReason : "",
+        };
       setbtnLoaderActiveSatisfaction(true);
       const result = await KrphSupportTicketSatisfiedUpdateData(formData);
       setbtnLoaderActiveSatisfaction(false);
@@ -1204,6 +1216,7 @@ function MyTicketLogics() {
         for (let i = 0; i < chatListDetails.length; i += 1) {
           if (data.TicketHistoryID === chatListDetails[i].TicketHistoryID) {
             chatListDetails[i].isSatisfied = formValuesSatifation.txtIsSatisfy.value;
+            chatListDetails[i].AuditRemarks = formValuesSatifation.txtunUnstatisfactoryReason;
             break;
           }
         }
