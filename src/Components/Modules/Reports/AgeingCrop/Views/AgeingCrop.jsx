@@ -1,4 +1,4 @@
-import React, { useState, Suspense } from "react";
+import React, { useState, Suspense, useMemo } from "react";
 import { DataGrid, PageBar } from "Framework/Components/Layout";
 import PropTypes from "prop-types";
 import { Loader } from "Framework/Components/Widgets";
@@ -21,6 +21,19 @@ function AgeingCropReport({
   getAgeingCropReportsDetailsList,
   exportAgeingTicketListClick,
 }) {
+  const calculateTotalRow = () => {
+        const totalRow = {
+          [formValues && formValues.txtReportFilter && formValues.txtReportFilter.Value]: "Total",
+          ["Total Open Ticket"]: filteredAgeingCropReportDataList.reduce((acc, row) => Number(acc) + Number(row["Total Open Ticket"]), 0),
+          ["0-10 days"]: filteredAgeingCropReportDataList.reduce((acc, row) => Number(acc) + Number(row["0-10 days"]), 0),
+          ["11-15 days"]: filteredAgeingCropReportDataList.reduce((acc, row) => Number(acc) + Number(row["11-15 days"]), 0),
+          ["16-20 days"]: filteredAgeingCropReportDataList.reduce((acc, row) => Number(acc) + Number(row["16-20 days"]), 0),
+          ["More than 20"]: filteredAgeingCropReportDataList.reduce((acc, row) => Number(acc) + Number(row["More than 20"]), 0),
+        };
+        return [totalRow];
+      };
+    
+  const pinnedBottomRowData = useMemo(() => calculateTotalRow(), [filteredAgeingCropReportDataList]);
   const [openAgeingTicketModal, setOpenAgeingTicketModal] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState([]);
   const openAgeingTicketListClick = (data, headerName) => {
@@ -97,8 +110,9 @@ function AgeingCropReport({
             sixteentotwentydaysCellStyle,
             morthantwentyCellStyle,
           }}
+          pinnedBottomRowData={pinnedBottomRowData} 
         >
-          <DataGrid.Column valueGetter="node.rowIndex + 1" field="#" headerName="Sr No." width={80} pinned="left" />
+          {/* <DataGrid.Column valueGetter="node.rowIndex + 1" field="#" headerName="Sr No." width={80} pinned="left" /> */}
           <DataGrid.Column
             field="Name"
             headerName={
@@ -166,6 +180,21 @@ function AgeingCropReport({
               openAgeingTicketListClick,
             }}
           />
+         <DataGrid.Column
+                            field="total"
+                            headerName="Total"
+                            width="110px"
+                            cellStyle={{ "text-align": "right" }}
+                            valueGetter={(node) => {
+                              return (
+                                Number(node.data["Total Open Ticket"]) +
+                                Number(node.data["0-10 days"]) +
+                                Number(node.data["11-15 days"]) +
+                                Number(node.data["16-20 days"]) +
+                                Number(node.data["More than 20"])
+                              );
+                            }}
+                          />  
         </DataGrid>
       </div>
     </>
@@ -174,39 +203,40 @@ function AgeingCropReport({
 const totalOpenTicketCellStyle = (params) => {
   return (
     <div>
-      {params.data && params.data["Total Open Ticket"] ? (
+      {params.node.rowPinned ? params.data["Total Open Ticket"] : params.data && Number(params.data["Total Open Ticket"]) > 0 ? (
         <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openAgeingTicketListClick(params.data, "Total Open Ticket")}>
           {params.data["Total Open Ticket"]}
         </a>
       ) : (
         "0"
-      )}
+      ) }
+      
     </div>
   );
 };
 const zerototendaysCellStyle = (params) => {
   return (
     <div>
-      {params.data && params.data["0-10 days"] ? (
+      {params.node.rowPinned ? params.data["0-10 days"] : params.data && Number(params.data["0-10 days"]) > 0 ? (
         <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openAgeingTicketListClick(params.data, "0-10 days")}>
           {params.data["0-10 days"]}
         </a>
       ) : (
         "0"
-      )}
+      ) }
     </div>
   );
 };
 const eleventofifteendaysCellStyle = (params) => {
   return (
     <div>
-      {params.data && params.data["11-15 days"] ? (
+      {params.node.rowPinned ? params.data["11-15 days"] : params.data && Number(params.data["11-15 days"]) > 0 ? (
         <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openAgeingTicketListClick(params.data, "11-15 days")}>
           {params.data["11-15 days"]}
         </a>
       ) : (
         "0"
-      )}
+      ) }
     </div>
   );
 };
@@ -214,13 +244,13 @@ const eleventofifteendaysCellStyle = (params) => {
 const sixteentotwentydaysCellStyle = (params) => {
   return (
     <div>
-      {params.data && params.data["16-20 days"] ? (
+       {params.node.rowPinned ? params.data["16-20 days"] : params.data && Number(params.data["16-20 days"]) > 0 ? (
         <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openAgeingTicketListClick(params.data, "16-20 days")}>
           {params.data["16-20 days"]}
         </a>
       ) : (
         "0"
-      )}
+      ) }
     </div>
   );
 };
@@ -228,13 +258,13 @@ const sixteentotwentydaysCellStyle = (params) => {
 const morthantwentyCellStyle = (params) => {
   return (
     <div>
-      {params.data && params.data["More than 20"] ? (
+      {params.node.rowPinned ? params.data["More than 20"] : params.data && Number(params.data["More than 20"]) > 0 ? (
         <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openAgeingTicketListClick(params.data, "More than 20")}>
           {params.data["More than 20"]}
         </a>
       ) : (
         "0"
-      )}
+      ) }
     </div>
   );
 };
