@@ -24,7 +24,6 @@ function ManageTicketPage() {
     getTicketCategoryListData,
     getTicketCategoryTypeListData,
     refereshFarmerTicket,
-    handleBackButtonClick,
     ClearTicketFilters,
     getTicketSourceListData,
     ticketSourceList,
@@ -60,8 +59,6 @@ function ManageTicketPage() {
     totalPages,
     currentPage,
     handlePageChange,
-    onClickViewManageTickets,
-    showHideManageTicket,
     isLoadingDistrictList,
     districtList,
   } = ManageTicketLogics();
@@ -153,7 +150,6 @@ function ManageTicketPage() {
         ticketSourceList={ticketSourceList}
         getTicketSourceListData={getTicketSourceListData}
         refereshFarmerTicket={refereshFarmerTicket}
-        handleBackButtonClick={handleBackButtonClick}
         getTicketCategoryTypeListData={getTicketCategoryTypeListData}
         getTicketCategoryListData={getTicketCategoryListData}
         isLoadingTicketCategoryTypeList={isLoadingTicketCategoryTypeList}
@@ -194,8 +190,6 @@ function ManageTicketPage() {
         totalPages={totalPages}
         currentPage={currentPage}
         handlePageChange={handlePageChange}
-        onClickViewManageTickets={onClickViewManageTickets}
-        showHideManageTicket={showHideManageTicket}
         isLoadingDistrictList={isLoadingDistrictList}
         districtList={districtList}
       />

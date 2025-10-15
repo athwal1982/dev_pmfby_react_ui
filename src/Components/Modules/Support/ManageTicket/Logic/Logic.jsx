@@ -136,7 +136,7 @@ function ManageTicketLogics() {
   const [viewTypeMode, setViewTypeMode] = useState([]);
   const [esclatedCount, setEsclatedCount] = useState("0");
   const [showHideDownload, setshowHideDownload] = useState(true);
-  const [showHideManageTicket, setshowHideManageTicket] = useState(false);
+
   const getFarmersTickets = async (pviewTYP, pType, pageIndex, pageSize) => {
     debugger;
     setViewTypeMode(pviewTYP);
@@ -1243,20 +1243,6 @@ function ManageTicketLogics() {
     console.log("checking");
   }, [formValues]);
 
-  const onClickViewManageTickets = () => {
-    setshowHideManageTicket(true);
-    if (ChkBRHeadTypeID === "124003") {
-      getFarmersTickets("DEFESCAL", "DEFAULTFILTER", 1, 20);
-    }
-    getTicketSourceListData();
-    getTicketStatusListData();
-    getInsuranceCompanyListData();
-    getStateListData();
-    getSchemeListData();
-  };
-  const handleBackButtonClick = () => {
-    setshowHideManageTicket(false);
-  };
 
   return {
     farmersTicketData,
@@ -1274,7 +1260,6 @@ function ManageTicketLogics() {
     getTicketCategoryListData,
     getTicketCategoryTypeListData,
     refereshFarmerTicket,
-    handleBackButtonClick,
     ClearTicketFilters,
     getTicketSourceListData,
     ticketSourceList,
@@ -1310,8 +1295,6 @@ function ManageTicketLogics() {
     totalPages,
     currentPage,
     handlePageChange,
-    showHideManageTicket,
-    onClickViewManageTickets,
     isLoadingDistrictList,
     districtList,
   };

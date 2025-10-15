@@ -78,6 +78,8 @@ import BotFarmerTicket from "Components/Modules/Reports/BotFarmerTicket";
 import BIDashboard from "Components/Common/BIDashboard/BIDashboard";
 import BIDashboard1 from "Components/Common/BIDashboard/BIDashboard1";
 import KRPHPortalN from "Components/Newhome/MobileNumberInput/KRPHPortalN";
+import ICWiseAudit from "Components/Modules/Reports/ICWiseAudit/ICWiseAudit";
+import UserWiseAudit from "Components/Modules/Reports/UserWiseAudit/UserWiseAudit";
 
 const PageRouter = () => {
   return (
@@ -169,6 +171,8 @@ const PageRouter = () => {
         <Route exact path="/BotFarmerTicket" element={<Page component={<BotFarmerTicket />} title="Bot Farmer Tickets" />} />
         <Route exact path="/BIDashboard" element={<BIDashboard />} />
         <Route exact path="/BIDashboard1" element={<Page component={<BIDashboard1 />} title="BI Dashboard" />} />
+        <Route exact path="/ICWiseAudit" element={<Page component={<ICWiseAudit />} title="IC Wise Audit" />} />
+        <Route exact path="/UserWiseAudit" element={<Page component={<UserWiseAudit />} title="User Wise Audit" />} />
       </Routes>
     </Router>
     // </BrowserRouter>

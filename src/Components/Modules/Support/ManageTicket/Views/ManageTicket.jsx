@@ -78,8 +78,6 @@ function ManageTicket({
   totalPages,
   currentPage,
   handlePageChange,
-  showHideManageTicket,
-  onClickViewManageTickets,
   isLoadingDistrictList,
   districtList,
 }) {
@@ -115,21 +113,15 @@ function ManageTicket({
       getFarmersTickets("ESCAL", "", 1, 20);
       // A getFarmersTickets("DEFESCAL", "", 1, 20);
     } else {
-      if (ChkBRHeadTypeID === "124001" && ChkAppAccessTypeID === "503" && showHideManageTicket === false) {
-        console.log(showHideManageTicket);
-      } else if (ChkBRHeadTypeID === "124003") {
+      if (ChkBRHeadTypeID === "124003") {
         getFarmersTickets("DEFESCAL", "DEFAULTFILTER", 1, 20);
       }
     }
-    if (ChkBRHeadTypeID === "124001" && ChkAppAccessTypeID === "503" && showHideManageTicket === false) {
-      console.log(showHideManageTicket);
-    } else {
       getTicketSourceListData();
       getTicketStatusListData();
       getInsuranceCompanyListData();
       getStateListData();
       getSchemeListData();
-    }
   }, [esclationTicketRight]);
 
   console.log(userRightDataList);
@@ -164,10 +156,8 @@ function ManageTicket({
       {openEmegencyCallModal && <SOSEmergencyPopup toggleEmergencyCallModal={toggleEmergencyCallModal} ticketRowData={ticketRowData} />}
       <div className={BizClass.Box}>
         <div className={BizClass.PageBar}>
-          {viewTicketRight ? (
-            <>
-              {ChkBRHeadTypeID === "124001" && ChkAppAccessTypeID === "503" && showHideManageTicket === false ? null : (
-                <div className={BizClass.ticketCounterBar}>
+          {viewTicketRight ? 
+          <div className={BizClass.ticketCounterBar}>
                   <span>Open :</span>
                   <p>{satatusCount && satatusCount.length > 0 ? satatusCount[0].Open : 0}</p>
                   <span>In-Progress :</span>
@@ -180,10 +170,7 @@ function ManageTicket({
                   <p>{satatusCount && satatusCount.length > 0 ? satatusCount[0].ReOpen : 0}</p>
                   <span>Total :</span>
                   <p>{totalSatatusCount}</p>
-                </div>
-              )}
-            </>
-          ) : null}
+          </div> : null}
 
           {/* {userData.BRHeadTypeID.toString() === "124003" || userData.BRHeadTypeID.toString() === "0" ? null : (
           <div className={BizClass.ticketCounterBar}>
@@ -204,10 +191,8 @@ function ManageTicket({
           <HeaderPortal>
             {/* {userData.BRHeadTypeID.toString() === "124003" || userData.BRHeadTypeID.toString() === "0" ? null : ( */}
 
-            {viewTicketRight ? (
-              <>
-                {ChkBRHeadTypeID === "124001" && ChkAppAccessTypeID === "503" && showHideManageTicket === false ? null : (
-                  <>
+            {viewTicketRight ?  
+                   <>
                     <PageBar.Select
                       ControlTxt="Search By"
                       name="SearchByFilter"
@@ -225,25 +210,13 @@ function ManageTicket({
                       onClick={() => searchByMobileTicketsOnClick(1, 5000)}
                       style={{ width: "158px" }}
                     />
-                  </>
-                )}
-              </>
-            ) : null}
+                  </> : null}
 
             {/* )} */}
             {addTicketRight ? <PageBar.Button onClick={() => openAddTicketPage()}>Add Ticket</PageBar.Button> : null}
             {/* {userData.BRHeadTypeID.toString() === "124003" || userData.BRHeadTypeID.toString() === "0" ? null : (
             <PageBar.Button onClick={() => openAddTicketPage()}>Add Ticket</PageBar.Button>
           )} */}
-            {viewTicketRight ? (
-              <>
-                {ChkBRHeadTypeID === "124001" && ChkAppAccessTypeID === "503" ? (
-                  <PageBar.Button onClick={() => onClickViewManageTickets()} title="View Tickets" style={{ display: "flex", alignItems: "center" }}>
-                    View Tickets
-                  </PageBar.Button>
-                ) : null}
-              </>
-            ) : null}
             {esclationTicketRight ? (
               <PageBar.Button onClick={() => onClickEscalation()} title="Escalated Tickets" style={{ display: "flex" }}>
                 Escalated (<p style={{ minWidth: "45px" }}>{esclatedCount}</p>)
@@ -266,12 +239,7 @@ function ManageTicket({
           <div style={{ "text-align": "center" }}>You are not authorized to view this page</div>
         ) : null} */}
 
-          {viewTicketRight ? (
-            <>
-              {ChkBRHeadTypeID === "124001" && ChkAppAccessTypeID === "503" && showHideManageTicket === false ? (
-                <div style={{ "text-align": "center" }}>Click on View Tickets button to view ticket listing</div>
-              ) : (
-                <>
+          {viewTicketRight ? <>
                   <div className={BizClass.divGridPagination}>
                     <DataGrid
                       rowData={farmersTicketData}
@@ -521,13 +489,11 @@ function ManageTicket({
                         </button>
                       ) : null}
                     </div>
-                  </div>{" "}
+                  </div>
                 </>
-              )}
-            </>
-          ) : (
+           : 
             <div style={{ "text-align": "center" }}>You are not authorized to view ticket list</div>
-          )}
+          }
         </div>
       </div>
     </>
@@ -582,8 +548,6 @@ ManageTicket.propTypes = {
   getFilterTicketsClick: PropTypes.func.isRequired,
   showHideDownload: PropTypes.bool,
   OpenReplyOnMultipleTiketsForm: PropTypes.func.isRequired,
-  showHideManageTicket: PropTypes.bool,
-  onClickViewManageTickets: PropTypes.func.isRequired,
 };
 
 function SOSEmergencyPopup({ toggleEmergencyCallModal, ticketRowData }) {

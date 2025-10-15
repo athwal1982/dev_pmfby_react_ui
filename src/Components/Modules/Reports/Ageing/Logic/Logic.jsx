@@ -127,6 +127,7 @@ function AgeingReportLogics() {
   const exportClick = () => {
     const excelParams = {
       fileName: "Ageing(Grievance)",
+      sheetName: "Ageing(Grievance)_Report",
     };
     gridApi.exportDataAsExcel(excelParams);
   };
