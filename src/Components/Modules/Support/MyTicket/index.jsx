@@ -9,6 +9,7 @@ import MyTicketLogics from "./Logic/Logic";
 import html2pdf from "html2pdf.js";
 import LogoL from "../../../../assets/LogoL.jpg";
 import LogoR from "../../../../assets/LogoR.png";
+import CaseHistoryComponent from "./Views/Layout/ChatList/CaseHistory";
 
 function MyTicketPage({ selectedData, showfunc }) {
   const {
@@ -83,6 +84,7 @@ function MyTicketPage({ selectedData, showfunc }) {
     const pageRef = useRef();
     const [isLoadingDownloadpdf, setIsLoadingDownloadpdf] = useState(false);
     const [pdfDownlaodStatus] = useState("PDFD");
+    const [showAnother, setShowAnother] = useState(false);
   // A   const downloadPDF = async () => {
   // A  if (!pageRef.current) return;
   // A  setIsLoadingDownloadpdf(true);
@@ -126,6 +128,7 @@ function MyTicketPage({ selectedData, showfunc }) {
 const downloadPDF = async () => {
   debugger;
   if (!pageRef.current) return;
+  setShowAnother(true);
   setIsLoadingDownloadpdf(true);
 
   const prevExpanded = expanded;
@@ -263,6 +266,7 @@ const downloadPDF = async () => {
       isLoadingDownloadpdf={isLoadingDownloadpdf}
       selectedData={selectedData}
       pdfDownlaodStatus={pdfDownlaodStatus}
+      showAnother={showAnother}
     >
       <ChatList
         chatListDetails={chatListDetails}

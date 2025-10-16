@@ -8,7 +8,7 @@ import { getUserRightCodeAccess } from "Components/Common/Login/Auth/auth";
 import BizClass from "./MyTicket.module.scss";
 import CaseHistoryComponent from "../Views/Layout/ChatList/CaseHistory";
 
-function MyTicket({ children, replyBoxCollapsed, setReplyBoxCollapsed, setTicketStatusBtn, ticketData, showfunc, downloadPDF, pageRef, isLoadingDownloadpdf,selectedData, pdfDownlaodStatus }) {
+function MyTicket({ children, replyBoxCollapsed, setReplyBoxCollapsed, setTicketStatusBtn, ticketData, showfunc, downloadPDF, pageRef, isLoadingDownloadpdf,selectedData, pdfDownlaodStatus, showAnother }) {
   // Anil const setAlertMessage = AlertMessage();
   // Anil const navigate = useNavigate();
   const replyTicketRight = getUserRightCodeAccess("mgif");
@@ -81,9 +81,10 @@ function MyTicket({ children, replyBoxCollapsed, setReplyBoxCollapsed, setTicket
       </div>
       <div className={BizClass.ContentDiv} ref={pageRef}>
         {children}
-         <div style={{ display: "none" }}>
+        {showAnother && <div style={{ display: "none" }}>
         <CaseHistoryComponent  selectedData={selectedData} pdfDownlaodStatus={pdfDownlaodStatus} />
-      </div>
+      </div>}
+         
       </div>
     </div>
   );
