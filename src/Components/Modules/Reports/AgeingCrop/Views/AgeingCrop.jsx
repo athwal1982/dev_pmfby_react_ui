@@ -23,7 +23,7 @@ function AgeingCropReport({
 }) {
   const calculateTotalRow = () => {
         const totalRow = {
-          [formValues && formValues.txtReportFilter && formValues.txtReportFilter.Value]: "Total",
+          Name: "Total",
           ["Total Open Ticket"]: filteredAgeingCropReportDataList.reduce((acc, row) => Number(acc) + Number(row["Total Open Ticket"]), 0),
           ["0-10 days"]: filteredAgeingCropReportDataList.reduce((acc, row) => Number(acc) + Number(row["0-10 days"]), 0),
           ["11-15 days"]: filteredAgeingCropReportDataList.reduce((acc, row) => Number(acc) + Number(row["11-15 days"]), 0),
