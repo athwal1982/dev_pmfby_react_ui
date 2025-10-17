@@ -316,9 +316,12 @@ function ManageTicket({
                         }}
                       />
                     </DataGrid>
-                    {showHideDownload === false || farmersTicketData.length === 0 ? null : (
+                    {/* {showHideDownload === false || farmersTicketData.length === 0 ? null : (
                       <ResponsivePagination current={currentPage} total={totalPages} onPageChange={handlePageChange} />
-                    )}
+                    )} */}
+                      {showHideDownload === false && farmersTicketData.length > 0 ? (
+                      <ResponsivePagination current={currentPage} total={totalPages} onPageChange={handlePageChange} />
+                      ) : null }
                   </div>
                   <div className={BizClass.FilterBox}>
                     <div className={BizClass.Header}>
@@ -328,8 +331,8 @@ function ManageTicket({
                         Filters Tickets
                       </button>
                       <span />
-
-                      <button type="button" className={BizClass.ExportButton} onClick={() => getOneDayTicketData()}>
+                      
+                      <button  disabled={showHideDownload} type="button" className={BizClass.ExportButton} onClick={() => getOneDayTicketData()}>
                         {" "}
                         Download
                       </button>
@@ -483,11 +486,9 @@ function ManageTicket({
                         Apply
                       </button>
                       &nbsp;
-                      {showHideDownload ? (
                         <button type="button" onClick={() => ClearTicketFilters()}>
                           Clear
                         </button>
-                      ) : null}
                     </div>
                   </div>
                 </>

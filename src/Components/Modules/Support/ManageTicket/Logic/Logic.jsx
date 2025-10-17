@@ -172,48 +172,6 @@ function ManageTicketLogics() {
         return;
       }
     }
-    if (showHideDownload === false) {
-      const dateDiffrence = daysdifference(dateFormatDefault(formValues.txtFromDate), dateFormatDefault(formValues.txtToDate));
-      if (formValues.txtFromDate === "") {
-        setAlertMessage({
-          type: "error",
-          message: "Please Select From Date",
-        });
-        return;
-      }
-      if (formValues.txtFromDate) {
-        if (formValues.txtToDate) {
-          if (formValues.txtFromDate > formValues.txtToDate) {
-            setAlertMessage({
-              type: "error",
-              message: "From Date must be less than To Date",
-            });
-            return;
-          }
-        } else {
-          setAlertMessage({
-            type: "error",
-            message: "Please select To Date",
-          });
-          return;
-        }
-      }
-
-      if (dateDiffrence + 1 > 7) {
-        setAlertMessage({
-          type: "error",
-          message: "7 days is allowed only to download.",
-        });
-        return;
-      }
-      if (formValues.txtTicketType === null) {
-        setAlertMessage({
-          type: "error",
-          message: "Plesae Select Ticket Tpe",
-        });
-        return;
-      }
-    }
 
     try {
       // A const userData = getSessionStorage("user");
@@ -257,6 +215,7 @@ function ManageTicketLogics() {
           // A if (pviewTYP === "ESCAL") {
           // A  setEsclatedCount(result.responseData.supportTicket.length);
           // A }
+          setshowHideDownload(false);
           setFarmersTicketData(result.responseData.supportTicket);
 
           result.responseData.status.forEach((v) => {
@@ -286,13 +245,67 @@ function ManageTicketLogics() {
           }
           settotalSatatusCount(totalStsCnt.toString());
           setSatatusCount([jsonStatusCnt]);
-          if (showHideDownload === false) {
-            if (result.responseData.supportTicket.length > 0) {
+          
+        } else {
+          settotalSatatusCount(totalStsCnt.toString());
+          setSatatusCount([jsonStatusCnt]);
+          setFarmersTicketData([]);
+          setshowHideDownload(true);
+        }
+      } else {
+        setAlertMessage({
+          type: "error",
+          message: result.responseMessage,
+        });
+        settotalSatatusCount(totalStsCnt.toString());
+        setSatatusCount([jsonStatusCnt]);
+        setFarmersTicketData([]);
+        setshowHideDownload(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setAlertMessage({
+        type: "error",
+        message: error,
+      });
+    }
+  };
+
+    const getFarmersTicketsForDownload = async (pviewTYP, pageIndex, pageSize) => {
+    debugger;
+  
+    try {
+      const formData = {
+        insuranceCompanyID: formValues.txtInsuranceCompany && formValues.txtInsuranceCompany.CompanyID ? formValues.txtInsuranceCompany.CompanyID : 0,
+        viewTYP: pviewTYP,
+        stateID: formValues.txtState && formValues.txtState.length > 0 ? formValues.txtState.map((x) => x.value.toString()).join(",") : "",
+        districtID: formValues.txtDistrict && formValues.txtDistrict.length > 0 ? formValues.txtDistrict.map((x) => x.value.toString()).join(",") : "",
+        supportTicketID: 0,
+        ticketCategoryID: formValues.txtTicketCategory && formValues.txtTicketCategory.TicketCategoryID ? formValues.txtTicketCategory.TicketCategoryID : 0,
+        ticketSourceID: 0,
+        supportTicketTypeID:
+          formValues.txtTicketCategoryType && formValues.txtTicketCategoryType.SupportTicketTypeID ? formValues.txtTicketCategoryType.SupportTicketTypeID : 0,
+        supportTicketNo: "",
+        applicationNo: "",
+        docketNo: "",
+        statusID: formValues.txtStatus && formValues.txtStatus.CommonMasterValueID ? formValues.txtStatus.CommonMasterValueID : 0,
+        fromdate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
+        toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
+        RequestorMobileNo: "",
+        schemeID: formValues.txtScheme && formValues.txtScheme.SchemeID ? formValues.txtScheme.SchemeID : 0,
+        ticketHeaderID: formValues.txtTicketType && formValues.txtTicketType.TicketTypeID ? formValues.txtTicketType.TicketTypeID : 0,
+        pageIndex: pageIndex,
+        pageSize: pageSize,
+      };
+      setIsLoadingFarmersticket(true);
+      let result = [];
+     
+      result = await getfarmerTicketsListPagging(formData);
+      setIsLoadingFarmersticket(false);
+     
+      if (result.responseCode === 1) {
+        if (result.responseData.supportTicket && result.responseData.supportTicket.length > 0) {
               setTimeout(() => {
-                // A const excelParams = {
-                // A  fileName: `Ticket_Data_${dateToSpecificFormat(formValues.txtFromDate, "DD-MM-YYYY")}`,
-                // A };
-                // A gridApi.exportDataAsExcel(excelParams);
                 const columnOrder = {
                   SupportTicketNo: "Ticket No",
                   ApplicationNo: "Application No",
@@ -389,24 +402,14 @@ function ManageTicketLogics() {
             } else {
               setAlertMessage({
                 type: "error",
-                message: "Data not found to download",
+                message: result.responseMessage,
               });
-              setFarmersTicketData([]);
             }
-          }
-        } else {
-          settotalSatatusCount(totalStsCnt.toString());
-          setSatatusCount([jsonStatusCnt]);
-          setFarmersTicketData([]);
-        }
       } else {
         setAlertMessage({
           type: "error",
-          message: result.responseMessage,
+          message: "Data not found to download",
         });
-        settotalSatatusCount(totalStsCnt.toString());
-        setSatatusCount([jsonStatusCnt]);
-        setFarmersTicketData([]);
       }
     } catch (error) {
       console.log(error);
@@ -1153,6 +1156,10 @@ function ManageTicketLogics() {
     setTicketCategoryList([]);
     setIsDataCleared(true);
     setDistrictList([]);
+    setshowHideDownload(true);
+    setFarmersTicketData([]);
+    setSatatusCount({});
+    settotalSatatusCount("0");
   };
 
   const ClearTicketFiltersForEscalated = () => {
@@ -1177,26 +1184,26 @@ function ManageTicketLogics() {
     setDistrictList([]);
   };
 
-  const SetTicketFiltersTab = () => {
-    setFormValues({
-      ...formValues,
-      txtTicketType: null,
-      txtTicketCategory: null,
-      txtTicketCategoryType: null,
-      txtTicketSource: null,
-      txtStatus: null,
-      txtInsuranceCompany: null,
-      txtState: null,
-      txtDistrict: null,
-      txtScheme: null,
-      txtFromDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
-      txtToDate: dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD"),
-      txtScheme: null,
-    });
-    setTicketCategoryTypeList([]);
-    setTicketCategoryList([]);
-    setDistrictList([]);
-  };
+  // A const SetTicketFiltersTab = () => {
+  // A  setFormValues({
+  // A    ...formValues,
+  // A    txtTicketType: null,
+  // A    txtTicketCategory: null,
+  // A    txtTicketCategoryType: null,
+  // A    txtTicketSource: null,
+  // A    txtStatus: null,
+  // A    txtInsuranceCompany: null,
+  // A    txtState: null,
+  // A    txtDistrict: null,
+  // A    txtScheme: null,
+  // A    txtFromDate: dateToSpecificFormat(moment().subtract(1, "days"), "YYYY-MM-DD"),
+  // A    txtToDate: dateToSpecificFormat(moment().subtract(0, "days"), "YYYY-MM-DD"),
+  // A    txtScheme: null,
+  // A  });
+  // A  setTicketCategoryTypeList([]);
+  // A  setTicketCategoryList([]);
+  // A  setDistrictList([]);
+  // A };
 
   const onClickEscalation = () => {
     ClearTicketFiltersForEscalated();
@@ -1205,20 +1212,64 @@ function ManageTicketLogics() {
 
   const getOneDayTicketData = async () => {
     debugger;
-    setshowHideDownload(false);
-    SetTicketFiltersTab();
-    settotalSatatusCount("0");
-    setSatatusCount([{ Open: "0", InProgress: "0", Resolved: "0", ResolvedInformation: "0", ReOpen: "0" }]);
-    setFarmersTicketData([]);
+    // A setshowHideDownload(false);
+    // A SetTicketFiltersTab();
+    // A settotalSatatusCount("0");
+    // A setSatatusCount([{ Open: "0", InProgress: "0", Resolved: "0", ResolvedInformation: "0", ReOpen: "0" }]);
+    // A setFarmersTicketData([]);
+
+     if (farmersTicketData.length === 0) {
+        setAlertMessage({
+          type: "error",
+          message: "Please filter the data before downloading",
+        });
+        return;
+      }
+      
+      const dateDiffrence = daysdifference(dateFormatDefault(formValues.txtFromDate), dateFormatDefault(formValues.txtToDate));
+      if (formValues.txtFromDate === "") {
+        setAlertMessage({
+          type: "error",
+          message: "Please Select From Date",
+        });
+        return;
+      }
+      if (formValues.txtFromDate) {
+        if (formValues.txtToDate) {
+          if (formValues.txtFromDate > formValues.txtToDate) {
+            setAlertMessage({
+              type: "error",
+              message: "From Date must be less than To Date",
+            });
+            return;
+          }
+        } else {
+          setAlertMessage({
+            type: "error",
+            message: "Please select To Date",
+          });
+          return;
+        }
+      }
+
+      if (dateDiffrence + 1 > 7) {
+        setAlertMessage({
+          type: "error",
+          message: "7 days is allowed only to download.",
+        });
+        return;
+      }
+    
+    getFarmersTicketsForDownload("FILTER", -1, 20);
   };
 
   const getFilterTicketsClick = async () => {
     debugger;
-    setshowHideDownload(true);
-    SetTicketFiltersTab();
-    settotalSatatusCount("0");
-    setSatatusCount([{ Open: "0", InProgress: "0", Resolved: "0", ResolvedInformation: "0", ReOpen: "0" }]);
-    setFarmersTicketData([]);
+    // A setshowHideDownload(true);
+    // A SetTicketFiltersTab();
+    // A settotalSatatusCount("0");
+    // A setSatatusCount([{ Open: "0", InProgress: "0", Resolved: "0", ResolvedInformation: "0", ReOpen: "0" }]);
+    // A setFarmersTicketData([]);
   };
   const dataToSend = {
       fromdate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
