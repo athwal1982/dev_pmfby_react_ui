@@ -9,9 +9,8 @@ import Ticket from "../../../../../../../assets/img/ticket_band.png";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Loader } from "Framework/Components/Widgets";
 import { getkrphTicketTrailData } from "../../../../MyTicket/Services/Services";
-const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData,pdfDownlaodStatus }) => {
+const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData, pdfDownlaodStatus }) => {
   const setAlertMessage = AlertMessage();
-
 
   const [steps, setsetps] = useState([]);
 
@@ -210,7 +209,10 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData,pdfDownlaod
             id: 1,
             color: "#f06d1a",
             text: `Farmer request received from  ( ${pData && pData.CreatedBY ? pData.CreatedBY : ""} )`,
-            date:  pData && pData.CreatedAt ? dateToSpecificFormat(`${pData.CreatedAt.split("T")[0]} ${Convert24FourHourAndMinute(pData.CreatedAt.split("T")[1])}`, "DD-MM-YYYY HH:mm") : null,
+            date:
+              pData && pData.CreatedAt
+                ? dateToSpecificFormat(`${pData.CreatedAt.split("T")[0]} ${Convert24FourHourAndMinute(pData.CreatedAt.split("T")[1])}`, "DD-MM-YYYY HH:mm")
+                : null,
             icon: <img src={Ticket} width="24px" height="24px" />,
             textId: "",
             agentName:
@@ -227,7 +229,10 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData,pdfDownlaod
             id: 2,
             color: "#0f99ef",
             text: "Farmer ticket created",
-            date:  pData && pData.CreatedAt ? dateToSpecificFormat(`${pData.CreatedAt.split("T")[0]} ${Convert24FourHourAndMinute(pData.CreatedAt.split("T")[1])}`, "DD-MM-YYYY HH:mm") : null,
+            date:
+              pData && pData.CreatedAt
+                ? dateToSpecificFormat(`${pData.CreatedAt.split("T")[0]} ${Convert24FourHourAndMinute(pData.CreatedAt.split("T")[1])}`, "DD-MM-YYYY HH:mm")
+                : null,
             icon: <img src={Ticket} width="24px" height="24px" />,
             textId: "",
             agentName:
@@ -265,10 +270,13 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData,pdfDownlaod
             id: 4,
             color: "#dd5c9cff",
             text: "Ticket responded by IC User",
-            date:  pData && pData.TicketHistoryDate ? dateToSpecificFormat(
-              `${pData.TicketHistoryDate.split("T")[0]} ${Convert24FourHourAndMinute(pData.TicketHistoryDate.split("T")[1])}`,
-              "DD-MM-YYYY HH:mm",
-            ) : null,
+            date:
+              pData && pData.TicketHistoryDate
+                ? dateToSpecificFormat(
+                    `${pData.TicketHistoryDate.split("T")[0]} ${Convert24FourHourAndMinute(pData.TicketHistoryDate.split("T")[1])}`,
+                    "DD-MM-YYYY HH:mm",
+                  )
+                : null,
             icon: <img src={Ticket} width="24px" height="24px" />,
             textId: "",
             agentName:
@@ -328,10 +336,13 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData,pdfDownlaod
             id: 5,
             color: "#eb0c7b",
             text: "Ticket responded by IC User",
-            date: pData && pData.TicketHistoryDate ? dateToSpecificFormat(
-              `${pData.TicketHistoryDate.split("T")[0]} ${Convert24FourHourAndMinute(pData.TicketHistoryDate.split("T")[1])}`,
-              "DD-MM-YYYY HH:mm",
-            ): null,
+            date:
+              pData && pData.TicketHistoryDate
+                ? dateToSpecificFormat(
+                    `${pData.TicketHistoryDate.split("T")[0]} ${Convert24FourHourAndMinute(pData.TicketHistoryDate.split("T")[1])}`,
+                    "DD-MM-YYYY HH:mm",
+                  )
+                : null,
             icon: <img src={Ticket} width="24px" height="24px" />,
             textId: "",
             agentName:
@@ -370,10 +381,13 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData,pdfDownlaod
             id: 7,
             color: "#b94e00",
             text: "Ticket reponed by farmer",
-            date:  pData && pData.TicketHistoryDate ? dateToSpecificFormat(
-              `${pData.TicketHistoryDate.split("T")[0]} ${Convert24FourHourAndMinute(pData.TicketHistoryDate.split("T")[1])}`,
-              "DD-MM-YYYY HH:mm",
-            ) : null,
+            date:
+              pData && pData.TicketHistoryDate
+                ? dateToSpecificFormat(
+                    `${pData.TicketHistoryDate.split("T")[0]} ${Convert24FourHourAndMinute(pData.TicketHistoryDate.split("T")[1])}`,
+                    "DD-MM-YYYY HH:mm",
+                  )
+                : null,
             icon: <img src={Ticket} width="24px" height="24px" />,
             textId: "",
             agentName:
@@ -535,57 +549,56 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData,pdfDownlaod
                 opacity: animating ? 0 : 1,
               }}
             >
-              
               <div id="case_history_ticket_details">
-              {stepChunks[currentPage].map((step, index) => (
-                <div className="card-tooltip" key={`${step.id}-${index}`} >
-                  <div
-                    className="pill top"
-                    style={{
-                      borderColor: step.color,
-                      background: `linear-gradient(to bottom, ${step.color} 25%, #fff 20%)`,
-                      marginBottom: "250px",
-                    }}
-                  >
-                    {/* Circle */}
-                    <div className="circle circle-top" style={{ borderColor: step.color }}>
-                      <p className="icon">{step.icon !== "" ? step.icon : <img src={Ticket} width="24px" height="24px" />}</p>
+                {stepChunks[currentPage].map((step, index) => (
+                  <div className="card-tooltip" key={`${step.id}-${index}`}>
+                    <div
+                      className="pill top"
+                      style={{
+                        borderColor: step.color,
+                        background: `linear-gradient(to bottom, ${step.color} 25%, #fff 20%)`,
+                        marginBottom: "250px",
+                      }}
+                    >
+                      {/* Circle */}
+                      <div className="circle circle-top" style={{ borderColor: step.color }}>
+                        <p className="icon">{step.icon !== "" ? step.icon : <img src={Ticket} width="24px" height="24px" />}</p>
+                      </div>
+
+                      {/* Text */}
+                      <div className="text-part text-top">
+                        <strong>{step.tat ? step.tat : ""}</strong>
+                        <p>{step.text}</p>
+                        <strong style={{ fontSize: "12px" }}>{step.ticketStatus}</strong>
+                        <p>
+                          {" "}
+                          <strong style={{ fontSize: "12px" }}>{step.ageing}</strong>{" "}
+                        </p>
+                      </div>
+
+                      {/* Connector */}
+                      <div className="connector connector-bottom">
+                        <span className="dot" style={{ background: step.color }}></span>
+                      </div>
+
+                      {/* Always visible details */}
+                      <div className="details details-bottom">
+                        <p>{step.textId}</p>
+                        <p>{step.agentName}</p>
+                        <p>{step.date}</p>
+                        <strong>{step.ticket}</strong>
+                        <p className="success">{step.status}</p>
+                      </div>
                     </div>
 
-                    {/* Text */}
-                    <div className="text-part text-top">
-                      <strong>{step.tat ? step.tat : ""}</strong>
-                      <p>{step.text}</p>
-                      <strong style={{ fontSize: "12px" }}>{step.ticketStatus}</strong>
-                      <p>
-                        {" "}
-                        <strong style={{ fontSize: "12px" }}>{step.ageing}</strong>{" "}
-                      </p>
-                    </div>
-
-                    {/* Connector */}
-                    <div className="connector connector-bottom">
-                      <span className="dot" style={{ background: step.color }}></span>
-                    </div>
-
-                    {/* Always visible details */}
-                    <div className="details details-bottom">
-                      <p>{step.textId}</p>
-                      <p>{step.agentName}</p>
-                      <p>{step.date}</p>
-                      <strong>{step.ticket}</strong>
-                      <p className="success">{step.status}</p>
-                    </div>
+                    {/* Hover card (summary info only) */}
+                    {step.smsText !== "" ? (
+                      <div className="hover-card">
+                        <p dangerouslySetInnerHTML={{ __html: step.smsText }} />
+                      </div>
+                    ) : null}
                   </div>
-
-                  {/* Hover card (summary info only) */}
-                  {step.smsText !== "" ? (
-                    <div className="hover-card">
-                      <p dangerouslySetInnerHTML={{ __html: step.smsText }} />
-                    </div>
-                  ) : null}
-                </div>
-              ))}
+                ))}
               </div>
             </div>
             {/* Left Arrow */}

@@ -76,15 +76,15 @@ function MyTicketPage({ selectedData, showfunc }) {
     getBankListData();
   }, []);
 
-    const [expanded, setExpanded] = useState("");
-  
-    const handleChange = (panel) => (_, isExpanded) => {
-      setExpanded(isExpanded ? panel : false);
-    };
-    const pageRef = useRef();
-    const [isLoadingDownloadpdf, setIsLoadingDownloadpdf] = useState(false);
-    const [pdfDownlaodStatus] = useState("PDFD");
-    const [showAnother, setShowAnother] = useState(false);
+  const [expanded, setExpanded] = useState("");
+
+  const handleChange = (panel) => (_, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+  const pageRef = useRef();
+  const [isLoadingDownloadpdf, setIsLoadingDownloadpdf] = useState(false);
+  const [pdfDownlaodStatus] = useState("PDFD");
+  const [showAnother, setShowAnother] = useState(false);
   // A   const downloadPDF = async () => {
   // A  if (!pageRef.current) return;
   // A  setIsLoadingDownloadpdf(true);
@@ -125,132 +125,122 @@ function MyTicketPage({ selectedData, showfunc }) {
   // A    setIsLoadingDownloadpdf(false);
   // A  }
   // A};
-const downloadPDF = async () => {
-  debugger;
-  if (!pageRef.current) return;
-  setShowAnother(true);
-  setIsLoadingDownloadpdf(true);
+  const downloadPDF = async () => {
+    debugger;
+    if (!pageRef.current) return;
+    setShowAnother(true);
+    setIsLoadingDownloadpdf(true);
 
-  const prevExpanded = expanded;
-  setExpanded("ALL");
+    const prevExpanded = expanded;
+    setExpanded("ALL");
 
-  await new Promise((resolve) => setTimeout(resolve, 1200));
+    await new Promise((resolve) => setTimeout(resolve, 1200));
 
-  const element = pageRef.current;
-  const clonedElement = element.cloneNode(true);
+    const element = pageRef.current;
+    const clonedElement = element.cloneNode(true);
 
+    const pdfLastSection = clonedElement.querySelector("#pdf-last-section");
+    const targetSection = clonedElement.querySelector("#three_part_ticket_details");
+    const flexContainer = clonedElement.querySelector("#iwant_flex");
+    const flexCaseHistory = clonedElement.querySelector("#case_history_ticket_details");
 
-  const pdfLastSection = clonedElement.querySelector("#pdf-last-section");
-  const targetSection = clonedElement.querySelector("#three_part_ticket_details");
-  const flexContainer = clonedElement.querySelector("#iwant_flex");
-  const flexCaseHistory = clonedElement.querySelector("#case_history_ticket_details");
+    // A Add two logos on top of the first page
+    const logoHeader = document.createElement("div");
+    logoHeader.style.display = "flex";
+    logoHeader.style.justifyContent = "space-between";
+    logoHeader.style.alignItems = "center";
+    logoHeader.style.marginBottom = "0px";
+    logoHeader.style.padding = "0px 20px";
+    logoHeader.style.width = "100%";
 
-  // A Add two logos on top of the first page
-  const logoHeader = document.createElement("div");
-  logoHeader.style.display = "flex";
-  logoHeader.style.justifyContent = "space-between";
-  logoHeader.style.alignItems = "center";
-  logoHeader.style.marginBottom = "0px";
-  logoHeader.style.padding = "0px 20px";
-  logoHeader.style.width = "100%";
+    // A Replace with your own logo URLs or base64 images
+    const leftLogo = document.createElement("img");
+    leftLogo.src = LogoL; // A change path
+    leftLogo.alt = "Left Logo";
+    leftLogo.style.width = "209px";
+    leftLogo.style.height = "123px";
 
-  // A Replace with your own logo URLs or base64 images
-  const leftLogo = document.createElement("img");
-  leftLogo.src = LogoL; // A change path
-  leftLogo.alt = "Left Logo";
-  leftLogo.style.width = "209px";
-  leftLogo.style.height = "123px";
+    const rightLogo = document.createElement("img");
+    rightLogo.src = LogoR; // A change path
+    rightLogo.alt = "Right Logo";
+    rightLogo.style.width = "176px";
+    rightLogo.style.height = "88px";
 
-  const rightLogo = document.createElement("img");
-  rightLogo.src = LogoR; // A change path
-  rightLogo.alt = "Right Logo";
-  rightLogo.style.width = "176px";
-  rightLogo.style.height = "88px";
+    logoHeader.appendChild(leftLogo);
+    logoHeader.appendChild(rightLogo);
 
-  logoHeader.appendChild(leftLogo);
-  logoHeader.appendChild(rightLogo);
+    // A Insert logo header at the top of cloned content
+    clonedElement.insertBefore(logoHeader, clonedElement.firstChild);
 
-  // A Insert logo header at the top of cloned content
-  clonedElement.insertBefore(logoHeader, clonedElement.firstChild);
+    if (flexContainer) {
+      flexContainer.style.display = "grid";
+      flexContainer.style.gridTemplateColumns = "repeat(2, 1fr)";
+      flexContainer.style.gap = "1px";
+      flexContainer.style.alignItems = "start";
+      flexContainer.style.justifyItems = "stretch";
 
-  if (flexContainer) {
-    flexContainer.style.display = "grid";
-    flexContainer.style.gridTemplateColumns = "repeat(2, 1fr)";
-    flexContainer.style.gap = "1px";
-    flexContainer.style.alignItems = "start";
-    flexContainer.style.justifyItems = "stretch";
+      flexContainer.childNodes.forEach((child) => {
+        if (child.nodeType === 1) {
+          const el = child;
+          el.style.margin = "1px 0";
+        }
+      });
+    }
+    if (flexCaseHistory) {
+      flexCaseHistory.style.display = "flex";
+      flexCaseHistory.style.alignItems = "flex-start";
+      flexCaseHistory.style.justifyItems = "center";
+      flexCaseHistory.style.flexWrap = "wrap";
+    }
 
-    flexContainer.childNodes.forEach((child) => {
-      if (child.nodeType === 1) {
-        const el = child;
-        el.style.margin = "1px 0";
-      }
-    });
-  }
-  if (flexCaseHistory) {
-    flexCaseHistory.style.display = "flex";
-    flexCaseHistory.style.alignItems = "flex-start";
-    flexCaseHistory.style.justifyItems = "center";
-    flexCaseHistory.style.flexWrap = "wrap";
-  }
-  
+    if (pdfLastSection && targetSection) {
+      targetSection.parentNode.insertBefore(pdfLastSection, targetSection);
+    }
 
-  if (pdfLastSection && targetSection) {
-    targetSection.parentNode.insertBefore(pdfLastSection, targetSection);
-  }
+    if (flexCaseHistory) {
+      // A Remove it from its current position if needed
+      flexCaseHistory.parentNode?.removeChild(flexCaseHistory);
+      flexCaseHistory.style.pageBreakBefore = "always";
+      // A Append at the very end of the clonedElement
+      clonedElement.appendChild(flexCaseHistory);
+    }
 
-  if (flexCaseHistory) {
-  // A Remove it from its current position if needed
-  flexCaseHistory.parentNode?.removeChild(flexCaseHistory);
-  flexCaseHistory.style.pageBreakBefore = "always";
-  // A Append at the very end of the clonedElement
-  clonedElement.appendChild(flexCaseHistory);
-}
+    const UniqueDateTimeTick = getCurrentDateTimeTick();
+    const opt = {
+      margin: [5, 6, 8, 6],
+      filename: `Ticket_Details_${selectedData?.SupportTicketNo || "File"}_${UniqueDateTimeTick}.pdf`,
+      image: { type: "jpeg", quality: 0.9 },
+      html2canvas: {
+        scale: 1.2,
+        useCORS: true,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: element.scrollWidth,
+        windowHeight: element.scrollHeight,
+      },
+      jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
+      pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+    };
 
-  const UniqueDateTimeTick = getCurrentDateTimeTick();
-  const opt = {
-    margin: [5, 6, 8, 6],
-    filename: `Ticket_Details_${selectedData?.SupportTicketNo || "File"}_${UniqueDateTimeTick}.pdf`,
-    image: { type: "jpeg", quality: 0.9 },
-    html2canvas: {
-      scale: 1.2,
-      useCORS: true,
-      scrollX: 0,
-      scrollY: 0,
-      windowWidth: element.scrollWidth,
-      windowHeight: element.scrollHeight,
-    },
-    jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
-    pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+    try {
+      const worker = html2pdf().set(opt).from(clonedElement).toPdf();
+      await worker.get("pdf").then(async (jspdf) => {
+        const pageCount = jspdf.internal.getNumberOfPages();
+        for (let i = 1; i <= pageCount; i++) {
+          jspdf.setPage(i);
+          jspdf.setFont("helvetica", "bold");
+          jspdf.setFontSize(10);
+          jspdf.text(`Page ${i} of ${pageCount}`, jspdf.internal.pageSize.getWidth() / 2, jspdf.internal.pageSize.getHeight() - 5, { align: "center" });
+        }
+      });
+      await worker.save();
+    } catch (err) {
+      console.error("PDF generation error:", err);
+    } finally {
+      setExpanded(prevExpanded);
+      setIsLoadingDownloadpdf(false);
+    }
   };
-
-  try {
-     const worker = html2pdf().set(opt).from(clonedElement).toPdf();
-     await worker.get("pdf").then(async (jspdf) => {
-      const pageCount = jspdf.internal.getNumberOfPages();
-      for (let i = 1; i <= pageCount; i++) {
-        jspdf.setPage(i);
-        jspdf.setFont("helvetica", "bold");
-        jspdf.setFontSize(10);
-        jspdf.text(
-          `Page ${i} of ${pageCount}`,
-          jspdf.internal.pageSize.getWidth() / 2,
-          jspdf.internal.pageSize.getHeight() - 5,
-          { align: "center" }
-        );
-      }
-     });
-     await worker.save();
-  } catch (err) {
-    console.error("PDF generation error:", err);
-  } finally {
-    setExpanded(prevExpanded);
-    setIsLoadingDownloadpdf(false);
-  }
-};
-
-
-
 
   return (
     <MyTicket

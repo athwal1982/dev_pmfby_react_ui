@@ -1,6 +1,7 @@
 const APIEndpoints = {
   Reports: {
     GetAuditReport: "FGMS/GetAuditReport",
+    GetAuditDetailReport: "FGMS/GetAuditDetailReport",
   },
 };
 

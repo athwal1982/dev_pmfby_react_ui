@@ -1134,10 +1134,10 @@ function MyTicketLogics() {
       const errors = {};
       let formIsValid = true;
       errors["txtIsSatisfy"] = validateFieldSatifation("txtIsSatisfy", formValuesSatifation.txtIsSatisfy);
-      if(formValuesSatifation && formValuesSatifation.txtIsSatisfy &&  formValuesSatifation.txtIsSatisfy.value === 0) {
+      if (formValuesSatifation && formValuesSatifation.txtIsSatisfy && formValuesSatifation.txtIsSatisfy.value === 0) {
         errors["txtunUnstatisfactoryReason"] = validateFieldSatifation("txtunUnstatisfactoryReason", formValuesSatifation.txtunUnstatisfactoryReason);
       }
-     
+
       if (Object.values(errors).join("").toString()) {
         formIsValid = false;
       }
@@ -1208,7 +1208,7 @@ function MyTicketLogics() {
         isSatisfied:
           formValuesSatifation && formValuesSatifation.txtIsSatisfy && formValuesSatifation.txtIsSatisfy.value ? formValuesSatifation.txtIsSatisfy.value : 0,
         auditRemarks: formValuesSatifation && formValuesSatifation.txtunUnstatisfactoryReason ? formValuesSatifation.txtunUnstatisfactoryReason : "",
-        };
+      };
       setbtnLoaderActiveSatisfaction(true);
       const result = await KrphSupportTicketSatisfiedUpdateData(formData);
       setbtnLoaderActiveSatisfaction(false);

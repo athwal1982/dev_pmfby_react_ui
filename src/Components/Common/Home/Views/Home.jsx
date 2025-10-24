@@ -140,7 +140,7 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className={BizClass.PieCharBox}>
+        <div className={BizClass.PieCharBox} style={{display:"none"}}>
           <div className={BizClass.PieChart}>
             {isLoadingChartTypeWiseData ? <Loader /> : null}
             <div className={BizClass.PieChartHeadBox}>
@@ -169,7 +169,7 @@ function Home() {
             {Object.keys(state5).length === 0 ? null : <Chart options={state5.options} series={state5.series} type="pie" height={420} />}
           </div>
         </div>
-        <div className={BizClass.ChartBox}>
+        <div className={BizClass.ChartBox} style={{display:"none"}}>
           <div className={BizClass.Chart}>
             {isLoadingChartInsuranceCompanyData ? <Loader /> : null}
             <div className={BizClass.ChartHeadBox}>

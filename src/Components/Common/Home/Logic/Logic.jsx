@@ -780,7 +780,7 @@ function HomeLogics() {
 
             setSessionStorage("satatusCountSsnStrg", result.response.responseData);
             if (pRefressh !== "yes") {
-              getChartTypeWiseData(2, userData && userData.LoginID ? userData.LoginID : 0, "BYHDR", "");
+              // A getChartTypeWiseData(2, userData && userData.LoginID ? userData.LoginID : 0, "BYHDR", "");
             }
           } else {
             setSatatusCountGrvnce([]);
@@ -846,7 +846,7 @@ function HomeLogics() {
         });
         setSatatusCountInfomn([jsonStatusCntInfomn]);
         if (pRefressh !== "yes") {
-          getChartTypeWiseData(2, userData && userData.LoginID ? userData.LoginID : 0, "BYHDR", "");
+          // A getChartTypeWiseData(2, userData && userData.LoginID ? userData.LoginID : 0, "BYHDR", "");
         }
       }
     } catch (error) {

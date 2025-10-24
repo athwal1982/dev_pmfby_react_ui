@@ -197,7 +197,7 @@ function ManageTicketLogics() {
         schemeID: formValues.txtScheme && formValues.txtScheme.SchemeID ? formValues.txtScheme.SchemeID : 0,
         ticketHeaderID: formValues.txtTicketType && formValues.txtTicketType.TicketTypeID ? formValues.txtTicketType.TicketTypeID : 0,
         // A pageIndex: showHideDownload === false ? -1 : pageIndex,
-        pageIndex:  pageIndex,
+        pageIndex: pageIndex,
         pageSize: pageSize,
       };
       setIsLoadingFarmersticket(true);
@@ -246,7 +246,6 @@ function ManageTicketLogics() {
           }
           settotalSatatusCount(totalStsCnt.toString());
           setSatatusCount([jsonStatusCnt]);
-          
         } else {
           settotalSatatusCount(totalStsCnt.toString());
           setSatatusCount([jsonStatusCnt]);
@@ -272,9 +271,9 @@ function ManageTicketLogics() {
     }
   };
 
-    const getFarmersTicketsForDownload = async (pviewTYP, pageIndex, pageSize) => {
+  const getFarmersTicketsForDownload = async (pviewTYP, pageIndex, pageSize) => {
     debugger;
-  
+
     try {
       const formData = {
         insuranceCompanyID: formValues.txtInsuranceCompany && formValues.txtInsuranceCompany.CompanyID ? formValues.txtInsuranceCompany.CompanyID : 0,
@@ -300,112 +299,106 @@ function ManageTicketLogics() {
       };
       setIsLoadingFarmersticket(true);
       let result = [];
-     
+
       result = await getfarmerTicketsListPagging(formData);
       setIsLoadingFarmersticket(false);
-     
+
       if (result.responseCode === 1) {
         if (result.responseData.supportTicket && result.responseData.supportTicket.length > 0) {
-              setTimeout(() => {
-                const columnOrder = {
-                  SupportTicketNo: "Ticket No",
-                  ApplicationNo: "Application No",
-                  InsurancePolicyNo: "Policy No",
-                  TicketStatus: "Ticket Status",
-                  CallerContactNumber: "Caller Mobile No",
-                  RequestorName: "Farmer Name",
-                  RequestorMobileNo: "Mobile No",
-                  StateMasterName: "State",
-                  DistrictMasterName: "District",
-                  SubDistrictName: "Sub District",
-                  InsuranceCompany: "Insurance Company",
-                  TicketHeadName: "Type",
-                  TicketTypeName: "Category",
-                  TicketCategoryName: "Sub Category",
-                  SchemeName: "Scheme",
-                  RequestSeason: "Season",
-                  RequestYear: "Year",
-                  ApplicationCropName: "Crop Name",
-                  Relation: "Relation",
-                  RelativeName: "Relative Name",
-                  PolicyPremium: "Policy Premium",
-                  PolicyArea: "Policy Area",
-                  PolicyType: "Policy Type",
-                  LandSurveyNumber: "Land Survey Number",
-                  LandDivisionNumber: "Land Division Number",
-                  PlotStateName: "Plot State",
-                  PlotDistrictName: "Plot District",
-                  PlotVillageName: "Plot Village",
-                  ApplicationSource: "Application Source",
-                  CropShare: "Crop Share",
-                  IFSCCode: "IFSC Code",
-                  FarmerShare: "Farmer Share",
-                  SowingDate: "Sowing Date",
-                  LossDate: "Crop Loss At",
-                  TicketNCIPDocketNo: "NCIP Docket No",
-                  CreatedBY: "Created By",
-                  CreatedAt: "Created At",
-                };
-                const mappedData = result.responseData.supportTicket.map((value) => {
-                  return {
-                    SupportTicketNo: value.SupportTicketNo,
-                    ApplicationNo: value.ApplicationNo,
-                    InsurancePolicyNo: value.InsurancePolicyNo,
-                    TicketStatus: value.TicketStatus,
-                    CallerContactNumber: value.CallerContactNumber,
-                    RequestorName: value.RequestorName,
-                    RequestorMobileNo: value.RequestorMobileNo,
-                    StateMasterName: value.StateMasterName,
-                    DistrictMasterName: value.DistrictMasterName,
-                    SubDistrictName: value.SubDistrictName,
-                    InsuranceCompany: value.InsuranceCompany,
-                    TicketHeadName: value.TicketHeadName,
-                    TicketTypeName: value.TicketTypeName,
-                    TicketCategoryName: value.TicketCategoryName,
-                    SchemeName: value.SchemeName,
-                    RequestSeason: value.RequestSeason && value.RequestSeason === 1 ? "Kharif" : value.RequestSeason === 2 ? "Rabi" : "",
-                    RequestYear: value.RequestYear,
-                    ApplicationCropName: value.ApplicationCropName,
-                    Relation: value.Relation,
-                    RelativeName: value.RelativeName,
-                    PolicyPremium: value.PolicyPremium,
-                    PolicyArea: value.PolicyArea,
-                    PolicyType: value.PolicyType,
-                    LandSurveyNumber: value.LandSurveyNumber,
-                    LandDivisionNumber: value.LandDivisionNumber,
-                    PlotStateName: value.PlotStateName,
-                    PlotDistrictName: value.PlotDistrictName,
-                    PlotVillageName: value.PlotVillageName,
-                    ApplicationSource: value.ApplicationSource,
-                    CropShare: value.CropShare,
-                    IFSCCode: value.IFSCCode,
-                    FarmerShare: value.FarmerShare,
-                    SowingDate: value.SowingDate
-                      ? dateToSpecificFormat(
-                          `${value.SowingDate.split("T")[0]} ${Convert24FourHourAndMinute(value.SowingDate.split("T")[1])}`,
-                          "DD-MM-YYYY HH:mm",
-                        )
-                      : "",
-                    LossDate: value.LossDate ? dateToSpecificFormat(value.LossDate.split("T")[0], "DD-MM-YYYY") : "",
-                    TicketNCIPDocketNo: value.TicketNCIPDocketNo,
-                    CreatedBY: value.CreatedBY,
-                    CreatedAt: value.CreatedAt
-                      ? dateToSpecificFormat(
-                          `${value.CreatedAt.split("T")[0]} ${Convert24FourHourAndMinute(value.CreatedAt.split("T")[1])}`,
-                          "DD-MM-YYYY HH:mm",
-                        )
-                      : "",
-                  };
-                });
-                const rearrangedData = rearrangeAndRenameColumns(mappedData, columnOrder);
-                downloadExcel(rearrangedData);
-              }, 1000);
-            } else {
-              setAlertMessage({
-                type: "error",
-                message: result.responseMessage,
-              });
-            }
+          setTimeout(() => {
+            const columnOrder = {
+              SupportTicketNo: "Ticket No",
+              ApplicationNo: "Application No",
+              InsurancePolicyNo: "Policy No",
+              TicketStatus: "Ticket Status",
+              CallerContactNumber: "Caller Mobile No",
+              RequestorName: "Farmer Name",
+              RequestorMobileNo: "Mobile No",
+              StateMasterName: "State",
+              DistrictMasterName: "District",
+              SubDistrictName: "Sub District",
+              InsuranceCompany: "Insurance Company",
+              TicketHeadName: "Type",
+              TicketTypeName: "Category",
+              TicketCategoryName: "Sub Category",
+              SchemeName: "Scheme",
+              RequestSeason: "Season",
+              RequestYear: "Year",
+              ApplicationCropName: "Crop Name",
+              Relation: "Relation",
+              RelativeName: "Relative Name",
+              PolicyPremium: "Policy Premium",
+              PolicyArea: "Policy Area",
+              PolicyType: "Policy Type",
+              LandSurveyNumber: "Land Survey Number",
+              LandDivisionNumber: "Land Division Number",
+              PlotStateName: "Plot State",
+              PlotDistrictName: "Plot District",
+              PlotVillageName: "Plot Village",
+              ApplicationSource: "Application Source",
+              CropShare: "Crop Share",
+              IFSCCode: "IFSC Code",
+              FarmerShare: "Farmer Share",
+              SowingDate: "Sowing Date",
+              LossDate: "Crop Loss At",
+              TicketNCIPDocketNo: "NCIP Docket No",
+              CreatedBY: "Created By",
+              CreatedAt: "Created At",
+            };
+            const mappedData = result.responseData.supportTicket.map((value) => {
+              return {
+                SupportTicketNo: value.SupportTicketNo,
+                ApplicationNo: value.ApplicationNo,
+                InsurancePolicyNo: value.InsurancePolicyNo,
+                TicketStatus: value.TicketStatus,
+                CallerContactNumber: value.CallerContactNumber,
+                RequestorName: value.RequestorName,
+                RequestorMobileNo: value.RequestorMobileNo,
+                StateMasterName: value.StateMasterName,
+                DistrictMasterName: value.DistrictMasterName,
+                SubDistrictName: value.SubDistrictName,
+                InsuranceCompany: value.InsuranceCompany,
+                TicketHeadName: value.TicketHeadName,
+                TicketTypeName: value.TicketTypeName,
+                TicketCategoryName: value.TicketCategoryName,
+                SchemeName: value.SchemeName,
+                RequestSeason: value.RequestSeason && value.RequestSeason === 1 ? "Kharif" : value.RequestSeason === 2 ? "Rabi" : "",
+                RequestYear: value.RequestYear,
+                ApplicationCropName: value.ApplicationCropName,
+                Relation: value.Relation,
+                RelativeName: value.RelativeName,
+                PolicyPremium: value.PolicyPremium,
+                PolicyArea: value.PolicyArea,
+                PolicyType: value.PolicyType,
+                LandSurveyNumber: value.LandSurveyNumber,
+                LandDivisionNumber: value.LandDivisionNumber,
+                PlotStateName: value.PlotStateName,
+                PlotDistrictName: value.PlotDistrictName,
+                PlotVillageName: value.PlotVillageName,
+                ApplicationSource: value.ApplicationSource,
+                CropShare: value.CropShare,
+                IFSCCode: value.IFSCCode,
+                FarmerShare: value.FarmerShare,
+                SowingDate: value.SowingDate
+                  ? dateToSpecificFormat(`${value.SowingDate.split("T")[0]} ${Convert24FourHourAndMinute(value.SowingDate.split("T")[1])}`, "DD-MM-YYYY HH:mm")
+                  : "",
+                LossDate: value.LossDate ? dateToSpecificFormat(value.LossDate.split("T")[0], "DD-MM-YYYY") : "",
+                TicketNCIPDocketNo: value.TicketNCIPDocketNo,
+                CreatedBY: value.CreatedBY,
+                CreatedAt: value.CreatedAt
+                  ? dateToSpecificFormat(`${value.CreatedAt.split("T")[0]} ${Convert24FourHourAndMinute(value.CreatedAt.split("T")[1])}`, "DD-MM-YYYY HH:mm")
+                  : "",
+              };
+            });
+            const rearrangedData = rearrangeAndRenameColumns(mappedData, columnOrder);
+            downloadExcel(rearrangedData);
+          }, 1000);
+        } else {
+          setAlertMessage({
+            type: "error",
+            message: result.responseMessage,
+          });
+        }
       } else {
         setAlertMessage({
           type: "error",
@@ -1117,20 +1110,20 @@ function ManageTicketLogics() {
       }
     }
 
-      if (name === "txtState") {
-        setFormValues({
-          ...formValues,
-          txtState: value,
-          txtDistrict: null,
-        });
-        setDistrictList([]);
-        if (value) {
-          const pStateIds = value && value.length > 0 ? value.map((x) => x.value.toString()).join(",") : "";
-          if (pStateIds !== "") {
-            getDistrictByStateListData(pStateIds);
-          }
+    if (name === "txtState") {
+      setFormValues({
+        ...formValues,
+        txtState: value,
+        txtDistrict: null,
+      });
+      setDistrictList([]);
+      if (value) {
+        const pStateIds = value && value.length > 0 ? value.map((x) => x.value.toString()).join(",") : "";
+        if (pStateIds !== "") {
+          getDistrictByStateListData(pStateIds);
         }
       }
+    }
   };
 
   const refereshFarmerTicket = () => {
@@ -1219,48 +1212,48 @@ function ManageTicketLogics() {
     // A setSatatusCount([{ Open: "0", InProgress: "0", Resolved: "0", ResolvedInformation: "0", ReOpen: "0" }]);
     // A setFarmersTicketData([]);
 
-     if (farmersTicketData.length === 0) {
-        setAlertMessage({
-          type: "error",
-          message: "Please filter the data before downloading",
-        });
-        return;
-      }
-      
-      const dateDiffrence = daysdifference(dateFormatDefault(formValues.txtFromDate), dateFormatDefault(formValues.txtToDate));
-      if (formValues.txtFromDate === "") {
-        setAlertMessage({
-          type: "error",
-          message: "Please Select From Date",
-        });
-        return;
-      }
-      if (formValues.txtFromDate) {
-        if (formValues.txtToDate) {
-          if (formValues.txtFromDate > formValues.txtToDate) {
-            setAlertMessage({
-              type: "error",
-              message: "From Date must be less than To Date",
-            });
-            return;
-          }
-        } else {
+    if (farmersTicketData.length === 0) {
+      setAlertMessage({
+        type: "error",
+        message: "Please filter the data before downloading",
+      });
+      return;
+    }
+
+    const dateDiffrence = daysdifference(dateFormatDefault(formValues.txtFromDate), dateFormatDefault(formValues.txtToDate));
+    if (formValues.txtFromDate === "") {
+      setAlertMessage({
+        type: "error",
+        message: "Please Select From Date",
+      });
+      return;
+    }
+    if (formValues.txtFromDate) {
+      if (formValues.txtToDate) {
+        if (formValues.txtFromDate > formValues.txtToDate) {
           setAlertMessage({
             type: "error",
-            message: "Please select To Date",
+            message: "From Date must be less than To Date",
           });
           return;
         }
-      }
-
-      if (dateDiffrence + 1 > 7) {
+      } else {
         setAlertMessage({
           type: "error",
-          message: "7 days is allowed only to download.",
+          message: "Please select To Date",
         });
         return;
       }
-    
+    }
+
+    if (dateDiffrence + 1 > 7) {
+      setAlertMessage({
+        type: "error",
+        message: "7 days is allowed only to download.",
+      });
+      return;
+    }
+
     getFarmersTicketsForDownload("FILTER", -1, 20);
   };
 
@@ -1273,9 +1266,9 @@ function ManageTicketLogics() {
     // A setFarmersTicketData([]);
   };
   const dataToSend = {
-      fromdate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
-      toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
-    };
+    fromdate: formValues.txtFromDate ? dateToCompanyFormat(formValues.txtFromDate) : "",
+    toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
+  };
   const OpenReplyOnMultipleTiketsForm = () => {
     navigate("/ReplyOnMultipleTikets", { state: dataToSend });
   };
@@ -1294,7 +1287,6 @@ function ManageTicketLogics() {
     // A  }
     console.log("checking");
   }, [formValues]);
-
 
   return {
     farmersTicketData,

@@ -92,11 +92,11 @@ function Page(props) {
   };
 
   useEffect(() => {
-  const bhashiniDiv = document.getElementById("bhashini-translation");
+    const bhashiniDiv = document.getElementById("bhashini-translation");
     if (bhashiniDiv) {
       bhashiniDiv.style.display = "none";
     }
-}, []);
+  }, []);
 
   return (
     <>

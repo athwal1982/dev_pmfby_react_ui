@@ -28,6 +28,7 @@ const FarmerLoginN = ({ handleOtpSent }) => {
   const [enteredCaptcha, setEnteredCaptcha] = useState("");
   const [otpFieldVisible, setOtpFieldVisible] = useState(false);
   const [isButtonVisible, setIsButtonVisible] = useState(true);
+  const [loader, setLoader] = useState(false);
   const setAlertMessage = AlertMessage();
 
   useEffect(() => {
@@ -66,8 +67,9 @@ const FarmerLoginN = ({ handleOtpSent }) => {
 
     try {
       const ip = await publicIp.v4();
-
+      setLoader(true);
       const result = await smsotpsend(mobileNum, ip);
+      setLoader(false);
 
       if (result.data.responseCode === "1") {
         setAlertMessage({ type: "success", message: "OTP sent successfully" });
@@ -80,6 +82,7 @@ const FarmerLoginN = ({ handleOtpSent }) => {
     } catch (error) {
       console.log(error);
       setAlertMessage({ type: "error", message: "An error occurred while sending OTP. Please try again." });
+      setLoader(false);
     }
 
     setCaptchaCode(generateCaptcha());
@@ -178,8 +181,9 @@ const FarmerLoginN = ({ handleOtpSent }) => {
     const enteredOtp = otp;
     try {
       const ip = await publicIp.v4();
+      setLoader(true);
       const verifyResult = await verifyOtp(mobileNum, enteredOtp, ip);
-
+      setLoader(false);
       if (verifyResult.responseCode == 1 || verifyResult.responseCode === "1") {
         const { responseData } = verifyResult;
 
@@ -188,6 +192,7 @@ const FarmerLoginN = ({ handleOtpSent }) => {
             type: "error",
             message: "Enter the correct OTP.",
           });
+          setLoader(false);
           setCaptchaCode(generateCaptcha());
           return;
         }
@@ -224,6 +229,7 @@ const FarmerLoginN = ({ handleOtpSent }) => {
         type: "error",
         message: error?.message || "An error occurred. Please try again.",
       });
+      setLoader(false);
     }
   };
 
@@ -284,7 +290,11 @@ const FarmerLoginN = ({ handleOtpSent }) => {
 
               {isButtonVisible && !otpFieldVisible && (
                 <button className="get-otpN" onClick={handleMobileInputSubmission}>
-                  Send OTP
+                  {loader ? (
+                 <span className="loader-inline"></span>
+                   ) : (
+                 "Send OTP"
+             )}
                 </button>
               )}
 
@@ -338,7 +348,11 @@ const FarmerLoginN = ({ handleOtpSent }) => {
                   </> */}
                   <br />
                   <button className="get-otpN" onClick={handleOtpSubmit}>
-                    Verify OTP
+                    {loader ? (
+                 <span className="loader-inline"></span>
+                   ) : (
+                 "Verify OTP"
+                 )} 
                   </button>
                 </div>
               )}

@@ -122,8 +122,12 @@ function AdminLoginN({ handleOtpSent, setSelectedOption }) {
             {loginBtnClick && enteredCaptcha === "" ? <p className="error-text-adminLoginN">Captcha is required</p> : ""}
 
             {/* Login Button */}
-            <button className="get-otpN" onClick={handleClick}>
-              Login
+            <button className="get-otpN" onClick={handleClick} disabled={loader}>
+              {loader ? (
+                 <span className="loader-inline"></span>
+                   ) : (
+              "Login"
+             )}
             </button>
           </>
         )}

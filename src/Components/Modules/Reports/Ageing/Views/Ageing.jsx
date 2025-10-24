@@ -21,21 +21,20 @@ function AgeingReport({
   getAgeingReportsDetailsList,
   exportAgeingTicketListClick,
 }) {
-
-   const calculateTotalRow = () => {
-      const totalRow = {
-        Name: "Total",
-        ["Total Open Ticket"]: filteredAgeingReportDataList.reduce((acc, row) => Number(acc) + Number(row["Total Open Ticket"]), 0),
-        ["0-3 days"]: filteredAgeingReportDataList.reduce((acc, row) => Number(acc) + Number(row["0-3 days"]), 0),
-        ["4-7 days"]: filteredAgeingReportDataList.reduce((acc, row) => Number(acc) + Number(row["4-7 days"]), 0),
-        ["8-12 days"]: filteredAgeingReportDataList.reduce((acc, row) => Number(acc) + Number(row["8-12 days"]), 0),
-        ["13-15 days"]: filteredAgeingReportDataList.reduce((acc, row) => Number(acc) + Number(row["13-15 days"]), 0),
-        ["More than 16"]: filteredAgeingReportDataList.reduce((acc, row) => Number(acc) + Number(row["More than 16"]), 0),
-      };
-      return [totalRow];
+  const calculateTotalRow = () => {
+    const totalRow = {
+      Name: "Total",
+      ["Total Open Ticket"]: filteredAgeingReportDataList.reduce((acc, row) => Number(acc) + Number(row["Total Open Ticket"]), 0),
+      ["0-3 days"]: filteredAgeingReportDataList.reduce((acc, row) => Number(acc) + Number(row["0-3 days"]), 0),
+      ["4-7 days"]: filteredAgeingReportDataList.reduce((acc, row) => Number(acc) + Number(row["4-7 days"]), 0),
+      ["8-12 days"]: filteredAgeingReportDataList.reduce((acc, row) => Number(acc) + Number(row["8-12 days"]), 0),
+      ["13-15 days"]: filteredAgeingReportDataList.reduce((acc, row) => Number(acc) + Number(row["13-15 days"]), 0),
+      ["More than 16"]: filteredAgeingReportDataList.reduce((acc, row) => Number(acc) + Number(row["More than 16"]), 0),
     };
-  
-    const pinnedBottomRowData = useMemo(() => calculateTotalRow(), [filteredAgeingReportDataList]);
+    return [totalRow];
+  };
+
+  const pinnedBottomRowData = useMemo(() => calculateTotalRow(), [filteredAgeingReportDataList]);
 
   const [openAgeingTicketModal, setOpenAgeingTicketModal] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState([]);
@@ -116,7 +115,7 @@ function AgeingReport({
             thirteentofifteendaysCellStyle,
             morthansixteenCellStyle,
           }}
-          pinnedBottomRowData={pinnedBottomRowData} 
+          pinnedBottomRowData={pinnedBottomRowData}
         >
           {/* <DataGrid.Column valueGetter="node.rowIndex + 1" field="#" headerName="Sr No." width={80} pinned="left" /> */}
           <DataGrid.Column
@@ -197,21 +196,21 @@ function AgeingReport({
             }}
           />
           <DataGrid.Column
-                    field="total"
-                    headerName="Total"
-                    width="110px"
-                    cellStyle={{ "text-align": "right" }}
-                    valueGetter={(node) => {
-                      return (
-                        Number(node.data["Total Open Ticket"]) +
-                        Number(node.data["0-3 days"]) +
-                        Number(node.data["4-7 days"]) +
-                        Number(node.data["8-12 days"]) +
-                        Number(node.data["13-15 days"]) +
-                        Number(node.data["More than 16"])
-                      );
-                    }}
-                  />
+            field="total"
+            headerName="Total"
+            width="110px"
+            cellStyle={{ "text-align": "right" }}
+            valueGetter={(node) => {
+              return (
+                Number(node.data["Total Open Ticket"]) +
+                Number(node.data["0-3 days"]) +
+                Number(node.data["4-7 days"]) +
+                Number(node.data["8-12 days"]) +
+                Number(node.data["13-15 days"]) +
+                Number(node.data["More than 16"])
+              );
+            }}
+          />
         </DataGrid>
       </div>
     </>
@@ -220,40 +219,45 @@ function AgeingReport({
 const totalOpenTicketCellStyle = (params) => {
   return (
     <div>
-      {params.node.rowPinned ? params.data["Total Open Ticket"] : params.data && Number(params.data["Total Open Ticket"]) > 0 ? (
+      {params.node.rowPinned ? (
+        params.data["Total Open Ticket"]
+      ) : params.data && Number(params.data["Total Open Ticket"]) > 0 ? (
         <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openAgeingTicketListClick(params.data, "Total Open Ticket")}>
           {params.data["Total Open Ticket"]}
         </a>
       ) : (
         "0"
-      ) }
+      )}
     </div>
   );
 };
 const zeroto3daysCellStyle = (params) => {
   return (
     <div>
-      {params.node.rowPinned ? params.data["0-3 days"] : params.data && Number(params.data["0-3 days"]) > 0 ? (
+      {params.node.rowPinned ? (
+        params.data["0-3 days"]
+      ) : params.data && Number(params.data["0-3 days"]) > 0 ? (
         <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openAgeingTicketListClick(params.data, "0-3 days")}>
           {params.data["0-3 days"]}
         </a>
       ) : (
         "0"
-      ) }
+      )}
     </div>
   );
 };
 const fourto7daysCellStyle = (params) => {
   return (
     <div>
-       {params.node.rowPinned ? params.data["4-7 days"] : params.data && Number(params.data["4-7 days"]) > 0 ? (
+      {params.node.rowPinned ? (
+        params.data["4-7 days"]
+      ) : params.data && Number(params.data["4-7 days"]) > 0 ? (
         <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openAgeingTicketListClick(params.data, "4-7 days")}>
           {params.data["4-7 days"]}
         </a>
       ) : (
         "0"
-      ) }
-      
+      )}
     </div>
   );
 };
@@ -261,13 +265,15 @@ const fourto7daysCellStyle = (params) => {
 const eighttotwelvedaysCellStyle = (params) => {
   return (
     <div>
-       {params.node.rowPinned ? params.data["8-12 days"] : params.data && Number(params.data["8-12 days"]) > 0 ? (
+      {params.node.rowPinned ? (
+        params.data["8-12 days"]
+      ) : params.data && Number(params.data["8-12 days"]) > 0 ? (
         <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openAgeingTicketListClick(params.data, "8-12 days")}>
           {params.data["8-12 days"]}
         </a>
       ) : (
         "0"
-      ) }
+      )}
     </div>
   );
 };
@@ -275,13 +281,15 @@ const eighttotwelvedaysCellStyle = (params) => {
 const thirteentofifteendaysCellStyle = (params) => {
   return (
     <div>
-       {params.node.rowPinned ? params.data["13-15 days"] : params.data && Number(params.data["13-15 days"]) > 0 ? (
+      {params.node.rowPinned ? (
+        params.data["13-15 days"]
+      ) : params.data && Number(params.data["13-15 days"]) > 0 ? (
         <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openAgeingTicketListClick(params.data, "13-15 days")}>
           {params.data["13-15 days"]}
         </a>
       ) : (
         "0"
-      ) }
+      )}
     </div>
   );
 };
@@ -289,13 +297,15 @@ const thirteentofifteendaysCellStyle = (params) => {
 const morthansixteenCellStyle = (params) => {
   return (
     <div>
-       {params.node.rowPinned ? params.data["More than 16"] : params.data && Number(params.data["More than 16"]) > 0 ? (
+      {params.node.rowPinned ? (
+        params.data["More than 16"]
+      ) : params.data && Number(params.data["More than 16"]) > 0 ? (
         <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openAgeingTicketListClick(params.data, "More than 16")}>
           {params.data["More than 16"]}
         </a>
       ) : (
         "0"
-      ) }
+      )}
     </div>
   );
 };

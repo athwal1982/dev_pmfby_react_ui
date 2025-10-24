@@ -443,7 +443,6 @@ function ChatList({
                                           </Button>
                                         </Form.InputGroup>
                                       </Form.Group>
-                                     
                                     </Form>
                                   ) : null}
                                   {data && data.isSatisfied === 1 ? (
@@ -453,38 +452,49 @@ function ChatList({
                                   ) : (
                                     ""
                                   )}
-                                  
                                 </FormControl>
-                                
                               </Grid>
                             </Grid>
-                             {formValuesSatifation && formValuesSatifation.txtIsSatisfy &&  formValuesSatifation.txtIsSatisfy.value === 0  && data.isSatisfied === null ?  <>
-                                         <Typography variant="subtitle2" fontWeight="bold">
-                                                      Reason :{" "}
-                                                    </Typography>
-                                                    <Typography variant="body2" color="text.secondary">
-                                                       <InputGroup Row="5"  ErrorMsg={formValidationSatisfyError["txtunUnstatisfactoryReason"]}>
-                                                                              <InputControl
-                                                                                Input_type="textarea"
-                                                                                name="txtunUnstatisfactoryReason"
-                                                                                value={formValuesSatifation.txtunUnstatisfactoryReason}
-                                                                                maxLength="500"
-                                                                                rows="5"
-                                                                                onChange={(e) => updateStateSatifation("txtunUnstatisfactoryReason", e.target.value)}
-                                                                              />
-                                                                            </InputGroup>
-                                                                            <p className={BizClass.CounterDescKRPH}>
-                                                                              {formValuesSatifation.txtunUnstatisfactoryReason && formValuesSatifation.txtunUnstatisfactoryReason.length ? formValuesSatifation.txtunUnstatisfactoryReason.length : 0} / {500}
-                                                                            </p>
-                                                    </Typography> </>
-                                        : null } 
-                                   {data && data.isSatisfied === 0 && data.AuditRemarks !== "" ? <><Typography variant="subtitle2" fontWeight="bold">
-                                                      Reason :{" "}
-                                                     
-                                                    </Typography>
-                                                    <Typography variant="body2" color="text.secondary">
-                                                      {data && data.AuditRemarks ? data.AuditRemarks : null}
-                                                    </Typography> </> : "" }     
+                            {formValuesSatifation &&
+                            formValuesSatifation.txtIsSatisfy &&
+                            formValuesSatifation.txtIsSatisfy.value === 0 &&
+                            data.isSatisfied === null ? (
+                              <>
+                                <Typography variant="subtitle2" fontWeight="bold">
+                                  Reason :{" "}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                  <InputGroup Row="5" ErrorMsg={formValidationSatisfyError["txtunUnstatisfactoryReason"]}>
+                                    <InputControl
+                                      Input_type="textarea"
+                                      name="txtunUnstatisfactoryReason"
+                                      value={formValuesSatifation.txtunUnstatisfactoryReason}
+                                      maxLength="500"
+                                      rows="5"
+                                      onChange={(e) => updateStateSatifation("txtunUnstatisfactoryReason", e.target.value)}
+                                    />
+                                  </InputGroup>
+                                  <p className={BizClass.CounterDescKRPH}>
+                                    {formValuesSatifation.txtunUnstatisfactoryReason && formValuesSatifation.txtunUnstatisfactoryReason.length
+                                      ? formValuesSatifation.txtunUnstatisfactoryReason.length
+                                      : 0}{" "}
+                                    / {500}
+                                  </p>
+                                </Typography>{" "}
+                              </>
+                            ) : null}
+                            {data && data.isSatisfied === 0 && data.AuditRemarks !== "" ? (
+                              <>
+                                <Typography variant="subtitle2" fontWeight="bold">
+                                  Reason :{" "}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                  {data && data.AuditRemarks ? data.AuditRemarks : null}
+                                </Typography>{" "}
+                              </>
+                            ) : (
+                              ""
+                            )}
                           </Grid>
                         </Grid>
                       </Paper>
@@ -498,8 +508,7 @@ function ChatList({
           )}
         </div>
       </div>
-      {open && <CaseHistory handleCloseCaseHistory={handleCloseCaseHistory} selectedData={selectedData} pdfDownlaodStatus="PDFDN"  />}
-      
+      {open && <CaseHistory handleCloseCaseHistory={handleCloseCaseHistory} selectedData={selectedData} pdfDownlaodStatus="PDFDN" />}
     </>
   );
 }

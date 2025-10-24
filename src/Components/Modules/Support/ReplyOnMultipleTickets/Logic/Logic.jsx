@@ -137,7 +137,7 @@ function ReplyOnMultipleTicketsLogics() {
       setTicketCategoryTypeList([]);
       setTicketCategoryList([]);
       if (value) {
-      getTicketCategoryTypeListData(value.TicketTypeID);
+        getTicketCategoryTypeListData(value.TicketTypeID);
       }
     }
   };
@@ -145,14 +145,17 @@ function ReplyOnMultipleTicketsLogics() {
   const searchTicketListOnClick = async () => {
     debugger;
     try {
-      const dateDiffrence = daysdifference(dateFormatDefault(location.state && location.state.fromdate ? location.state.fromdate : ""), dateFormatDefault(location.state && location.state.toDate ? location.state.toDate : ""));
-          if (dateDiffrence > 31) {
-            setAlertMessage({
-              type: "error",
-              message: "1 month date range is allowed only",
-            });
-            return;
-          }
+      const dateDiffrence = daysdifference(
+        dateFormatDefault(location.state && location.state.fromdate ? location.state.fromdate : ""),
+        dateFormatDefault(location.state && location.state.toDate ? location.state.toDate : ""),
+      );
+      if (dateDiffrence > 31) {
+        setAlertMessage({
+          type: "error",
+          message: "1 month date range is allowed only",
+        });
+        return;
+      }
       if (filterValues.txtTicketType !== null) {
         if (filterValues.txtTicketType.TicketTypeID === "2") {
           setAlertMessage({
@@ -201,8 +204,8 @@ function ReplyOnMultipleTicketsLogics() {
         applicationNo: "",
         docketNo: "",
         statusID: filterValues.txtStatus && filterValues.txtStatus.CommonMasterValueID ? filterValues.txtStatus.CommonMasterValueID : 0,
-        fromdate: location.state && location.state.fromdate ? location.state.fromdate : "" ,
-        toDate: location.state && location.state.toDate ? location.state.toDate : "" ,
+        fromdate: location.state && location.state.fromdate ? location.state.fromdate : "",
+        toDate: location.state && location.state.toDate ? location.state.toDate : "",
         RequestorMobileNo: "",
         schemeID: 0,
         ticketHeaderID: filterValues.txtTicketType && filterValues.txtTicketType.TicketTypeID ? filterValues.txtTicketType.TicketTypeID : 0,

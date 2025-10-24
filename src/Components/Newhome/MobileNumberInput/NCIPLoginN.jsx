@@ -33,14 +33,18 @@ function NCIPLoginN() {
     setCaptchaCode(generateCaptcha());
   };
 
+  const [loader, setLoader] = useState(false);
   const handleLogin = async () => {
+     setLoader(true);
     try {
       await handleLoginNcip(formValuesNcip, enteredCaptcha, captchaCode, setCaptchaCode, setAlertMessage);
+      setLoader(false);
     } catch (error) {
       setAlertMessage({
         type: "error",
         message: "Login failed. Please try again.",
       });
+      setLoader(false);
     }
   };
 
@@ -108,7 +112,11 @@ function NCIPLoginN() {
             </div>
 
             <button type="button" className="get-otpN" onClick={handleLogin}>
-              Login
+              {loader ? (
+                 <span className="loader-inline"></span>
+                   ) : (
+              "Login"
+             )}
               <span />
             </button>
           </>
