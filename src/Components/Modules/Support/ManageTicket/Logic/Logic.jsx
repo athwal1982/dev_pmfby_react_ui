@@ -196,7 +196,8 @@ function ManageTicketLogics() {
         RequestorMobileNo: "",
         schemeID: formValues.txtScheme && formValues.txtScheme.SchemeID ? formValues.txtScheme.SchemeID : 0,
         ticketHeaderID: formValues.txtTicketType && formValues.txtTicketType.TicketTypeID ? formValues.txtTicketType.TicketTypeID : 0,
-        pageIndex: showHideDownload === false ? -1 : pageIndex,
+        // A pageIndex: showHideDownload === false ? -1 : pageIndex,
+        pageIndex:  pageIndex,
         pageSize: pageSize,
       };
       setIsLoadingFarmersticket(true);
