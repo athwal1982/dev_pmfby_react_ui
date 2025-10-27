@@ -121,6 +121,7 @@ function ICWiseAudit({}) {
       Unstatisfied: filteredICWiseAuditDataList.reduce((acc, row) => Number(acc) + Number(row.Unstatisfied ? row.Unstatisfied : 0), 0),
       Satisfied: filteredICWiseAuditDataList.reduce((acc, row) => Number(acc) + Number(row.Satisfied ? row.Satisfied : 0), 0),
       NotFlagged: filteredICWiseAuditDataList.reduce((acc, row) => Number(acc) + Number(row.NotFlagged ? row.NotFlagged : 0), 0),
+      NotFlagged: filteredICWiseAuditDataList.reduce((acc, row) => Number(acc) + Number(row.NotFlagged ? row.NotFlagged : 0), 0),
     };
     return [totalRow];
   };
@@ -534,6 +535,16 @@ function ICWiseAudit({}) {
             width="210px"
             cellStyle={{ "text-align": "right" }}
             cellRenderer="NotFlaggedCellStyle"
+            cellRendererParams={{
+              openICWiseAuditDetailsClick,
+            }}
+          />
+          <DataGrid.Column
+            field="TicketReOpen"
+            headerName="Re-Open"
+            width="110px"
+            cellStyle={{ "text-align": "right" }}
+            cellRenderer="TicketReOpen"
             cellRendererParams={{
               openICWiseAuditDetailsClick,
             }}

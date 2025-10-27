@@ -36,7 +36,7 @@ function InsuranceCompLogics() {
 
         setIsLoadingChartSatatusCountData(false);
         if (result.response.responseCode === 1) {
-          if (result.response.responseData && result.response.responseData.dashboard) {
+          if (result.response.responseData && result.response.responseData.dashboard && (result.response.responseData.dashboard.length > 0 || Object.values(result.response.responseData.dashboard).length > 0)) {
             setSatatusCountGrvnce(result.response.responseData.dashboard.Grievence);
             setSatatusCountCrpLos(result.response.responseData.dashboard.Crop);
             setSatatusCountInfomn(result.response.responseData.dashboard.Information);
@@ -91,7 +91,7 @@ function InsuranceCompLogics() {
 
             setSessionStorage("satatusCountSsnStrg", result.response.responseData);
             if (pRefressh !== "yes") {
-              getChartTypeWiseData(2, userData && userData.LoginID ? userData.LoginID : 0, "BYHDR", "");
+              // A getChartTypeWiseData(2, userData && userData.LoginID ? userData.LoginID : 0, "BYHDR", "");
             }
           } else {
             setSatatusCountGrvnce([]);
@@ -157,7 +157,7 @@ function InsuranceCompLogics() {
         });
         setSatatusCountInfomn([jsonStatusCntInfomn]);
         if (pRefressh !== "yes") {
-          getChartTypeWiseData(2, userData && userData.LoginID ? userData.LoginID : 0, "BYHDR", "");
+          // A getChartTypeWiseData(2, userData && userData.LoginID ? userData.LoginID : 0, "BYHDR", "");
         }
       }
     } catch (error) {

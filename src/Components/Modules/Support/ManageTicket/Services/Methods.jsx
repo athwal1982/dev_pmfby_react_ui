@@ -59,8 +59,23 @@ export const getfarmerTicketsListPagging = async (formData) => {
         ...formData,
       },
     };
-    // A const result = await ApiCalling(requestData, APIEndpoints.ManageTicket.GetFarmerTicketDetailsPagging);
-    const result = await ApiCallingListing(requestData, APIEndpoints.ManageTicket.SupportTicketListing);
+    const result = await ApiCalling(requestData, APIEndpoints.ManageTicket.GetFarmerTicketDetailsPagging);
+    // A const result = await ApiCallingListing(requestData, APIEndpoints.ManageTicket.SupportTicketListing);
+    return result;
+  } catch (error) {
+    console.log(error);
+    return { response: { responseCode: 0, responseData: null, responseMessage: error } };
+  }
+};
+
+export const supportTicketListingDownloadData = async (formData) => {
+  try {
+    const requestData = {
+      main: {
+        ...formData,
+      },
+    };
+    const result = await ApiCalling(requestData, APIEndpoints.ManageTicket.SupportTicketListingDownload);
     return result;
   } catch (error) {
     console.log(error);

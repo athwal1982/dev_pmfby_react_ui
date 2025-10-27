@@ -3,22 +3,11 @@ import { Dialog, DialogTitle, DialogContent, TextField, Button, IconButton, Typo
 import CloseIcon from "@mui/icons-material/Close";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 
-const SOSEmergencyPopup = ({
-  openSOS,
-  showMessage,
-  setShowMessage,
-  setOpenSOS,
-  open,
-  onClose,
-  formValuesTicketCreation,
-  setFormValuesTicketCreation,
-  updateStateTicketCreation,
-  setAlertMessage,
-}) => {
+const SOSEmergencyPopup = ({openSOS ,showMessage, setShowMessage, setOpenSOS, open, onClose,formValuesTicketCreation,setFormValuesTicketCreation,updateStateTicketCreation,setAlertMessage }) => {
   const handleSubmitEmergencyAlert = () => {
     // Aif(showMessage === )
     debugger;
-    if (formValuesTicketCreation.txtSosDescription === "") {
+    if(formValuesTicketCreation.txtSosDescription === "") {
       setAlertMessage({
         type: "warning",
         message: "Please enter the message",
@@ -51,15 +40,7 @@ const SOSEmergencyPopup = ({
 
         {/* Description Field */}
         <Typography sx={{ fontWeight: "bold", mb: 1 }}>Description *</Typography>
-        <TextField
-          value={formValuesTicketCreation.txtSosDescription}
-          onChange={(e) => updateStateTicketCreation("txtSosDescription", e.target.value)}
-          fullWidth
-          multiline
-          rows={4}
-          placeholder="Enter your message"
-          variant="outlined"
-        />
+        <TextField value={formValuesTicketCreation.txtSosDescription}  onChange={(e) => updateStateTicketCreation("txtSosDescription", e.target.value)} fullWidth multiline rows={4} placeholder="Enter your message" variant="outlined" />
 
         {/* Submit Button */}
         <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>

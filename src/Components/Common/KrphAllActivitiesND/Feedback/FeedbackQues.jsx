@@ -17,17 +17,7 @@ const AnyOtherTextField = ({ id, value, onChange, placeholder }) => (
   />
 );
 
-const FeedbackQuestions = ({
-  feedbackResponses,
-  onFeedbackChange,
-  setfeedbackSubmit,
-  dcryptUNQEID,
-  farmerName,
-  farmerMobileNumber,
-  dcryptUID,
-  pStateName,
-  pDistrictName,
-}) => {
+const FeedbackQuestions = ({ feedbackResponses, onFeedbackChange, setfeedbackSubmit,dcryptUNQEID,farmerName,farmerMobileNumber,dcryptUID,pStateName,pDistrictName }) => {
   const [questions, setQuestions] = useState([]);
   const [hoveredBox, setHoveredBox] = useState(null);
   const [validationErrors, setValidationErrors] = useState({});
@@ -49,6 +39,7 @@ const FeedbackQuestions = ({
     setHoveredBox(null);
   };
 
+
   const handleSubmit = async () => {
     debugger;
     const errors = {};
@@ -60,7 +51,7 @@ const FeedbackQuestions = ({
       }
 
       q.subQuestions?.forEach((subQ) => {
-        if (feedbackResponses[q.id] === subQ.condition && !feedbackResponses[subQ.id]) {
+        if (feedbackResponses[q.id] === subQ.condition && !feedbackResponses[subQ.id]?.trim()) {
           errors[subQ.id] = "This sub-question must be answered";
         }
       });
@@ -129,7 +120,7 @@ const FeedbackQuestions = ({
     debugger;
     try {
       const response = await submitFeedback(payload);
-      if (response && response.responseCode === 1) {
+      if(response && response.responseCode === 1) {
         toast.success("Form submitted successfully!");
         setfeedbackSubmit(true);
       } else {

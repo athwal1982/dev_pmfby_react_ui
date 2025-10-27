@@ -390,7 +390,7 @@ function ChatList({
                                   </button>
                                 </Grid>
                               ) : null}
-                              {data && data.isAudit === 1 ? (
+                              {data && data.isAudit === 1 && data.TicketStatusID === 109303 ? (
                                 <Grid item>
                                   <button
                                     style={{
@@ -445,9 +445,9 @@ function ChatList({
                                       </Form.Group>
                                     </Form>
                                   ) : null}
-                                  {data && data.isSatisfied === 1 ? (
+                                  {data && data.isSatisfied === 1 && data.TicketStatusID === 109303 ? (
                                     <strong>Satisfactory Response</strong>
-                                  ) : data && data.isSatisfied === 0 ? (
+                                  ) : data && data.isSatisfied === 0 && data.TicketStatusID === 109303 ? (
                                     <strong>Unsatisfactory Response</strong>
                                   ) : (
                                     ""
@@ -483,7 +483,7 @@ function ChatList({
                                 </Typography>{" "}
                               </>
                             ) : null}
-                            {data && data.isSatisfied === 0 && data.AuditRemarks !== "" ? (
+                            {data && data.isSatisfied === 0 && data.AuditRemarks !== "" && data.TicketStatusID === 109303 ? (
                               <>
                                 <Typography variant="subtitle2" fontWeight="bold">
                                   Reason :{" "}

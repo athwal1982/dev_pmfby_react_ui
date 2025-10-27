@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { BsTelephoneOutbound, BsBank2 } from "react-icons/bs";
 import { CgWebsite } from "react-icons/cg";
-import { MdOutlineWeb, MdOutlineDisabledByDefault, MdAttachFile, MdOutlineContentCopy } from "react-icons/md";
+import { MdOutlineWeb, MdOutlineDisabledByDefault,MdAttachFile, MdOutlineContentCopy } from "react-icons/md";
 import { FaTwitterSquare, FaEdit } from "react-icons/fa";
 import { Loader, Button } from "Framework/Components/Widgets";
 import classNames from "classnames";
@@ -50,6 +50,7 @@ function ChatList({
   setSelectedHistoryData,
   apiDataAttachment,
   setapiDataAttachment,
+
 }) {
   const setAlertMessage = AlertMessage();
   const user = getSessionStorage("user");
@@ -82,7 +83,7 @@ function ChatList({
       });
     }
   };
-
+ 
   function stripHtmlTags(html) {
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = html;
@@ -90,9 +91,9 @@ function ChatList({
   }
 
   const [expanded, setExpanded] = useState("");
-
+    
   const handleChange = (panel) => (_, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
+        setExpanded(isExpanded ? panel : false);
   };
 
   return (
@@ -152,7 +153,7 @@ function ChatList({
             <span> {selectedData && selectedData.TicketDescription ? parse(selectedData.TicketDescription) : null}  </span>
           </p> */}
         </div>
-        <div className={BizClass.Event1panel}>{children}</div>
+         <div className={BizClass.Event1panel}>{children}</div>
         <div className={BizClass.Event1panel}>
           <Accordion defaultExpanded sx={{ borderRadius: 2, boxShadow: 3, overflow: "hidden" }}>
             <AccordionSummary
@@ -178,9 +179,7 @@ function ChatList({
             >
               <Grid container spacing={0.7}>
                 <Grid item xs={10} md={3}>
-                  <Typography variant="subtitle2" fontWeight="bold">
-                    Activity 1 : Ticket Generated
-                  </Typography>
+                  <Typography variant="subtitle2" fontWeight="bold">Activity 1 : Ticket Generated</Typography>
                 </Grid>
                 <Grid item xs={10} md={3}>
                   <Typography variant="subtitle2" fontWeight="bold" textAlign="center">
@@ -191,9 +190,7 @@ function ChatList({
                   </Typography>
                 </Grid>
                 <Grid item xs={10} md={3}>
-                  <Typography variant="subtitle2" fontWeight="bold">
-                    Name : {selectedData && selectedData.AgentName ? selectedData.AgentName : null}
-                  </Typography>
+                  <Typography variant="subtitle2" fontWeight="bold">Name : {selectedData && selectedData.AgentName ? selectedData.AgentName : null}</Typography>
                 </Grid>
                 <Grid item xs={10} md={3}>
                   <Typography variant="subtitle2" fontWeight="bold">
@@ -202,6 +199,7 @@ function ChatList({
                       : selectedData.CreatedType}
                   </Typography>
                 </Grid>
+                
               </Grid>
             </AccordionSummary>
 
@@ -233,6 +231,8 @@ function ChatList({
                       {selectedData && selectedData.TicketDescription ? parse(selectedData.TicketDescription) : null}
                     </Typography>
                   </Grid>
+
+                
                 </Grid>
               </Paper>
             </AccordionDetails>
@@ -243,7 +243,9 @@ function ChatList({
             chatListDetails && chatListDetails.length > 0 ? (
               chatListDetails.map((data, i) => {
                 return (
-                  <Accordion sx={{ borderRadius: 2, boxShadow: 3, mb: 1, overflow: "hidden" }} key={i} expanded={expanded === i} onChange={handleChange(i)}>
+                  <Accordion sx={{ borderRadius: 2, boxShadow: 3, mb: 1, overflow: "hidden" }}  key={i}
+          expanded={expanded === i}
+          onChange={handleChange(i)} >
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
                       sx={{
@@ -279,16 +281,15 @@ function ChatList({
                             )}
                           </Typography>
                         </Grid>
-                        <Grid item xs={10} md={3}>
-                          <Typography variant="subtitle2" fontWeight="bold">
-                            Name : {data.CreatedBY}
-                          </Typography>
+                         <Grid item xs={10} md={3}>
+                          <Typography variant="subtitle2" fontWeight="bold">Name : {data.CreatedBY}</Typography>
                         </Grid>
                         <Grid item xs={10} md={3}>
                           <Typography variant="subtitle2" fontWeight="bold">
                             {data.UserType === "CSC" ? `Agent ID : ${data && data.CallingUserID ? data.CallingUserID : ""}` : data.UserType}
                           </Typography>
                         </Grid>
+                       
                       </Grid>
                     </AccordionSummary>
 

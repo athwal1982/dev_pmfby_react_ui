@@ -6,7 +6,7 @@ import * as XLSX from "xlsx";
 import { useNavigate } from "react-router-dom";
 import { getSessionStorage } from "Components/Common/Login/Auth/auth";
 // A import { getfarmerTicketsList, getMasterDataBinding, getfarmerTicketsListPagging } from "../Services/Methods";
-import { getMasterDataBinding, getfarmerTicketsListPagging, getAssignedTicketList } from "../Services/Methods";
+import { getMasterDataBinding, getfarmerTicketsListPagging, getAssignedTicketList,supportTicketListingDownloadData } from "../Services/Methods";
 import { getMasterDataBindingDataList } from "../Views/Modals/AddTicket/Services/Methods";
 
 function ManageTicketLogics() {
@@ -300,7 +300,7 @@ function ManageTicketLogics() {
       setIsLoadingFarmersticket(true);
       let result = [];
 
-      result = await getfarmerTicketsListPagging(formData);
+      result = await supportTicketListingDownloadData(formData);
       setIsLoadingFarmersticket(false);
 
       if (result.responseCode === 1) {
