@@ -5544,6 +5544,8 @@ function KrphAllActivitiesNDN() {
                                       farmerName={formValuesGI.txtFarmerName ? formValuesGI.txtFarmerName : ""}
                                       farmerMobileNumber={formValuesGI.txtMobileCallerNumber ? formValuesGI.txtMobileCallerNumber : ""}
                                       dcryptUID={dcryptUID}
+                                      pStateName ={formValuesGI.txtState && formValuesGI.txtState.StateMasterName ? formValuesGI.txtState.StateMasterName : ""}
+                                      pDistrictName={formValuesGI.txtDistrict && formValuesGI.txtDistrict.level3Name ? formValuesGI.txtDistrict.level3Name : ""}
                                     />
                                   </div>
                                 </div>

@@ -187,7 +187,6 @@ function AgeingCropReport({
             cellStyle={{ "text-align": "right" }}
             valueGetter={(node) => {
               return (
-                Number(node.data["Total Open Ticket"]) +
                 Number(node.data["0-10 days"]) +
                 Number(node.data["11-15 days"]) +
                 Number(node.data["16-20 days"]) +

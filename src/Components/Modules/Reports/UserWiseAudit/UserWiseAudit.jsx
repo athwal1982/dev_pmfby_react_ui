@@ -121,6 +121,7 @@ function UserWiseAudit() {
       Unstatisfied: filteredUserWiseAuditDataList.reduce((acc, row) => Number(acc) + Number(row.Unstatisfied ? row.Unstatisfied : 0), 0),
       Satisfied: filteredUserWiseAuditDataList.reduce((acc, row) => Number(acc) + Number(row.Satisfied ? row.Satisfied : 0), 0),
       NotFlagged: filteredUserWiseAuditDataList.reduce((acc, row) => Number(acc) + Number(row.NotFlagged ? row.NotFlagged : 0), 0),
+      TicketReOpen: filteredUserWiseAuditDataList.reduce((acc, row) => Number(acc) + Number(row.TicketReOpen ? row.TicketReOpen : 0), 0),
     };
     return [totalRow];
   };
@@ -133,7 +134,6 @@ function UserWiseAudit() {
     // A let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
     // A XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
     worksheet["!cols"] = [
-      { width: 20 },
       { width: 20 },
       { width: 15 },
       { width: 15 },
@@ -213,7 +213,6 @@ function UserWiseAudit() {
     }
     const columnOrder = {
       SupportTicketNo: "Ticket No",
-      TicketNCIPDocketNo: "NCIP Docket No",
       TicketDate: "Creation Date",
       TicketStatus: "Ticket Status",
       StateMasterName: "State",
@@ -447,6 +446,22 @@ function UserWiseAudit() {
       </div>
     );
   };
+
+  const ReOpenCellStyle = (params) => {
+    return (
+      <div>
+        {params.node.rowPinned ? (
+          params.data.TicketReOpen
+        ) : params.data && Number(params.data.TicketReOpen) > 0 ? (
+          <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openUserWiseAuditDetailsClick(params.data, "REOPEN")}>
+            {params.data.TicketReOpen}
+          </a>
+        ) : (
+          "0"
+        )}
+      </div>
+    );
+  };
   return (
     <>
       {openUserWiseAuditDetailsModal && (
@@ -497,6 +512,7 @@ function UserWiseAudit() {
             SatisfiedCellStyle,
             UnstatisfiedCellStyle,
             NotFlaggedCellStyle,
+            ReOpenCellStyle
           }}
           pinnedBottomRowData={pinnedBottomRowData}
         >
@@ -541,6 +557,16 @@ function UserWiseAudit() {
               openUserWiseAuditDetailsClick,
             }}
           />
+          <DataGrid.Column
+                      field="TicketReOpen"
+                      headerName="Re-Open"
+                      width="110px"
+                      cellStyle={{ "text-align": "right" }}
+                      cellRenderer="ReOpenCellStyle"
+                      cellRendererParams={{
+                        openUserWiseAuditDetailsClick,
+                      }}
+                    /> 
         </DataGrid>
       </div>
     </>

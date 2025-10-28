@@ -22,7 +22,6 @@ function ICWiseAuditDetails({
           <DataGrid rowData={iCWiseAuditDetailsCountList} loader={isLoadingICWiseAuditDetailsCountList ? <Loader /> : false}>
             <DataGrid.Column valueGetter="node.rowIndex + 1" field="#" headerName="Sr No." width={80} pinned="left" />
             <DataGrid.Column field="SupportTicketNo" headerName="Ticket No" width="160px" />
-            <DataGrid.Column field="TicketNCIPDocketNo" headerName="NCIP Docket No" width="160px" />
             <DataGrid.Column
               field="#"
               headerName="Creation Date"
