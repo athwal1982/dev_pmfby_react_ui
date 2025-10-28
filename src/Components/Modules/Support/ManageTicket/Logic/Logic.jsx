@@ -402,7 +402,7 @@ function ManageTicketLogics() {
       } else {
         setAlertMessage({
           type: "error",
-          message: "Data not found to download",
+          message: result.responseMessage,
         });
       }
     } catch (error) {
