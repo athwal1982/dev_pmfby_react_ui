@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AlertMessage } from "../../../../Framework/Components/Widgets/Notification/NotificationProvider";
 import { Button } from "Framework/Components/Widgets";
 import { krphSupportTicketRatingUpdate } from "Components/Newhome/Services/Methods";
-const FarmerRating = ({ ticket }) => {
+const FarmerRating = ({ ticket, chatListDetails, setChatListDetails }) => {
   const setAlertMessage = AlertMessage();
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
@@ -25,8 +25,13 @@ const FarmerRating = ({ ticket }) => {
           type: "success",
           message: response.responseMessage,
         });
-        ticket.Rating = rating;
-        ticket.ratingRemarks = remarks;
+        setChatListDetails((prevList) =>
+          prevList.map((item) =>
+         item.TicketHistoryID === ticket.TicketHistoryID
+           ? { ...item, Rating: rating, RatingRemarks: remarks }
+         : item
+        )
+      );
       } else {
         setAlertMessage({
           type: "error",

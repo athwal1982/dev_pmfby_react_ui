@@ -410,6 +410,7 @@ const ComplaintStatus = () => {
                             expanded={expanded}
                             setExpanded={setExpanded}
                             updateTicketHistorytData={updateTicketHistorytData}
+                            setChatListDetails={setChatListDetails}
                           />
                         ))}
                     </tbody>
