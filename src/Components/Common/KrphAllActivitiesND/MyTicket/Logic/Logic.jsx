@@ -5,7 +5,14 @@ import publicIp from "public-ip";
 // A import { getCurrentDateTimeTick } from "Configration/Utilities/dateformat";
 import { getSessionStorage, getUserRightCodeAccess } from "Components/Common/Login/Auth/auth";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
-import { getSupportTicketReview, addSupportTicketReview, getMasterDataBinding, ticketStatusUpdate, editSupportTicketReview, addCSCSupportTicketReview } from "../Services/Services";
+import {
+  getSupportTicketReview,
+  addSupportTicketReview,
+  getMasterDataBinding,
+  ticketStatusUpdate,
+  editSupportTicketReview,
+  addCSCSupportTicketReview,
+} from "../Services/Services";
 import { getFarmerPolicyDetail, sendSMSToFarmer } from "../../../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
 
 function MyTicketLogics() {
@@ -418,7 +425,7 @@ function MyTicketLogics() {
       //  Anil   return;
       // Anil  }
       // Anil }
-     if (ticketData.TicketStatusID === formValuesTicketProperties.txtTicketStatus.CommonMasterValueID) {
+      if (ticketData.TicketStatusID === formValuesTicketProperties.txtTicketStatus.CommonMasterValueID) {
         setAlertMessage({
           type: "warning",
           message: "The system does not allow updating a ticket to the same status. To change the status, please select a different option.",
@@ -605,7 +612,7 @@ function MyTicketLogics() {
           const user = getSessionStorage("user");
           const newlyAddedEntry = {
             CreatedBY: user && user.UserDisplayName ? user.UserDisplayName.toString() : "",
-            UserType:user && user.UserCompanyType ? user.UserCompanyType.toString() : "",
+            UserType: user && user.UserCompanyType ? user.UserCompanyType.toString() : "",
             AgentUserID: ticketData.AgentUserID ? ticketData.AgentUserID : "0",
             // A HasDocument: phasDocument,
             HasDocument: 0,
@@ -638,7 +645,7 @@ function MyTicketLogics() {
             type: "success",
             message: result.response.responseMessage,
           });
-           setapiDataAttachment({ apiFor: "TCKHIS", TicketHistoryID: result.response.responseData.TicketHistoryID });
+          setapiDataAttachment({ apiFor: "TCKHIS", TicketHistoryID: result.response.responseData.TicketHistoryID });
           // A if (pAttachment !== "") {
           // A  const formDataDoc = new FormData();
           // A  formDataDoc.append("ImgPath", pAttachmentDirPath);
@@ -880,7 +887,7 @@ function MyTicketLogics() {
   const handleSaveEditTicketComment = async (toggleEditTicketCommentModal) => {
     debugger;
     console.log(ticketData);
-    if (valueEditTicketComment === "" || valueEditTicketComment === "<p></p>" || valueEditTicketComment === "<p><br></p>" ) {
+    if (valueEditTicketComment === "" || valueEditTicketComment === "<p></p>" || valueEditTicketComment === "<p><br></p>") {
       popUpMsg = "Ticket comment is required!";
       setAlertMessage({
         type: "warning",
@@ -900,7 +907,7 @@ function MyTicketLogics() {
       setbtnLoaderActiveEditTicketComment(FaLaptopHouse);
       if (result.response.responseCode === 1) {
         for (let i = 0; i < chatListDetails.length; i += 1) {
-          if(selectedHistoryData.TicketHistoryID === chatListDetails[i].TicketHistoryID) {
+          if (selectedHistoryData.TicketHistoryID === chatListDetails[i].TicketHistoryID) {
             chatListDetails[i].TicketDescription = valueEditTicketComment;
             break;
           }
@@ -924,24 +931,22 @@ function MyTicketLogics() {
         message: error,
       });
     }
-    
   };
 
-  
   const [btnLoaderActiveComment, setbtnLoaderActiveComment] = useState(false);
   const handleAddComment = async (e) => {
     debugger;
     try {
-    if (e) e.preventDefault();
-    let popUpMsg = "";
-    if (value === "" || value === "<p></p>") {
-      popUpMsg = "Ticket comment is required!";
-      setAlertMessage({
-        type: "warning",
-        message: popUpMsg,
-      });
-      return;
-    }
+      if (e) e.preventDefault();
+      let popUpMsg = "";
+      if (value === "" || value === "<p></p>") {
+        popUpMsg = "Ticket comment is required!";
+        setAlertMessage({
+          type: "warning",
+          message: popUpMsg,
+        });
+        return;
+      }
       const formData = {
         ticketHistoryID: 0,
         supportTicketID: ticketData.SupportTicketID,
@@ -960,7 +965,7 @@ function MyTicketLogics() {
           const user = getSessionStorage("user");
           const newlyAddedEntry = {
             CreatedBY: user && user.UserDisplayName ? user.UserDisplayName.toString() : "",
-            UserType:user && user.UserCompanyType ? user.UserCompanyType.toString() : "",
+            UserType: user && user.UserCompanyType ? user.UserCompanyType.toString() : "",
             AgentUserID: ticketData.AgentUserID ? ticketData.AgentUserID : "0",
             HasDocument: 0,
             InsertIPAddress: ip,
@@ -980,7 +985,6 @@ function MyTicketLogics() {
             type: "success",
             message: result.response.responseMessage,
           });
-          
         }
       } else {
         setAlertMessage({
@@ -988,10 +992,7 @@ function MyTicketLogics() {
           message: result.response.responseMessage,
         });
       }
-
-    }  catch (error) {
-
-    }
+    } catch (error) {}
   };
 
   return {

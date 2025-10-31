@@ -6,6 +6,7 @@ const FarmerRating = ({ ticket }) => {
   const setAlertMessage = AlertMessage();
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
+  const [remarks, setRemarks] = useState("");
 
   const handleSave = async () => {
     try {
@@ -18,13 +19,14 @@ const FarmerRating = ({ ticket }) => {
         return;
       }
 
-      const response = await krphSupportTicketRatingUpdate(ticket.SupportTicketID, ticket.TicketHistoryID, rating);
+      const response = await krphSupportTicketRatingUpdate(ticket.SupportTicketID, ticket.TicketHistoryID, rating, remarks);
       if (response.responseData) {
         setAlertMessage({
           type: "success",
           message: response.responseMessage,
         });
         ticket.Rating = rating;
+        ticket.ratingRemarks = remarks;
       } else {
         setAlertMessage({
           type: "error",
@@ -79,6 +81,28 @@ const FarmerRating = ({ ticket }) => {
         </div>
       </div>
       <p style={{ marginTop: "20px", display: "none" }}>Your rating: {rating}</p>
+        <div style={{ marginTop: "20px", textAlign: "left" }}>
+     <h6 style={{ margin: 2 }}>
+      Rating Remarks:
+    </h6>
+    <textarea
+      id="remarks"
+      rows="6"
+      value={remarks}
+      onChange={(e) => setRemarks(e.target.value)}
+      style={{
+        width: "100%",
+        padding: "6px",
+        borderRadius: "8px",
+        border: "1px solid #ccc",
+        fontSize: "12px",
+        resize: "none",
+        outline: "none",
+        fontFamily: "inherit",
+        minHeight: "120px",
+      }}
+    />
+  </div>
       <div
         style={{
           display: "flex",

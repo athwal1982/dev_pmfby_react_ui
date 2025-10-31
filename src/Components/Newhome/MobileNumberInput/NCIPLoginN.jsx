@@ -35,7 +35,7 @@ function NCIPLoginN() {
 
   const [loader, setLoader] = useState(false);
   const handleLogin = async () => {
-     setLoader(true);
+    setLoader(true);
     try {
       await handleLoginNcip(formValuesNcip, enteredCaptcha, captchaCode, setCaptchaCode, setAlertMessage);
       setLoader(false);
@@ -112,11 +112,7 @@ function NCIPLoginN() {
             </div>
 
             <button type="button" className="get-otpN" onClick={handleLogin}>
-              {loader ? (
-                 <span className="loader-inline"></span>
-                   ) : (
-              "Login"
-             )}
+              {loader ? <span className="loader-inline"></span> : "Login"}
               <span />
             </button>
           </>

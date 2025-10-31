@@ -763,6 +763,12 @@ const TicketItem = ({ item: ticket, isExpanded, onExpand, chatListDetails, isLoa
                                     ) : (
                                       <FarmerRating ticket={data} />
                                     )}
+                                    {data && data.Rating && data.Rating !== null ? <>
+                                    <Typography variant="subtitle2" fontWeight="bold" display="inline">
+                                      Rating Remarks :
+                                    </Typography> <div style={{ fontSize: "12px" }}>
+                                    {data.RatingRemarks ?  data.RatingRemarks : "No Remarks"}
+                                    </div></>  : null }
                                   </Grid>
                                 ) : null}
                               </Grid>

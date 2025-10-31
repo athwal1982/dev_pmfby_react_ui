@@ -97,6 +97,7 @@ const FarmerLoginN = ({ handleOtpSent }) => {
   };
 
   const handleSubmit5 = async (value) => {
+    setSessionStorage("DefaultLang", "DEFLANG");
     if (value === "ComplaintStatus") {
       navigate("/complaint-status", { state: { mobileNum } });
     } else if (value === "CropLossIntimation") {
@@ -290,11 +291,7 @@ const FarmerLoginN = ({ handleOtpSent }) => {
 
               {isButtonVisible && !otpFieldVisible && (
                 <button className="get-otpN" onClick={handleMobileInputSubmission}>
-                  {loader ? (
-                 <span className="loader-inline"></span>
-                   ) : (
-                 "Send OTP"
-             )}
+                  {loader ? <span className="loader-inline"></span> : "Send OTP"}
                 </button>
               )}
 
@@ -348,11 +345,7 @@ const FarmerLoginN = ({ handleOtpSent }) => {
                   </> */}
                   <br />
                   <button className="get-otpN" onClick={handleOtpSubmit}>
-                    {loader ? (
-                 <span className="loader-inline"></span>
-                   ) : (
-                 "Verify OTP"
-                 )} 
+                    {loader ? <span className="loader-inline"></span> : "Verify OTP"}
                   </button>
                 </div>
               )}

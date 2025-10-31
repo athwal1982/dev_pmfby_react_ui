@@ -512,7 +512,7 @@ function UserWiseAudit() {
             SatisfiedCellStyle,
             UnstatisfiedCellStyle,
             NotFlaggedCellStyle,
-            ReOpenCellStyle
+            ReOpenCellStyle,
           }}
           pinnedBottomRowData={pinnedBottomRowData}
         >
@@ -558,15 +558,15 @@ function UserWiseAudit() {
             }}
           />
           <DataGrid.Column
-                      field="TicketReOpen"
-                      headerName="Re-Open"
-                      width="110px"
-                      cellStyle={{ "text-align": "right" }}
-                      cellRenderer="ReOpenCellStyle"
-                      cellRendererParams={{
-                        openUserWiseAuditDetailsClick,
-                      }}
-                    /> 
+            field="TicketReOpen"
+            headerName="Re-Open"
+            width="110px"
+            cellStyle={{ "text-align": "right" }}
+            cellRenderer="ReOpenCellStyle"
+            cellRendererParams={{
+              openUserWiseAuditDetailsClick,
+            }}
+          />
         </DataGrid>
       </div>
     </>

@@ -186,12 +186,7 @@ function AgeingCropReport({
             width="110px"
             cellStyle={{ "text-align": "right" }}
             valueGetter={(node) => {
-              return (
-                Number(node.data["0-10 days"]) +
-                Number(node.data["11-15 days"]) +
-                Number(node.data["16-20 days"]) +
-                Number(node.data["More than 20"])
-              );
+              return Number(node.data["0-10 days"]) + Number(node.data["11-15 days"]) + Number(node.data["16-20 days"]) + Number(node.data["More than 20"]);
             }}
           />
         </DataGrid>

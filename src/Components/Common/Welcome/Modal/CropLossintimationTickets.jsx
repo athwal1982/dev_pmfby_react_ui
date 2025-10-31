@@ -45,6 +45,7 @@ function CropLossintimationTickets() {
   const [data, setData] = useState(null);
 
   const userData = getSessionStorage("user");
+  const defaultLangData = getSessionStorage("DefaultLang");
   const ticketBindingData = getSessionStorage("ticketDataBindingSsnStrg");
   const [formValidationFarmersInfoError, setFormValidationFarmersInfoError] = useState({});
   const [formValuesForFarmerInfo, setFormValuesForFarmerInfo] = useState({
@@ -1255,6 +1256,87 @@ function CropLossintimationTickets() {
     getticketDataBindingData();
     selectedOptionOnClick("LO");
     // A getTicketCategoryTypeListData("1", 0, "TCKTYP");
+  }, []);
+
+    useEffect(() => {
+      debugger;
+    if (window.__bhashiniLangAlreadySet) return;
+    window.__bhashiniLangAlreadySet = true;
+
+    const stateLanguageMap = {
+      "Andhra Pradesh": "te",
+      "Arunachal Pradesh": "as",
+      Assam: "as",
+      Bihar: "hi",
+      Chhattisgarh: "hi",
+      Goa: "gom",
+      Gujarat: "gu",
+      Haryana: "hi",
+      "Himachal Pradesh": "hi",
+      Jharkhand: "hi",
+      Karnataka: "kn",
+      Kerala: "ml",
+      "Madhya Pradesh": "hi",
+      Maharashtra: "mr",
+      Manipur: "mni",
+      Meghalaya: "as",
+      Mizoram: "as",
+      Nagaland: "as",
+      Odisha: "or",
+      Punjab: "pa",
+      Rajasthan: "hi",
+      Sikkim: "ne",
+      "Tamil Nadu": "ta",
+      Telangana: "te",
+      Tripura: "bn",
+      "Uttar Pradesh": "hi",
+      Uttarakhand: "hi",
+      "West Bengal": "bn",
+      Delhi: "hi",
+      "Jammu and Kashmir": "ks",
+      Ladakh: "ks",
+    };
+
+    const toTitleCase = (str = "") =>
+      str
+        .toLowerCase()
+        .split(" ")
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ");
+
+    const userState = userData?.data?.data?.result?.state ? toTitleCase(userData.data.data.result.state) : "";
+
+    const langCode = stateLanguageMap[userState] || "en";
+
+    const trySetLanguage = () => {
+      const dropdown = document.getElementById("bhashiniLanguageDropdown");
+      const langOption = dropdown?.querySelector(`[data-value="${langCode}"]`);
+      const btnText = document.querySelector(".bhashini-dropdown-btn-text");
+      const bhashiniDiv = document.getElementById("bhashini-translation");
+
+      if (bhashiniDiv) bhashiniDiv.style.display = "block";
+
+      if (langOption) {
+        setSessionStorage("DefaultLang", "ALLLANG");
+        langOption.dispatchEvent(new Event("click", { bubbles: true }));
+        if (btnText) btnText.textContent = langOption.textContent.trim();
+        return true;
+      }
+      return false;
+    };
+    if (defaultLangData && defaultLangData === "DEFLANG") {
+      trySetLanguage();
+    }
+  }, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const bhashiniDiv = document.getElementById("bhashini-translation");
+      if (bhashiniDiv) {
+        bhashiniDiv.style.display = "block";
+      }
+    }, 500);
+
+    return () => clearInterval(interval);
   }, []);
 
   const requestorDetails = useMemo(() => {

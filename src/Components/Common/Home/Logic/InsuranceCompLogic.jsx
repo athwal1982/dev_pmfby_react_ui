@@ -36,7 +36,11 @@ function InsuranceCompLogics() {
 
         setIsLoadingChartSatatusCountData(false);
         if (result.response.responseCode === 1) {
-          if (result.response.responseData && result.response.responseData.dashboard && (result.response.responseData.dashboard.length > 0 || Object.values(result.response.responseData.dashboard).length > 0)) {
+          if (
+            result.response.responseData &&
+            result.response.responseData.dashboard &&
+            (result.response.responseData.dashboard.length > 0 || Object.values(result.response.responseData.dashboard).length > 0)
+          ) {
             setSatatusCountGrvnce(result.response.responseData.dashboard.Grievence);
             setSatatusCountCrpLos(result.response.responseData.dashboard.Crop);
             setSatatusCountInfomn(result.response.responseData.dashboard.Information);

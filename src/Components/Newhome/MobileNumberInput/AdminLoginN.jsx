@@ -123,11 +123,7 @@ function AdminLoginN({ handleOtpSent, setSelectedOption }) {
 
             {/* Login Button */}
             <button className="get-otpN" onClick={handleClick} disabled={loader}>
-              {loader ? (
-                 <span className="loader-inline"></span>
-                   ) : (
-              "Login"
-             )}
+              {loader ? <span className="loader-inline"></span> : "Login"}
             </button>
           </>
         )}

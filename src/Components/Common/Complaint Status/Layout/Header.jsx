@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AppBar, Toolbar, Typography, Box, Button, Avatar, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import cs_img from "../../../../assets/img_cs.svg";
 // A import logo from "../../../../assets/logo3.svg";
 import { ReactComponent as LogoPMFBY } from "../../../../assets/img/Group 161806.svg";
-import { getSessionStorage } from "Components/Common/Login/Auth/auth";
+import { getSessionStorage, setSessionStorage } from "Components/Common/Login/Auth/auth";
 import { logout } from "../../../Common/Login/Services/Methods";
 const Header = ({ title, showComplaintButton, onComplaintClick, showClaimButton, onComplaintStatus }) => {
   const navigate = useNavigate();
@@ -28,6 +28,7 @@ const Header = ({ title, showComplaintButton, onComplaintClick, showClaimButton,
     sessionStorage.clear();
     navigate("/krph");
   };
+
   return (
     <AppBar position="static" sx={{ backgroundColor: "#ffffff" }}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", padding: 0 }}>
