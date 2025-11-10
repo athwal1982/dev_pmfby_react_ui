@@ -10,6 +10,7 @@ import html2pdf from "html2pdf.js";
 import LogoL from "../../../../assets/LogoL.jpg";
 import LogoR from "../../../../assets/LogoR.png";
 import CaseHistoryComponent from "./Views/Layout/ChatList/CaseHistory";
+import SendPdfToFarmer from "./Views/Layout/ChatList/SendPdfToFarmer";
 
 function MyTicketPage({ selectedData, showfunc }) {
   const {
@@ -242,87 +243,96 @@ function MyTicketPage({ selectedData, showfunc }) {
     }
   };
 
+  const [opensendPDFModal, setOpensendPDFModal] = useState(false);
+  const sendPDF = async () => {
+    setOpensendPDFModal(!opensendPDFModal);
+  };
+
   return (
-    <MyTicket
-      replyBoxCollapsed={replyBoxCollapsed}
-      setReplyBoxCollapsed={setReplyBoxCollapsed}
-      setTicketStatusBtn={setTicketStatusBtn}
-      ticketData={ticketData}
-      btnloaderCloseTicketActive={btnloaderCloseTicketActive}
-      closeSupportTicketOnClick={closeSupportTicketOnClick}
-      showfunc={showfunc}
-      downloadPDF={downloadPDF}
-      pageRef={pageRef}
-      isLoadingDownloadpdf={isLoadingDownloadpdf}
-      selectedData={selectedData}
-      pdfDownlaodStatus={pdfDownlaodStatus}
-      showAnother={showAnother}
-    >
-      <ChatList
-        chatListDetails={chatListDetails}
-        isLoadingchatListDetails={isLoadingchatListDetails}
+    <>
+      {opensendPDFModal && <SendPdfToFarmer showfunc={sendPDF} selectedData={selectedData} />}
+      <MyTicket
+        replyBoxCollapsed={replyBoxCollapsed}
+        setReplyBoxCollapsed={setReplyBoxCollapsed}
+        setTicketStatusBtn={setTicketStatusBtn}
+        ticketData={ticketData}
+        btnloaderCloseTicketActive={btnloaderCloseTicketActive}
+        closeSupportTicketOnClick={closeSupportTicketOnClick}
+        showfunc={showfunc}
+        downloadPDF={downloadPDF}
+        pageRef={pageRef}
+        isLoadingDownloadpdf={isLoadingDownloadpdf}
         selectedData={selectedData}
-        valueEditTicketComment={valueEditTicketComment}
-        setValueEditTicketComment={setValueEditTicketComment}
-        handleSaveEditTicketComment={handleSaveEditTicketComment}
-        btnLoaderActiveEditTicketComment={btnLoaderActiveEditTicketComment}
-        wordcountEditTicketComment={wordcountEditTicketComment}
-        setWordcountEditTicketComment={setWordcountEditTicketComment}
-        setSelectedHistoryData={setSelectedHistoryData}
-        apiDataAttachment={apiDataAttachment}
-        setapiDataAttachment={setapiDataAttachment}
-        updateStateSatifation={updateStateSatifation}
-        formValuesSatifation={formValuesSatifation}
-        formValidationSatisfyError={formValidationSatisfyError}
-        IsSatisfyList={IsSatisfyList}
-        btnLoaderActiveSatisfaction={btnLoaderActiveSatisfaction}
-        handleSatisfaction={handleSatisfaction}
-        btnLoaderActiveAudit={btnLoaderActiveAudit}
-        handleAudit={handleAudit}
-        expanded={expanded}
-        handleChange={handleChange}
         pdfDownlaodStatus={pdfDownlaodStatus}
-        formValidationSupportTicketReviewError={formValidationSupportTicketReviewError}
+        showAnother={showAnother}
+        sendPDF={sendPDF}
       >
-        <ChatBox
-          replyBoxCollapsed={replyBoxCollapsed}
-          value={value}
-          setValue={setValue}
-          handleSave={handleSave}
-          btnloaderActive={btnloaderActive}
+        <ChatList
+          chatListDetails={chatListDetails}
+          isLoadingchatListDetails={isLoadingchatListDetails}
+          selectedData={selectedData}
+          valueEditTicketComment={valueEditTicketComment}
+          setValueEditTicketComment={setValueEditTicketComment}
+          handleSaveEditTicketComment={handleSaveEditTicketComment}
+          btnLoaderActiveEditTicketComment={btnLoaderActiveEditTicketComment}
+          wordcountEditTicketComment={wordcountEditTicketComment}
+          setWordcountEditTicketComment={setWordcountEditTicketComment}
+          setSelectedHistoryData={setSelectedHistoryData}
+          apiDataAttachment={apiDataAttachment}
+          setapiDataAttachment={setapiDataAttachment}
+          updateStateSatifation={updateStateSatifation}
+          formValuesSatifation={formValuesSatifation}
+          formValidationSatisfyError={formValidationSatisfyError}
+          IsSatisfyList={IsSatisfyList}
+          btnLoaderActiveSatisfaction={btnLoaderActiveSatisfaction}
+          handleSatisfaction={handleSatisfaction}
+          btnLoaderActiveAudit={btnLoaderActiveAudit}
+          handleAudit={handleAudit}
+          expanded={expanded}
+          handleChange={handleChange}
+          pdfDownlaodStatus={pdfDownlaodStatus}
+          formValidationSupportTicketReviewError={formValidationSupportTicketReviewError}
+        >
+          <ChatBox
+            replyBoxCollapsed={replyBoxCollapsed}
+            value={value}
+            setValue={setValue}
+            handleSave={handleSave}
+            btnloaderActive={btnloaderActive}
+            ticketStatusList={ticketStatusList}
+            isLoadingBankDropdownDataList={isLoadingBankDropdownDataList}
+            formValuesTicketProperties={formValuesTicketProperties}
+            updateStateTicketProperties={updateStateTicketProperties}
+            wordcount={wordcount}
+            setWordcount={setWordcount}
+            btnLoaderActive1={btnLoaderActive1}
+            formValidationSupportTicketReviewError={formValidationSupportTicketReviewError}
+            fileRef={fileRef}
+            handleResetFile={handleResetFile}
+            btnLoaderActiveComment={btnLoaderActiveComment}
+            handleAddComment={handleAddComment}
+            selectedPolicyDetails={selectedPolicyDetails}
+            handleInput={handleInput}
+            handleInput1={handleInput1}
+            editableRef={editableRef}
+            editableRef1={editableRef1}
+            selectedData={selectedData}
+          />
+        </ChatList>
+        <TicketCustomerDetail
+          ticketData={ticketData}
           ticketStatusList={ticketStatusList}
+          isLoadingTicketStatusList={isLoadingTicketStatusList}
+          bankDropdownDataList={bankDropdownDataList}
           isLoadingBankDropdownDataList={isLoadingBankDropdownDataList}
           formValuesTicketProperties={formValuesTicketProperties}
           updateStateTicketProperties={updateStateTicketProperties}
-          wordcount={wordcount}
-          setWordcount={setWordcount}
-          btnLoaderActive1={btnLoaderActive1}
-          formValidationSupportTicketReviewError={formValidationSupportTicketReviewError}
-          fileRef={fileRef}
-          handleResetFile={handleResetFile}
-          btnLoaderActiveComment={btnLoaderActiveComment}
-          handleAddComment={handleAddComment}
+          btnloaderStatusTicketActive={btnloaderStatusTicketActive}
+          updateStatusSupportTicketOnClick={updateStatusSupportTicketOnClick}
           selectedPolicyDetails={selectedPolicyDetails}
-          handleInput={handleInput}
-          handleInput1={handleInput1}
-          editableRef={editableRef}
-          editableRef1={editableRef1}
-          selectedData={selectedData}
         />
-      </ChatList>
-      <TicketCustomerDetail
-        ticketData={ticketData}
-        ticketStatusList={ticketStatusList}
-        isLoadingTicketStatusList={isLoadingTicketStatusList}
-        bankDropdownDataList={bankDropdownDataList}
-        isLoadingBankDropdownDataList={isLoadingBankDropdownDataList}
-        formValuesTicketProperties={formValuesTicketProperties}
-        updateStateTicketProperties={updateStateTicketProperties}
-        btnloaderStatusTicketActive={btnloaderStatusTicketActive}
-        updateStatusSupportTicketOnClick={updateStatusSupportTicketOnClick}
-        selectedPolicyDetails={selectedPolicyDetails}
-      />
-    </MyTicket>
+      </MyTicket>
+    </>
   );
 }
 

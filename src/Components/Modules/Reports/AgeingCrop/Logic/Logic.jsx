@@ -64,6 +64,7 @@ function AgeingCropReportLogics() {
       { width: 20 },
       { width: 20 },
       { width: 20 },
+      { width: 20 },
       { width: 80 },
     ];
     XLSX.writeFile(workbook, "Ageing(Crop)_Ticket_Details.xlsx");
@@ -168,6 +169,7 @@ function AgeingCropReportLogics() {
       LandDivisionNumber: "Land Division Number",
       PlotVillageName: "Plot Village",
       PlotDistrictName: "Plot District Name",
+      PlotStateName: "Plot State Name",
       ApplicationSource: "Application Source",
       CropShare: "Crop Share",
       IFSCCode: "IFSC Code",
@@ -203,6 +205,7 @@ function AgeingCropReportLogics() {
         LandDivisionNumber: value.LandDivisionNumber,
         PlotVillageName: value.PlotVillageName,
         PlotDistrictName: value.PlotDistrictName,
+        PlotStateName: value.PlotStateName,
         ApplicationSource: value.ApplicationSource,
         CropShare: value.CropShare,
         IFSCCode: value.IFSCCode,

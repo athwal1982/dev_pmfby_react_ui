@@ -38,7 +38,17 @@ import { gCPFileUploadData, AddKRPHTicketHistoryAttachmentData } from "../../../
 import TextEditor from "Framework/Components/Widgets/TextEditor/TextEditor";
 import CaseHistory from "../../../Modules/Support/MyTicket/Views/Layout/ChatList/CaseHistory";
 import { display } from "@mui/system";
-const TicketItem = ({ item: ticket, isExpanded, onExpand, chatListDetails, isLoadingchatListDetails, expanded, setExpanded, updateTicketHistorytData, setChatListDetails }) => {
+const TicketItem = ({
+  item: ticket,
+  isExpanded,
+  onExpand,
+  chatListDetails,
+  isLoadingchatListDetails,
+  expanded,
+  setExpanded,
+  updateTicketHistorytData,
+  setChatListDetails,
+}) => {
   const isResolved = ticket.TicketStatus === "Resolved";
 
   const removeHtmlTags = (str) => {
@@ -761,14 +771,16 @@ const TicketItem = ({ item: ticket, isExpanded, onExpand, chatListDetails, isLoa
                                         ))}
                                       </div>
                                     ) : (
-                                      <FarmerRating ticket={data} chatListDetails={chatListDetails}  setChatListDetails={setChatListDetails} />
+                                      <FarmerRating ticket={data} chatListDetails={chatListDetails} setChatListDetails={setChatListDetails} />
                                     )}
-                                    {data && data.Rating && data.Rating !== null ? <>
-                                    <Typography variant="subtitle2" fontWeight="bold" display="inline">
-                                      Rating Remarks :
-                                    </Typography> <div style={{ fontSize: "12px" }}>
-                                    {data.RatingRemarks ?  data.RatingRemarks : "No Remarks"}
-                                    </div></>  : null }
+                                    {data && data.Rating && data.Rating !== null ? (
+                                      <>
+                                        <Typography variant="subtitle2" fontWeight="bold" display="inline">
+                                          Rating Remarks :
+                                        </Typography>{" "}
+                                        <div style={{ fontSize: "12px" }}>{data.RatingRemarks ? data.RatingRemarks : "No Remarks"}</div>
+                                      </>
+                                    ) : null}
                                   </Grid>
                                 ) : null}
                               </Grid>

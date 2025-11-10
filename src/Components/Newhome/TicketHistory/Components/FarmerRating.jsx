@@ -26,12 +26,8 @@ const FarmerRating = ({ ticket, chatListDetails, setChatListDetails }) => {
           message: response.responseMessage,
         });
         setChatListDetails((prevList) =>
-          prevList.map((item) =>
-         item.TicketHistoryID === ticket.TicketHistoryID
-           ? { ...item, Rating: rating, RatingRemarks: remarks }
-         : item
-        )
-      );
+          prevList.map((item) => (item.TicketHistoryID === ticket.TicketHistoryID ? { ...item, Rating: rating, RatingRemarks: remarks } : item)),
+        );
       } else {
         setAlertMessage({
           type: "error",
@@ -86,28 +82,26 @@ const FarmerRating = ({ ticket, chatListDetails, setChatListDetails }) => {
         </div>
       </div>
       <p style={{ marginTop: "20px", display: "none" }}>Your rating: {rating}</p>
-        <div style={{ marginTop: "20px", textAlign: "left" }}>
-     <h6 style={{ margin: 2 }}>
-      Rating Remarks:
-    </h6>
-    <textarea
-      id="remarks"
-      rows="6"
-      value={remarks}
-      onChange={(e) => setRemarks(e.target.value)}
-      style={{
-        width: "100%",
-        padding: "6px",
-        borderRadius: "8px",
-        border: "1px solid #ccc",
-        fontSize: "12px",
-        resize: "none",
-        outline: "none",
-        fontFamily: "inherit",
-        minHeight: "120px",
-      }}
-    />
-  </div>
+      <div style={{ marginTop: "20px", textAlign: "left" }}>
+        <h6 style={{ margin: 2 }}>Rating Remarks:</h6>
+        <textarea
+          id="remarks"
+          rows="6"
+          value={remarks}
+          onChange={(e) => setRemarks(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "6px",
+            borderRadius: "8px",
+            border: "1px solid #ccc",
+            fontSize: "12px",
+            resize: "none",
+            outline: "none",
+            fontFamily: "inherit",
+            minHeight: "120px",
+          }}
+        />
+      </div>
       <div
         style={{
           display: "flex",

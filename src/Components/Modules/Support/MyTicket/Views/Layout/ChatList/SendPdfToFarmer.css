@@ -1,0 +1,572 @@
+.main-box {
+  width: 1055px;
+  padding: 10px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border: 1px solid #000;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+}
+
+.header img {
+  height: 60px;
+}
+
+.divider {
+  width: 1px;
+  height: 50px;
+  background-color: #000;
+  margin: 0 12px;
+}
+
+.header-text {
+  margin-left: 10px;
+}
+
+.header-text h2 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 700;
+}
+
+.header-text p {
+  font-size: 13px;
+  margin: 0;
+  font-weight: 500;
+}
+
+.policy-bar {
+  background-color: #f4c430;
+  color: #000;
+  border: 1px solid #000;
+  padding: 6px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.policy-bar b {
+  font-weight: 700;
+}
+
+.info-box {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid #000;
+  width: 100%;
+  background: #fff;
+  margin-bottom: 10px;
+}
+
+/* Left QR */
+.left-qr,
+.right-qr {
+  background-color: #eaf8e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  padding: 5px;
+}
+
+.left-qr {
+  border-right: 1px solid #000;
+}
+
+.right-qr {
+  border-left: 1px solid #000;
+  flex-direction: row; /* To place label left, QR center, number below */
+  position: relative;
+}
+
+.right-qr-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.left-qr img,
+.right-qr img {
+  width: 140px;
+  height: 140px;
+}
+
+.center-info {
+  flex: 1;
+  padding: 10px 20px;
+  font-size: 12px;
+}
+
+.center-info table {
+  width: 100%;
+  border-collapse: collapse;
+  border: none;
+}
+
+.center-info td {
+  padding: 4px 0;
+  text-align: left;
+  border: none;
+}
+
+.center-info td:first-child {
+  color: #444;
+}
+
+.center-info td:last-child {
+  font-weight: bold;
+}
+
+/* WhatsApp label styling */
+.whatsapp-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-weight: bold;
+  color: #000;
+  margin-right: 6px;
+}
+
+.whatsapp-number {
+  font-weight: bold;
+  color: #075e54;
+  margin-top: 4px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+td,
+th {
+  border: 1px solid #000;
+  padding: 6px 10px;
+  text-align: center;
+}
+
+.Farmer-info {
+  margin-bottom: 10px;
+  border: 1px solid #000;
+}
+
+.Farmer-info table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #000;
+}
+
+.Farmer-info td {
+  padding: 4px 0;
+  text-align: center;
+  border: 1px solid #000;
+}
+
+.section-title {
+  font-weight: bold;
+  padding: 6px;
+  border: 1px solid #000;
+  margin-bottom: 2px;
+}
+.section-title-table {
+  margin-bottom: 15px;
+  border: 1px solid #000;
+}
+
+.section-title-table table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #000;
+  font-size: 12px;
+}
+
+.section-title-table td {
+  padding: 4px;
+  text-align: center;
+  border: 1px solid #000;
+  font-weight: 600;
+}
+
+.section-title-table th {
+  padding: 4px 0;
+  text-align: center;
+  border: 1px solid #000;
+  background-color: #fff;
+  font-weight: normal;
+  color: #000;
+}
+
+.summary-table.no-inner-border {
+  border: 1px solid #000;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+
+.summary-table.no-inner-border td {
+  border: none;
+  padding: 6px 10px;
+  text-align: left;
+}
+
+.summary-table.no-inner-border tr td:first-child {
+  border-right: 1px solid transparent;
+}
+
+.currency {
+  font-family: "DejaVu Sans", Arial, sans-serif;
+}
+
+.h6Tag {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.pTag {
+  font-size: 12.5px;
+  text-align: left;
+}
+.hrTag {
+  font-weight: bold;
+}
+
+.containerhistory {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  font-size: 12px;
+}
+
+/* Left Section */
+.left-panel {
+  flex: 2.2;
+  background: #fff;
+  border-radius: 10px;
+  padding: 0px;
+  width: 550px;
+}
+
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #e6e6e6;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.ticket-header h2 {
+  font-size: 18px;
+  color: #222;
+}
+
+.ticket-status {
+  background-color: #e6fff0;
+  color: #007a33;
+  border: 1px solid #007a33;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-block;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.ticket-info {
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+/* Activity Section */
+.activity {
+  background: #fff;
+  border-radius: 10px;
+  margin-top: 15px;
+  border: 1px solid #ddd;
+  overflow: hidden;
+}
+
+.activity-header {
+  background-color: #2b78e4;
+  color: white;
+  padding: 10px 15px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.activity-content {
+  background: #f9f9f9;
+  padding: 15px;
+}
+
+.activity-content p {
+  margin-bottom: 8px;
+}
+
+/* Right Section */
+.right-panel {
+  flex: 1;
+  background: #fff;
+  border-radius: 10px;
+  padding: 5px;
+  width: 450px;
+  height: fit-content;
+}
+
+.ticketcard {
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.ticketheader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #f9fafb, #ffffff);
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.leftpanel h1 {
+  font-size: 14px;
+  color: #374151;
+}
+
+.leftpanel strong {
+  color: #111827;
+}
+
+.status {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid #10b981;
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+/* Status Variants */
+.status.open {
+  background: #fffbeb;
+  color: #92400e;
+  border-color: #f59e0b;
+}
+.status.reopen {
+  background: #fef2f2;
+  color: #991b1b;
+  border-color: #ef4444;
+}
+
+.status.inprogress {
+  background: #fffbeb;
+  color: #92400e;
+  border-color: #f59e0b;
+}
+
+.status.resolved {
+  background: #ecfdf5;
+  color: #065f46;
+  border-color: #10b981;
+}
+
+.rightpanel {
+  min-width: 120px;
+  text-align: -webkit-center;
+  display: inline-block;
+}
+
+.Event1panel {
+  display: grid;
+  width: 100%;
+  padding: 10px 12px 5px 12px;
+}
+
+/* Pill capsule */
+.pillSendPdf {
+  width: 120px;
+  min-height: 235px;
+  border: 5px solid black;
+  border-radius: 150px;
+  position: relative;
+  margin: 45px 5px;
+  transition: all 0.3s ease;
+}
+
+/* Top vs Bottom alignment */
+.pillSendPdf.top {
+  align-self: flex-start;
+}
+.pillSendPdf.bottom {
+  align-self: flex-end;
+}
+
+/* Circle with icon */
+.circleSendPdf {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+.iconSendPdf {
+  margin-top: 13px;
+}
+.circle-topSendPdf {
+  top: 13%;
+}
+.circle-bottomSendPdf {
+  bottom: 13%;
+}
+
+.text-partSendPdf {
+  width: 100%; /* keep it inside the pill */
+  padding: 5px 10px; /* side padding */
+  font-size: 10px;
+  font-weight: 600;
+  text-align: center;
+  /* word-wrap: break-word; */
+  white-space: normal;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 1.4;
+}
+
+.text-topSendPdf {
+  top: 35%;
+}
+.text-bottomSendPdf {
+  bottom: 35%;
+}
+
+.connectorSendPdf {
+  width: 2px;
+  height: 30px;
+  background: #ccc;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.connector-bottomSendPdf {
+  bottom: -19%;
+}
+.connector-topSendPdf {
+  top: -19%;
+}
+
+/* Connector dot */
+.connectorSendPdf .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.connector-bottomSendPdf .dot {
+  bottom: -12px;
+}
+.connector-topSendPdf .dot {
+  top: -12px;
+}
+
+
+/* Details */
+.detailsSendPdf {
+  font-size: 11px;
+  color: #444;
+  text-align: left;
+  width: 100%;
+  position: absolute;
+  text-wrap: wrap;
+  top: 315px;
+}
+.details-bottomSendPdf {
+  /* bottom: -95%; */
+  width: 100%;
+  left: 5%;
+}
+.details-topSendPdf {
+  width: 100%;
+  top: -95%;
+  left: 5%;
+}
+
+.detailsSendPdf p {
+  margin: 2px 0;
+}
+
+.successSendPdf {
+  color: green;
+  font-weight: bold;
+}
+
+.card-tooltipSendPdf {
+  position: relative;
+  display: inline-block;
+}
+
+/* Hover card (hidden by default) */
+.hover-cardSendPdf {
+  position: absolute;
+  bottom: 5%; /* above the pill */
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+  min-width: 300px;
+  max-width: 220px;
+  padding: 8px 10px;
+  background: #fff;
+  color: #333;
+  border-radius: 8px;
+  font-size: 11px;
+  line-height: 1.4;
+  text-align: justify;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+  z-index: 2000;
+}
+
+/* Show on hover */
+.card-tooltipSendPdf:hover .hover-cardSendPdf {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) scale(1);
+}
+
+/* Arrow */
+.hover-cardSendPdf::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -6px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: #fff transparent transparent transparent;
+}

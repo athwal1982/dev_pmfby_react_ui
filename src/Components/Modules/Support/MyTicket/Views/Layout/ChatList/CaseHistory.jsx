@@ -352,7 +352,7 @@ const CaseHistory = ({ setOpen, handleCloseCaseHistory, selectedData, pdfDownlao
             ticketStatus:
               pStatusID === 109301 ? "Open" : pStatusID === 109302 ? "In-Progress" : pStatusID === 109303 ? "Resolved" : pStatusID === 109304 ? "Re-Open" : "",
             smsText: "",
-            ageing: `(${pAgeiing} days)`,
+            ageing: `(${pAgeiing !=null ? pAgeiing : 0 } days)`,
           },
           {
             tat: "",

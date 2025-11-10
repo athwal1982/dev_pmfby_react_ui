@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, RadioGroup, FormControlLabel, Radio, Button, TextField } from "@mui/material";
+import { InputControl, InputGroup } from "Framework/OldFramework/FormComponents/FormComponents";
 import { fetchFeedbackQuestions, submitFeedback } from "./Services/Services";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -124,6 +125,12 @@ const FeedbackQuestions = ({
       agent_id: dcryptUID,
       StateName: pStateName ? pStateName.trim() : "",
       DistrictName: pDistrictName ? pDistrictName.trim() : "",
+      ReasonWithFeedback:
+        formValuesWithoutFeedBackReason &&
+        formValuesWithoutFeedBackReason.txtWithoutFeedBackReason &&
+        formValuesWithoutFeedBackReason.txtWithoutFeedBackReason.value
+          ? formValuesWithoutFeedBackReason.txtWithoutFeedBackReason.value
+          : "",
     };
 
     try {
@@ -139,6 +146,146 @@ const FeedbackQuestions = ({
       toast.error("Error submitting feedback. Please try again.");
     }
   };
+
+  const handleWithoutSubmit = async () => {
+    debugger;
+    if (!handleWithoutFeedBackReasonInfoValidation()) {
+      return;
+    }
+
+    const feedbackData = questions.map((q) => {
+      let responseText = "";
+
+      if (q.options?.length > 0) {
+        const selectedOption = q.options.find((opt) => opt.id === feedbackResponses[q.id]);
+        responseText = selectedOption ? selectedOption.option : feedbackResponses[q.id] || "";
+      } else {
+        responseText = feedbackResponses[q.id] || "";
+      }
+
+      const questionResponse = {
+        questionId: q.id,
+        questionText: q.question,
+        response: responseText.trim(),
+        subAnswers: [],
+      };
+
+      const processedSubResponses = new Set();
+
+      q.subQuestions?.forEach((subQ) => {
+        if (feedbackResponses[q.id] === subQ.conditionId) {
+          const selectedSubOption = subQ.options?.find((opt) => opt.id === feedbackResponses[subQ.id]);
+          let subResponse = selectedSubOption ? selectedSubOption.option : feedbackResponses[subQ.id] || "";
+
+          if (selectedSubOption?.option?.toLowerCase().includes("other")) {
+            subResponse = feedbackResponses[`${subQ.id}_other`] || "";
+          }
+
+          if (subResponse && !processedSubResponses.has(subResponse)) {
+            questionResponse.subAnswers.push({
+              subQuestionId: subQ.id,
+              subQuestionText: subQ.question,
+              order: subQ.order,
+              subResponse: subResponse.trim(),
+            });
+            processedSubResponses.add(subResponse);
+          }
+        }
+      });
+
+      const mainOption = q.options?.find((opt) => opt.id === feedbackResponses[q.id]);
+      if (mainOption?.option?.toLowerCase().includes("other") && feedbackResponses[`${q.id}_other`]) {
+        const mainOtherResponse = feedbackResponses[`${q.id}_other`];
+        if (mainOtherResponse && !processedSubResponses.has(mainOtherResponse)) {
+          questionResponse.subAnswers.push({
+            subQuestionId: `${q.id}_other`,
+            subQuestionText: "Other (Specify)",
+            order: 0,
+            subResponse: mainOtherResponse.trim(),
+          });
+          processedSubResponses.add(mainOtherResponse);
+        }
+      }
+
+      return questionResponse;
+    });
+
+    const payload = {
+      answers: feedbackData,
+      farmer_name: farmerName,
+      farmer_mobile_number: farmerMobileNumber,
+      CallingUniqueID: dcryptUNQEID,
+      agent_id: dcryptUID,
+      StateName: pStateName ? pStateName.trim() : "",
+      DistrictName: pDistrictName ? pDistrictName.trim() : "",
+      ReasonWithFeedback:
+        formValuesWithoutFeedBackReason &&
+        formValuesWithoutFeedBackReason.txtWithoutFeedBackReason &&
+        formValuesWithoutFeedBackReason.txtWithoutFeedBackReason.value
+          ? formValuesWithoutFeedBackReason.txtWithoutFeedBackReason.value
+          : "",
+    };
+
+    try {
+      const response = await submitFeedback(payload);
+      if (response && response.responseCode === 1) {
+        toast.success("Form submitted successfully!");
+        setfeedbackSubmit(true);
+      } else {
+        toast.error("Error submitting feedback!");
+      }
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
+      toast.error("Error submitting feedback. Please try again.");
+    }
+  };
+
+  const [formValidationWithoutFeedBackReasonError, setFormValidationWithoutFeedBackReasonError] = useState({});
+  const validateWithoutFeedBackReasonInfoField = (name, value) => {
+    let errorsMsg = "";
+    if (name === "txtWithoutFeedBackReason") {
+      if (!value || typeof value === "undefined") {
+        errorsMsg = "Reason is required!";
+      }
+    }
+
+    return errorsMsg;
+  };
+
+  const handleWithoutFeedBackReasonInfoValidation = () => {
+    try {
+      const errors = {};
+      let formIsValid = true;
+      errors["txtWithoutFeedBackReason"] = validateWithoutFeedBackReasonInfoField(
+        "txtWithoutFeedBackReason",
+        formValuesWithoutFeedBackReason.txtWithoutFeedBackReason,
+      );
+
+      if (Object.values(errors).join("").toString()) {
+        formIsValid = false;
+      }
+      setFormValidationWithoutFeedBackReasonError(errors);
+      return formIsValid;
+    } catch (error) {
+      toast.error("Something Went Wrong");
+      return false;
+    }
+  };
+
+  const updateStateWithoutFeedBackReason = (name, value) => {
+    setFormValuesWithoutFeedBackReason({ ...formValuesWithoutFeedBackReason, [name]: value });
+    setFormValidationWithoutFeedBackReasonError[name] = validateWithoutFeedBackReasonInfoField(name, value);
+  };
+
+  const [formValuesWithoutFeedBackReason, setFormValuesWithoutFeedBackReason] = useState({
+    txtWithoutFeedBackReason: null,
+  });
+
+  const [withoutFeedbackddlList] = useState([
+    { value: "Call Not Answered", label: "Call Not Answered" },
+    { value: "Farmer Denied To Provide Feedback", label: "Farmer Denied To Provide Feedback" },
+    { value: "Call Disconnected", label: "Call Disconnected" },
+  ]);
 
   useEffect(() => {
     const loadQuestions = async () => {
@@ -259,7 +406,7 @@ const FeedbackQuestions = ({
         );
       })}
 
-      <Box textAlign="center" mt={3}>
+      <Box display="flex" alignItems="center" justifyContent="center" gap={2} mt={3} flexWrap="wrap">
         <Button
           variant="contained"
           size="large"
@@ -272,6 +419,30 @@ const FeedbackQuestions = ({
         >
           Submit Feedback
         </Button>
+        <Button
+          variant="contained"
+          size="large"
+          sx={{
+            textTransform: "none",
+            backgroundColor: "#075307",
+            borderRadius: "15px",
+          }}
+          onClick={handleWithoutSubmit}
+        >
+          Submit Without Feedback
+        </Button>
+        <InputGroup ErrorMsg={formValidationWithoutFeedBackReasonError["txtWithoutFeedBackReason"]}>
+          <InputControl
+            Input_type="select"
+            name="txtWithoutFeedBackReason"
+            getOptionLabel={(option) => `${option.label}`}
+            value={formValuesWithoutFeedBackReason.txtWithoutFeedBackReason}
+            getOptionValue={(option) => `${option}`}
+            options={withoutFeedbackddlList}
+            ControlTxt="Reason"
+            onChange={(e) => updateStateWithoutFeedBackReason("txtWithoutFeedBackReason", e)}
+          />
+        </InputGroup>
       </Box>
 
       <ToastContainer />

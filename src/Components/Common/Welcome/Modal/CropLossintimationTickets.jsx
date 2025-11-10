@@ -1258,8 +1258,8 @@ function CropLossintimationTickets() {
     // A getTicketCategoryTypeListData("1", 0, "TCKTYP");
   }, []);
 
-    useEffect(() => {
-      debugger;
+  useEffect(() => {
+    debugger;
     if (window.__bhashiniLangAlreadySet) return;
     window.__bhashiniLangAlreadySet = true;
 
