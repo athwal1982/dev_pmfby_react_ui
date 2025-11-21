@@ -52,7 +52,7 @@ function TicketCustomerDetail({
     }
   };
   return (
-    <div className={BizClass.CustomerBox}>
+    <div className={BizClass.CustomerBox} id="pdf-last-section">
       <div className={BizClass.Heading}>
         <div className={BizClass.ReqInfo}>
           <img src={CustomerAvatar} alt="Customer" />
@@ -66,7 +66,7 @@ function TicketCustomerDetail({
         </div>
       </div>
       <div className={BizClass.MainBox}>
-        <div className={BizClass.InfoBox}>
+        <div className={BizClass.InfoBox} id="iwant_flex">
           <div className={BizClass.SubBox}>
             <RiNewspaperLine />
             <p>

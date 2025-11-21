@@ -182,24 +182,3 @@ export const KrphSupportTicketSatisfiedUpdateData = async (formData) => {
     return { response: { responseCode: 0, responseData: null, responseMessage: error } };
   }
 };
-
-export const KRPHFarmerTicketPdfData = async (formData) => {
-  try {
-    const requestData = {
-      main: {
-        ...formData,
-      },
-    };
-    const result = await ApiCalling(requestData, APIEndpoints.ChatList.KRPHFarmerTicketPdf);
-    if (result.responseCode === 1) {
-      if (result.responseData) {
-        return { response: result };
-      }
-      return { response: result };
-    }
-    return { response: result };
-  } catch (error) {
-    console.log(error);
-    return { response: { responseCode: 0, responseData: null, responseMessage: error } };
-  }
-};

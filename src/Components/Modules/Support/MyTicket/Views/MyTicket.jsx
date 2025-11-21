@@ -21,7 +21,6 @@ function MyTicket({
   selectedData,
   pdfDownlaodStatus,
   showAnother,
-  sendPDF,
 }) {
   // Anil const setAlertMessage = AlertMessage();
   // Anil const navigate = useNavigate();
@@ -91,10 +90,6 @@ function MyTicket({
         <Button type="button" varient="title" trigger={isLoadingDownloadpdf} onClick={() => downloadPDF()}>
           {" "}
           Export To PDF{" "}
-        </Button>
-        <Button type="button" varient="title" trigger={isLoadingDownloadpdf} onClick={() => sendPDF()}>
-          {" "}
-          Send PDF{" "}
         </Button>
       </div>
       <div className={BizClass.ContentDiv} ref={pageRef}>

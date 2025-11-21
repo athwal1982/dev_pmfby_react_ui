@@ -9,7 +9,6 @@ const APIEndpoints = {
     krphTicketTrail: "FGMS/krphTicketTrail",
     KrphSupportTicketAuditUpdate: "FGMS/KrphSupportTicketAuditUpdate",
     KrphSupportTicketSatisfiedUpdate: "FGMS/KrphSupportTicketSatisfiedUpdate",
-    KRPHFarmerTicketPdf: "FGMS/KRPHFarmerTicketPdf",
   },
 };
 

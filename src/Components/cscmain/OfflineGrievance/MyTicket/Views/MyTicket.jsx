@@ -1,10 +1,14 @@
 import React from "react";
 import { PropTypes } from "prop-types";
 import { PageBar } from "Framework/Components/Layout";
+import { Button } from "Framework/Components/Widgets";
 import { getUserRightCodeAccess, getSessionStorage } from "Components/Common/Login/Auth/auth";
 import BizClass from "./MyTicket.module.scss";
 
-function MyTicket({ children, replyBoxCollapsed, setReplyBoxCollapsed, setTicketStatusBtn, ticketData, showfunc }) {
+function MyTicket({ children, replyBoxCollapsed, setReplyBoxCollapsed, setTicketStatusBtn, ticketData, showfunc,  downloadPDF,
+  pageRef,
+  isLoadingDownloadpdf,
+ }) {
   debugger;
   const replyTicketRight = getUserRightCodeAccess("ofga");
   const reopenTicketRight = getUserRightCodeAccess("ofro");
@@ -50,8 +54,12 @@ function MyTicket({ children, replyBoxCollapsed, setReplyBoxCollapsed, setTicket
             <PageBar.Button onClick={() => toggelReOpenButton()}>Re-Open</PageBar.Button>
           ) : null
         ) : null}
+         <Button type="button" varient="title" trigger={isLoadingDownloadpdf} onClick={() => downloadPDF()}>
+                  {" "}
+                  Export To PDF{" "}
+                </Button>
       </div>
-      <div className={BizClass.ContentDiv}>{children}</div>
+      <div className={BizClass.ContentDiv} ref={pageRef}>{children}</div>
     </div>
   );
 }

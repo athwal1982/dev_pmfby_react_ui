@@ -166,6 +166,7 @@ function UserWiseAudit() {
       { width: 20 },
       { width: 20 },
       { width: 80 },
+      { width: 20 },
       { width: 15 },
       { width: 80 },
       { width: 20 },
@@ -244,6 +245,7 @@ function UserWiseAudit() {
       FarmerShare: "Farmer Share",
       SowingDate: "Sowing Date",
       TicketDescription: "Description",
+      AuditBy: "Audit By",
       InprogressDate: "In-Progress",
       InprogressComment: "In-Progress Comment",
       InprogressUpdatedBy: "In-Progress By",
@@ -308,6 +310,7 @@ function UserWiseAudit() {
           ? dateToSpecificFormat(`${value.SowingDate.split("T")[0]} ${Convert24FourHourAndMinute(value.SowingDate.split("T")[1])}`, "DD-MM-YYYY HH:mm")
           : "",
         TicketDescription: value.TicketDescription,
+        AuditBy: value.AuditBy,
         InprogressDate: value.InprogressDate,
         InprogressComment: value.InprogressComment,
         InprogressUpdatedBy: value.InprogressUpdatedBy,
@@ -343,7 +346,7 @@ function UserWiseAudit() {
 
   const [UserWiseAuditDetailsCountList, setUserWiseAuditDetailsCountList] = useState([]);
   const [isLoadingUserWiseAuditDetailsCountList, setIsLoadingUserWiseAuditDetailsCountList] = useState(false);
-  const getUserWiseAuditDetailsList = async (pType, pAppAccessID) => {
+  const getUserWiseAuditDetailsList = async (pType, pAppAccessID, pgrandTotal) => {
     try {
       setIsLoadingUserWiseAuditDetailsCountList(true);
 
@@ -352,6 +355,7 @@ function UserWiseAudit() {
         toDate: formValues.txtToDate ? dateToCompanyFormat(formValues.txtToDate) : "",
         viewMode: "UserWiseAudit",
         type: pType,
+        grandTotal: pgrandTotal,
         insuranceCompanyID: 0,
         userID: pAppAccessID,
       };
@@ -377,10 +381,10 @@ function UserWiseAudit() {
   };
 
   const [openUserWiseAuditDetailsModal, setOpenUserWiseAuditDetailsModal] = useState(false);
-  const openUserWiseAuditDetailsClick = (data, type) => {
+  const openUserWiseAuditDetailsClick = (data, type, grandTotal) => {
     if (data) {
       let pAppAccessID = data && data.AppAccessID ? data.AppAccessID : 0;
-      getUserWiseAuditDetailsList(type, pAppAccessID);
+      getUserWiseAuditDetailsList(type, pAppAccessID,grandTotal );
     }
     setOpenUserWiseAuditDetailsModal(!openUserWiseAuditDetailsModal);
   };
@@ -388,29 +392,31 @@ function UserWiseAudit() {
   const IsAuditCellStyle = (params) => {
     return (
       <div>
-        {params.node.rowPinned ? (
-          params.data.IsAudit
-        ) : params.data && Number(params.data.IsAudit) > 0 ? (
-          <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openUserWiseAuditDetailsClick(params.data, "AUDIT")}>
+        {params.node.rowPinned ? params.data && Number(params.data.IsAudit) > 0 ? (
+          <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openUserWiseAuditDetailsClick(params.data, "AUDIT",1)}>
             {params.data.IsAudit}
           </a>
-        ) : (
-          "0"
-        )}
+        ) : 0 : (
+          params.data && Number(params.data.IsAudit) > 0 ? 
+           <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openUserWiseAuditDetailsClick(params.data, "AUDIT", 0)}>
+            {params.data.IsAudit}
+          </a> : 0
+        ) }
       </div>
     );
   };
   const SatisfiedCellStyle = (params) => {
     return (
       <div>
-        {params.node.rowPinned ? (
-          params.data.Satisfied
-        ) : params.data && Number(params.data.Satisfied) > 0 ? (
-          <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openUserWiseAuditDetailsClick(params.data, "SATISFIED")}>
+        {params.node.rowPinned ? params.data && Number(params.data.Satisfied) > 0 ? (
+          <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openUserWiseAuditDetailsClick(params.data, "SATISFIED",1)}>
             {params.data.Satisfied}
           </a>
-        ) : (
-          "0"
+        ) : 0 : (
+          params.data && Number(params.data.Satisfied) > 0 ? 
+           <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openUserWiseAuditDetailsClick(params.data, "SATISFIED", 0)}>
+            {params.data.Satisfied}
+          </a> : 0
         )}
       </div>
     );
@@ -418,14 +424,15 @@ function UserWiseAudit() {
   const UnstatisfiedCellStyle = (params) => {
     return (
       <div>
-        {params.node.rowPinned ? (
-          params.data.Unstatisfied
-        ) : params.data && Number(params.data.Unstatisfied) > 0 ? (
-          <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openUserWiseAuditDetailsClick(params.data, "UNSATISFIED")}>
+        {params.node.rowPinned ? params.data && Number(params.data.Unstatisfied) > 0 ? (
+          <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openUserWiseAuditDetailsClick(params.data, "UNSATISFIED",1)}>
             {params.data.Unstatisfied}
           </a>
-        ) : (
-          "0"
+        ) : 0 : (
+          params.data && Number(params.data.Unstatisfied) > 0 ? 
+           <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openUserWiseAuditDetailsClick(params.data, "UNSATISFIED", 0)}>
+            {params.data.Unstatisfied}
+          </a> : 0
         )}
       </div>
     );
@@ -434,14 +441,15 @@ function UserWiseAudit() {
   const NotFlaggedCellStyle = (params) => {
     return (
       <div>
-        {params.node.rowPinned ? (
-          params.data.NotFlagged
-        ) : params.data && Number(params.data.NotFlagged) > 0 ? (
-          <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openUserWiseAuditDetailsClick(params.data, "UNFLAGGED")}>
+         {params.node.rowPinned ? params.data && Number(params.data.NotFlagged) > 0 ? (
+          <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openUserWiseAuditDetailsClick(params.data, "UNFLAGGED",1)}>
             {params.data.NotFlagged}
           </a>
-        ) : (
-          "0"
+        ) : 0 : (
+          params.data && Number(params.data.NotFlagged) > 0 ? 
+           <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openUserWiseAuditDetailsClick(params.data, "UNFLAGGED", 0)}>
+            {params.data.NotFlagged}
+          </a> : 0
         )}
       </div>
     );
@@ -450,14 +458,15 @@ function UserWiseAudit() {
   const ReOpenCellStyle = (params) => {
     return (
       <div>
-        {params.node.rowPinned ? (
-          params.data.TicketReOpen
-        ) : params.data && Number(params.data.TicketReOpen) > 0 ? (
-          <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openUserWiseAuditDetailsClick(params.data, "REOPEN")}>
+         {params.node.rowPinned ? params.data && Number(params.data.TicketReOpen) > 0 ?   (
+          <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openUserWiseAuditDetailsClick(params.data, "REOPEN",1)}>
             {params.data.TicketReOpen}
           </a>
-        ) : (
-          "0"
+        ) : 0 : (
+          params.data && Number(params.data.TicketReOpen) > 0 ? 
+           <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openUserWiseAuditDetailsClick(params.data, "REOPEN", 0)}>
+            {params.data.TicketReOpen}
+          </a> : 0
         )}
       </div>
     );

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Loader } from "Framework/Components/Widgets";
 import CustomerAvatar from "Framework/Assets/Images/CustomerAvatar.png";
 import { FiCopy } from "react-icons/fi";
 import { HiDotsVertical } from "react-icons/hi";
@@ -7,7 +6,7 @@ import { BsFillArrowDownCircleFill } from "react-icons/bs";
 import { RiNewspaperLine } from "react-icons/ri";
 import { dateToSpecificFormat, Convert24FourHourAndMinute } from "Configration/Utilities/dateformat";
 import moment from "moment";
-import Modal from "Framework/Components/Layout/Modal/Modal";
+// A import Modal from "Framework/Components/Layout/Modal/Modal";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { KRPHFarmerTicketPdfData } from "../../../../MyTicket/Services/Services";
 import "./SendPdfToFarmer.css";
@@ -17,24 +16,25 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { MdOutlineTextsms } from "react-icons/md";
 import Ticket from "../../../../../../../assets/img/ticket_band.png";
 import parse from "html-react-parser";
-import { Comment } from "@mui/icons-material";
+import html2pdf from "html2pdf.js";
+import { getSessionStorage, setSessionStorage } from "Components/Common/Login/Auth/auth";
+import {uploadTicketPDFData} from  "../../../Services/Services";
 
-const SendPdfToFarmer = ({ showfunc, selectedData }) => {
+
+
+const SendPdfToFarmer = ({selectedData, pageRef, setBtnLoaderActive1 }) => {
   const setAlertMessage = AlertMessage();
 
   const [ticketListDetails, setticketListDetails] = useState([]);
-  const [isLoadingticketListDetails, setIsLoadingticketListDetails] = useState(false);
-  const [steps, setsetps] = useState([]);
   const getticketListDetailsData = async () => {
     debugger;
     try {
-      setIsLoadingticketListDetails(true);
       const formdata = {
         viewMode: "PDF",
         supportTicketNo: selectedData && selectedData.SupportTicketNo ? selectedData.SupportTicketNo : "",
       };
+      setBtnLoaderActive1(true);
       const result = await KRPHFarmerTicketPdfData(formdata);
-      setIsLoadingticketListDetails(false);
       if (result.response.responseCode === 1) {
         if (result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
           const data = result.response.responseData;
@@ -61,15 +61,18 @@ const SendPdfToFarmer = ({ showfunc, selectedData }) => {
           setticketListDetails(combinedTickets);
         } else {
           setticketListDetails([]);
+          setBtnLoaderActive1(false);
         }
       } else {
         setAlertMessage({
           type: "error",
           message: result.response.responseMessage,
         });
+         setBtnLoaderActive1(false);
       }
     } catch (error) {
       console.log(error);
+      setBtnLoaderActive1(false);
       setAlertMessage({
         type: "error",
         message: error,
@@ -393,7 +396,7 @@ const SendPdfToFarmer = ({ showfunc, selectedData }) => {
             ticketStatus:
               pStatusID === 109301 ? "Open" : pStatusID === 109302 ? "In-Progress" : pStatusID === 109303 ? "Resolved" : pStatusID === 109304 ? "Re-Open" : "",
             smsText: "",
-            ageing: `(${pAgeiing !=null ? pAgeiing : 0 } days)`,
+            ageing: `(${pAgeiing != null ? pAgeiing : 0} days)`,
           },
           {
             tat: "",
@@ -467,46 +470,39 @@ const SendPdfToFarmer = ({ showfunc, selectedData }) => {
     return rtnStatusWiseTemplate;
   };
 
-  const getCaseHistoryStepByStep = (commentsTickets,pdata) => {
+  const getCaseHistoryStepByStep = (commentsTickets, pdata) => {
     debugger;
     let rtnCommentsList = [];
-   if (commentsTickets.length === 0) {
-            const statusTemplate = getStatusWiseTemplate(pdata.TicketStatusID, pdata, "", "");
-            rtnCommentsList = statusTemplate;
-          } else if (commentsTickets.length > 0) {
-            if (commentsTickets.length > 0) {
-              let allTicketStatusTemplate = [];
+    if (commentsTickets.length === 0) {
+      const statusTemplate = getStatusWiseTemplate(pdata.TicketStatusID, pdata, "", "");
+      rtnCommentsList = statusTemplate;
+    } else if (commentsTickets.length > 0) {
+      if (commentsTickets.length > 0) {
+        let allTicketStatusTemplate = [];
 
-              // A First statusTemplate (Initial)
-              let statusTemplate = getStatusWiseTemplate(109301, pdata, "", "");
-              allTicketStatusTemplate.push(...statusTemplate);
+        // A First statusTemplate (Initial)
+        let statusTemplate = getStatusWiseTemplate(109301, pdata, "", "");
+        allTicketStatusTemplate.push(...statusTemplate);
 
-             commentsTickets.forEach(value => {
-  if (value.TicketStatusID === 109302) {
-    // A In-Process
-    let statusTemplate = getStatusWiseTemplate(value.TicketStatusID, value, pdata, "", "");
-    allTicketStatusTemplate.push(...statusTemplate);
-  } else if (value.TicketStatusID === 109304) {
-    // A Re-Open
-    let statusTemplate = getStatusWiseTemplate(value.TicketStatusID, value, pdata, "", "");
-    allTicketStatusTemplate.push(...statusTemplate);
-  } else if (value.TicketStatusID === 109303) {
-    // A Resolved
-    let statusTemplate = getStatusWiseTemplate(
-      value.TicketStatusID,
-      value,
-      pdata,
-      commentsTickets,
-      value.TicketStatus
-    );
-    allTicketStatusTemplate.push(...statusTemplate);
-  }
-});
-
-
-              rtnCommentsList = allTicketStatusTemplate;
-            }
+        commentsTickets.forEach((value) => {
+          if (value.TicketStatusID === 109302) {
+            // A In-Process
+            let statusTemplate = getStatusWiseTemplate(value.TicketStatusID, value, pdata, "", "");
+            allTicketStatusTemplate.push(...statusTemplate);
+          } else if (value.TicketStatusID === 109304) {
+            // A Re-Open
+            let statusTemplate = getStatusWiseTemplate(value.TicketStatusID, value, pdata, "", "");
+            allTicketStatusTemplate.push(...statusTemplate);
+          } else if (value.TicketStatusID === 109303) {
+            // A Resolved
+            let statusTemplate = getStatusWiseTemplate(value.TicketStatusID, value, pdata, commentsTickets, value.TicketStatus);
+            allTicketStatusTemplate.push(...statusTemplate);
           }
+        });
+
+        rtnCommentsList = allTicketStatusTemplate;
+      }
+    }
 
     return rtnCommentsList;
   };
@@ -515,11 +511,93 @@ const SendPdfToFarmer = ({ showfunc, selectedData }) => {
     getticketListDetailsData();
   }, []);
 
+useEffect(() => {
+  debugger;
+  if (ticketListDetails.length > 0) {
+    setTimeout(() => {
+      SendPdfToFarmer();
+    }, 1000);
+  }
+}, [ticketListDetails]);
+
+  const SendPdfToFarmer = async () => {
+    debugger;
+    if (!pageRef.current) return;
+    const element = pageRef.current;
+
+    // A await new Promise((resolve) => setTimeout(resolve, 5000));
+    const opt = {
+      margin: [5, 6, 8, 6],
+      filename: `Ticket_Details_${selectedData?.SupportTicketNo}.pdf`,
+      image: { type: "jpeg", quality: 0.9 },
+      html2canvas: {
+        scale: 1.2,
+        useCORS: true,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: element.scrollWidth,
+        windowHeight: element.scrollHeight,
+      },
+      jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
+      pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+    };
+
+    try {
+      const worker = html2pdf().set(opt).from(element).toPdf();
+      await worker.get("pdf").then(async (jspdf) => {
+        const pageCount = jspdf.internal.getNumberOfPages();
+        for (let i = 1; i <= pageCount; i++) {
+          jspdf.setPage(i);
+          jspdf.setFont("helvetica", "bold");
+          jspdf.setFontSize(10);
+          jspdf.text(`Page ${i} of ${pageCount}`, jspdf.internal.pageSize.getWidth() / 2, jspdf.internal.pageSize.getHeight() - 5, { align: "center" });
+        }
+      });
+      const pdfBlob = await worker.output("blob");
+      const ticketRelatedData= getSessionStorage("sendPDFToFarmer");
+       const formDataDoc = new FormData();
+                    formDataDoc.append("SupportTicketID", ticketRelatedData.SupportTicketID);
+                    formDataDoc.append("SupportTicketNo", selectedData?.SupportTicketNo);
+                    formDataDoc.append("TicketHistoryID", ticketRelatedData.TicketHistoryID);
+                    formDataDoc.append("TicketStatusID", ticketRelatedData.TicketStatusID);
+                    formDataDoc.append("LastTicketStatusID", ticketRelatedData.LastTicketStatusID);
+                    formDataDoc.append("UpdatedByID", ticketRelatedData.InsertUserID);
+                    formDataDoc.append("UpdatedBy", ticketRelatedData.CreatedBY);
+                    formDataDoc.append("UpdateDateTime", ticketRelatedData.TicketHistoryDate);
+                    formDataDoc.append("RequestorMobileNo", ticketRelatedData.RequestorMobileNo);
+                    formDataDoc.append("file", pdfBlob, opt.filename);
+      
+                    try {
+                      const resultPdfData = await uploadTicketPDFData(formDataDoc);
+                      if (resultPdfData.responseCode === 1) {
+                        setSessionStorage("sendPDFToFarmer", null);
+                        setBtnLoaderActive1(false);
+  
+                      } else if (resultPdfData.responseCode === 0) {
+                        setAlertMessage({
+                          type: "error",
+                          message: resultPdfData.responseMessage,
+                        });
+                        setBtnLoaderActive1(false);
+                      }
+                    } catch (error) {
+                      setBtnLoaderActive1(false);
+                      console.log(error);
+                    }
+
+    } catch (err) {
+      setBtnLoaderActive1(false);
+      console.error("PDF generation error:", err);
+    } finally {
+      setBtnLoaderActive1(false);
+    }
+  };
+
   return (
     <>
-      <Modal varient="half" title="" right="0" width="79.5vw" show={showfunc}>
-        <Modal.Body>
-          <div class="main-box">
+      {/* <Modal varient="half" title="" right="0" width="79.5vw" show={showfunc}>
+        <Modal.Body> */}
+          <div class="main-box" ref={pageRef} >
             <div class="header">
               <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="India Emblem" />
               <div class="divider"></div>
@@ -548,7 +626,7 @@ const SendPdfToFarmer = ({ showfunc, selectedData }) => {
                 <table>
                   <tr>
                     <td>State</td>
-                    <td>: {selectedData && selectedData.PlotStateName ? selectedData.PlotStateName : ""}</td>
+                    <td>: {selectedData && selectedData.StateMasterName ? selectedData.StateMasterName : ""}</td>
                   </tr>
                   <tr>
                     <td>Scheme</td>
@@ -586,7 +664,7 @@ const SendPdfToFarmer = ({ showfunc, selectedData }) => {
                 </table>
               </div>
               <div class="right-qr">
-                <div class="whatsapp-label">WhatsApp ChatBot</div>
+                {/* <div class="whatsapp-label">WhatsApp ChatBot</div> */}
                 <div class="right-qr-content">
                   <img src="https://pmfby.amnex.co.in/pmfby/public/img/whatsapp-chatbot-scanner.jpg" alt="Right QR" />
                   <div class="whatsapp-number">7065514447</div>
@@ -699,7 +777,7 @@ const SendPdfToFarmer = ({ showfunc, selectedData }) => {
                 </td>
               </tr>
             </table>
-            {!isLoadingticketListDetails ? (
+            {
               ticketListDetails && ticketListDetails.length > 0 ? (
                 ticketListDetails.map((data, i) => {
                   return (
@@ -805,11 +883,7 @@ const SendPdfToFarmer = ({ showfunc, selectedData }) => {
                           {data && data.Histories && data.Histories.length > 0
                             ? data.Histories.map((v, i) => {
                                 return (
-                                  <Accordion
-                                    sx={{ borderRadius: 2, boxShadow: 3, mb: 1, overflow: "hidden" }}
-                                    key={i}
-                                    defaultExpanded
-                                  >
+                                  <Accordion sx={{ borderRadius: 2, boxShadow: 3, mb: 1, overflow: "hidden" }} key={i} defaultExpanded>
                                     <AccordionSummary
                                       expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
                                       sx={{
@@ -955,10 +1029,10 @@ const SendPdfToFarmer = ({ showfunc, selectedData }) => {
                                   <p>
                                     Residential Location :
                                     <span id="spnInsStateDistrict">
-                                      {data && data.StateMasterName ? data.StateMasterName : ""}{" "} 
-                {data && data.DistrictMasterName  ? `, ${data.DistrictMasterName}` : ""}{" "}
-                {data && data.SubDistrictName ? `, ${data.SubDistrictName}` : ""}{" "}
-                {data && data.VillageName  ? `, ${data.VillageName}` : ""} 
+                                      {data && data.StateMasterName ? data.StateMasterName : ""}{" "}
+                                      {data && data.DistrictMasterName ? `, ${data.DistrictMasterName}` : ""}{" "}
+                                      {data && data.SubDistrictName ? `, ${data.SubDistrictName}` : ""}{" "}
+                                      {data && data.VillageName ? `, ${data.VillageName}` : ""}
                                     </span>
                                   </p>
                                   <FiCopy />
@@ -968,9 +1042,8 @@ const SendPdfToFarmer = ({ showfunc, selectedData }) => {
                                   <p>
                                     Land Location :
                                     <span id="spnLandDistrictVillage">
-                                      {data && data.PlotStateName  ? data.PlotStateName : ""}{" "}
-                {data && data.PlotDistrictName  ? `, ${data.PlotDistrictName}` : ""}{" "}
-                {data && data.PlotVillageName  ? `, ${data.PlotVillageName}` : ""}{" "} 
+                                      {data && data.PlotStateName ? data.PlotStateName : ""} {data && data.PlotDistrictName ? `, ${data.PlotDistrictName}` : ""}{" "}
+                                      {data && data.PlotVillageName ? `, ${data.PlotVillageName}` : ""}{" "}
                                     </span>
                                   </p>
                                   <FiCopy />
@@ -1001,8 +1074,8 @@ const SendPdfToFarmer = ({ showfunc, selectedData }) => {
                                   <p>
                                     Land Survey Or Land Division Number :
                                     <span id="spnLandSurveyDivision">
-                                      {data && data.LandSurveyNumber  ? data.LandSurveyNumber : ""} Or{" "}
-                {data && data.LandDivisionNumber  ? data.LandDivisionNumber : ""} 
+                                      {data && data.LandSurveyNumber ? data.LandSurveyNumber : ""} Or{" "}
+                                      {data && data.LandDivisionNumber ? data.LandDivisionNumber : ""}
                                     </span>
                                   </p>
                                   <FiCopy />
@@ -1010,21 +1083,21 @@ const SendPdfToFarmer = ({ showfunc, selectedData }) => {
                                 <div className={BizClass.SubBox}>
                                   <RiNewspaperLine />
                                   <p>
-                                    Area :<span id="spnArea">{data && data.PolicyArea  ? data.PolicyArea : ""}</span>
+                                    Area :<span id="spnArea">{data && data.PolicyArea ? data.PolicyArea : ""}</span>
                                   </p>
                                   <FiCopy />
                                 </div>
                                 <div className={BizClass.SubBox}>
                                   <RiNewspaperLine />
                                   <p>
-                                    Crop Name :<span id="spnCropName">{data && data.ApplicationCropName  ? data.ApplicationCropName : ""} </span>
+                                    Crop Name :<span id="spnCropName">{data && data.ApplicationCropName ? data.ApplicationCropName : ""} </span>
                                   </p>
                                   <FiCopy />
                                 </div>
                                 <div className={BizClass.SubBox}>
                                   <RiNewspaperLine />
                                   <p>
-                                    Premium Amount :<span id="spnPremiumAmount">{data && data.PolicyPremium  ? data.PolicyPremium : ""}</span>
+                                    Premium Amount :<span id="spnPremiumAmount">{data && data.PolicyPremium ? data.PolicyPremium : ""}</span>
                                   </p>
                                   <FiCopy />
                                 </div>
@@ -1050,11 +1123,11 @@ const SendPdfToFarmer = ({ showfunc, selectedData }) => {
                       </div>
                       <hr />
                       <div id="case_history_ticket_details">
-                       <h6>Case History</h6>
+                        <h6>Case History</h6>
                         {data &&
                           data.Comments &&
                           data.Comments.length > 0 &&
-                          getCaseHistoryStepByStep(data.Comments,data).map((step, index) => (
+                          getCaseHistoryStepByStep(data.Comments, data).map((step, index) => (
                             <div className="card-tooltipSendPdf" key={`${step.id}-${index}`}>
                               <div
                                 className="pillSendPdf top"
@@ -1109,9 +1182,7 @@ const SendPdfToFarmer = ({ showfunc, selectedData }) => {
                   );
                 })
               ) : null
-            ) : (
-              <Loader />
-            )}
+            }
             <br />
             <div>
               <h6 className="h6Tag">Important Note: </h6>
@@ -1167,8 +1238,8 @@ const SendPdfToFarmer = ({ showfunc, selectedData }) => {
               </p>
             </div>
           </div>
-        </Modal.Body>
-      </Modal>
+        {/* </Modal.Body>
+      </Modal> */}
     </>
   );
 };

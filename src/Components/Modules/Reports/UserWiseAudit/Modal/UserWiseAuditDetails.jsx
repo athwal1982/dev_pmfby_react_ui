@@ -45,6 +45,7 @@ function UserWiseAuditDetails({
             <DataGrid.Column field="RequestorName" headerName="Farmer Name" width="220px" />
             <DataGrid.Column field="RequestorMobileNo" headerName="Mobile No" width="125px" />
             <DataGrid.Column field="TicketDescription" headerName="Description" width="290px" />
+            <DataGrid.Column field="AuditBy" headerName="Audit By" width="160px" />
             <DataGrid.Column
               field="InprogressDate"
               headerName="In-progress"

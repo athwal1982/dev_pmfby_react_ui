@@ -126,10 +126,11 @@
 /* WhatsApp label styling */
 .whatsapp-label {
   writing-mode: vertical-rl;
-  transform: rotate(180deg);
+  transform: rotate(180deg); /* flips text upright */
   font-weight: bold;
   color: #000;
-  margin-right: 6px;
+  padding: 0 4px;
+  text-align: center;
 }
 
 .whatsapp-number {
@@ -493,7 +494,6 @@ th {
 .connector-topSendPdf .dot {
   top: -12px;
 }
-
 
 /* Details */
 .detailsSendPdf {
