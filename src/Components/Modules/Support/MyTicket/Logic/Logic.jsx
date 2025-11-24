@@ -163,6 +163,7 @@ function MyTicketLogics() {
 
   const [selectedPolicyDetails, setSelectedPolicyDetails] = useState([]);
   const getPolicyDetailsOfFarmer = async (pticketData) => {
+    debugger;
     try {
       let result = "";
       let formData = "";
@@ -201,6 +202,7 @@ function MyTicketLogics() {
                     resVillageID: v.resVillageID,
                     resSubDistrictID: v.resSubDistrictID,
                     policyPremium: parseFloat(v.policyPremium).toFixed(2),
+                    sumInsured: parseFloat(x.sumInsured).toFixed(2),
                     policyArea: v.policyArea,
                     policyType: v.policyType,
                     scheme: v.scheme,

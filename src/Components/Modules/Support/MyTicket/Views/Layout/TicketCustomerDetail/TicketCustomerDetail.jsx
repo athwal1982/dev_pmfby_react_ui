@@ -87,6 +87,7 @@ function TicketCustomerDetail({
       policyArea: "Area",
       cropName: "Crop Name",
       policyPremium: "Premium Amount",
+      sumInsured: "Sum Insured",
       applicationSource: "Source of Enrolment",
       scheme: "Scheme",
       applicationStatus: "Application Status",
@@ -110,6 +111,7 @@ function TicketCustomerDetail({
         policyArea: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].policyArea : "",
         cropName: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].cropName : "",
         policyPremium: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].policyPremium : "",
+        sumInsured: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].sumInsured : "",
         applicationSource: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].applicationSource : "",
         scheme: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].scheme : "",
         applicationStatus: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].applicationStatus : "",
@@ -135,6 +137,7 @@ function TicketCustomerDetail({
       { width: 12 },
       { width: 22 },
       { width: 18 },
+      { width: 20 },
       { width: 20 },
       { width: 15 },
       { width: 30 },
@@ -256,7 +259,15 @@ function TicketCustomerDetail({
               Premium Amount :
               <span id="spnPremiumAmount">{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].policyPremium : ""}</span>
             </p>
-            <FiCopy onClick={() => copyToClipboard("spnPremiumAmount")} />
+            <FiCopy onClick={() => copyToClipboard("spsumInsured")} />
+          </div>
+           <div className={BizClass.SubBox}>
+            <RiNewspaperLine />
+            <p>
+             Sum Insured :
+              <span id="spsumInsured">{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].sumInsured : ""}</span>
+            </p>
+            <FiCopy onClick={() => copyToClipboard("spsumInsured")} />
           </div>
           <div className={BizClass.SubBox}>
             <RiNewspaperLine />

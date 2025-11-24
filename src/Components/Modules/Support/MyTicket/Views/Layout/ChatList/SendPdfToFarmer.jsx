@@ -396,7 +396,7 @@ const SendPdfToFarmer = ({selectedData, pageRef, setBtnLoaderActive1 }) => {
             ticketStatus:
               pStatusID === 109301 ? "Open" : pStatusID === 109302 ? "In-Progress" : pStatusID === 109303 ? "Resolved" : pStatusID === 109304 ? "Re-Open" : "",
             smsText: "",
-            ageing: `(${pAgeiing != null ? pAgeiing : 0} days)`,
+            ageing: `${pAgeiing ? `(${pAgeiing} days)` : ""}`,
           },
           {
             tat: "",
