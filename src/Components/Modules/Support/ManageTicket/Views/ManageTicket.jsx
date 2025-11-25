@@ -286,7 +286,7 @@ function ManageTicket({
                     width="100px"
                     valueFormatter={(param) => (param.value && param.value === 1 ? "Kharif" : param.value === 2 ? "Rabi" : "")}
                   />
-                  <DataGrid.Column field="RequestYear" headerName="Year" width="100px" />
+                  <DataGrid.Column field="RequestYear" headerName="Season Year" width="120px" />
                   <DataGrid.Column field="ApplicationCropName" headerName="Crop Name" width="150px" />
                   {/* <DataGrid.Column
              field="LossDate"

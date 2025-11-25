@@ -48,6 +48,7 @@ const TicketItem = ({
   setExpanded,
   updateTicketHistorytData,
   setChatListDetails,
+  selectedPolicyDetails,
 }) => {
   const isResolved = ticket.TicketStatus === "Resolved";
 
@@ -386,8 +387,8 @@ const TicketItem = ({
       <React.Fragment>
         <tr className={BizClass.ticketRow} onClick={onExpand}>
           <td>{ticket.SupportTicketNo}</td>
-          <td>{ticket.InsurancePolicyNo}</td>
-          <td>{ticket.SchemeName ?? "--"}</td>
+          <td>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].policyID : ""}</td>
+          <td>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].scheme : "--"}</td>
           <td>{ticket.TicketTypeName}</td>
           <td className={classNames(BizClass.status, isResolved ? BizClass.resolved : BizClass.unresolved)}>
             {ticket.TicketStatus}
@@ -417,7 +418,7 @@ const TicketItem = ({
                   <div className={BizClass.detailsCol}>
                     <img
                       src={logoPath}
-                      alt={ticket.InsuranceCompany}
+                      alt={selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].insuranceCompanyName : ""}
                       className={BizClass.insuranceLogo}
                       style={{
                         width: "100px",
@@ -426,7 +427,7 @@ const TicketItem = ({
                         objectFit: "contain",
                       }}
                     />
-                    <span>{ticket.InsuranceCompany}</span>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].insuranceCompanyName : ""}</span>
                   </div>
                   <div className={BizClass.detailsCol}>
                     <strong>Farmer Name</strong>
@@ -438,14 +439,31 @@ const TicketItem = ({
                   </div>
                   <div className={BizClass.detailsCol}>
                     <strong>Application Number</strong>
-                    <span>{ticket.ApplicationNo ?? "--"}</span>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].applicationNo : "--"}</span>
                   </div>
                   <div className={BizClass.detailsCol}>
                     <strong>Policy Number</strong>
-                    <span>{ticket.InsurancePolicyNo ?? "--"}</span>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].policyID : "--"}</span>
                   </div>
                 </div>
                 <div className={BizClass.detailsGrid}>
+                  <div className={BizClass.detailsCol}>
+                    <strong>Ticket Type</strong>
+                    <span>{ticket.TicketHeadName}</span>
+                  </div>
+                  <div className={BizClass.detailsCol}>
+                    <strong>Ticket Category</strong>
+                    <span>{ticket.TicketTypeName}</span>
+                  </div>
+
+                  <div className={BizClass.detailsCol}>
+                    <strong>Ticket Sub Category</strong>
+                    <span>{ticket.TicketCategoryName}</span>
+                  </div>
+                  <div className={BizClass.detailsCol}>
+                    <strong>Crop Category Others</strong>
+                    <span>{ticket.CropCategoryOthers ? ticket.CropCategoryOthers : "--"}</span>
+                  </div>
                   <div className={BizClass.detailsCol}>
                     <strong>Request Year</strong>
                     <span>{ticket.RequestYear}</span>
@@ -456,7 +474,7 @@ const TicketItem = ({
                   </div>
                   <div className={BizClass.detailsCol}>
                     <strong>Scheme Name</strong>
-                    <span>{ticket.SchemeName}</span>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].scheme : ""}</span>
                   </div>
                   {/* <div className={BizClass.detailsCol}>
                   <span>Request Season</span>
@@ -480,15 +498,20 @@ const TicketItem = ({
                 </div> */}
                   <div className={BizClass.detailsCol}>
                     <strong>Application Crop Name</strong>
-                    <span>{ticket.ApplicationCropName}</span>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].cropName : ""}</span>
                   </div>
                   {/* <div className={BizClass.detailsCol}>
                   <span>Crop Name</span>
                   <span>{ticket.CropName ? ticket.CropName : "--"}</span>
                 </div> */}
+                 <div className={BizClass.detailsCol}>
+                    <strong>Land Survey Or Land Division Number</strong>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].landSurveyNumber : ""} Or{" "}
+                {selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].landDivisionNumber : ""}</span>
+                  </div>
                   <div className={BizClass.detailsCol}>
                     <strong>Area</strong>
-                    <span>{ticket.AREA}</span>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].policyArea : ""}</span>
                   </div>
 
                   {/* <div className={BizClass.detailsCol}>
@@ -497,50 +520,72 @@ const TicketItem = ({
                 </div> */}
                   <div className={BizClass.detailsCol}>
                     <strong>Farmer Share</strong>
-                    <span>{ticket.FarmerShare ?? "--"}</span>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].farmerShare : "--"}</span>
                   </div>
                   <div className={BizClass.detailsCol}>
                     <strong>Sowing Date/Seeding Date</strong>
-                    <span>{ticket.SowingDate ? moment(ticket.SowingDate).format("DD-MM-YYYY") : "--"}</span>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? moment(selectedPolicyDetails[0].sowingDate).format("DD-MM-YYYY")  : "--"}</span>
                   </div>
-                  <div className={BizClass.detailsCol}>
-                    <strong>Ticket Type</strong>
-                    <span>{ticket.TicketHeadName}</span>
-                  </div>
-                  <div className={BizClass.detailsCol}>
-                    <strong>Ticket Category</strong>
-                    <span>{ticket.TicketTypeName}</span>
-                  </div>
-                  {/* <div className={BizClass.detailsCol}>
-                  <span>Ticket Status</span>
-                  <span>{ticket.TicketStatus}</span>
-                </div> */}
 
                   <div className={BizClass.detailsCol}>
-                    <strong>Ticket Sub Category</strong>
-                    <span>{ticket.TicketCategoryName}</span>
+                    <strong>Premium Amount</strong>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].policyPremium : ""}</span>
                   </div>
                   <div className={BizClass.detailsCol}>
-                    <strong>Crop Category Others</strong>
-                    <span>{ticket.CropCategoryOthers ? ticket.CropCategoryOthers : "--"}</span>
+                    <strong>Sum Insured</strong>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].sumInsured : ""}</span>
                   </div>
                   <div className={BizClass.detailsCol}>
+                    <strong>Source of Enrolment</strong>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].applicationSource : ""}</span>
+                  </div>
+                   <div className={BizClass.detailsCol}>
+                    <strong>Application Status</strong>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].applicationStatus : ""}</span>
+                  </div>
+                  
+                </div>
+                <div className={BizClass.detailsGrid}>
+                  <strong style={{textDecoration:"Underline"}} >Residential Location</strong>
+                </div>
+                <div className={BizClass.detailsGrid}>
+                   <div className={BizClass.detailsCol}>
                     <strong>State Name</strong>
-                    <span>{ticket.StateMasterName}</span>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].resState : ""}</span>
                   </div>
                   <div className={BizClass.detailsCol}>
                     <strong>District Name</strong>
-                    <span>{ticket.District}</span>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].resDistrict : ""}</span>
+                  </div>
+                  <div className={BizClass.detailsCol}>
+                    <strong>SubDistrict Name</strong>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].resSubDistrict : ""}</span>
+                  </div>
+                   <div className={BizClass.detailsCol}>
+                    <strong>Village Name</strong>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].resVillage : ""}</span>
+                  </div>
+                </div>
+                  <div className={BizClass.detailsGrid}>
+                  <strong style={{textDecoration:"Underline"}} >Land Location</strong>
+                </div>
+                <div className={BizClass.detailsGrid}>
+                   <div className={BizClass.detailsCol}>
+                    <strong>State Name</strong>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].plotStateName : ""}</span>
+                  </div>
+                  <div className={BizClass.detailsCol}>
+                    <strong>District Name</strong>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].plotDistrictName : ""}</span>
                   </div>
                   <div className={BizClass.detailsCol}>
                     <strong>Village Name</strong>
-                    <span>{ticket.VillageName}</span>
+                    <span>{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].plotVillageName : ""}</span>
                   </div>
-                  {/* <div className={BizClass.detailsCol}>
-                  <span>Created At</span>
-                  <span>{ticket.CreatedAt}</span>
-                </div> */}
-                  <div className={BizClass.detailsCol}>
+                </div>
+                <br/>
+                <div className={BizClass.detailsGrid}>
+                   <div className={BizClass.detailsCol}>
                     <Button type="button" varient="primary" onClick={() => handleClickCaseHistory()}>
                       CASE HISTORY
                     </Button>

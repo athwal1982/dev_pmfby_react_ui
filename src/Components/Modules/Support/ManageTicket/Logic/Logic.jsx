@@ -323,7 +323,7 @@ function ManageTicketLogics() {
               TicketCategoryName: "Sub Category",
               SchemeName: "Scheme",
               RequestSeason: "Season",
-              RequestYear: "Year",
+              RequestYear: "Season Year",
               ApplicationCropName: "Crop Name",
               Relation: "Relation",
               RelativeName: "Relative Name",

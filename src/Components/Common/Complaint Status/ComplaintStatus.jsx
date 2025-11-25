@@ -12,6 +12,9 @@ import { AppBar, Toolbar, Typography, Box, Button, Avatar } from "@mui/material"
 import Footer from "./Layout/Footer";
 import logo_croploss from "../../../assets/img_croploss.svg";
 import { getSupportTicketReview } from "../../Modules/Support/MyTicket/Services/Services";
+import {
+  getFarmerPolicyDetail,
+} from "../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
 
 const ComplaintStatus = () => {
   const alertMessage = AlertMessage();
@@ -49,7 +52,7 @@ const ComplaintStatus = () => {
   }, []);
 
   const [expanded, setExpanded] = useState("");
-  const handleOnExpand = (ticketId) => {
+  const handleOnExpand = (ticketId, pitem) => {
     debugger;
     if (expandedTicketId === ticketId) {
       setExpandedTicketId(null);
@@ -57,6 +60,7 @@ const ComplaintStatus = () => {
       setExpandedTicketId(ticketId);
       setExpanded("");
       getChatListDetailsData(ticketId, 1, -1);
+      getPolicyDetailsOfFarmer(pitem);
     }
   };
   const [chatListDetails, setChatListDetails] = useState([]);
@@ -119,6 +123,95 @@ const ComplaintStatus = () => {
       setErrorMsg(false);
     }
   };
+
+    const [selectedPolicyDetails, setSelectedPolicyDetails] = useState([]);
+    const getPolicyDetailsOfFarmer = async (pticketData) => {
+      debugger;
+      try {
+        let result = "";
+        let formData = "";
+  
+        formData = {
+          mobilenumber: "7776543289",
+          seasonID: pticketData && pticketData.RequestSeason ? pticketData.RequestSeason.toString() : "",
+          year: pticketData && pticketData.RequestYear ? pticketData.RequestYear.toString() : "",
+          farmerID: pticketData ? pticketData.TicketRequestorID : "",
+        };
+        result = await getFarmerPolicyDetail(formData);
+        setSelectedPolicyDetails([]);
+        if (result.response.responseCode === 1) {
+          if (result.response.responseData) {
+            if (Object.keys(result.response.responseData.data).length > 0) {
+              const farmersData = Object.values(result.response.responseData.data);
+              if (farmersData && farmersData.length > 0) {
+                const farmerAndApplicationData = [];
+                farmersData.forEach((v) => {
+                  v.applicationList.forEach((x) => {
+                    farmerAndApplicationData.push({
+                      mobile: v.mobile,
+                      farmerName: v.farmerName,
+                      farmerID: v.farmerID,
+                      aadharNumber: v.aadharNumber,
+                      accountNumber: v.accountNumber,
+                      relation: v.relation,
+                      relativeName: v.relativeName,
+                      resDistrict: v.resDistrict,
+                      resState: v.resState,
+                      resVillage: v.resVillage,
+                      resSubDistrict: v.resSubDistrict,
+                      resDistrictID: v.resDistrictID,
+                      resStateID: v.resStateID,
+                      resVillageID: v.resVillageID,
+                      resSubDistrictID: v.resSubDistrictID,
+                      policyPremium: parseFloat(v.policyPremium).toFixed(2),
+                      sumInsured: parseFloat(x.sumInsured).toFixed(2),
+                      policyArea: v.policyArea,
+                      policyType: v.policyType,
+                      scheme: v.scheme,
+                      insuranceCompanyName: v.insuranceCompanyName,
+                      policyID: x.policyID,
+                      applicationStatus: x.applicationStatus,
+                      applicationStatusCode: x.applicationStatusCode,
+                      applicationNo: x.applicationNo,
+                      landSurveyNumber: x.landSurveyNumber,
+                      landDivisionNumber: x.landDivisionNumber,
+                      applicationSource: x.applicationSource,
+                      plotStateName: x.plotStateName,
+                      plotDistrictName: x.plotDistrictName,
+                      plotVillageName: x.plotVillageName,
+                      cropName: x.cropName,
+                      cropShare: parseFloat(x.cropShare).toFixed(3),
+                      createdAt: x.createdAt,
+                      ifscCode: x.ifscCode,
+                      farmerShare: x.farmerShare,
+                      sowingDate: x.sowingDate,
+                    });
+                  });
+                });
+                const filteredData = farmerAndApplicationData.filter((data) => {
+                  return data.applicationNo === pticketData.ApplicationNo && data.policyID === pticketData.InsurancePolicyNo;
+                });
+                setSelectedPolicyDetails(filteredData);
+              } else {
+                setSelectedPolicyDetails([]);
+              }
+            } else {
+              setSelectedPolicyDetails([]);
+            }
+          } else {
+            setSelectedPolicyDetails([]);
+          }
+        } else {
+          setSelectedPolicyDetails([]);
+        }
+      } catch (error) {
+        console.log(error);
+        setAlertMessage({
+          type: "error",
+          message: error,
+        });
+      }
+    };
 
   useEffect(() => {
     //  A fetchHistory();
@@ -404,13 +497,14 @@ const ComplaintStatus = () => {
                             key={item.SupportTicketNo}
                             item={item}
                             isExpanded={expandedTicketId === item.SupportTicketID}
-                            onExpand={() => handleOnExpand(item.SupportTicketID)}
+                            onExpand={() => handleOnExpand(item.SupportTicketID,item)}
                             chatListDetails={chatListDetails}
                             isLoadingchatListDetails={isLoadingchatListDetails}
                             expanded={expanded}
                             setExpanded={setExpanded}
                             updateTicketHistorytData={updateTicketHistorytData}
                             setChatListDetails={setChatListDetails}
+                            selectedPolicyDetails={selectedPolicyDetails}
                           />
                         ))}
                     </tbody>
