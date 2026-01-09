@@ -427,3 +427,22 @@
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.25);
   transform: translateY(1px);
 }
+
+.CounterDescKRPH {
+  color: #fff;
+  background-color: #01a3fd;
+  border-radius: 0px 0px 4px 4px;
+  width: max-content;
+  font-size: 10px;
+  padding: 1px 8px 1px;
+  justify-content: center;
+  font-weight: 400;
+  -webkit-user-select: none;
+  user-select: none;
+  grid-column: span 2;
+  justify-content: center;
+  margin-left: auto;
+  min-width: 50px;
+  text-align: right;
+  position: sticky;
+}

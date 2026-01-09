@@ -120,3 +120,45 @@ export const getKRPHGrievanceSupportTicketComment = async (formData) => {
     return { response: { responseCode: 0, responseData: null, responseMessage: error } };
   }
 };
+
+export const KrphGrievanceSupportTicketAuditUpdateData = async (formData) => {
+  try {
+    const requestData = {
+      main: {
+        ...formData,
+      },
+    };
+    const result = await ApiCalling(requestData, APIEndpoints.ChatList.KrphGrievanceSupportTicketAuditUpdate);
+    if (result.responseCode === 1) {
+      if (result.responseData) {
+        return { response: result };
+      }
+      return { response: result };
+    }
+    return { response: result };
+  } catch (error) {
+    console.log(error);
+    return { response: { responseCode: 0, responseData: null, responseMessage: error } };
+  }
+};
+
+export const KrphGrievanceSupportTicketSatisfiedUpdateData = async (formData) => {
+  try {
+    const requestData = {
+      main: {
+        ...formData,
+      },
+    };
+    const result = await ApiCalling(requestData, APIEndpoints.ChatList.KrphGrievanceSupportTicketSatisfiedUpdate);
+    if (result.responseCode === 1) {
+      if (result.responseData) {
+        return { response: result };
+      }
+      return { response: result };
+    }
+    return { response: result };
+  } catch (error) {
+    console.log(error);
+    return { response: { responseCode: 0, responseData: null, responseMessage: error } };
+  }
+};

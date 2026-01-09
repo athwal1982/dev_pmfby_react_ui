@@ -1,7 +1,7 @@
 import React from "react";
 import { DataGrid, Modal, PageBar } from "Framework/Components/Layout";
 import { Loader } from "Framework/Components/Widgets";
-import { dateFormatDDMMYY } from "Configration/Utilities/dateformat";
+import { dateFormatDDMMYY, daysdifference, dateFormatDefault } from "Configration/Utilities/dateformat";
 import BizClass from "./AgeingTicketList.module.scss";
 function AgeingTicketList({ selectedRowData, openAgeingTicketListClick, ageingTicketCountList, isLoadingAgeingTicketCountList, exportAgeingTicketListClick }) {
   console.log(selectedRowData);
@@ -26,6 +26,23 @@ function AgeingTicketList({ selectedRowData, openAgeingTicketListClick, ageingTi
                 return node.data.Created ? `${dateFormatDDMMYY(node.data.Created.split("T")[0])}` : null;
               }}
             />
+            <DataGrid.Column
+                          field="#"
+                          headerName="Reopen Date"
+                          width="128px"
+                          valueGetter={(node) => {
+                            return node.data.TicketReOpenDate ? `${dateFormatDDMMYY(node.data.TicketReOpenDate.split("T")[0])}` : null;
+                          }}
+                        />
+                        <DataGrid.Column
+                          field="#"
+                          headerName="Ageing"
+                          width="90px"
+                          valueGetter={(node) => {
+                             return node.data.TicketStatusID === 109301 ? node.data.Created ? `${daysdifference(dateFormatDefault(new Date()), dateFormatDefault(node.data.Created.split("T")[0]))} days` : null : node.data.TicketStatusID === 109304 ? node.data.Created && node.data.TicketReOpenDate ? `${daysdifference(dateFormatDefault(node.data.TicketReOpenDate.split("T")[0]), dateFormatDefault(node.data.Created.split("T")[0]))} days` : null : null;
+  
+                          }}
+                        />
             <DataGrid.Column field="TicketStatus" headerName="Ticket Status" width="150px" />
             <DataGrid.Column field="StateMasterName" headerName="State" width="150px" />
             <DataGrid.Column field="DistrictMasterName" headerName="District" width="150px" />
@@ -33,7 +50,7 @@ function AgeingTicketList({ selectedRowData, openAgeingTicketListClick, ageingTi
             <DataGrid.Column field="TicketTypeName" headerName="Category" width="160px" />
             <DataGrid.Column field="TicketCategoryName" headerName="Sub Category" width="170px" />
             <DataGrid.Column field="CropSeasonName" headerName="Season" width="90px" />
-            <DataGrid.Column field="RequestYear" headerName="Year" width="70px" />
+            <DataGrid.Column field="RequestYear" headerName="Season-Year" width="120px" />
             <DataGrid.Column field="InsuranceCompany" headerName="Insurance Company" width="290px" />
             <DataGrid.Column field="ApplicationNo" headerName="Application No" width="210px" />
             <DataGrid.Column field="InsurancePolicyNo" headerName="Policy No" width="170px" />

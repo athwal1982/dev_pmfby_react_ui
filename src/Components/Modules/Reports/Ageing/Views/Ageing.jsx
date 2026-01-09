@@ -29,7 +29,8 @@ function AgeingReport({
       ["4-7 days"]: filteredAgeingReportDataList.reduce((acc, row) => Number(acc) + Number(row["4-7 days"]), 0),
       ["8-12 days"]: filteredAgeingReportDataList.reduce((acc, row) => Number(acc) + Number(row["8-12 days"]), 0),
       ["13-15 days"]: filteredAgeingReportDataList.reduce((acc, row) => Number(acc) + Number(row["13-15 days"]), 0),
-      ["More than 16"]: filteredAgeingReportDataList.reduce((acc, row) => Number(acc) + Number(row["More than 16"]), 0),
+      ["16-30 days"]: filteredAgeingReportDataList.reduce((acc, row) => Number(acc) + Number(row["16-30 days"]), 0),
+      ["More than 30"]: filteredAgeingReportDataList.reduce((acc, row) => Number(acc) + Number(row["More than 30"]), 0),
     };
     return [totalRow];
   };
@@ -64,8 +65,10 @@ function AgeingReport({
                 ? "3"
                 : headerName === "13-15 days"
                   ? "4"
-                  : headerName === "More than 16"
+                  : headerName === "16-30 days"
                     ? "5"
+                  : headerName === "More than 30"
+                    ? "6"
                     : "";
       getAgeingReportsDetailsList(pViewMode, pFiterlID, pageingPeriodsID);
     }
@@ -113,7 +116,8 @@ function AgeingReport({
             fourto7daysCellStyle,
             eighttotwelvedaysCellStyle,
             thirteentofifteendaysCellStyle,
-            morthansixteenCellStyle,
+            sixteentothirtydaysCellStyle,
+            morthanthirtyCellStyle,
           }}
           pinnedBottomRowData={pinnedBottomRowData}
         >
@@ -186,11 +190,21 @@ function AgeingReport({
             }}
           />
           <DataGrid.Column
-            field={["More than 16"]}
-            headerName="More than 16"
+            field={["16-30 days"]}
+            headerName="16-30 days"
             width={115}
             cellStyle={{ "text-align": "right" }}
-            cellRenderer="morthansixteenCellStyle"
+            cellRenderer="sixteentothirtydaysCellStyle"
+            cellRendererParams={{
+              openAgeingTicketListClick,
+            }}
+          />
+           <DataGrid.Column
+            field={["More than 30"]}
+            headerName="More than 30"
+            width={120}
+            cellStyle={{ "text-align": "right" }}
+            cellRenderer="morthanthirtyCellStyle"
             cellRendererParams={{
               openAgeingTicketListClick,
             }}
@@ -198,7 +212,7 @@ function AgeingReport({
           <DataGrid.Column
             field="total"
             headerName="Total"
-            width="110px"
+            width="90px"
             cellStyle={{ "text-align": "right" }}
             valueGetter={(node) => {
               return (
@@ -206,7 +220,8 @@ function AgeingReport({
                 Number(node.data["4-7 days"]) +
                 Number(node.data["8-12 days"]) +
                 Number(node.data["13-15 days"]) +
-                Number(node.data["More than 16"])
+                Number(node.data["16-30 days"]) +
+                Number(node.data["More than 30"])
               );
             }}
           />
@@ -292,15 +307,30 @@ const thirteentofifteendaysCellStyle = (params) => {
     </div>
   );
 };
-
-const morthansixteenCellStyle = (params) => {
+const sixteentothirtydaysCellStyle = (params) => {
   return (
     <div>
       {params.node.rowPinned ? (
-        params.data["More than 16"]
-      ) : params.data && Number(params.data["More than 16"]) > 0 ? (
-        <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openAgeingTicketListClick(params.data, "More than 16")}>
-          {params.data["More than 16"]}
+        params.data["16-30 days"]
+      ) : params.data && Number(params.data["16-30 days"]) > 0 ? (
+        <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openAgeingTicketListClick(params.data, "16-30 days")}>
+          {params.data["16-30 days"]}
+        </a>
+      ) : (
+        "0"
+      )}
+    </div>
+  );
+};
+
+const morthanthirtyCellStyle = (params) => {
+  return (
+    <div>
+      {params.node.rowPinned ? (
+        params.data["More than 30"]
+      ) : params.data && Number(params.data["More than 30"]) > 0 ? (
+        <a href="#" style={{ cursor: "pointer" }} onClick={() => params.openAgeingTicketListClick(params.data, "More than 30")}>
+          {params.data["More than 30"]}
         </a>
       ) : (
         "0"

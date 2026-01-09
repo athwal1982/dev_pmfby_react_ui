@@ -46,6 +46,14 @@ function MyTicketPage({ selectedData, showfunc }) {
     handleAddComment,
     setapiDataAttachment,
     apiDataAttachment,
+    updateStateSatifation,
+    formValuesSatifation,
+    formValidationSatisfyError,
+    IsSatisfyList,
+    btnLoaderActiveSatisfaction,
+    handleSatisfaction,
+    btnLoaderActiveAudit,
+    handleAudit,
   } = MyTicketLogics();
 
   useEffect(() => {
@@ -224,6 +232,14 @@ function MyTicketPage({ selectedData, showfunc }) {
         selectedData={selectedData}
         apiDataAttachment={apiDataAttachment}
         setapiDataAttachment={setapiDataAttachment}
+        updateStateSatifation={updateStateSatifation}
+        formValuesSatifation={formValuesSatifation}
+        formValidationSatisfyError={formValidationSatisfyError}
+        IsSatisfyList={IsSatisfyList}
+        btnLoaderActiveSatisfaction={btnLoaderActiveSatisfaction}
+        handleSatisfaction={handleSatisfaction}
+        btnLoaderActiveAudit={btnLoaderActiveAudit}
+        handleAudit={handleAudit}
         expanded={expanded}
         handleChange={handleChange}
       >

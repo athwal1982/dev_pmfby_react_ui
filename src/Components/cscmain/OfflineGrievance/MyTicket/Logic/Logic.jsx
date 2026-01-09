@@ -9,8 +9,13 @@ import {
   farmerTicketStatusUpdate,
   addKRPHGrievanceSupportTicketComment,
   getKRPHGrievanceSupportTicketComment,
+  KrphGrievanceSupportTicketAuditUpdateData,
+  KrphGrievanceSupportTicketSatisfiedUpdateData
 } from "../Services/Services";
-import { gCPFileUploadData, addKRPHGrievenceTicketHistoryAttachmentData } from "../../Services/Methods";
+import {
+  sendSMSToFarmer,
+} from "../../../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
+import { gCPFileUploadData, addKRPHGrievenceTicketHistoryAttachmentData,  } from "../../Services/Methods";
 
 function MyTicketLogics() {
   const [value, setValue] = useState("<p></p>");
@@ -334,6 +339,12 @@ function MyTicketLogics() {
               });
             }
           }
+
+           if (formValuesTicketProperties.txtTicketStatus.BMCGCode.toString() === "109025") {
+            SendSMSToFarmerAgaintSupportTicket("C", ticketData.RequestorMobileNo, ticketData.GrievenceSupportTicketNo);
+          } else if (formValuesTicketProperties.txtTicketStatus.BMCGCode.toString() === "109026") {
+            SendSMSToFarmerAgaintSupportTicket("R", ticketData.RequestorMobileNo, ticketData.GrievenceSupportTicketNo);
+          }
         }
       } else {
         setAlertMessage({
@@ -349,6 +360,30 @@ function MyTicketLogics() {
       });
     }
   };
+
+   const SendSMSToFarmerAgaintSupportTicket = async (ptemplateID, pmobileNO, psupportTicketNo) => {
+      try {
+        const formData = {
+          templateID: ptemplateID,
+          mobileNO: pmobileNO,
+          supportTicketNo: psupportTicketNo,
+        };
+  
+        const result = await sendSMSToFarmer(formData);
+        if (result.response.responseCode === 1) {
+          console.log(`Success: TemplateID : ${ptemplateID} ${JSON.stringify(result)}`);
+        } else {
+          console.log(`Error: TemplateID : ${ptemplateID} ${JSON.stringify(result)}`);
+        }
+      } catch (error) {
+        console.log(error);
+        setAlertMessage({
+          type: "error",
+          message: error,
+        });
+      }
+    };
+
   const [ticketStatusList, setTicketStatusList] = useState([]);
   const [isLoadingTicketStatusList, setIsTicketStatusList] = useState(false);
   const getTicketStatusListData = async (pticketData) => {
@@ -663,6 +698,143 @@ function MyTicketLogics() {
     } catch (error) {}
   };
 
+  const [formValidationSatisfyError, setFormValidationSatisfyError] = useState({});
+  
+    const [formValuesSatifation, setFormValuesSatifation] = useState({
+      txtIsSatisfy: null,
+      txtReason: "",
+    });
+    const updateStateSatifation = (name, value) => {
+      setFormValuesSatifation({ ...formValuesSatifation, [name]: value });
+      formValidationSatisfyError[name] = validateFieldSatifation(name, value);
+    };
+  
+    const validateFieldSatifation = (name, value) => {
+      let errorsMsg = "";
+      if (name === "txtIsSatisfy") {
+        if (!value || typeof value === "undefined") {
+          errorsMsg = "Is Satisfied is required!";
+        }
+      }
+      if (name === "txtunUnstatisfactoryReason") {
+        if (!value || typeof value === "undefined") {
+          errorsMsg = "Unstatisfactory Reason is required!";
+        }
+      }
+      return errorsMsg;
+    };
+  
+    const handleValidationSatifation = () => {
+      try {
+        const errors = {};
+        let formIsValid = true;
+        errors["txtIsSatisfy"] = validateFieldSatifation("txtIsSatisfy", formValuesSatifation.txtIsSatisfy);
+        if (formValuesSatifation && formValuesSatifation.txtIsSatisfy && formValuesSatifation.txtIsSatisfy.value === 0) {
+          errors["txtunUnstatisfactoryReason"] = validateFieldSatifation("txtunUnstatisfactoryReason", formValuesSatifation.txtunUnstatisfactoryReason);
+        }
+  
+        if (Object.values(errors).join("").toString()) {
+          formIsValid = false;
+        }
+        setFormValidationSatisfyError(errors);
+        return formIsValid;
+      } catch (error) {
+        setAlertMessage({
+          type: "error",
+          message: "Something Went Wrong",
+        });
+        return false;
+      }
+    };
+  
+    const [IsSatisfyList] = useState([
+      { label: "Yes", value: 1 },
+      { label: "No", value: 0 },
+    ]);
+  
+    const [btnLoaderActiveAudit, setbtnLoaderActiveAudit] = useState(false);
+    const handleAudit = async (data) => {
+      debugger;
+      try {
+        const formData = {
+          grievenceTicketHistoryID: data.GrievenceTicketHistoryID,
+          isAudit: 1,
+        };
+        setbtnLoaderActiveAudit(true);
+        const result = await KrphGrievanceSupportTicketAuditUpdateData(formData);
+        setbtnLoaderActiveAudit(false);
+        if (result.response.responseCode === 1) {
+          for (let i = 0; i < chatListDetails.length; i += 1) {
+            if (data.GrievenceTicketHistoryID === chatListDetails[i].GrievenceTicketHistoryID) {
+              chatListDetails[i].isAudit = 1;
+              break;
+            }
+          }
+          setChatListDetails(chatListDetails);
+          setAlertMessage({
+            type: "success",
+            message: result.response.responseMessage,
+          });
+        } else {
+          setAlertMessage({
+            type: "error",
+            message: result.response.responseMessage,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+        setAlertMessage({
+          type: "error",
+          message: error,
+        });
+      }
+    };
+  
+    const [btnLoaderActiveSatisfaction, setbtnLoaderActiveSatisfaction] = useState(false);
+    const handleSatisfaction = async (data) => {
+      debugger;
+      if (!handleValidationSatifation()) {
+        return;
+      }
+  
+      try {
+        const formData = {
+          grievenceTicketHistoryID: data.GrievenceTicketHistoryID,
+          isSatisfied:
+            formValuesSatifation && formValuesSatifation.txtIsSatisfy && formValuesSatifation.txtIsSatisfy.value ? formValuesSatifation.txtIsSatisfy.value : 0,
+          auditRemarks: formValuesSatifation && formValuesSatifation.txtunUnstatisfactoryReason ? formValuesSatifation.txtunUnstatisfactoryReason : "",
+        };
+        setbtnLoaderActiveSatisfaction(true);
+        const result = await KrphGrievanceSupportTicketSatisfiedUpdateData(formData);
+        setbtnLoaderActiveSatisfaction(false);
+        if (result.response.responseCode === 1) {
+          for (let i = 0; i < chatListDetails.length; i += 1) {
+            if (data.GrievenceTicketHistoryID === chatListDetails[i].GrievenceTicketHistoryID) {
+              chatListDetails[i].isSatisfied = formValuesSatifation.txtIsSatisfy.value;
+              chatListDetails[i].AuditRemarks = formValuesSatifation.txtunUnstatisfactoryReason;
+              break;
+            }
+          }
+          setChatListDetails(chatListDetails);
+          setAlertMessage({
+            type: "success",
+            message: result.response.responseMessage,
+          });
+        } else {
+          setAlertMessage({
+            type: "error",
+            message: result.response.responseMessage,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+        setAlertMessage({
+          type: "error",
+          message: error,
+        });
+      }
+    };
+
   return {
     value,
     setValue,
@@ -700,6 +872,14 @@ function MyTicketLogics() {
     handleAddComment,
     setapiDataAttachment,
     apiDataAttachment,
+    updateStateSatifation,
+    formValuesSatifation,
+    formValidationSatisfyError,
+    IsSatisfyList,
+    btnLoaderActiveSatisfaction,
+    handleSatisfaction,
+    btnLoaderActiveAudit,
+    handleAudit,
   };
 }
 

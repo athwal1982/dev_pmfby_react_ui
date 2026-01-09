@@ -2819,6 +2819,7 @@ function KrphAllActivitiesNDN() {
                     resVillageID: v.resVillageID,
                     resSubDistrictID: v.resSubDistrictID,
                     policyPremium: parseFloat(v.policyPremium).toFixed(2),
+                    sumInsured: parseFloat(x.sumInsured).toFixed(2),
                     policyArea: v.policyArea,
                     policyType: v.policyType,
                     scheme: v.scheme,
@@ -3362,6 +3363,7 @@ function KrphAllActivitiesNDN() {
   };
 
   const CreateTicketBAuthOptions = async () => {
+    debugger;
     try {
       let pticketStatusID = 0;
       // A let pticketStatusNoneBMCG = 0;
@@ -3558,6 +3560,8 @@ function KrphAllActivitiesNDN() {
         sowingDate: selectedInsuranceDetails ? selectedInsuranceDetails.sowingDate : "",
         isSos: showMessage ? 1 : 0,
         sos: showMessage === true && formValuesTicketCreation.txtSosDescription ? formValuesTicketCreation.txtSosDescription : "",
+        sumInsured : selectedInsuranceDetails ? selectedInsuranceDetails.sumInsured : "",
+        ticketCategoryDescriptionID: 1,
       };
       setisBtndisabled(1);
       setBtnLoaderSupportTicketActive(true);

@@ -9,7 +9,7 @@ import { InputControl, InputGroup } from "Framework/OldFramework/FormComponents/
 import { KrphButton } from "../../Common/KrphAllActivitiesND/Widgets/KrphButton";
 import Modal from "Framework/Components/Layout/Modal/Modal";
 import { getSessionStorage, setSessionStorage } from "Components/Common/Login/Auth/auth";
-import { getMasterDataBindingDataList, getDistrictByState } from "../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
+import { getMasterDataBindingDataList, getDistrictByState, sendSMSToFarmer } from "../../Modules/Support/ManageTicket/Views/Modals/AddTicket/Services/Methods";
 import { getMasterDataBinding } from "../../Modules/Support/ManageTicket/Services/Methods";
 import { ticketDataBindingData } from "Components/Common/Welcome/Service/Methods";
 import { addKRPHGrievenceSupportTicketData, gCPFileUploadData, addKRPHGrievanceAttachmentData } from "./Services/Methods";
@@ -768,6 +768,7 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
           updateFarmersTickets(newlyAddedTicket);
           ClearFormFields();
           setShowMessage(false);
+          SendSMSToFarmerAgaintSupportTicket("G",formValuesGI.txtMobileNumber ? formValuesGI.txtMobileNumber : "",result.responseData.GrievenceSupportTicketNo ? result.responseData.GrievenceSupportTicketNo : "");
           if (pAttachment.length > 0) {
             for (let i = 0; i < pAttachment.length; i++) {
               const formDataDoc = new FormData();
@@ -814,6 +815,29 @@ const AddOfflineGrievance = ({ showfunc, updateFarmersTickets }) => {
       });
     }
   };
+
+    const SendSMSToFarmerAgaintSupportTicket = async (ptemplateID, pmobileNO, psupportTicketNo) => {
+      try {
+        const formData = {
+          templateID: ptemplateID,
+          mobileNO: pmobileNO,
+          supportTicketNo: psupportTicketNo,
+        };
+  
+        const result = await sendSMSToFarmer(formData);
+        if (result.response.responseCode === 1) {
+          console.log(`Success: TemplateID : ${ptemplateID} ${JSON.stringify(result)}`);
+        } else {
+          console.log(`Error: TemplateID : ${ptemplateID} ${JSON.stringify(result)}`);
+        }
+      } catch (error) {
+        console.log(error);
+        setAlertMessage({
+          type: "error",
+          message: error,
+        });
+      }
+    };
 
   const fileRef = useRef(null);
 

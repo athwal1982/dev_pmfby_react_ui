@@ -12,7 +12,7 @@ import AddTicketLogics from "../Logic/Logic";
 import BizClass from "./AddTicket.module.scss";
 
 // A function AddTicket({ showfunc, updateFarmersTickets, updateFarmersTicketsStatusCount, openMyTicketPage }) {
-function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
+  function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) { 
   const {
     selectedValidateOption,
     selectedOption,
@@ -157,6 +157,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
     ticketCategoryOtherList,
     isLoadingTicketCategoryOtherList,
   } = AddTicketLogics();
+
   return (
     <>
       {openModal && (
@@ -248,7 +249,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                 {selectedValidateOption === "1" && (
                   <div className={BizClass.ValidateControlGroup}>
                     <Form.Group column="1" controlwidth="auto">
-                      <Form.InputGroup label="Mobile Number" req="true" errorMsg={formValidationFarmersError["txtMobileNumber"]}>
+                      <Form.InputGroup label="Mobile Number" errorMsg={formValidationFarmersError["txtMobileNumber"]}>
                         <Form.InputControl
                           control="input"
                           name="txtMobileNumber"
@@ -262,7 +263,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                       </Form.InputGroup>
                       {btnEnableSaveOnValidateMN ? (
                         <>
-                          <Form.InputGroup label="Call Status" req="true" errorMsg={formValidationFarmersError["txtCallStatus"]}>
+                          <Form.InputGroup label="Call Status" errorMsg={formValidationFarmersError["txtCallStatus"]}>
                             <Form.InputControl
                               control="select"
                               name="txtCallStatus"
@@ -275,16 +276,16 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                           </Form.InputGroup>
                           {formValuesMN && formValuesMN.txtCallStatus && formValuesMN.txtCallStatus.ID === 1 ? (
                             <>
-                              <Form.InputGroup req="true" label="Farmer Name" errorMsg={formValidationFarmersError["txtFarmerName"]}>
-                                <Form.InputControl
-                                  control="input"
-                                  name="txtFarmername"
-                                  value={formValuesMN.txtFarmerName}
-                                  onChange={(e) => updateStateMN("txtFarmerName", e.target.value)}
-                                  autoComplete="off"
-                                />
-                              </Form.InputGroup>
-                              <Form.InputGroup req="true" label="State" errorMsg={formValidationFarmersError["txtStateValidateMobile"]}>
+                             <Form.InputGroup label="Farmer Name" errorMsg={formValidationFarmersError["txtFarmerName"]}>
+                            <Form.InputControl
+                              control="input"
+                              name="txtFarmername"
+                              value={formValuesMN.txtFarmerName}
+                              onChange={(e) => updateStateMN("txtFarmerName", e.target.value)}
+                              autoComplete="off"
+                            />
+                          </Form.InputGroup>
+                              <Form.InputGroup label="State" errorMsg={formValidationFarmersError["txtStateValidateMobile"]}>
                                 <Form.InputControl
                                   control="select"
                                   name="txtStateValidateMobile"
@@ -297,7 +298,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                                   onChange={(e) => updateStateMN("txtStateValidateMobile", e)}
                                 />
                               </Form.InputGroup>
-                              <Form.InputGroup req="true" label="District" errorMsg={formValidationFarmersError["txtDistrictValidateMobile"]}>
+                              <Form.InputGroup label="District" errorMsg={formValidationFarmersError["txtDistrictValidateMobile"]}>
                                 <Form.InputControl
                                   control="select"
                                   name="txtDistrictValidateMobile"
@@ -331,7 +332,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                 {selectedValidateOption === "2" && (
                   <div className={BizClass.ValidateControlGroup}>
                     <Form.Group column="1" controlwidth="auto">
-                      <Form.InputGroup req="true" label="Aadhar Number" errorMsg={formValidationFarmersError["txtAadharNumber"]}>
+                      <Form.InputGroup label="Aadhar Number" errorMsg={formValidationFarmersError["txtAadharNumber"]}>
                         <Form.InputControl
                           control="input"
                           name="txtAadharNumber"
@@ -349,7 +350,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                 {selectedValidateOption === "3" && (
                   <div className={BizClass.ValidateControlGroup}>
                     <Form.Group column="1" controlwidth="auto">
-                      <Form.InputGroup req="true" label="State" errorMsg={formValidationFarmersError["txtState"]}>
+                      <Form.InputGroup label="State" errorMsg={formValidationFarmersError["txtState"]}>
                         <Form.InputControl
                           control="select"
                           name="txtState"
@@ -363,7 +364,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                           focus="true"
                         />
                       </Form.InputGroup>
-                      <Form.InputGroup label="District" req="true" errorMsg={formValidationFarmersError["txtDistrict"]}>
+                      <Form.InputGroup label="District" errorMsg={formValidationFarmersError["txtDistrict"]}>
                         <Form.InputControl
                           control="select"
                           name="txtDistrict"
@@ -376,7 +377,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                           onChange={(e) => updateState("txtDistrict", e)}
                         />
                       </Form.InputGroup>
-                      <Form.InputGroup label="Bank Name" req="true" errorMsg={formValidationFarmersError["txtBankName"]}>
+                      <Form.InputGroup label="Bank Name" errorMsg={formValidationFarmersError["txtBankName"]}>
                         <Form.InputControl
                           control="select"
                           name="txtBankName"
@@ -389,7 +390,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                           onChange={(e) => updateState("txtBankName", e)}
                         />
                       </Form.InputGroup>
-                      <Form.InputGroup req="true" label="Bank Branch" errorMsg={formValidationFarmersError["txtBranchName"]}>
+                      <Form.InputGroup label="Bank Branch" errorMsg={formValidationFarmersError["txtBranchName"]}>
                         <Form.InputControl
                           control="select"
                           name="txtBranchName"
@@ -402,7 +403,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                           onChange={(e) => updateState("txtBranchName", e)}
                         />
                       </Form.InputGroup>
-                      <Form.InputGroup req="true" label="Account Number" errorMsg={formValidationFarmersError["txtAccountNumber"]}>
+                      <Form.InputGroup label="Account Number" errorMsg={formValidationFarmersError["txtAccountNumber"]}>
                         <Form.InputControl
                           control="input"
                           label="Account Number"
@@ -419,7 +420,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                 {selectedValidateOption === "4" && (
                   <div className={BizClass.ValidateControlGroup}>
                     <Form.Group column="1" controlwidth="auto">
-                      <Form.InputGroup label="" req="true" style={{ display: "none" }}>
+                      <Form.InputGroup label="" style={{ display: "none" }}>
                         <Form.InputControl
                           control="select"
                           name="txtStateForPolicyNumber"
@@ -432,7 +433,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                           focus="true"
                         />
                       </Form.InputGroup>
-                      <Form.InputGroup label="" req="true" style={{ display: "none" }}>
+                      <Form.InputGroup label="" style={{ display: "none" }}>
                         <Form.InputControl
                           control="select"
                           name="txtDistrictForPolicyNumber"
@@ -444,7 +445,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                           onChange={(e) => updateStateForPolicyNumber("txtDistrictForPolicyNumber", e)}
                         />
                       </Form.InputGroup>
-                      <Form.InputGroup label="" req="true" style={{ display: "none" }}>
+                      <Form.InputGroup label="" style={{ display: "none" }}>
                         <Form.InputControl
                           control="select"
                           name="txtSubDistrictForPolicyNumber"
@@ -458,7 +459,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                       </Form.InputGroup>
 
                       <div className={BizClass.ModalCustomBox} style={{ display: "none" }}>
-                        <Form.InputGroup req="true" label={lableVillageForPolicyNumber}>
+                        <Form.InputGroup label={lableVillageForPolicyNumber}>
                           <Form.InputControl
                             control="select"
                             name="txtVillageForPolicyNumber"
@@ -471,7 +472,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                           />
                         </Form.InputGroup>
                       </div>
-                      <Form.InputGroup label="" req="true" style={{ display: "none" }}>
+                      <Form.InputGroup label="" style={{ display: "none" }}>
                         <Form.InputControl
                           control="select"
                           name="txtSeasonForPolicyNumber"
@@ -483,7 +484,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                           onChange={(e) => updateStateForPolicyNumber("txtSeasonForPolicyNumber", e)}
                         />
                       </Form.InputGroup>
-                      <Form.InputGroup label="" req="true" style={{ display: "none" }}>
+                      <Form.InputGroup label="" style={{ display: "none" }}>
                         <Form.InputControl
                           control="select"
                           name="txtYearForPolicyNumber"
@@ -495,7 +496,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                         />
                       </Form.InputGroup>
 
-                      <Form.InputGroup req="true" label="Policy Number" errorMsg={formValidationFarmersError["txtPolicyNumber"]}>
+                      <Form.InputGroup label="Policy Number" errorMsg={formValidationFarmersError["txtPolicyNumber"]}>
                         <Form.InputControl
                           id="inputPolicyNumber"
                           control="input"
@@ -514,7 +515,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                           onChange={(e) => updateStateForPolicyNumber("txtPolicyNumber", e.target.value)}
                         />
                       </Form.InputGroup>
-                      <Form.InputGroup req="true" label="Scheme">
+                      <Form.InputGroup label="Scheme">
                         <Form.InputControl
                           control="input"
                           name="txtSchemeForPolicyNumber"
@@ -523,7 +524,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                           disabled={true}
                         />
                       </Form.InputGroup>
-                      <Form.InputGroup req="true" label="Season">
+                      <Form.InputGroup label="Season">
                         <Form.InputControl
                           control="input"
                           name="txtSeasonForPolicyNumber"
@@ -532,7 +533,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                           disabled={true}
                         />
                       </Form.InputGroup>
-                      <Form.InputGroup req="true" label="State & Year">
+                      <Form.InputGroup label="State & Year">
                         <Form.InputControl
                           control="input"
                           name="txtStateAndYearForPolicyNumber"
@@ -548,7 +549,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                   <div className={BizClass.ValidateControlGroup}>
                     <Form.Group column="1" controlwidth="auto">
                       <div className={BizClass.ModalCustomGroup}>
-                        <Form.InputGroup label="Season" req="true" errorMsg={formValidationFarmersError["txtSeasonForLocation"]}>
+                        <Form.InputGroup label="Season" errorMsg={formValidationFarmersError["txtSeasonForLocation"]}>
                           <Form.InputControl
                             control="select"
                             name="txtSeasonForLocation"
@@ -561,7 +562,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                             onChange={(e) => updateStateForByLocation("txtSeasonForLocation", e)}
                           />
                         </Form.InputGroup>
-                        <Form.InputGroup label="Year" req="true" errorMsg={formValidationFarmersError["txtYearForLocation"]}>
+                        <Form.InputGroup label="Year" errorMsg={formValidationFarmersError["txtYearForLocation"]}>
                           <Form.InputControl
                             control="select"
                             name="txtYearForLocation"
@@ -572,7 +573,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                             onChange={(e) => updateStateForByLocation("txtYearForLocation", e)}
                           />
                         </Form.InputGroup>
-                        <Form.InputGroup label="Scheme" req="true" errorMsg={formValidationFarmersError["txtSchemeForLocation"]}>
+                        <Form.InputGroup label="Scheme" errorMsg={formValidationFarmersError["txtSchemeForLocation"]}>
                           <Form.InputControl
                             control="select"
                             name="txtSchemeForLocation"
@@ -583,7 +584,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                             onChange={(e) => updateStateForByLocation("txtSchemeForLocation", e)}
                           />
                         </Form.InputGroup>
-                        <Form.InputGroup label="State" req="true" errorMsg={formValidationFarmersError["txtStateForByLocation"]}>
+                        <Form.InputGroup label="State" errorMsg={formValidationFarmersError["txtStateForByLocation"]}>
                           <Form.InputControl
                             control="select"
                             name="txtStateForByLocation"
@@ -597,7 +598,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                             focus="true"
                           />
                         </Form.InputGroup>
-                        <Form.InputGroup label="District" req="true" errorMsg={formValidationFarmersError["txtDistrictForByLocation"]}>
+                        <Form.InputGroup label="District" errorMsg={formValidationFarmersError["txtDistrictForByLocation"]}>
                           <Form.InputControl
                             control="select"
                             name="txtDistrictForByLocation"
@@ -611,7 +612,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                             onChange={(e) => updateStateForByLocation("txtDistrictForByLocation", e)}
                           />
                         </Form.InputGroup>
-                        <Form.InputGroup label={lableTalukAnything} req="true" errorMsg={formValidationFarmersError["txtSubDistrictForByLocation"]}>
+                        <Form.InputGroup label={lableTalukAnything} errorMsg={formValidationFarmersError["txtSubDistrictForByLocation"]}>
                           <Form.InputControl
                             control="select"
                             name="txtSubDistrictForByLocation"
@@ -626,7 +627,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                           />
                         </Form.InputGroup>
 
-                        <Form.InputGroup label={lablelevel5} req="true" errorMsg={formValidationFarmersError["txtlevel5ByLocation"]}>
+                        <Form.InputGroup label={lablelevel5} errorMsg={formValidationFarmersError["txtlevel5ByLocation"]}>
                           <Form.InputControl
                             control="select"
                             name="txtlevel5ByLocation"
@@ -641,7 +642,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                         </Form.InputGroup>
 
                         {lablelevel6 === null ? null : (
-                          <Form.InputGroup label={lablelevel6} req="true" errorMsg={formValidationFarmersError["txtlevel6ByLocation"]}>
+                          <Form.InputGroup label={lablelevel6} errorMsg={formValidationFarmersError["txtlevel6ByLocation"]}>
                             <Form.InputControl
                               control="select"
                               name="txtlevel6ByLocation"
@@ -656,7 +657,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                           </Form.InputGroup>
                         )}
                         {/* <div className={BizClass.ModalCustomBox}> */}
-                        <Form.InputGroup label={lableVillageForByLocation} req="true" errorMsg={formValidationFarmersError["txtVillageForByLocation"]}>
+                        <Form.InputGroup label={lableVillageForByLocation} errorMsg={formValidationFarmersError["txtVillageForByLocation"]}>
                           <Form.InputControl
                             control="select"
                             name="txtVillageForByLocation"
@@ -675,7 +676,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                   </div>
                 )}
                 <div className={BizClass.ValidateFormFooter}>
-                  {btnEnableSaveOnValidateMN === false ? (
+                {btnEnableSaveOnValidateMN === false ? (
                     <Button className={BizClass.FormFooterButton} trigger={btnLoaderActive && "true"} onClick={() => validateFarmerOnClick()}>
                       Validate
                     </Button>
@@ -697,12 +698,9 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
               {/* <div className={BizClass.ValidateProfile} /> */}
               <div className={BizClass.ValidateBox}>
                 <div className={BizClass.ValidateTitle}>
-                  <h3>Farmer Ticket Summary And Ticket History</h3>{" "}
-                  {fetchfarmersummary !== "" ? (
-                    <Button trigger={btnLoaderActiveTicketSummary && "true"} className={BizClass.FormFooterButton} onClick={() => fetchfarmersTicketSummary()}>
-                      Fetch Data
-                    </Button>
-                  ) : null}
+                <h3>Farmer Ticket Summary And Tick History</h3> {fetchfarmersummary !==""  ? <Button trigger={btnLoaderActiveTicketSummary && "true"} className={BizClass.FormFooterButton} onClick={() => fetchfarmersTicketSummary()}>
+                        Fetch Data
+                      </Button> : null } 
                 </div>
                 <div className={BizClass.Farmer_Ticket_Box}>
                   {/* {isLoadingPageData ? <Loader /> : null} */}
@@ -779,10 +777,10 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                       {selectedFarmer && selectedFarmer.state
                         ? selectedFarmer.state
                         : selectedFarmer.stateName
-                          ? selectedFarmer.stateName
-                          : selectedFarmer.resState
-                            ? selectedFarmer.resState
-                            : ""}
+                        ? selectedFarmer.stateName
+                        : selectedFarmer.resState
+                        ? selectedFarmer.resState
+                        : ""}
                     </p>
                   </Form.InputGroup>
                   <Form.InputGroup label="District">
@@ -790,10 +788,10 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                       {selectedFarmer && selectedFarmer.district
                         ? selectedFarmer.district
                         : selectedFarmer.districtName
-                          ? selectedFarmer.districtName
-                          : selectedFarmer.resDistrict
-                            ? selectedFarmer.resDistrict
-                            : ""}
+                        ? selectedFarmer.districtName
+                        : selectedFarmer.resDistrict
+                        ? selectedFarmer.resDistrict
+                        : ""}
                     </p>
                   </Form.InputGroup>
                   <Form.InputGroup label="Taluka">
@@ -801,8 +799,8 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                       {selectedFarmer && selectedFarmer.subDistrict
                         ? selectedFarmer.subDistrict
                         : selectedFarmer.resSubDistrict
-                          ? selectedFarmer.resSubDistrict
-                          : ""}
+                        ? selectedFarmer.resSubDistrict
+                        : ""}
                     </p>
                   </Form.InputGroup>
                   <Form.InputGroup label="Village">
@@ -810,17 +808,17 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                       {selectedFarmer && selectedFarmer.village
                         ? selectedFarmer.village
                         : selectedFarmer.villageName
-                          ? selectedFarmer.villageName
-                          : selectedFarmer.resVillage
-                            ? selectedFarmer.resVillage
-                            : ""}
+                        ? selectedFarmer.villageName
+                        : selectedFarmer.resVillage
+                        ? selectedFarmer.resVillage
+                        : ""}
                     </p>
                   </Form.InputGroup>
                 </Form.Group>
                 <div className={BizClass.ContentDiv}>
                   <Form.Group column="2" controlwidth="360px">
                     <Form.CustomGroup column={4} columntemplate="140px 140px auto">
-                      <Form.InputGroup label="" errorMsg={formValidationFarmersInfoError["txtYearForFarmerInfo"]}>
+                    <Form.InputGroup label="" errorMsg={formValidationFarmersInfoError["txtYearForFarmerInfo"]}>
                         <Form.InputControl
                           control="select"
                           label="Year"
@@ -830,7 +828,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                           getOptionLabel={(option) => `${option.Name}`}
                           getOptionValue={(option) => `${option}`}
                           onChange={(e) => updateStateForFarmerInfo("txtYearForFarmerInfo", e)}
-                          isDisabled={stateYearAndSeason === "YRSSNNO"}
+                          isDisabled ={stateYearAndSeason === "YRSSNNO"}
                         />
                       </Form.InputGroup>
                       <Form.InputGroup errorMsg={formValidationFarmersInfoError["txtSeasonForFarmerInfo"]}>
@@ -845,7 +843,7 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                           getOptionLabel={(option) => `${option.CropSeasonName}`}
                           getOptionValue={(option) => `${option}`}
                           onChange={(e) => updateStateForFarmerInfo("txtSeasonForFarmerInfo", e)}
-                          isDisabled={stateYearAndSeason === "YRSSNNO"}
+                          isDisabled ={stateYearAndSeason === "YRSSNNO"}
                         />
                       </Form.InputGroup>
                       <Form.InputGroup label="" errorMsg={formValidationSupportTicketError["txtSchemeForFarmerInfo"]}>
@@ -876,8 +874,8 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                             ? selectedInsuranceDetails.applicationNo
                             : ""
                           : selectedInsuranceDetails && selectedInsuranceDetails.applicationNo
-                            ? selectedInsuranceDetails.applicationNo
-                            : ""}
+                          ? selectedInsuranceDetails.applicationNo
+                          : ""}
                       </p>
                     </Form.InputGroup>
                     <Form.InputGroup label="Farmer Premium">
@@ -887,8 +885,8 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                             ? selectedInsuranceDetails.farmerPremium
                             : ""
                           : selectedInsuranceDetails && selectedInsuranceDetails.policyPremium
-                            ? selectedInsuranceDetails.policyPremium
-                            : ""}
+                          ? selectedInsuranceDetails.policyPremium
+                          : ""}
                       </p>
                     </Form.InputGroup>
                     <Form.InputGroup label="Village">
@@ -898,8 +896,8 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                             ? selectedInsuranceDetails.plotVillageName
                             : ""
                           : selectedInsuranceDetails && selectedInsuranceDetails.plotVillageName
-                            ? selectedInsuranceDetails.plotVillageName
-                            : ""}
+                          ? selectedInsuranceDetails.plotVillageName
+                          : ""}
                       </p>
                     </Form.InputGroup>
                     <Form.InputGroup label="Area In Hactare">
@@ -909,8 +907,8 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                             ? selectedInsuranceDetails.area
                             : ""
                           : selectedInsuranceDetails && selectedInsuranceDetails.policyArea
-                            ? selectedInsuranceDetails.policyArea
-                            : ""}
+                          ? selectedInsuranceDetails.policyArea
+                          : ""}
                       </p>
                     </Form.InputGroup>
                     <Form.InputGroup label="Crop Name">
@@ -920,8 +918,8 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                             ? selectedInsuranceDetails.cropName
                             : ""
                           : selectedInsuranceDetails && selectedInsuranceDetails.cropName
-                            ? selectedInsuranceDetails.cropName
-                            : ""}
+                          ? selectedInsuranceDetails.cropName
+                          : ""}
                       </p>
                     </Form.InputGroup>
                   </Form.Group>
@@ -945,7 +943,10 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                       <Button className={BizClass.Button} trigger={btnLoaderClaimStatusActive && "true"} onClick={() => getClaimStatusOnClick()}>
                         Claim Status
                       </Button>
-                      <Button className={BizClass.Button} onClick={() => ResetYrSsnSchmApplicationDataOnClick()}>
+                      <Button
+                        className={BizClass.Button}
+                        onClick={() => ResetYrSsnSchmApplicationDataOnClick()}
+                      >
                         Reset
                       </Button>
                       <Button
@@ -977,22 +978,17 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                         <div className={BizClass.ValidateTabCheckBox} />
                         <span>Information</span>
                       </button>
-                      {formValuesForFarmerInfo.txtYearForFarmerInfo &&
+                      {(formValuesForFarmerInfo.txtYearForFarmerInfo &&
                       formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
-                      formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null : (
-                        <button type="button" className={selectedOption === "4" && BizClass.Active} onClick={() => selectedOptionOnClick("LO")}>
+                      formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024)  ? null :
+                      <button type="button" className={selectedOption === "4" && BizClass.Active} onClick={() => selectedOptionOnClick("LO")}>
                           <div className={BizClass.ValidateTabCheckBox} />
                           <span>Crop Loss Intimation</span>
-                        </button>
-                      )}
-                      {/* {formValuesForFarmerInfo.txtYearForFarmerInfo &&
-                      formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
-                      formValuesForFarmerInfo.txtYearForFarmerInfo.Value < runningCurrentYear ? null : (
-                        <button type="button" className={selectedOption === "4" && BizClass.Active} onClick={() => selectedOptionOnClick("LO")}>
-                          <div className={BizClass.ValidateTabCheckBox} />
-                          <span>Crop Loss Intimation</span>
-                        </button>
-                      )} */}
+                        </button> }
+                      {/* {formValuesForFarmerInfo.txtYearForFarmerInfo && formValuesForFarmerInfo.txtYearForFarmerInfo.Value && formValuesForFarmerInfo.txtYearForFarmerInfo.Value < runningCurrentYear ? null :  <button type="button" className={selectedOption === "4" && BizClass.Active} onClick={() => selectedOptionOnClick("LO")}>
+                        <div className={BizClass.ValidateTabCheckBox} />
+                        <span>Crop Loss Intimation</span>
+                      </button>} */}
                     </ul>
                   </Form.InputGroup>
                   {selectedOption === "4" ? (
@@ -1036,14 +1032,12 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                   ) : null}
                   <Form.InputGroup column={2} label="Attachment" errorMsg={formValidationSupportTicketError["txtDocumentUpload"]}>
                     <Form.InputControl
-                      style={{ padding: "1px 8px", height: "24px", fontSize: "10px" }}
                       control="input"
                       type="file"
                       accept="image/*,.pdf"
                       name="txtDocumentUpload"
-                      onChange={(e) => updateStateTicketCreation(e.target.name, e.target.files)}
+                      onChange={(e) => updateStateTicketCreation(e.target.name, e.target.files[0])}
                       ref={fileRef}
-                      multiple
                     />
                   </Form.InputGroup>
                   <Form.InputGroup column={1}>
@@ -1107,23 +1101,23 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                     : 0) ? (
                     <Form.InputGroup column={3} label="Other Sub Cat." errorMsg={formValidationSupportTicketError["txtOtherSubCategory"]}>
                       {/* <Form.InputControl
-                        control="input"
-                        type="text"
-                        name="txtOtherSubCategory"
-                        value={formValuesTicketCreation.txtOtherSubCategory}
-                        onChange={(e) => updateStateTicketCreation(e.target.name, e.target.value)}
-                      />
-                    </Form.InputGroup> */}
-                      <Form.InputControl
-                        control="select"
-                        name="txtOtherSubCategory"
-                        value={formValuesTicketCreation.txtOtherSubCategory}
-                        options={ticketCategoryOtherList}
-                        isLoading={isLoadingTicketCategoryOtherList}
-                        getOptionLabel={(option) => `${option.OtherCategoryName}`}
-                        getOptionValue={(option) => `${option}`}
-                        onChange={(e) => updateStateTicketCreation("txtOtherSubCategory", e)}
-                      />
+                         control="input"
+                         type="text"
+                         name="txtOtherSubCategory"
+                         value={formValuesTicketCreation.txtOtherSubCategory}
+                         onChange={(e) => updateStateTicketCreation(e.target.name, e.target.value)}
+                       />
+                     </Form.InputGroup> */}
+                     <Form.InputControl
+                         control="select"
+                         name="txtOtherSubCategory"
+                         value={formValuesTicketCreation.txtOtherSubCategory}
+                         options={ticketCategoryOtherList}
+                         isLoading={isLoadingTicketCategoryOtherList}
+                         getOptionLabel={(option) => `${option.OtherCategoryName}`}
+                         getOptionValue={(option) => `${option}`}
+                         onChange={(e) => updateStateTicketCreation("txtOtherSubCategory", e)}
+                       />
                     </Form.InputGroup>
                   ) : null}
                   {selectedOption === "4" ? (
@@ -1159,10 +1153,10 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                           : 0)
                           ? "90px 110px 68px 110px 85px auto"
                           : selectedOptionCropStage === "2"
-                            ? "75px 110px 60px 110px 85px auto"
-                            : selectedOptionCropStage === "1"
-                              ? "70px 110px 85px auto"
-                              : null
+                          ? "75px 110px 60px 110px 85px auto"
+                          : selectedOptionCropStage === "1"
+                          ? "70px 110px 85px auto"
+                          : null
                       }
                     >
                       {selectedOptionCropStage === "2" ? (
@@ -1245,12 +1239,9 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                       value={formValuesTicketCreation.txtTicketDescription}
                       onChange={(e) => updateStateTicketCreation("txtTicketDescription", e.target.value)}
                     />
-                    <p className={BizClass.CounterDesc}>
-                      {formValuesTicketCreation.txtTicketDescription && formValuesTicketCreation.txtTicketDescription.length
-                        ? formValuesTicketCreation.txtTicketDescription.length
-                        : 0}{" "}
-                      / {500}
-                    </p>
+                   <p className={BizClass.CounterDesc}>
+                    {formValuesTicketCreation.txtTicketDescription && formValuesTicketCreation.txtTicketDescription.length ? formValuesTicketCreation.txtTicketDescription.length : 0} / {500}
+                  </p>   
                   </Form.InputGroup>
                 </Form.Group>
                 <div className={BizClass.ValidateFormFooter}>
@@ -1258,8 +1249,8 @@ function AddTicket({ showfunc, updateFarmersTickets, openMyTicketPage }) {
                     className={isBtndisabled === 0 ? BizClass.FormFooterButton : classNames(BizClass.disableFormFooterButton, BizClass.FormFooterButton)}
                     disabled={isBtndisabled}
                     trigger={btnLoaderSupportTicketActive && "true"}
-                    // A onClick={() => supportTicketOnClick(updateFarmersTickets, updateFarmersTicketsStatusCount, showfunc)}
-                    onClick={() => supportTicketOnClick(updateFarmersTickets, showfunc)}
+                     // A onClick={() => supportTicketOnClick(updateFarmersTickets, updateFarmersTicketsStatusCount, showfunc)}
+                     onClick={() => supportTicketOnClick(updateFarmersTickets, showfunc)}
                   >
                     Submit
                   </Button>
@@ -1435,8 +1426,8 @@ function InsuranceCompanyModal({
                 return node.data.typeOfClaim === 0
                   ? "Multiple Peril Crop Insurance"
                   : node.data.paymentAccountType === 1
-                    ? "Actual Production History"
-                    : "Crop Revenue Coverage";
+                  ? "Actual Production History"
+                  : "Crop Revenue Coverage";
               }}
             />
           </DataGrid>
@@ -1500,10 +1491,10 @@ function InsuranceCompanyModalGreivence({
             tooltipInteraction={true}
           >
             <DataGrid.Column
-              headerName="Action"
+              headerName="Claim Status"
               lockPosition="1"
               pinned="left"
-              width={80}
+              width={135}
               cellRenderer="actionTemplate"
               cellRendererParams={{
                 toggleClaimStatusModal,
@@ -1763,6 +1754,9 @@ function ClaimStatusModal({
             onGridReady={onGridReadyClaimStatus}
           >
             <DataGrid.Column field="applicationNo" headerName="Application Number" width="175px" />
+            <DataGrid.Column field="FarmerName" headerName="Farmer Name" width="200px" />
+            <DataGrid.Column field="Status" headerName="Status" width="110px" />
+             <DataGrid.Column field="UtrNumber" headerName="UTR Number" width="160px" />
             <DataGrid.Column
               field="claimDate"
               headerName="Claim Date"
@@ -1771,23 +1765,34 @@ function ClaimStatusModal({
                 return dateFormatDDMMYY(node.data.claimDate);
               }}
             />
-            <DataGrid.Column field="amount" headerName="Claim Amount" width="135px" />
+            <DataGrid.Column field="amount" headerName="Claim Amount" width="135px" cellStyle={{ "text-align": "right" }} />
             <DataGrid.Column field="ClaimType" headerName="Claim Type" width="150px" />
-            <DataGrid.Column field="UtrNumber" headerName="UTR Number" width="140px" />
-            <DataGrid.Column field="aadharPaymentAccountNumber" headerName="Payment To Account Number" width="220px" />
-            <DataGrid.Column field="aadharPaymentBankName" headerName="Payment To Bank Name" width="220px" />
-            <DataGrid.Column field="aadharPaymentFarmerName" headerName="Farmer Name" width="290px" />
+            <DataGrid.Column field="ClaimStatus" headerName="Claim Status" width="220px" />
+            <DataGrid.Column field="aadharPaymentAccountNumber" headerName="Aadhar Payment To Account Number" width="240px" cellStyle={{ "text-align": "right" }} valueGetter={(node) => {
+                return node.data.aadharPaymentAccountNumber ? node.data.aadharPaymentAccountNumber.replace(/.(?=.{4})/g, "x") : null;
+              }} />
+            <DataGrid.Column field="aadharPaymentBankName" headerName="Aadhar Payment To Bank Name" width="240px" />
+            <DataGrid.Column field="aadharPaymentFarmerName" headerName="Aadhar Payment Farmer Name" width="270px" />
             <DataGrid.Column
               field="aadharPaymentAadharNumber"
               headerName="Aadhar Number"
               width="140px"
+              cellStyle={{ "text-align": "right" }}
               valueGetter={(node) => {
                 return node.data.aadharPaymentAadharNumber ? node.data.aadharPaymentAadharNumber.replace(/.(?=.{4})/g, "x") : null;
               }}
             />
-            <DataGrid.Column field="ClaimStatus" headerName="Claim Status" width="220px" />
             <DataGrid.Column field="paymentMode" headerName="Payment Mode" width="140px" />
-            <DataGrid.Column field="Status" headerName="Status" width="155px" />
+            <DataGrid.Column field="claimPaymentStatus" headerName="Claim Payment Status" width="190px" />
+            <DataGrid.Column field="sumOfClaimCalculated" headerName="Sum Of Claim Calculated" width="200px" cellStyle={{ "text-align": "right" }} />
+            <DataGrid.Column field="lossPercentageCalculated" headerName="Loss Percentage Calculated" width="210px" cellStyle={{ "text-align": "right" }} />
+            <DataGrid.Column field="inputCost" headerName="Input Cost" width="115px" cellStyle={{ "text-align": "right" }} />
+             <DataGrid.Column field="areaPercentage" headerName="Area Percentage" width="145px" cellStyle={{ "text-align": "right" }} />
+              <DataGrid.Column field="TotalClaim" headerName="Total Claim" width="115px" cellStyle={{ "text-align": "right" }} />
+               <DataGrid.Column field="lossPercentage" headerName="Loss Percentage" width="145px" cellStyle={{ "text-align": "right" }} />
+               <DataGrid.Column field="totalPayable" headerName="Total Payable" width="125px" cellStyle={{ "text-align": "right" }} />
+                <DataGrid.Column field="Balance" headerName="Balance" width="100px" cellStyle={{ "text-align": "right" }} />
+                 <DataGrid.Column field="partialClaim" headerName="Partial Claim" width="125px" cellStyle={{ "text-align": "right" }} />
           </DataGrid>
         </div>
       </Modal.Body>

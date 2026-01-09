@@ -1,6 +1,6 @@
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { useState } from "react";
-import { dateToSpecificFormat, Convert24FourHourAndMinute } from "Configration/Utilities/dateformat";
+import { dateToSpecificFormat, Convert24FourHourAndMinute, daysdifference, dateFormatDefault } from "Configration/Utilities/dateformat";
 import * as XLSX from "xlsx";
 import { getSupportTicketAgeingReport, getSupportAgeingReportDetail } from "../Services/Methods";
 
@@ -33,6 +33,8 @@ function AgeingReportLogics() {
     // A XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
     worksheet["!cols"] = [
       { width: 20 },
+      { width: 15 },
+      { width: 15 },
       { width: 15 },
       { width: 15 },
       { width: 20 },
@@ -144,6 +146,8 @@ function AgeingReportLogics() {
     const columnOrder = {
       SupportTicketNo: "Ticket No",
       TicketDate: "Creation Date",
+      TicketReOpenDate: "Reopen Date",
+      Ageing: "Ageing",
       TicketStatus: "Ticket Status",
       StateMasterName: "State",
       DistrictMasterName: "District",
@@ -152,7 +156,7 @@ function AgeingReportLogics() {
       TicketTypeName: "Category",
       TicketCategoryName: "Sub Category",
       CropSeasonName: "Season",
-      RequestYear: "Year",
+      RequestYear: "Season-Year",
       InsuranceCompany: "Insurance Company",
       ApplicationNo: "Application No",
       InsurancePolicyNo: "Policy No",
@@ -195,6 +199,8 @@ function AgeingReportLogics() {
         CropSeasonName: value.CropSeasonName,
         RequestYear: value.RequestYear,
         TicketDate: value.Created ? dateToSpecificFormat(value.Created.split("T")[0], "DD-MM-YYYY") : "",
+        TicketReOpenDate: value.TicketReOpenDate ? dateToSpecificFormat(value.TicketReOpenDate.split("T")[0], "DD-MM-YYYY") : "",
+        Ageing: value.TicketStatusID === 109301 ? value.Created ? `${daysdifference(dateFormatDefault(new Date()), dateFormatDefault(value.Created.split("T")[0]))} days` : null : value.TicketStatusID === 109304 ? value.Created && value.TicketReOpenDate ? `${daysdifference(dateFormatDefault(value.TicketReOpenDate.split("T")[0]), dateFormatDefault(value.Created.split("T")[0]))} days` : null : null,
         Relation: value.Relation,
         RelativeName: value.RelativeName,
         PolicyPremium: value.PolicyPremium,

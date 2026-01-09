@@ -80,6 +80,8 @@ import BIDashboard1 from "Components/Common/BIDashboard/BIDashboard1";
 import KRPHPortalN from "Components/Newhome/MobileNumberInput/KRPHPortalN";
 import ICWiseAudit from "Components/Modules/Reports/ICWiseAudit/ICWiseAudit";
 import UserWiseAudit from "Components/Modules/Reports/UserWiseAudit/UserWiseAudit";
+import ICWiseAuditGFOS from "Components/Modules/Reports/ICWiseAuditGFOS/ICWiseAuditGFOS";
+import UserWiseAuditGFOS from "Components/Modules/Reports/UserWiseAuditGFOS/UserWiseAuditGFOS";
 
 const PageRouter = () => {
   return (
@@ -173,6 +175,8 @@ const PageRouter = () => {
         <Route exact path="/BIDashboard1" element={<Page component={<BIDashboard1 />} title="BI Dashboard" />} />
         <Route exact path="/ICWiseAudit" element={<Page component={<ICWiseAudit />} title="IC Wise Audit" />} />
         <Route exact path="/UserWiseAudit" element={<Page component={<UserWiseAudit />} title="User Wise Audit" />} />
+        <Route exact path="/ICWiseAuditGFOS" element={<Page component={<ICWiseAuditGFOS />} title="IC Wise Audit(GFOS)" />} />
+        <Route exact path="/UserWiseAuditGFOS" element={<Page component={<UserWiseAuditGFOS />} title="User Wise Audit(GFOS)" />} />
       </Routes>
     </Router>
     // </BrowserRouter>

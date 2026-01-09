@@ -86,7 +86,7 @@ function TicketCustomerDetail({
       landDivisionNumber: "Land Division Number",
       policyArea: "Area",
       cropName: "Crop Name",
-      policyPremium: "Premium Amount",
+      farmerShare: "Premium Amount",
       sumInsured: "Sum Insured",
       applicationSource: "Source of Enrolment",
       scheme: "Scheme",
@@ -110,7 +110,7 @@ function TicketCustomerDetail({
         landDivisionNumber: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].landDivisionNumber : "",
         policyArea: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].policyArea : "",
         cropName: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].cropName : "",
-        policyPremium: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].policyPremium : "",
+        farmerShare: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].farmerShare : "",
         sumInsured: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].sumInsured : "",
         applicationSource: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].applicationSource : "",
         scheme: selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].scheme : "",
@@ -257,7 +257,7 @@ function TicketCustomerDetail({
             <RiNewspaperLine />
             <p>
               Premium Amount :
-              <span id="spnPremiumAmount">{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].policyPremium : ""}</span>
+              <span id="spnPremiumAmount">{selectedPolicyDetails && selectedPolicyDetails.length > 0 ? selectedPolicyDetails[0].farmerShare : ""}</span>
             </p>
             <FiCopy onClick={() => copyToClipboard("spsumInsured")} />
           </div>

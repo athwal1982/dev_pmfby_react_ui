@@ -786,6 +786,7 @@ function CropLossintimationTickets() {
                     resVillageID: v.resVillageID,
                     resSubDistrictID: v.resSubDistrictID,
                     policyPremium: parseFloat(v.policyPremium).toFixed(2),
+                    sumInsured: parseFloat(x.sumInsured).toFixed(2),
                     policyArea: v.policyArea,
                     policyType: v.policyType,
                     scheme: v.scheme,
@@ -1187,6 +1188,7 @@ function CropLossintimationTickets() {
         iFSCCode: selectedInsuranceDetails ? selectedInsuranceDetails.ifscCode : "",
         farmerShare: selectedInsuranceDetails ? selectedInsuranceDetails.farmerShare : "",
         sowingDate: selectedInsuranceDetails ? selectedInsuranceDetails.sowingDate : "",
+        sumInsured : selectedInsuranceDetails ? selectedInsuranceDetails.sumInsured : "",
       };
       setisBtndisabled(1);
       setBtnLoaderSupportTicketActive(true);
@@ -1258,8 +1260,8 @@ function CropLossintimationTickets() {
     // A getTicketCategoryTypeListData("1", 0, "TCKTYP");
   }, []);
 
-  useEffect(() => {
-    debugger;
+    useEffect(() => {
+      debugger;
     if (window.__bhashiniLangAlreadySet) return;
     window.__bhashiniLangAlreadySet = true;
 
@@ -2451,32 +2453,46 @@ function ClaimStatusModal({
             onGridReady={onGridReadyClaimStatus}
           >
             <DataGrid.Column field="applicationNo" headerName="Application Number" width="175px" />
-            <DataGrid.Column
-              field="claimDate"
-              headerName="Claim Date"
-              width="115px"
-              cellRenderer={(node) => {
-                return dateFormatDDMMYY(node.data.claimDate);
-              }}
-            />
-            <DataGrid.Column field="amount" headerName="Claim Amount" width="135px" />
-            <DataGrid.Column field="ClaimType" headerName="Claim Type" width="150px" />
-            <DataGrid.Column field="UtrNumber" headerName="UTR Number" width="140px" />
-            <DataGrid.Column field="aadharPaymentAccountNumber" headerName="Payment To Account Number" width="220px" />
-            <DataGrid.Column field="aadharPaymentBankName" headerName="Payment To Bank Name" width="220px" />
-            <DataGrid.Column field="aadharPaymentFarmerName" headerName="Farmer Name" width="290px" />
-            <DataGrid.Column
-              field="aadharPaymentAadharNumber"
-              headerName="Aadhar Number"
-              width="140px"
-              valueGetter={(node) => {
-                return node.data.aadharPaymentAadharNumber ? node.data.aadharPaymentAadharNumber.replace(/.(?=.{4})/g, "x") : null;
-              }}
-            />
-            <DataGrid.Column field="ClaimStatus" headerName="Claim Status" width="220px" />
-            <DataGrid.Column field="paymentMode" headerName="Payment Mode" width="140px" />
-            <DataGrid.Column field="Status" headerName="Status" width="155px" />
-          </DataGrid>
+                                    <DataGrid.Column field="FarmerName" headerName="Farmer Name" width="200px" />
+                                    <DataGrid.Column field="Status" headerName="Status" width="110px" />
+                                     <DataGrid.Column field="UtrNumber" headerName="UTR Number" width="160px" />
+                                    <DataGrid.Column
+                                      field="claimDate"
+                                      headerName="Claim Date"
+                                      width="115px"
+                                      cellRenderer={(node) => {
+                                        return dateFormatDDMMYY(node.data.claimDate);
+                                      }}
+                                    />
+                                    <DataGrid.Column field="amount" headerName="Claim Amount" width="135px" cellStyle={{ "text-align": "right" }} />
+                                    <DataGrid.Column field="ClaimType" headerName="Claim Type" width="150px" />
+                                    <DataGrid.Column field="ClaimStatus" headerName="Claim Status" width="220px" />
+                                    <DataGrid.Column field="aadharPaymentAccountNumber" headerName="Aadhar Payment To Account Number" width="240px" cellStyle={{ "text-align": "right" }} valueGetter={(node) => {
+                                        return node.data.aadharPaymentAccountNumber ? node.data.aadharPaymentAccountNumber.replace(/.(?=.{4})/g, "x") : null;
+                                      }} />
+                                    <DataGrid.Column field="aadharPaymentBankName" headerName="Aadhar Payment To Bank Name" width="240px" />
+                                    <DataGrid.Column field="aadharPaymentFarmerName" headerName="Aadhar Payment Farmer Name" width="270px" />
+                                    <DataGrid.Column
+                                      field="aadharPaymentAadharNumber"
+                                      headerName="Aadhar Number"
+                                      width="140px"
+                                      cellStyle={{ "text-align": "right" }}
+                                      valueGetter={(node) => {
+                                        return node.data.aadharPaymentAadharNumber ? node.data.aadharPaymentAadharNumber.replace(/.(?=.{4})/g, "x") : null;
+                                      }}
+                                    />
+                                    <DataGrid.Column field="paymentMode" headerName="Payment Mode" width="140px" />
+                                    <DataGrid.Column field="claimPaymentStatus" headerName="Claim Payment Status" width="190px" />
+                                    <DataGrid.Column field="sumOfClaimCalculated" headerName="Sum Of Claim Calculated" width="200px" cellStyle={{ "text-align": "right" }} />
+                                    <DataGrid.Column field="lossPercentageCalculated" headerName="Loss Percentage Calculated" width="210px" cellStyle={{ "text-align": "right" }} />
+                                    <DataGrid.Column field="inputCost" headerName="Input Cost" width="115px" cellStyle={{ "text-align": "right" }} />
+                                     <DataGrid.Column field="areaPercentage" headerName="Area Percentage" width="145px" cellStyle={{ "text-align": "right" }} />
+                                      <DataGrid.Column field="TotalClaim" headerName="Total Claim" width="115px" cellStyle={{ "text-align": "right" }} />
+                                       <DataGrid.Column field="lossPercentage" headerName="Loss Percentage" width="145px" cellStyle={{ "text-align": "right" }} />
+                                       <DataGrid.Column field="totalPayable" headerName="Total Payable" width="125px" cellStyle={{ "text-align": "right" }} />
+                                        <DataGrid.Column field="Balance" headerName="Balance" width="100px" cellStyle={{ "text-align": "right" }} />
+                                         <DataGrid.Column field="partialClaim" headerName="Partial Claim" width="125px" cellStyle={{ "text-align": "right" }} />
+                                  </DataGrid>
         </div>
       </Modal.Body>
       <Modal.Footer />

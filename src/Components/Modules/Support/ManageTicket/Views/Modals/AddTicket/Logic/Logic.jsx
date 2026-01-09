@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
+// A import Config from "Configration/Config.json";
 import { getSessionStorage, setSessionStorage } from "Components/Common/Login/Auth/auth";
-import { dateToSpecificFormat, daysdifference, getCurrentDateTimeTick } from "Configration/Utilities/dateformat";
+import { dateToSpecificFormat, daysdifference } from "Configration/Utilities/dateformat";
 import moment from "moment";
 import {
   getMasterDataBindingDataList,
@@ -33,6 +34,7 @@ import {
   farmerCallingHistoryData,
 } from "../Services/Methods";
 // A import { getfarmerTicketsList } from "../../../../Services/Methods";
+
 function AddTicketLogics() {
   const [selectedOption, setSelectedOption] = useState("1");
   const [selectedOptionCropStage, setSelectedOptionCropStage] = useState("1");
@@ -221,35 +223,28 @@ function AddTicketLogics() {
   const [isLoadingStateDropdownDataList, setIsLoadingStateDropdownDataList] = useState(false);
   const getStateListData = async () => {
     try {
-      if (getSessionStorage("stateSsnStrg") === null) {
-        setIsLoadingStateDropdownDataList(true);
-        const formdata = {
-          filterID: 0,
-          filterID1: 0,
-          masterName: "STATEMAS",
-          searchText: "#ALL",
-          searchCriteria: "AW",
-        };
-        const result = await getMasterDataBindingDataList(formdata);
-        setIsLoadingStateDropdownDataList(false);
-        if (result.response.responseCode === 1) {
-          if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
-            setStateDropdownDataList(result.response.responseData.masterdatabinding);
-            setStateForPolicyNumberDropdownDataList(result.response.responseData.masterdatabinding);
-            setSessionStorage("stateSsnStrg", result.response.responseData.masterdatabinding);
-          } else {
-            setStateDropdownDataList([]);
-            setStateForPolicyNumberDropdownDataList([]);
-            setSessionStorage("stateSsnStrg", []);
-          }
+      setIsLoadingStateDropdownDataList(true);
+      const formdata = {
+        filterID: 0,
+        filterID1: 0,
+        masterName: "STATEMAS",
+        searchText: "#ALL",
+        searchCriteria: "AW",
+      };
+      const result = await getMasterDataBindingDataList(formdata);
+      console.log(result, "State Data");
+      setIsLoadingStateDropdownDataList(false);
+      if (result.response.responseCode === 1) {
+        if (result.response.responseData && result.response.responseData.masterdatabinding && result.response.responseData.masterdatabinding.length > 0) {
+          setStateDropdownDataList(result.response.responseData.masterdatabinding);
         } else {
-          setAlertMessage({
-            type: "error",
-            message: result.response.responseMessage,
-          });
+          setStateDropdownDataList([]);
         }
       } else {
-        setStateDropdownDataList(getSessionStorage("stateSsnStrg"));
+        setAlertMessage({
+          type: "error",
+          message: result.response.responseMessage,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -394,15 +389,9 @@ function AddTicketLogics() {
   };
 
   // A const [schemeList, setSchemeList] = useState([]);
-  const [schemeList] = useState([
-    { SchemeID: 2, SchemeName: "Weather Based Crop Insurance Scheme(WBCIS)" },
-    { SchemeID: 4, SchemeName: "Pradhan Mantri Fasal Bima Yojna(PMFBY)" },
-  ]);
+  const [schemeList] = useState([{ SchemeID: 2, SchemeName: "Weather Based Crop Insurance Scheme(WBCIS)"},{ SchemeID: 4, SchemeName: "Pradhan Mantri Fasal Bima Yojna(PMFBY)"}]);
   // A const [seasonForPolicyNumberDropdownDataList, setSeasonForPolicyNumberDropdownDataList] = useState([]);
-  const [seasonForPolicyNumberDropdownDataList] = useState([
-    { CropSeasonID: 1, CropSeasonName: "Kharif" },
-    { CropSeasonID: 2, CropSeasonName: "Rabi" },
-  ]);
+  const [seasonForPolicyNumberDropdownDataList] = useState([{ CropSeasonID: 1, CropSeasonName: "Kharif"},{ CropSeasonID: 2, CropSeasonName: "Rabi"}]);
   const [stateForPolicyNumberDropdownDataList, setStateForPolicyNumberDropdownDataList] = useState([]);
   const [yearList, setYearList] = useState([]);
   const [seasonPolicyNumber, setSeasonPolicyNumber] = useState("");
@@ -561,7 +550,7 @@ function AddTicketLogics() {
     }
   };
 
-  // A const [isLoadingStateForPolicyNumberDropdownDataList, setIsLoadingStateForPolicyNumberDropdownDataList] = useState(false);
+// A const [isLoadingStateForPolicyNumberDropdownDataList, setIsLoadingStateForPolicyNumberDropdownDataList] = useState(false);
   // A const getStateForPolicyNumberListData = async () => {
   // A  try {
   // A    setIsLoadingStateForPolicyNumberDropdownDataList(true);
@@ -722,7 +711,7 @@ function AddTicketLogics() {
       // A const result = await getSubDistrictByStateANDDistrictDataList(formdata);
       const result = await getLevel4Data(formdata);
       console.log(result, "SubDistrict Data");
-
+      debugger;
       setIsLoadingSubDistrictForByLocationDropdownDataList(false);
       if (result.response.responseCode === 1) {
         // A if (
@@ -772,22 +761,23 @@ function AddTicketLogics() {
   };
 
   const getLocationHierarchyListData = async (pStateAlphaCode, pStateMasterID, pSeason, pYear, pScheme) => {
+    debugger;
     try {
       const pschemeID =
         pScheme === ""
           ? formValuesForByLocation.txtSchemeForLocation.SchemeID === 2
             ? "02"
             : formValuesForByLocation.txtSchemeForLocation.SchemeID === 4
-              ? "04"
-              : ""
+            ? "04"
+            : ""
           : pScheme;
       const pseasonID =
         pSeason === ""
           ? formValuesForByLocation.txtSeasonForLocation.CropSeasonID === 1
             ? "01"
             : formValuesForByLocation.txtSeasonForLocation.CropSeasonID === 2
-              ? "02"
-              : ""
+            ? "02"
+            : ""
           : pSeason;
       const pstateID = pStateMasterID.toString().length < 2 ? `0${pStateMasterID}` : pStateMasterID;
       const pyearID =
@@ -1053,7 +1043,7 @@ function AddTicketLogics() {
             errorsMsg = "Reason is required!";
           }
         }
-        if (formValuesMN && formValuesMN.txtCallStatus && formValuesMN.txtCallStatus.ID === 1) {
+        if(formValuesMN && formValuesMN.txtCallStatus && formValuesMN.txtCallStatus.ID === 1 ) {
           if (name === "txtFarmerName") {
             if (!value || typeof value === "undefined") {
               errorsMsg = "Farmer Name is required!";
@@ -1140,17 +1130,17 @@ function AddTicketLogics() {
       }
       if (name === "txtSubDistrictForByLocation") {
         if (!value || typeof value === "undefined") {
-          errorsMsg = `${lableTalukAnything} is required!`;
+          errorsMsg = `${lableTalukAnything} is required`;
         }
       }
       if (name === "txtlevel5ByLocation") {
         if (!value || typeof value === "undefined") {
-          errorsMsg = `${lablelevel5} is required!`;
+          errorsMsg = `${lablelevel5} is required`;
         }
       }
       if (name === "txtlevel6ByLocation") {
         if (!value || typeof value === "undefined") {
-          errorsMsg = `${lablelevel6} is required!`;
+          errorsMsg = `${lablelevel6} is required`;
         }
       }
       if (name === "txtVillageForByLocation") {
@@ -1179,6 +1169,7 @@ function AddTicketLogics() {
   };
 
   const updateStateForByLocation = (name, value) => {
+    debugger;
     setFormValuesForByLocation({ ...formValuesForByLocation, [name]: value });
     console.log("name , value", name, value);
     formValidationFarmersError[name] = validateFarmersField(name, value);
@@ -1460,38 +1451,33 @@ function AddTicketLogics() {
   const [isLoadingStateForByLocationDropdownDataList, setIsLoadingStateForByLocationDropdownDataList] = useState(false);
   const getStateForByLocationListData = async () => {
     try {
-      if (getSessionStorage("stateByLocationSsnStrg") === null) {
-        setIsLoadingStateForByLocationDropdownDataList(true);
-        const user = getSessionStorage("user");
-        const formdata = {
-          level: 1,
-          filterID: "0",
-          userID: user && user.LoginID ? user.LoginID : 0,
-          searchText: "#ALL",
-          searchCriteria: "AW",
-        };
-        const result = await getLocationMasterDataBindingDataList(formdata);
-        console.log(result, "State Data");
-        setIsLoadingStateForByLocationDropdownDataList(false);
-        if (result.response.responseCode === 1) {
-          if (
-            result.response.responseData &&
-            result.response.responseData.locationmasterdatabinding &&
-            result.response.responseData.locationmasterdatabinding.length > 0
-          ) {
-            setStateForByLocationDropdownDataList(result.response.responseData.locationmasterdatabinding);
-            setSessionStorage("stateByLocationSsnStrg", result.response.responseData.locationmasterdatabinding);
-          } else {
-            setStateForByLocationDropdownDataList([]);
-          }
+      setIsLoadingStateForByLocationDropdownDataList(true);
+      const user = getSessionStorage("user");
+      const formdata = {
+        level: 1,
+        filterID: "0",
+        userID: user && user.LoginID ? user.LoginID : 0,
+        searchText: "#ALL",
+        searchCriteria: "AW",
+      };
+      const result = await getLocationMasterDataBindingDataList(formdata);
+      console.log(result, "State Data");
+      setIsLoadingStateForByLocationDropdownDataList(false);
+      if (result.response.responseCode === 1) {
+        if (
+          result.response.responseData &&
+          result.response.responseData.locationmasterdatabinding &&
+          result.response.responseData.locationmasterdatabinding.length > 0
+        ) {
+          setStateForByLocationDropdownDataList(result.response.responseData.locationmasterdatabinding);
         } else {
-          setAlertMessage({
-            type: "error",
-            message: result.response.responseMessage,
-          });
+          setStateForByLocationDropdownDataList([]);
         }
       } else {
-        setStateForByLocationDropdownDataList(getSessionStorage("stateByLocationSsnStrg"));
+        setAlertMessage({
+          type: "error",
+          message: result.response.responseMessage,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -1504,7 +1490,7 @@ function AddTicketLogics() {
 
   const [formValidationCounter, setFormValidationCounter] = useState({});
   const [formValuesTicketCreation, setFormValuesTicketCreation] = useState({
-    txtDocumentUpload: "",
+    // A txtDocumentUpload: "",
     txtTicketCategory: null,
     txtTicketCategoryType: null,
     txtCropLossDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
@@ -1512,7 +1498,7 @@ function AddTicketLogics() {
     txtCropLossTime: "",
     txtTicketDescription: "",
     txtLossAt: null,
-    txtOtherSubCategory: null,
+    txtOtherSubCategory: "",
     txtCropStage: null,
     txtCropHarvestDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
     txtCropName: "",
@@ -1522,13 +1508,13 @@ function AddTicketLogics() {
   });
 
   function dynamicSort(properties) {
-    return function (a, b) {
-      for (let i = 0; i < properties.length; i++) {
-        let prop = properties[i];
-        if (a[prop] < b[prop]) return -1;
-        if (a[prop] > b[prop]) return 1;
-      }
-      return 0;
+    return function(a, b) {
+        for (let i = 0; i < properties.length; i++) {
+            let prop = properties[i];
+            if (a[prop] < b[prop]) return -1;
+            if (a[prop] > b[prop]) return 1;
+        }
+        return 0;
     };
   }
 
@@ -1537,15 +1523,15 @@ function AddTicketLogics() {
   const getTicketCategoryListData = async (supportTicketTypeID, data) => {
     console.log(data);
     try {
-      if (ticketBindingData) {
+      if(ticketBindingData) {
         setTicketCategoryList([]);
         setIsTicketCategoryList(true);
-        const filterticketBindingData = ticketBindingData.TCKCGZ.filter((data) => {
-          return data.SupportTicketTypeID === Number(supportTicketTypeID);
-        });
-        const sortticketBindingData = filterticketBindingData.sort(dynamicSort(["preference", "TicketCategoryName"]));
-        setTicketCategoryList(sortticketBindingData);
-        setIsTicketCategoryList(false);
+          const filterticketBindingData = ticketBindingData.TCKCGZ.filter((data) => {
+            return data.SupportTicketTypeID === Number(supportTicketTypeID);
+          });
+          const sortticketBindingData = filterticketBindingData.sort(dynamicSort(["preference", "TicketCategoryName"]));
+          setTicketCategoryList(sortticketBindingData);  
+          setIsTicketCategoryList(false);
       } else {
         setTicketCategoryList([]);
       }
@@ -1584,25 +1570,26 @@ function AddTicketLogics() {
   const [ticketCategoryTypeList, setTicketCategoryTypeList] = useState([]);
   const [isLoadingTicketCategoryTypeList, setIsTicketCategoryTypeList] = useState(false);
   const getTicketCategoryTypeListData = async (pselectedOption, pCropLossDetailID, pMasterName) => {
-    if (ticketBindingData) {
+    debugger;
+    if(ticketBindingData) {
       setIsTicketCategoryTypeList(true);
-      if (pMasterName === "TCKTYP") {
+      if(pMasterName === "TCKTYP") {
         const filterticketBindingData = ticketBindingData.CRPTYP.filter((data) => {
           return data.CategoryHeadID === Number(pselectedOption);
         });
         const sortticketBindingData = filterticketBindingData.sort((a, b) => {
-          if (a.SupportTicketTypeName < b.SupportTicketTypeName) return -1;
-        });
-        setTicketCategoryTypeList(sortticketBindingData);
-      } else if (pMasterName === "CRPTYP") {
+          if (a.SupportTicketTypeName < b.SupportTicketTypeName) return -1;   
+        });  
+        setTicketCategoryTypeList(sortticketBindingData); 
+      } else if(pMasterName === "CRPTYP") {
         const filterticketBindingData = ticketBindingData.CRPTYP.filter((data) => {
-          return data.CategoryHeadID === Number(pselectedOption) && data.CropLossDetailID === pCropLossDetailID;
+          return data.CategoryHeadID === Number(pselectedOption) &&  data.CropLossDetailID === pCropLossDetailID;
         });
         const sortticketBindingData = filterticketBindingData.sort((a, b) => {
-          if (a.SupportTicketTypeName < b.SupportTicketTypeName) return -1;
-        });
-        setTicketCategoryTypeList(sortticketBindingData);
-      }
+          if (a.SupportTicketTypeName < b.SupportTicketTypeName) return -1;   
+        });  
+        setTicketCategoryTypeList(sortticketBindingData); 
+      }   
       setIsTicketCategoryTypeList(false);
     } else {
       setTicketCategoryTypeList([]);
@@ -1647,31 +1634,32 @@ function AddTicketLogics() {
       if (ticketBindingData) {
         setTicketCategoryOtherList([]);
         setIsTicketCategoryOtherList(true);
-        if (data.TicketCategoryID === 51) {
+        if(data.TicketCategoryID === 51) {
           const filterticketBindingData = ticketBindingData.CRPOTH.filter((data) => {
             return data.OtherCategory1 === Number(supportTicketTypeID);
           });
           setTicketCategoryOtherList(filterticketBindingData);
-        } else if (data.TicketCategoryID === 52) {
+        } else if(data.TicketCategoryID === 52) {
           const filterticketBindingData = ticketBindingData.CRPOTH.filter((data) => {
             return data.OtherCategory2 === Number(supportTicketTypeID);
           });
           setTicketCategoryOtherList(filterticketBindingData);
-        } else if (data.TicketCategoryID === 53) {
+         } else if(data.TicketCategoryID === 53) {
           const filterticketBindingData = ticketBindingData.CRPOTH.filter((data) => {
             return data.OtherCategory3 === Number(supportTicketTypeID);
           });
           setTicketCategoryOtherList(filterticketBindingData);
-        } else if (data.TicketCategoryID === 58) {
+         } else if(data.TicketCategoryID === 58) {
           const filterticketBindingData = ticketBindingData.CRPOTH.filter((data) => {
             return data.OtherCategory4 === Number(supportTicketTypeID);
           });
           setTicketCategoryOtherList(filterticketBindingData);
-        }
+         }
         setIsTicketCategoryOtherList(false);
       } else {
         setTicketCategoryOtherList([]);
       }
+      
     } catch (error) {
       console.log(error);
       setAlertMessage({
@@ -1685,13 +1673,13 @@ function AddTicketLogics() {
   const [isLoadingLossAtList, setIsLoadingLossAtList] = useState(false);
   const getLossAtListData = async (pCropStageID) => {
     try {
-      if (ticketBindingData) {
+      if(ticketBindingData) {
         setIsLoadingLossAtList(true);
-        const filterticketBindingData = ticketBindingData.CRPDTL.filter((data) => {
-          return data.CropStageID === Number(pCropStageID);
-        });
-        setLossAtList(filterticketBindingData);
-        setIsLoadingLossAtList(false);
+          const filterticketBindingData = ticketBindingData.CRPDTL.filter((data) => {
+            return data.CropStageID === Number(pCropStageID);
+          });
+          setLossAtList(filterticketBindingData);  
+          setIsLoadingLossAtList(false);
       } else {
         setLossAtList([]);
       }
@@ -1731,13 +1719,13 @@ function AddTicketLogics() {
   const [isLoadingCropStageList, setIsLoadingCropStageList] = useState(false);
   const getCropStageListData = async (pCropStageID) => {
     try {
-      if (ticketBindingData) {
+      if(ticketBindingData) {
         setIsLoadingCropStageList(true);
-        const filterticketBindingData = ticketBindingData.CRPSTG.filter((data) => {
-          return data.CropStageID === Number(pCropStageID);
-        });
-        setCropStageList(filterticketBindingData);
-        setIsLoadingCropStageList(false);
+          const filterticketBindingData = ticketBindingData.CRPSTG.filter((data) => {
+            return data.CropStageID === Number(pCropStageID);
+          });
+          setCropStageList(filterticketBindingData);  
+          setIsLoadingCropStageList(false);
       } else {
         setCropStageList([]);
       }
@@ -1882,7 +1870,7 @@ function AddTicketLogics() {
     try {
       const errors = {};
       let formIsValid = true;
-
+      debugger;
       // A errors["txtDocumentUpload"] = validateFieldSupportTicket("txtDocumentUpload", formValuesTicketCreation.txtDocumentUpload);
       errors["txtCallerMobileNumber"] = validateFieldSupportTicket("txtCallerMobileNumber", formValuesCallerInformation.txtCallerMobileNumber);
       errors["txtSchemeForFarmerInfo"] = validateFieldSupportTicket("txtSchemeForFarmerInfo", formValuesForFarmerInfo.txtSchemeForFarmerInfo);
@@ -1933,6 +1921,7 @@ function AddTicketLogics() {
 
   const [stateCropLossIntimation, setStateCropLossIntimation] = useState("NA");
   const updateStateTicketCreation = (name, value) => {
+    debugger;
     setFormValuesTicketCreation({ ...formValuesTicketCreation, [name]: value });
     formValidationSupportTicketError[name] = validateFieldSupportTicket(name, value);
     if (name === "txtTicketCategoryType") {
@@ -1946,8 +1935,8 @@ function AddTicketLogics() {
         getTicketCategoryListData(value.SupportTicketTypeID, value);
       }
     }
-
-    if (name === "txtTicketCategory") {
+    
+    if(name === "txtTicketCategory") {
       setFormValuesTicketCreation({
         ...formValuesTicketCreation,
         txtTicketCategory: value,
@@ -1957,6 +1946,7 @@ function AddTicketLogics() {
       if (value) {
         getTicketCategoryOtherListData(value.SupportTicketTypeID, value);
       }
+
     }
 
     if (name === "txtTicketDescription") {
@@ -2005,6 +1995,7 @@ function AddTicketLogics() {
 
   // A const [runningCurrentYear, setRunningCurrentYear] = useState("");
   useEffect(() => {
+    debugger;
     const currentYear = new Date().getFullYear();
     // A setRunningCurrentYear(currentYear);
     const yearArray = [];
@@ -2024,12 +2015,13 @@ function AddTicketLogics() {
   const [selectedFarmer, setSelectedFarmer] = useState([]);
 
   const [formValuesMN, setFormValuesMN] = useState({
-    txtMobileNumber: null,
+    txtMobileNumber: "",
     txtStateValidateMobile: null,
     txtDistrictValidateMobile: null,
-    txtCallStatus: { ID: 1, Value: "Connected" },
+    txtCallStatus:  { ID: 1, Value: "Connected" },
     txtFarmerName: "",
     txtReason: null,
+    
   });
 
   const updateStateMN = (name, value) => {
@@ -2112,12 +2104,6 @@ function AddTicketLogics() {
     setFormValuesMN({
       ...formValuesMN,
       txtMobileNumber: "",
-      txtMobileNumber: "",
-      txtStateValidateMobile: null,
-      txtDistrictValidateMobile: null,
-      txtCallStatus: { ID: 1, Value: "Connected" },
-      txtFarmerName: "",
-      txtReason: null,
     });
     setFormValuesAN({
       ...formValuesMN,
@@ -2171,7 +2157,7 @@ function AddTicketLogics() {
       txtCropLossTime: "",
       txtTicketDescription: "",
       txtLossAt: null,
-      txtOtherSubCategory: null,
+      txtOtherSubCategory: "",
       txtCropStage: null,
       txtCropHarvestDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
       txtCropName: "",
@@ -2223,7 +2209,6 @@ function AddTicketLogics() {
     setBtnEnableSaveOnValidateMN(false);
     setfetchfarmersummary("");
     setstateYearAndSeason("YRSSNYES");
-    setTicketCategoryOtherList([]);
   };
 
   const OnClickSelectedValidateOption = (selectedOption) => {
@@ -2242,6 +2227,7 @@ function AddTicketLogics() {
   };
 
   const handleFarmersValidation = () => {
+    debugger;
     try {
       const errors = {};
       let formIsValid = true;
@@ -2342,7 +2328,7 @@ function AddTicketLogics() {
       txtMobileNumber: "",
       txtStateValidateMobile: null,
       txtDistrictValidateMobile: null,
-      txtCallStatus: { ID: 1, Value: "Connected" },
+      txtCallStatus:  { ID: 1, Value: "Connected" },
       txtFarmerName: "",
       txtReason: null,
     });
@@ -2393,9 +2379,10 @@ function AddTicketLogics() {
   };
 
   const fetchfarmersTicketSummary = () => {
+    debugger;
     getfarmersTicketSummaryData(fetchfarmersummary);
   };
-
+  
   const [fetchfarmersummary, setfetchfarmersummary] = useState("");
   const [valisRegistered, setvalisRegistered] = useState("");
   const [btnLoaderActive, setBtnLoaderActive] = useState(false);
@@ -2711,7 +2698,7 @@ function AddTicketLogics() {
   const onCellDoubleClicked = (event) => {
     setSelectedFarmer(event.data);
     console.log(event.data);
-
+    debugger;
     setFormValuesForFarmerInfo({
       ...formValuesForFarmerInfo,
       txtSeasonForFarmerInfo: {
@@ -2721,15 +2708,15 @@ function AddTicketLogics() {
       txtYearForFarmerInfo: { Value: formValuesForByLocation.txtYearForLocation.Value, Name: formValuesForByLocation.txtYearForLocation.Name },
       txtSchemeForFarmerInfo: event.data && event.data.scheme ? schemeList.find((x) => x.ShortName === event.data.scheme) : null,
     });
-    // A getfarmersTicketSummaryData(event.data.farmerID);
-    setfetchfarmersummary(event.data.farmerID);
-    toggleModal();
+   // A getfarmersTicketSummaryData(event.data.farmerID);
+   setfetchfarmersummary(event.data.farmerID);
+   toggleModal();
   };
 
   const updateStateForFarmerInfo = (name, value) => {
     setFormValuesForFarmerInfo({ ...formValuesForFarmerInfo, [name]: value });
     formValidationFarmersInfoError[name] = validateFarmersInfoField(name, value);
-
+    debugger;
     //  Aif (name === "txtYearForFarmerInfo") {
     //  A if (value) {
     //  A   if (value.Value < runningCurrentYear) {
@@ -2760,33 +2747,33 @@ function AddTicketLogics() {
 
     if (name === "txtYearForFarmerInfo") {
       if (value) {
-        setSelectedOption("1");
-        setSelectedOptionCropStage("1");
-        setTicketCategoryTypeList([]);
-        setTicketCategoryList([]);
-        setLossAtList([]);
-        setCropStageList([]);
-        getTicketCategoryTypeListData("1", 0, "TCKTYP");
-        setFormValuesTicketCreation({
-          ...formValuesTicketCreation,
-          txtTicketCategoryType: null,
-          txtTicketCategory: null,
-          txtCropLossDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
-          txtCropLossIntimation: "On-time",
-          txtCropLossTime: "",
-          txtTicketDescription: "",
-          txtLossAt: null,
-          txtOtherSubCategory: null,
-          txtCropStage: null,
-          txtCropHarvestDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
-          txtCropName: "",
-        });
-      }
+          setSelectedOption("1");
+          setSelectedOptionCropStage("1");
+          setTicketCategoryTypeList([]);
+          setTicketCategoryList([]);
+          setLossAtList([]);
+          setCropStageList([]);
+          getTicketCategoryTypeListData("1", 0, "TCKTYP");
+          setFormValuesTicketCreation({
+            ...formValuesTicketCreation,
+            txtTicketCategoryType: null,
+            txtTicketCategory: null,
+            txtCropLossDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
+            txtCropLossIntimation: "On-time",
+            txtCropLossTime: "",
+            txtTicketDescription: "",
+            txtLossAt: null,
+            txtOtherSubCategory: null,
+            txtCropStage: null,
+            txtCropHarvestDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
+            txtCropName: "",
+          });
+        }
     }
   };
   const onCellDoubleClickedDetails = (event) => {
     setSelectedOption("2");
-
+    debugger;
     setClaimOrGrievenceDisabled(false);
     setSelectedClaimOrGrievence("CI");
     setSelectedInsuranceDetails(event.data);
@@ -2808,18 +2795,18 @@ function AddTicketLogics() {
     setSelectedInsuranceDetails(event.data);
     if (event.data && event.data.scheme) {
       // A const scheme = event.data && event.data.scheme ? schemeList.find((x) => x.ShortName === event.data.scheme) : null;
-      // A if (scheme !== null) {
-      // A  if (formValuesForFarmerInfo.txtSchemeForFarmerInfo === null) {
-      // A    setFormValuesForFarmerInfo({
-      // A      ...formValuesForFarmerInfo,
-      // A      txtSchemeForFarmerInfo: scheme,
-      // A    });
-      // A  }
-      // A }
-      setFormValuesForFarmerInfo({
-        ...formValuesForFarmerInfo,
-        txtSchemeForFarmerInfo: { SchemeID: event.data.SchemeID, SchemeName: event.data.SchemeName },
-      });
+       // A if (scheme !== null) {
+       // A  if (formValuesForFarmerInfo.txtSchemeForFarmerInfo === null) {
+       // A    setFormValuesForFarmerInfo({
+       // A      ...formValuesForFarmerInfo,
+       // A      txtSchemeForFarmerInfo: scheme,
+       // A    });
+       // A  }
+       // A }
+       setFormValuesForFarmerInfo({
+         ...formValuesForFarmerInfo,
+       txtSchemeForFarmerInfo: {SchemeID: event.data.SchemeID, SchemeName : event.data.SchemeName },
+       });
     }
     setTicketCategoryTypeList([]);
     setTicketCategoryList([]);
@@ -2834,7 +2821,7 @@ function AddTicketLogics() {
       txtCropLossTime: "",
       txtTicketDescription: "",
       txtLossAt: null,
-      txtOtherSubCategory: null,
+      txtOtherSubCategory: "",
       txtCropStage: null,
       txtCropHarvestDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
       txtCropName: "",
@@ -2861,7 +2848,7 @@ function AddTicketLogics() {
       txtCropLossTime: "",
       txtTicketDescription: "",
       txtLossAt: null,
-      txtOtherSubCategory: null,
+      txtOtherSubCategory: "",
       txtCropStage: null,
       txtCropHarvestDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
       txtCropName: "",
@@ -2936,8 +2923,8 @@ function AddTicketLogics() {
         formValuesForFarmerInfo.txtSeasonForFarmerInfo.CropSeasonID === 1
           ? "01"
           : formValuesForFarmerInfo.txtSeasonForFarmerInfo.CropSeasonID === 2
-            ? "02"
-            : "";
+          ? "02"
+          : "";
 
       formData = {
         mobilenumber: "8956238456",
@@ -2963,7 +2950,7 @@ function AddTicketLogics() {
               });
             } else {
               aryayInsuranceCompany.push(result.response.responseData.data.result);
-
+              debugger;
               setInsuranceCompanyData(aryayInsuranceCompany[0]);
               toggleInsuranceCompanyModal();
             }
@@ -3000,6 +2987,7 @@ function AddTicketLogics() {
   const [isLoadingApplicationNoDatGreivence, setIsLoadingApplicationNodatGreivence] = useState(false);
 
   const getPolicyOfFarmerGreivenceOnClick = async () => {
+    debugger;
     if (!handleFarmersInfoValidation()) {
       return;
     }
@@ -3055,16 +3043,12 @@ function AddTicketLogics() {
                     resVillageID: v.resVillageID,
                     resSubDistrictID: v.resSubDistrictID,
                     policyPremium: parseFloat(v.policyPremium).toFixed(2),
+                    sumInsured: parseFloat(x.sumInsured).toFixed(2),
                     policyArea: v.policyArea,
                     policyType: v.policyType,
                     scheme: v.scheme,
-                    SchemeName:
-                      v.scheme === "WBCIS"
-                        ? "Weather Based Crop Insurance Scheme(WBCIS)"
-                        : v.scheme === "PMFBY"
-                          ? "Pradhan Mantri Fasal Bima Yojna(PMFBY)"
-                          : "",
-                    SchemeID: v.scheme === "WBCIS" ? 2 : v.scheme === "PMFBY" ? 4 : 0,
+                    SchemeName: v.scheme === "WBCIS" ? "Weather Based Crop Insurance Scheme(WBCIS)" :  v.scheme === "PMFBY" ? "Pradhan Mantri Fasal Bima Yojna(PMFBY)" : "",
+                    SchemeID: v.scheme === "WBCIS" ? 2 :  v.scheme === "PMFBY" ? 4 : 0, 
                     insuranceCompanyName: v.insuranceCompanyName,
                     policyID: x.policyID,
                     applicationStatus: x.applicationStatus,
@@ -3072,7 +3056,7 @@ function AddTicketLogics() {
                     applicationNo: x.applicationNo,
                     landSurveyNumber: x.landSurveyNumber,
                     landDivisionNumber: x.landDivisionNumber,
-                    plotStateName: x.plotStateName,
+                    plotStateName:x.plotStateName,
                     plotDistrictName: x.plotDistrictName,
                     plotVillageName: x.plotVillageName,
                     plotDistrictID: x.plotDistrictID,
@@ -3127,6 +3111,7 @@ function AddTicketLogics() {
   const [btnLoaderTicketHistoryActive, setBtnLoaderTicketHistoryActive] = useState(false);
   const [isLoadingTicketHistory, setIsLoadingTicketHistory] = useState(false);
   const getTicketHistoryOnClick = async (pTicketStatusID) => {
+    debugger;
     try {
       setBtnLoaderTicketHistoryActive(true);
       setIsLoadingTicketHistory(true);
@@ -3204,7 +3189,7 @@ function AddTicketLogics() {
   };
 
   // A const getTicketHistoryOnClick = async (pTicketStatusID) => {
-  // A
+  // A  debugger;
   // A  try {
   // A    setBtnLoaderTicketHistoryActive(true);
   // A    setIsLoadingTicketHistory(true);
@@ -3294,6 +3279,7 @@ function AddTicketLogics() {
   const [btnLoaderClaimStatusActive, setBtnLoaderClaimStatusActive] = useState(false);
   const [isLoadingClaimStatusData, setIsLoadingClaimStatusData] = useState(false);
   const getClaimStatusOnClick = async (pApplicationNo) => {
+    debugger;
     try {
       setBtnLoaderClaimStatusActive(true);
       setIsLoadingClaimStatusData(true);
@@ -3385,7 +3371,7 @@ function AddTicketLogics() {
   // A    txtTicketDescription: "",
   // A    txtLossAt: null,
   // A    txtLossAt: null,
-  // A    txtOtherSubCategory: null,
+  // A    txtOtherSubCategory: "",
   // A    txtCropStage: null,
   // A    txtCropHarvestDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
   // A  });
@@ -3447,7 +3433,7 @@ function AddTicketLogics() {
       txtCropLossTime: "",
       txtTicketDescription: "",
       txtLossAt: null,
-      txtOtherSubCategory: null,
+      txtOtherSubCategory: "",
       txtCropStage: null,
       txtCropHarvestDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
       txtCropName: "",
@@ -3460,7 +3446,6 @@ function AddTicketLogics() {
     setCropStageList([]);
     getTicketCategoryTypeListData("1", 0, "TCKTYP");
     setstateYearAndSeason("YRSSNYES");
-    setTicketCategoryOtherList([]);
   };
   const handleResetFile = async () => {
     fileRef.current.value = null;
@@ -3469,7 +3454,7 @@ function AddTicketLogics() {
 
   const [isBtndisabled, setisBtndisabled] = useState(0);
   const [btnLoaderSupportTicketActive, setBtnLoaderSupportTicketActive] = useState(false);
-  // A const supportTicketOnClick = async (updateFarmersTickets, updateFarmersTicketsStatusCount, showfunc) => {
+ // A const supportTicketOnClick = async (updateFarmersTickets, updateFarmersTicketsStatusCount, showfunc) => {
   const supportTicketOnClick = async (updateFarmersTickets, showfunc) => {
     debugger;
     try {
@@ -3670,6 +3655,8 @@ function AddTicketLogics() {
         iFSCCode: selectedInsuranceDetails ? selectedInsuranceDetails.ifscCode : "",
         farmerShare: selectedInsuranceDetails ? selectedInsuranceDetails.farmerShare : "",
         sowingDate: selectedInsuranceDetails ? selectedInsuranceDetails.sowingDate : "",
+        sumInsured : selectedInsuranceDetails ? selectedInsuranceDetails.sumInsured : "",
+        ticketCategoryDescriptionID : 1,
       };
       setisBtndisabled(1);
       setBtnLoaderSupportTicketActive(true);
@@ -3883,10 +3870,9 @@ function AddTicketLogics() {
       txtCropLossTime: "",
       txtTicketDescription: "",
       txtLossAt: null,
-      txtOtherSubCategory: null,
+      txtOtherSubCategory: "",
       txtCropStage: null,
       txtCropHarvestDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
-      txtCropName: "",
     });
     setStateCropLossIntimation("NA");
   };
@@ -3912,7 +3898,7 @@ function AddTicketLogics() {
       txtCropLossTime: "",
       txtTicketDescription: "",
       txtLossAt: null,
-      txtOtherSubCategory: null,
+      txtOtherSubCategory: "",
       txtCropStage: null,
       txtCropHarvestDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
     });
@@ -3923,6 +3909,7 @@ function AddTicketLogics() {
   const [customeWindowWidth, setCustomeWindowWidth] = useState("45.7vw");
   const [customeWindowHeight, setCustomeWindowHeight] = useState("60vh");
   const OnClickCustomeWindow = (ptype) => {
+    debugger;
     if (ptype === "S") {
       setopenCustomeWindow("B");
       setCustomeWindowWidth("92.5vw");
@@ -3935,7 +3922,7 @@ function AddTicketLogics() {
   };
 
   const [stateYearAndSeason, setstateYearAndSeason] = useState("YRSSNYES");
-  const ResetYrSsnSchmApplicationDataOnClick = () => {
+  const ResetYrSsnSchmApplicationDataOnClick  = () => {
     setFormValuesForFarmerInfo({
       ...formValuesForFarmerInfo,
       txtSeasonForFarmerInfo: null,
@@ -4078,8 +4065,9 @@ function AddTicketLogics() {
     isLoadinglevel6ByLocationDropdownDataList,
     formValuesCallerInformation,
     updateStateCallerInformation,
-    handleResetFile,
+    // A handleResetFile,
     fileRef,
+    stateCropLossIntimation,
     btnEnableSaveOnValidateMN,
     btnLoaderActiveValidateMN,
     SavevalidateFarmerOnClick,
@@ -4089,7 +4077,7 @@ function AddTicketLogics() {
     btnLoaderActiveTicketSummary,
     fetchfarmersummary,
     fetchfarmersTicketSummary,
-    //  A runningCurrentYear,
+   // A runningCurrentYear,
     stateYearAndSeason,
     ResetYrSsnSchmApplicationDataOnClick,
     ticketCategoryOtherList,

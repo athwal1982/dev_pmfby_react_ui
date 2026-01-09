@@ -6,6 +6,8 @@ const APIEndpoints = {
     FarmerTicketStatusUpdate: "FGMS/FarmerTicketStatusUpdate",
     AddKRPHGrievanceSupportTicketComment: "FGMS/AddKRPHGrievanceSupportTicketComment",
     GetKRPHGrievanceSupportTicketComment: "FGMS/GetKRPHGrievanceSupportTicketComment",
+    KrphGrievanceSupportTicketAuditUpdate: "FGMS/KrphGrievanceSupportTicketAuditUpdate",
+    KrphGrievanceSupportTicketSatisfiedUpdate: "FGMS/KrphGrievanceSupportTicketSatisfiedUpdate",
   },
 };
 

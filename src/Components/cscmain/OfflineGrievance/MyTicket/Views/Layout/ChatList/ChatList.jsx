@@ -1,18 +1,20 @@
 import { React, useState } from "react";
+import { Form } from "Framework/Components/Layout";
 import { AlertMessage } from "Framework/Components/Widgets/Notification/NotificationProvider";
 import { MdOutlineEmail } from "react-icons/md";
 import { FaShareAltSquare, FaPalette, FaEnvelopeOpenText, FaUpload } from "react-icons/fa";
 import { MdAttachFile, MdOutlineContentCopy } from "react-icons/md";
 import { BsBoxes } from "react-icons/bs";
 import { Loader, Button } from "Framework/Components/Widgets";
+import { InputControl, InputGroup } from "Framework/OldFramework/FormComponents/FormComponents";
 import classNames from "classnames";
 import { PropTypes } from "prop-types";
 import { daysdifference, dateFormatDefault, dateToSpecificFormat, Convert24FourHourAndMinute } from "Configration/Utilities/dateformat";
 import parse from "html-react-parser";
-import { getSessionStorage } from "Components/Common/Login/Auth/auth";
+import { getSessionStorage, getUserRightCodeAccess } from "Components/Common/Login/Auth/auth";
 import { getKRPHGrievenceTicketHistoryAttachmentData } from "../../../../Services/Methods";
 import BizClass from "./ChatList.module.scss";
-import { Accordion, AccordionSummary, AccordionDetails, Typography, Grid, Paper } from "@mui/material";
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Grid, Paper, FormControl } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FileViewer from "./FileViewer/FileViewer";
 import FileUploadTicketHistory from "./FileUploadTicketHistory";
@@ -41,12 +43,20 @@ function ChatList({
   showMoreChatListOnClick,
   apiDataAttachment,
   setapiDataAttachment,
+  updateStateSatifation,
+  formValuesSatifation,
+  formValidationSatisfyError,
+  IsSatisfyList,
+  btnLoaderActiveSatisfaction,
+  handleSatisfaction,
+  btnLoaderActiveAudit,
+  handleAudit,
   expanded,
   handleChange,
 }) {
   const setAlertMessage = AlertMessage();
   const user = getSessionStorage("user");
-
+   const auditTicketRight = getUserRightCodeAccess("adtg");
   const [isFileViewerModalOpen, setIsFileViewerModalOpen] = useState(false);
 
   const toggleFileViewerModal = (papiFor, pGrievenceTicketHistoryID) => {
@@ -333,7 +343,9 @@ function ChatList({
                       >
                         <Grid container spacing={4} alignItems="center">
                           <Grid item xs={12} md={12}>
-                            <Typography variant="subtitle2" fontWeight="bold">
+                                               <Grid container justifyContent="space-between" alignItems="center">
+                       <Grid item>
+                       <Typography variant="subtitle2" fontWeight="bold">
                               Description :{" "}
                               <span>
                                 <MdOutlineContentCopy
@@ -356,9 +368,137 @@ function ChatList({
                                 style={{ color: "#000000", fontSize: "18px", cursor: "pointer" }}
                               />
                             </Typography>
+                       </Grid>
+                        {/* Audit Button */}
+                                                      {auditTicketRight === true &&
+                                                      i + 1 === chatListDetails.length &&
+                                                      selectedData &&
+                                                      selectedData.TicketStatusID === 109303 &&
+                                                      data &&
+                                                      data.TicketStatusID === 109303 &&
+                                                      data &&
+                                                      data.isAudit === 0 ? (
+                                                        <Grid item>
+                                                          <button
+                                                            style={{
+                                                              backgroundColor: "#85929e",
+                                                              color: "#ffffff",
+                                                              border: "1px solid #85929e",
+                                                              borderRadius: "10px",
+                                                              padding: "5px 15px",
+                                                              fontSize: "14px",
+                                                              fontWeight: "400",
+                                                            }}
+                                                            trigger={btnLoaderActiveAudit && "true"}
+                                                            onClick={() => handleAudit(data)}
+                                                          >
+                                                            Audit
+                                                          </button>
+                                                        </Grid>
+                                                      ) : null}
+                                                      {data && data.isAudit === 1 && data.TicketStatusID === 109303 ? (
+                                                        <Grid item>
+                                                          <button
+                                                            style={{
+                                                              backgroundColor: "#55d464ff",
+                                                              color: "#ffffff",
+                                                              border: "1px solid #1ce447ff",
+                                                              borderRadius: "10px",
+                                                              padding: "5px 15px",
+                                                              fontSize: "14px",
+                                                              fontWeight: "400",
+                                                            }}
+                                                          >
+                                                            Audited
+                                                          </button>
+                                                        </Grid>
+                                                      ) : null}
+                            
+                       </Grid>
                             <Typography variant="body2" color="text.secondary">
                               {data && data.TicketDescription ? parse(data.TicketDescription) : null}
                             </Typography>
+                         {/* Dropdown aligned right */}
+                            <Grid container justifyContent="flex-end">
+                              <Grid item>
+                                <FormControl size="small" sx={{ maxWidth: 340 }}>
+                                  {auditTicketRight === true && data && data.isAudit === 1 && data && data.isSatisfied === null ? (
+                                    <Form>
+                                      <Form.Group column="2" controlwidth="300px">
+                                        <Form.InputGroup label="Is Satisfied" column={2} errorMsg={formValidationSatisfyError["txtIsSatisfy"]}>
+                                          <Form.InputControl
+                                            control="select"
+                                            name="txtIsSatisfy"
+                                            onChange={(e) => updateStateSatifation("txtIsSatisfy", e)}
+                                            value={formValuesSatifation.txtIsSatisfy}
+                                            options={IsSatisfyList}
+                                            getOptionLabel={(option) => `${option.label}`}
+                                            getOptionValue={(option) => `${option}`}
+                                          />
+                                        </Form.InputGroup>
+                                        <Form.InputGroup column={1}>
+                                          <Button
+                                            type="button"
+                                            varient="primary"
+                                            trigger={btnLoaderActiveSatisfaction && "true"}
+                                            onClick={() => handleSatisfaction(data)}
+                                          >
+                                            Submit
+                                          </Button>
+                                        </Form.InputGroup>
+                                      </Form.Group>
+                                    </Form>
+                                  ) : null}
+                                  {data && data.isSatisfied === 1 && data.TicketStatusID === 109303 ? (
+                                    <strong>Satisfactory Response</strong>
+                                  ) : data && data.isSatisfied === 0 && data.TicketStatusID === 109303 ? (
+                                    <strong>Unsatisfactory Response</strong>
+                                  ) : (
+                                    ""
+                                  )}
+                                </FormControl>
+                              </Grid>
+                            </Grid>
+                            {formValuesSatifation &&
+                            formValuesSatifation.txtIsSatisfy &&
+                            formValuesSatifation.txtIsSatisfy.value === 0 &&
+                            data.isSatisfied === null ? (
+                              <>
+                                <Typography variant="subtitle2" fontWeight="bold">
+                                  Reason :{" "}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                  <InputGroup Row="5" ErrorMsg={formValidationSatisfyError["txtunUnstatisfactoryReason"]}>
+                                    <InputControl
+                                      Input_type="textarea"
+                                      name="txtunUnstatisfactoryReason"
+                                      value={formValuesSatifation.txtunUnstatisfactoryReason}
+                                      maxLength="500"
+                                      rows="5"
+                                      onChange={(e) => updateStateSatifation("txtunUnstatisfactoryReason", e.target.value)}
+                                    />
+                                  </InputGroup>
+                                  <p className={BizClass.CounterDescKRPH}>
+                                    {formValuesSatifation.txtunUnstatisfactoryReason && formValuesSatifation.txtunUnstatisfactoryReason.length
+                                      ? formValuesSatifation.txtunUnstatisfactoryReason.length
+                                      : 0}{" "}
+                                    / {500}
+                                  </p>
+                                </Typography>{" "}
+                              </>
+                            ) : null}
+                            {data && data.isSatisfied === 0 && data.AuditRemarks !== "" && data.TicketStatusID === 109303 ? (
+                              <>
+                                <Typography variant="subtitle2" fontWeight="bold">
+                                  Reason :{" "}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                  {data && data.AuditRemarks ? data.AuditRemarks : null}
+                                </Typography>{" "}
+                              </>
+                            ) : (
+                              ""
+                            )}
                           </Grid>
                         </Grid>
                       </Paper>
