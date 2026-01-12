@@ -641,7 +641,7 @@ const TicketItem = ({
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
                     sx={{
-                      backgroundColor: "#4a90e2",
+                      backgroundColor: "#55d464ff",
                       color: "white",
                       fontWeight: "bold",
                       minHeight: 35,
@@ -725,7 +725,7 @@ const TicketItem = ({
                           <AccordionSummary
                             expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
                             sx={{
-                              backgroundColor: "#4a90e2",
+                              backgroundColor: "#55d464ff",
                               color: "white",
                               fontWeight: "bold",
                               minHeight: 35,
