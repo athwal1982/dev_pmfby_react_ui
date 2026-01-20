@@ -820,6 +820,7 @@ function KrphAllActivitiesNDN() {
     // A setSelectedClaimOrGrievence("GR");
     // A setClaimOrGrievenceDisabled(true);
     setSelectedInsuranceDetails(event.data);
+    setmultipleApplication(event.data);
     if (event.data && event.data.scheme) {
       setFormValuesForFarmerInfo({
         ...formValuesForFarmerInfo,
@@ -850,6 +851,35 @@ function KrphAllActivitiesNDN() {
     }
     toggleInsuranceCompanyModalGreivence();
     handleStepClick(3);
+  };
+
+  const [gridReadySupportTicketGreivence, setGridReadySupportTicketGreivence] = useState();
+  const onGridReadySupportTicketGreivence = (params) => {
+    console.log(params.api);
+    setGridReadySupportTicketGreivence(params.api);
+  };
+
+  const getSelectedRowDataMultipleApplication = () => {
+    const selectedNodes = gridReadySupportTicketGreivence.getSelectedNodes();
+    return selectedNodes.map((node) => node.data);
+  };
+
+  const [multipleApplication, setmultipleApplication] = useState([]);
+  const handleSubmitMultipleApplication = () => {
+  debugger;
+    const fetchMultipleApplication = getSelectedRowDataMultipleApplication();
+
+      if (fetchMultipleApplication.length === 0) {
+        setAlertMessage({
+          type: "error",
+          message: "Please select at least one application.",
+        });
+        return;
+      }
+      setmultipleApplication(fetchMultipleApplication);
+      toggleInsuranceCompanyModalGreivence();
+      handleStepClick(3);
+
   };
 
   const [openCustomeWindow, setopenCustomeWindow] = useState("S");
@@ -5576,11 +5606,12 @@ function KrphAllActivitiesNDN() {
                   {openInsuranceCompanyModalGreivence && (
                     <InsuranceCompanyModalGreivence
                       toggleInsuranceCompanyModalGreivence={toggleInsuranceCompanyModalGreivence}
-                      // A onGridReadySupportTicketGreivence={onGridReadySupportTicketGreivence}
+                      onGridReadySupportTicketGreivence={onGridReadySupportTicketGreivence}
                       onCellDoubleClickedDetailsGreivence={onCellDoubleClickedDetailsGreivence}
                       insuranceCompanyDataGreivence={insuranceCompanyDataGreivence}
                       isLoadingApplicationNoDataGreivence={isLoadingApplicationNoDataGreivence}
                       getClaimStatusOnClick={getClaimStatusOnClick}
+                      handleSubmitMultipleApplication={handleSubmitMultipleApplication}
                     />
                   )}
                   {openTicketHistoryModal && (
@@ -7736,10 +7767,11 @@ const actionTemplateGreivence = (props) => {
 function InsuranceCompanyModalGreivence({
   toggleInsuranceCompanyModalGreivence,
   onCellDoubleClickedDetailsGreivence,
-  // A onGridReadySupportTicketGreivence,
+  onGridReadySupportTicketGreivence,
   insuranceCompanyDataGreivence,
   isLoadingApplicationNoDataGreivence,
   getClaimStatusOnClick,
+  handleSubmitMultipleApplication,
 }) {
   const toggleClaimStatusModal = (data) => {
     getClaimStatusOnClick(data.applicationNo);
@@ -7756,7 +7788,7 @@ function InsuranceCompanyModalGreivence({
             loader={isLoadingApplicationNoDataGreivence ? <Loader /> : null}
             rowSelection="single"
             suppressRowClickSelection="true"
-            // A onGridReady={onGridReadySupportTicketGreivence}
+            onGridReady={onGridReadySupportTicketGreivence}
             onCellDoubleClicked={(event) => onCellDoubleClickedDetailsGreivence(event)}
             components={{
               actionTemplate: actionTemplateGreivence,
@@ -7765,6 +7797,15 @@ function InsuranceCompanyModalGreivence({
             tooltipMouseTrack={true}
             tooltipInteraction={true}
           >
+            <DataGrid.Column
+                          headerName=""
+                          lockPosition="1"
+                          pinned="left"
+                          width={50}
+                          headerCheckboxSelection
+                          headerCheckboxSelectionFilteredOnly
+                          checkboxSelection
+                        />
             <DataGrid.Column
               headerName="Claim Status"
               lockPosition="1"
@@ -7886,7 +7927,15 @@ function InsuranceCompanyModalGreivence({
           </DataGrid>
         </div>
       </Modal.Body>
-      <Modal.Footer />
+      <Modal.Footer>
+         <KrphButton
+                  type="button"
+                  varient="secondary"
+                  onClick={() => handleSubmitMultipleApplication()}
+                >
+                  Submit
+                </KrphButton>
+      </Modal.Footer>
     </Modal>
   );
 }
