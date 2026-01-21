@@ -26,7 +26,8 @@ function TrainingReportLogic() {
     { name: "December", value: 12 },
   ];
 
-  const years = [2025, 2024, 2023, 2022];
+  // A const years = [2025, 2024, 2023, 2022];
+   const [years, setyears] = useState([]);
 
   const onGridReady = (params) => {
     setGridApi(params.api);
@@ -56,6 +57,13 @@ function TrainingReportLogic() {
 
   useEffect(() => {
     debugger;
+    const currentYear = new Date().getFullYear();
+    // A setRunningCurrentYear(currentYear);
+    const yearArray = [];
+    for (let i = 2022; i <= currentYear; i += 1) {
+      yearArray.push({ Name: i.toString(), Value: i.toString() });
+    }
+    setyears(yearArray.sort().reverse());
     fetchAllTrainer();
   }, []);
 

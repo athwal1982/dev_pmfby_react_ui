@@ -820,7 +820,8 @@ function KrphAllActivitiesNDN() {
     // A setSelectedClaimOrGrievence("GR");
     // A setClaimOrGrievenceDisabled(true);
     setSelectedInsuranceDetails(event.data);
-    setmultipleApplication(event.data);
+    const arrmultipleApplication = [event.data];
+    setmultipleApplication(arrmultipleApplication);
     if (event.data && event.data.scheme) {
       setFormValuesForFarmerInfo({
         ...formValuesForFarmerInfo,
@@ -857,6 +858,15 @@ function KrphAllActivitiesNDN() {
   const onGridReadySupportTicketGreivence = (params) => {
     console.log(params.api);
     setGridReadySupportTicketGreivence(params.api);
+    params.api.forEachNode((node) => {
+    const isMatched = multipleApplication?.some(
+      (item) => item.applicationNo === node.data.applicationNo
+    );
+
+    if (isMatched) {
+      node.setSelected(true);
+    }
+  });
   };
 
   const getSelectedRowDataMultipleApplication = () => {
@@ -876,10 +886,21 @@ function KrphAllActivitiesNDN() {
         });
         return;
       }
-      setmultipleApplication(fetchMultipleApplication);
-      toggleInsuranceCompanyModalGreivence();
-      handleStepClick(3);
+      if (fetchMultipleApplication.length === 1) {
+      setSelectedInsuranceDetails(fetchMultipleApplication[0]);
+      setFormValuesForFarmerInfo({
+        ...formValuesForFarmerInfo,
+        txtSchemeForFarmerInfo: { SchemeID: fetchMultipleApplication[0].SchemeID, SchemeName: fetchMultipleApplication[0].SchemeName },
+      });
+     }
+     setmultipleApplication(fetchMultipleApplication);
+     toggleInsuranceCompanyModalGreivence();
+     handleStepClick(3);
 
+  };
+
+  const OnClickBtnChange = () => {
+   toggleInsuranceCompanyModalGreivence(true);
   };
 
   const [openCustomeWindow, setopenCustomeWindow] = useState("S");
@@ -2748,6 +2769,7 @@ function KrphAllActivitiesNDN() {
     setfetchfarmersummary("");
     setFarmersTicketSummaryData([]);
     setstateYearAndSeason("YRSSNYES");
+    setmultipleApplication([]);
   };
 
   const [formValidationFarmersInfoError, setFormValidationFarmersInfoError] = useState({});
@@ -5612,6 +5634,7 @@ function KrphAllActivitiesNDN() {
                       isLoadingApplicationNoDataGreivence={isLoadingApplicationNoDataGreivence}
                       getClaimStatusOnClick={getClaimStatusOnClick}
                       handleSubmitMultipleApplication={handleSubmitMultipleApplication}
+                      multipleApplication={multipleApplication}
                     />
                   )}
                   {openTicketHistoryModal && (
@@ -6504,6 +6527,7 @@ function KrphAllActivitiesNDN() {
                                 <span className="login_ErrorTxt">{formValidationFarmersInfoError["txtSeasonForFarmerInfo"]}</span>
                               </div>
                               <div style={{ display: "flex", flexDirection: "column" }}>
+                                {multipleApplication?.length <= 1 ? <>
                                 <label
                                   style={{
                                     display: "block",
@@ -6528,7 +6552,7 @@ function KrphAllActivitiesNDN() {
                                     onChange={(e) => updateStateForFarmerInfo("txtSchemeForFarmerInfo", e)}
                                     isDisabled={true}
                                   />
-                                </InputGroup>
+                                </InputGroup> </> : null}
                                 <span className="login_ErrorTxt">{formValidationFarmersInfoError["txtYearForFarmerInfo"]}</span>
                               </div>
 
@@ -6562,11 +6586,34 @@ function KrphAllActivitiesNDN() {
                                 borderRadius: "10px",
                               }}
                             >
-                              <Typography sx={{ fontFamily: "Quicksand, sans-serif", fontSize: "16px" }} fontWeight="bold">
-                                INSURANCE COMPANY INFORMATION
+                              <Typography sx={{ fontFamily: "Quicksand, sans-serif", fontSize: "16px",paddingBottom:"4px" }} fontWeight="bold">
+                               <>
+  {multipleApplication?.length <= 1
+    ? "INSURANCE COMPANY INFORMATION"
+    : "INSURANCE COMPANIES INFORMATION"}
+  &nbsp;
+  {multipleApplication?.length > 1 && (
+<Button
+  variant="outlined"
+  size="small"
+  sx={{
+    color: "#ffffff",
+    borderColor: "#ff9500",
+    backgroundColor: "#ff9500",
+    fontWeight: 600,
+    textTransform: "none",
+    "&:hover": {
+      backgroundColor: "#ff9500",
+    },
+  }}
+  onClick={OnClickBtnChange}
+>
+  Change
+</Button>
+  )}
+</>
                               </Typography>
-
-                              <Box
+                            {multipleApplication?.length <= 1 ? <><Box
                                 sx={{
                                   display: "flex",
                                   alignItems: "flex-start",
@@ -6704,7 +6751,55 @@ function KrphAllActivitiesNDN() {
                                       ? selectedInsuranceDetails.cropName
                                       : "..............................."}
                                 </Typography>
-                              </Box>
+                              </Box> </> :
+                              <div className="table-wrapper-multiple-application">
+                                <table className="table_bordered table_Height_module_wise_training">
+                                        <thead>
+                                          <tr>
+                                            <th>Insurance Company</th>
+                                            <th>Application Number</th>
+                                            <th>Scheme</th>
+                                            <th>Farmer Premium</th>
+                                            <th>Area In Hectare</th>
+                                            <th>Village</th>
+                                            <th>Crop Name</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          {multipleApplication.map((v, i) => (
+                                            <tr>
+                                              <td><img
+                                  src={getInsuranceLogo(v.insuranceCompanyName)}
+                                  alt={v.insuranceCompanyName ? v.insuranceCompanyName : ""}
+                                  style={{
+                                    maxWidth: "100px",
+                                    maxHeight: "35px",
+                                    display: "block",
+                                  }} 
+                                />{v.insuranceCompanyName}</td>
+                                              <td>
+                                               {v.applicationNo}
+                                              </td>
+                                               <td>
+                                               {v.SchemeName}
+                                              </td>
+                                               <td>
+                                               {v.policyPremium}
+                                              </td>
+                                               <td>
+                                               {v.policyArea}
+                                              </td>
+                                               <td>
+                                               {v.plotVillageName}
+                                              </td>
+                                               <td>
+                                               {v.cropName}
+                                              </td>
+                                            </tr>
+                                          ))}
+                                        </tbody>
+                                      </table></div> }
+                              
                             </Box>{" "}
                           </>
                         ) : (
@@ -7640,14 +7735,19 @@ function KrphAllActivitiesNDN() {
                   <div className="success_container_img_agent">
                     <img src={successtick} className="success-icon_agent" alt="Success" />
                     <div className="success-ticket-info_agent">
+                      {multipleApplication?.length === 1 ? <>
                       <p className="success-ticket-number_agent">{getSupportTicketNo}</p>
-                      <p className="success-ticket-text_agent">Ticket Created Successfully</p>
+                      <p className="success-ticket-text_agent">Ticket Created Successfully</p></> :  <p className="success-ticket-text_agent">Tickets Created Successfully</p> }
                     </div>
                   </div>
+                  {multipleApplication?.length === 1 ? <>
                   <p className="success-message_agent">
                     Congratulations! A ticket with a reference number above has been generated. Click the "Create More" button if you wish to create more
                     tickets, or else please close the tab, you can ask for the farmer’s feedback.
-                  </p>
+                  </p> </> : <p className="success-message_agent">
+                    Congratulations! tickets have been generated. Click the "Create More" button if you wish to create more
+                    tickets, or else please close the tab, you can ask for the farmer’s feedback.
+                  </p> }
                   <div className="success-button-group_agent">
                     <button onClick={CreateMoreBtnOnClick} className="success-create-more_agent">
                       Create More
@@ -7772,10 +7872,13 @@ function InsuranceCompanyModalGreivence({
   isLoadingApplicationNoDataGreivence,
   getClaimStatusOnClick,
   handleSubmitMultipleApplication,
+  multipleApplication,
 }) {
   const toggleClaimStatusModal = (data) => {
     getClaimStatusOnClick(data.applicationNo);
   };
+
+  
   return (
     <Modal title="Grievance" varient="bottom" width="99vw" show={toggleInsuranceCompanyModalGreivence} right={0} height="60vh">
       <Modal.Body>
@@ -7786,7 +7889,7 @@ function InsuranceCompanyModalGreivence({
           <DataGrid
             rowData={insuranceCompanyDataGreivence}
             loader={isLoadingApplicationNoDataGreivence ? <Loader /> : null}
-            rowSelection="single"
+            rowSelection="multiple"
             suppressRowClickSelection="true"
             onGridReady={onGridReadySupportTicketGreivence}
             onCellDoubleClicked={(event) => onCellDoubleClickedDetailsGreivence(event)}
@@ -7802,9 +7905,7 @@ function InsuranceCompanyModalGreivence({
                           lockPosition="1"
                           pinned="left"
                           width={50}
-                          headerCheckboxSelection
-                          headerCheckboxSelectionFilteredOnly
-                          checkboxSelection
+                          checkboxSelection={true}
                         />
             <DataGrid.Column
               headerName="Claim Status"

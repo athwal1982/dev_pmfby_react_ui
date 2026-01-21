@@ -372,3 +372,9 @@
 .togg-button_agent.active {
   color: white;
 }
+
+.table-wrapper-multiple-application {
+  height: 40vh;     
+  overflow-y: auto; 
+  width: 100%;
+}
