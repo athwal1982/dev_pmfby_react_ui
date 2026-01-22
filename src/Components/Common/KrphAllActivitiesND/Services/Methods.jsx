@@ -337,6 +337,27 @@ export const addKRPHSupportTicketdata = async (formData) => {
   }
 };
 
+export const addTempKRPHSupportTicketdata = async (formData) => {
+  try {
+    const requestData = {
+      main: {
+        ...formData,
+      },
+    };
+    const result = await ApiCalling(requestData, APIEndpoints.KrphAllActivities.AddTempKRPHSupportTicket);
+    if (result.responseCode === 1) {
+      if (result.responseData && result.responseData.length > 0) {
+        return { response: result };
+      }
+      return { response: result };
+    }
+    return { response: result };
+  } catch (error) {
+    console.log(error);
+    return { response: { responseCode: 0, responseData: null, responseMessage: error } };
+  }
+};
+
 export const krphFarmerCallingHistorydata = async (formData) => {
   try {
     const requestData = {

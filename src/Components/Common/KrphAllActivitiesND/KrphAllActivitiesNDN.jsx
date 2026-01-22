@@ -69,6 +69,7 @@ import {
   farmerTicketSummaryKRPH,
   addKRPHFarmerSupportTicketData,
   addKrphfarmerCallingHistorydata,
+  addTempKRPHSupportTicketdata,
 } from "./Services/Methods";
 import { getUserRightData } from "../../Modules/Setup/MenuManagement/Services/Methods";
 import MyTicketPage from "./MyTicket/index";
@@ -894,6 +895,10 @@ function KrphAllActivitiesNDN() {
       });
      }
      setmultipleApplication(fetchMultipleApplication);
+     setstateYearAndSeason("YRSSNNO");
+     if (stateCategoryLoad === false) {
+      getTicketCategoryTypeListData("1", 0, "TCKTYP");
+     }
      toggleInsuranceCompanyModalGreivence();
      handleStepClick(3);
 
@@ -3203,7 +3208,10 @@ function KrphAllActivitiesNDN() {
       let formIsValid = true;
 
       // A errors["txtDocumentUpload"] = validateFieldSupportTicket("txtDocumentUpload", formValuesTicketCreation.txtDocumentUpload);
-      errors["txtSchemeForFarmerInfo"] = validateFieldSupportTicket("txtSchemeForFarmerInfo", formValuesForFarmerInfo.txtSchemeForFarmerInfo);
+      if(multipleApplication?.length === 1) {
+           errors["txtSchemeForFarmerInfo"] = validateFieldSupportTicket("txtSchemeForFarmerInfo", formValuesForFarmerInfo.txtSchemeForFarmerInfo);
+      }
+      
       errors["txtTicketCategoryType"] = validateFieldSupportTicket("txtTicketCategoryType", formValuesTicketCreation.txtTicketCategoryType);
       errors["txtTicketCategory"] = validateFieldSupportTicket("txtTicketCategory", formValuesTicketCreation.txtTicketCategory);
 
@@ -3353,6 +3361,7 @@ function KrphAllActivitiesNDN() {
   const [isBtndisabled, setisBtndisabled] = useState(0);
   const [btnLoaderSupportTicketActive, setBtnLoaderSupportTicketActive] = useState(false);
   const supportTicketOnClick = async () => {
+    debugger;
     try {
       if (selectedValidateOption !== "6" && selectedValidateOption !== "7") {
         if (selectedFarmer.length === 0 && selectedFarmer.length !== undefined) {
@@ -3363,8 +3372,8 @@ function KrphAllActivitiesNDN() {
 
           return;
         }
-
-        if (selectedInsuranceDetails.length === 0 && selectedInsuranceDetails.length !== undefined) {
+         if(multipleApplication?.length === 1) { 
+           if (selectedInsuranceDetails.length === 0 && selectedInsuranceDetails.length !== undefined) {
           setAlertMessage({
             type: "warning",
             message: "Insurance Company is required!",
@@ -3372,10 +3381,18 @@ function KrphAllActivitiesNDN() {
 
           return;
         }
+         }
+        
         if (!handleValidationSupportTicket()) {
           return;
         }
-        CreateTicketBAuthOptions();
+        if(multipleApplication?.length === 1) {
+          CreateTicketBAuthOptions();
+        } else {
+            CreateTicketBAuthOptionsForMultipleApplication();
+        }
+        
+        
       } else if (selectedValidateOption === "6") {
         if (!handleFarmersValidationForNonRegFarmerOrOffline()) {
           return;
@@ -3661,6 +3678,224 @@ function KrphAllActivitiesNDN() {
             ptemplateID = "I";
           }
           SendSMSToFarmerAgaintSupportTicket(ptemplateID, pMobileNo, pSupportTicketNo);
+        }
+      } else {
+        setAlertMessage({
+          type: "error",
+          message: result.response.responseMessage,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      setAlertMessage({
+        type: "error",
+        message: error,
+      });
+    }
+  };
+
+  const CreateTicketBAuthOptionsForMultipleApplication = async () => {
+    debugger;
+    try {
+
+      if(selectedOption !== "4") {
+        setAlertMessage({
+          type: "warning",
+          message: "Multiple tickets with multiple applications are allowed only for Crop Loss Intimation.",
+        });
+        return;
+      }
+      
+      const user = getSessionStorage("user");
+      const pcreationMode =
+        selectedValidateOption === "1"
+          ? "MOB"
+          : selectedValidateOption === "2"
+            ? "AAD"
+            : selectedValidateOption === "3"
+              ? "BNK"
+              : selectedValidateOption === "4"
+                ? "POL"
+                : selectedValidateOption === "5"
+                  ? "LOC"
+                  : "";
+      let pselectedOptionCropStage = "";
+      if (selectedOption === "4") {
+        pselectedOptionCropStage = selectedOptionCropStage === "1" ? "Standing Crop Stage" : selectedOptionCropStage === "2" ? "Harvested Stage" : "";
+      }
+
+      let multipleticketsformData = [];
+
+      multipleApplication.forEach((v) => {
+        multipleticketsformData.push({
+        creationMode: pcreationMode,
+        subCategoryName:
+          formValuesTicketCreation.txtOtherSubCategory && formValuesTicketCreation.txtOtherSubCategory.OtherCategoryName
+            ? formValuesTicketCreation.txtOtherSubCategory.OtherCategoryName
+            : "",
+        callerContactNumber: formValuesGI.txtMobileCallerNumber ? formValuesGI.txtMobileCallerNumber : "",
+        supportTicketID: 0,
+        ticketRequestorID: selectedFarmer ? selectedFarmer.farmerID : "",
+        stateCodeAlpha: selectedFarmer && selectedFarmer.stateID ? selectedFarmer.stateID : selectedFarmer.resStateID ? selectedFarmer.resStateID : "",
+        districtRequestorID:
+          selectedFarmer && selectedFarmer.districtID ? selectedFarmer.districtID : selectedFarmer.resDistrictID ? selectedFarmer.resDistrictID : "",
+        villageRequestorID:
+          selectedFarmer && selectedFarmer.villageID ? selectedFarmer.villageID : selectedFarmer.resVillageID ? selectedFarmer.resVillageID : "",
+        supportTicketNo: "0",
+        requestorName: selectedFarmer ? selectedFarmer.farmerName : "",
+        requestorMobileNo: selectedFarmer && selectedFarmer.mobile ? selectedFarmer.mobile : "",
+        requestorAccountNo: selectedFarmer && selectedFarmer.accountNumber ? selectedFarmer.accountNumber : "",
+        requestorAadharNo: selectedFarmer && selectedFarmer.aadharNumber ? selectedFarmer.aadharNumber : "",
+        ticketCategoryID:
+          formValuesTicketCreation.txtTicketCategoryType && formValuesTicketCreation.txtTicketCategoryType.SupportTicketTypeID
+            ? formValuesTicketCreation.txtTicketCategoryType.SupportTicketTypeID
+            : 0,
+        // A cropCategoryOthers: formValuesTicketCreation.txtOtherSubCategory ? formValuesTicketCreation.txtOtherSubCategory : "",
+        cropCategoryOthers:
+          formValuesTicketCreation.txtOtherSubCategory && formValuesTicketCreation.txtOtherSubCategory.OtherCategoryName
+            ? formValuesTicketCreation.txtOtherSubCategory.OtherCategoryName
+            : "",
+        cropStageMasterID:
+          formValuesTicketCreation.txtCropStage && formValuesTicketCreation.txtCropStage.CropStageMasterID
+            ? formValuesTicketCreation.txtCropStage.CropStageMasterID
+            : 0,
+        cropStageMaster:
+          formValuesTicketCreation.txtCropStage && formValuesTicketCreation.txtCropStage.CropStageMaster
+            ? formValuesTicketCreation.txtCropStage.CropStageMaster
+            : "",
+        cropLossDetailID:
+          formValuesTicketCreation.txtLossAt && formValuesTicketCreation.txtLossAt.CropLossDetailID ? formValuesTicketCreation.txtLossAt.CropLossDetailID : 0,
+        cropStage: pselectedOptionCropStage,
+        ticketHeaderID: selectedOption,
+        requestYear:
+          formValuesForFarmerInfo.txtYearForFarmerInfo && formValuesForFarmerInfo.txtYearForFarmerInfo.Value
+            ? formValuesForFarmerInfo.txtYearForFarmerInfo.Value
+            : 0,
+        requestSeason:
+          formValuesForFarmerInfo.txtSeasonForFarmerInfo && formValuesForFarmerInfo.txtSeasonForFarmerInfo.CropSeasonID
+            ? formValuesForFarmerInfo.txtSeasonForFarmerInfo.CropSeasonID
+            : 0,
+
+        ticketDescription: formValuesTicketCreation.txtTicketDescription,
+        lossDate: selectedOption !== "4" ? null : formValuesTicketCreation.txtCropLossDate ? dateToCompanyFormat(formValuesTicketCreation.txtCropLossDate) : "",
+        lossTime: selectedOption !== "4" ? null : formValuesTicketCreation.txtCropLossTime ? formValuesTicketCreation.txtCropLossTime : "",
+        postHarvestDate:
+          selectedOption !== "4" || selectedOptionCropStage !== "2"
+            ? null
+            : formValuesTicketCreation.txtCropHarvestDate
+              ? dateToCompanyFormat(formValuesTicketCreation.txtCropHarvestDate)
+              : "",
+        ticketSourceID: 6,
+        ticketSourceName: "CSC",
+        ticketStatusID: 109301,
+        ticketStatus: "Open",
+        applicationNo:  v.applicationNo ? v.applicationNo : "",
+        insuranceCompanyID: 0,
+        insuranceCompany: v.insuranceCompanyName ? v.insuranceCompanyName : "",
+        insuranceCompanyCode: 0,
+        cropSeasonName:
+          formValuesForFarmerInfo.txtSeasonForFarmerInfo && formValuesForFarmerInfo.txtSeasonForFarmerInfo.CropSeasonName
+            ? formValuesForFarmerInfo.txtSeasonForFarmerInfo.CropSeasonName
+            : "",
+        ticketCategoryName:
+          formValuesTicketCreation.txtTicketCategoryType && formValuesTicketCreation.txtTicketCategoryType.SupportTicketTypeName
+            ? formValuesTicketCreation.txtTicketCategoryType.SupportTicketTypeName
+            : "",
+        ticketSubCategoryID:
+          formValuesTicketCreation.txtTicketCategory && formValuesTicketCreation.txtTicketCategory.TicketCategoryID
+            ? formValuesTicketCreation.txtTicketCategory.TicketCategoryID
+            : 0,
+        ticketSubCategoryName:
+          formValuesTicketCreation.txtTicketCategory && formValuesTicketCreation.txtTicketCategory.TicketCategoryName
+            ? formValuesTicketCreation.txtTicketCategory.TicketCategoryName
+            : "",
+        ticketHeadName: "Crop Loss Intimation",
+        nyayPanchayatID:
+          formValuesForByLocation && formValuesForByLocation.txtlevel5ByLocation && formValuesForByLocation.txtlevel5ByLocation.level5ID
+            ? formValuesForByLocation.txtlevel5ByLocation.level5ID
+            : "0",
+        nyayPanchayat:
+          formValuesForByLocation && formValuesForByLocation.txtlevel5ByLocation && formValuesForByLocation.txtlevel5ByLocation.level5Name
+            ? formValuesForByLocation.txtlevel5ByLocation.level5Name
+            : "",
+        gramPanchayatID:
+          formValuesForByLocation && formValuesForByLocation.txtlevel6ByLocation && formValuesForByLocation.txtlevel6ByLocation.level6ID
+            ? formValuesForByLocation.txtlevel6ByLocation.level6ID
+            : "0",
+        gramPanchayat:
+          formValuesForByLocation && formValuesForByLocation.txtlevel6ByLocation && formValuesForByLocation.txtlevel6ByLocation.level6Name
+            ? formValuesForByLocation.txtlevel6ByLocation.level6Name
+            : "",
+        businessRelationName: user && user.UserCompanyType ? user.UserCompanyType : "",
+        schemeName: v.SchemeName ? v.SchemeName : "",
+        agentName: user && user.UserDisplayName ? user.UserDisplayName : "",
+        createdBY: user && user.UserDisplayName ? user.UserDisplayName : "",
+        createdOn: null,
+        farmerName: formValuesGI.txtFarmerName ? formValuesGI.txtFarmerName : "",
+        callStatus: formValuesGI.txtCallStatus && formValuesGI.txtCallStatus.Value ? formValuesGI.txtCallStatus.Value : "",
+        insurancePolicyNo: v.policyID ? v.policyID : "",
+        insurancePolicyDate: formValues.txtPolicyDate ? dateToCompanyFormat(formValues.txtPolicyDate) : "",
+        insuranceExpiryDate: formValues.txtPolicyExpiryDate ? dateToCompanyFormat(formValues.txtPolicyExpiryDate) : "",
+        agentUserID: user && user.LoginID ? user.LoginID.toString() : "0",
+        bankMasterID: 0,
+        schemeID: v.SchemeID ? v.SchemeID : "",
+        onTimeIntimationFlag: stateCropLossIntimation,
+        hasDocument: 0,
+        attachmentPath: "",
+        callingMasterID: getCallingMasterID,
+        cropName: formValuesTicketCreation.txtCropName ? formValuesTicketCreation.txtCropName : "",
+        applicationCropName: v.cropName ? v.cropName : "",
+        area: v.policyArea ? v.policyArea : "",
+        villageName: v.resVillage ? v.resVillage : "",
+        relation: v.relation ? v.relation : "",
+        relativeName: v.relativeName ? v.relativeName : "",
+        stateMasterName: selectedFarmer && selectedFarmer.stateID ? selectedFarmer.state : selectedFarmer.resState ? selectedFarmer.resState : "",
+        districtMasterName: v.resDistrict ? v.resDistrict : "",
+        subDistrictID: v.resSubDistrictID ? v.resSubDistrictID : "",
+        subDistrictName: v.resSubDistrict ? v.resSubDistrict : "",
+        policyPremium: v.policyPremium ? v.policyPremium : "",
+        policyArea: v.policyArea ? v.policyArea : "",
+        policyType: v.policyType ? v.policyType : "",
+        landSurveyNumber: v.landSurveyNumber ? v.landSurveyNumber : "",
+        landDivisionNumber: v.landDivisionNumber ? v.landDivisionNumber : "",
+        plotVillageName: v.plotVillageName ? v.plotVillageName : "",
+        plotDistrictName: v.plotDistrictName ? v.plotDistrictName : "",
+        plotStateName: v.plotStateName ? v.plotStateName : "",
+        plotDistrictRequestorID: v.plotDistrictID ? v.plotDistrictID : "",
+        applicationSource: v.applicationSource ? v.applicationSource : "",
+        cropShare: v.cropShare ? v.cropShare : "",
+        iFSCCode: v.ifscCode ? v.ifscCode : "",
+        farmerShare: v.farmerShare ? v.farmerShare : "",
+        sowingDate: v.sowingDate ? v.sowingDate : "",
+        isSos: showMessage ? 1 : 0,
+        sos: showMessage === true && formValuesTicketCreation.txtSosDescription ? formValuesTicketCreation.txtSosDescription : "",
+        sumInsured : v.sumInsured ? v.sumInsured : "",
+        ticketCategoryDescriptionID: 1,
+      });
+      });
+
+      const formData = {Tickets : multipleticketsformData };
+      setisBtndisabled(1);
+      setBtnLoaderSupportTicketActive(true);
+      const result = await addTempKRPHSupportTicketdata(formData);
+      setBtnLoaderSupportTicketActive(false);
+      setisBtndisabled(0);
+      if (result.response.responseCode === 1) {
+        if (result.response && result.response.responseData) {
+          
+          setFarmersTicketSummaryData([]);
+          setfetchfarmersummary(selectedFarmer ? selectedFarmer.farmerID : "");
+
+          if (selectedValidateOption === "5") {
+            setSelectedFarmer(selectedFarmer);
+          }
+
+          clearInsuranceFieldsAndTicketCreation();
+          handleStepClick(5);
+          setSessionStorage("servicesuccess", "TC");
+          setServiceSuccessState("SUCCESS");
+          setshowHideSos(true);
+         
         }
       } else {
         setAlertMessage({
