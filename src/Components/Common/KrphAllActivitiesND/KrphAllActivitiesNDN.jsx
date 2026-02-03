@@ -17,7 +17,11 @@ import {
   ToggleButton,
   CardContent,
   Tooltip,
+  Dialog,
+  DialogTitle,
+  DialogContent
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { motion, AnimatePresence } from "framer-motion";
 import { dateFormatDDMMYY, dateToSpecificFormat, daysdifference, dateToCompanyFormat, Convert24FourHourAndMinute } from "Configration/Utilities/dateformat";
 import moment from "moment";
@@ -69,6 +73,7 @@ import {
   farmerTicketSummaryKRPH,
   addKRPHFarmerSupportTicketData,
   addKrphfarmerCallingHistorydata,
+  getFarmerSeasonYearClaimData,
   addTempKRPHSupportTicketdata,
 } from "./Services/Methods";
 import { getUserRightData } from "../../Modules/Setup/MenuManagement/Services/Methods";
@@ -178,11 +183,12 @@ function KrphAllActivitiesNDN() {
   const [reasonConnectedDropdownDataList] = useState([
     { ID: 1, Value: "Crop Loss Intimation" },
     { ID: 2, Value: "Grievance" },
-    { ID: 3, Value: "Info–Claim Status" },
-    { ID: 4, Value: "Info–Ticket Status" },
-    { ID: 5, Value: "Info–Policy Details" },
-    { ID: 6, Value: "General Enquiry" },
-    { ID: 7, Value: "Feedback" },
+    { ID: 3, Value: "Information" },
+    { ID: 4, Value: "Info–Claim Status" },
+    { ID: 5, Value: "Info–Ticket Status" },
+    { ID: 6, Value: "Info–Policy Details" },
+    { ID: 7, Value: "General Enquiry" },
+    { ID: 8, Value: "Feedback" },
   ]);
   const [reasonDropdownDataList] = useState([
     { ID: 1, Value: "Caller voice not clear" },
@@ -269,6 +275,7 @@ function KrphAllActivitiesNDN() {
   const [openFeedback, setOpenFeedback] = useState(false);
 
   const updateStateGI = (name, value) => {
+    debugger;
     setFormValuesGI({ ...formValuesGI, [name]: value });
     setFormValidationKRPHError[name] = validateKRPHInfoField(name, value);
 
@@ -300,6 +307,44 @@ function KrphAllActivitiesNDN() {
         txtFarmerName: value,
       });
       setfarmerName(value);
+    }
+    if (name === "txtCallPurpose") { 
+      if(value && value.ID === 1) {
+         selectedOptionOnClick("LO");
+          const currentYear = new Date().getFullYear();
+           const yearArray = [];
+          for (let i = 2025; i <= currentYear; i += 1) {
+           yearArray.push({ Name: i.toString(), Value: i.toString() });
+          }
+          setYearList(yearArray.sort().reverse());
+      } else if(value && value.ID === 2) {
+          selectedOptionOnClick("GR");
+          const currentYear = new Date().getFullYear();
+           const yearArray = [];
+          for (let i = 2018; i <= currentYear; i += 1) {
+           yearArray.push({ Name: i.toString(), Value: i.toString() });
+          }
+          setYearList(yearArray.sort().reverse());
+      }  else if(value && value.ID === 3) {
+          selectedOptionOnClick("IN");
+           const currentYear = new Date().getFullYear();
+           const yearArray = [];
+          for (let i = 2018; i <= currentYear; i += 1) {
+           yearArray.push({ Name: i.toString(), Value: i.toString() });
+          }
+          setYearList(yearArray.sort().reverse());
+      } else if(value && value.ID === 8) {
+         
+      }
+       else {
+        selectedOptionOnClick("GR");
+         const currentYear = new Date().getFullYear();
+           const yearArray = [];
+          for (let i = 2018; i <= currentYear; i += 1) {
+           yearArray.push({ Name: i.toString(), Value: i.toString() });
+          }
+          setYearList(yearArray.sort().reverse());
+      }
     }
   };
   const SavevalidateFarmerDisconnectedOnClick = async () => {
@@ -492,7 +537,7 @@ function KrphAllActivitiesNDN() {
     }
 
     if (pType === "BTNNXT") {
-      if (formValuesGI && formValuesGI.txtCallPurpose && formValuesGI.txtCallPurpose.ID && formValuesGI.txtCallPurpose.ID === 7) {
+      if (formValuesGI && formValuesGI.txtCallPurpose && formValuesGI.txtCallPurpose.ID && formValuesGI.txtCallPurpose.ID === 8) {
         setOpenFeedback(!openFeedback);
         return;
       }
@@ -527,6 +572,11 @@ function KrphAllActivitiesNDN() {
       ...formValuesGI,
       txtCallPurpose: null,
     });
+    setFormValuesForFarmerInfo({
+            ...formValuesForFarmerInfo,
+            txtTicketCreationType: null,
+            txtCropForMultipleApplication: null,
+        });
     if (farmerAuthenticateByMobile === true) {
       handleStepClick(2);
     } else {
@@ -880,13 +930,14 @@ function KrphAllActivitiesNDN() {
   debugger;
     const fetchMultipleApplication = getSelectedRowDataMultipleApplication();
 
-      if (fetchMultipleApplication.length === 0) {
+      if (fetchMultipleApplication.length === 0 || fetchMultipleApplication.length === 1) {
         setAlertMessage({
           type: "error",
-          message: "Please select at least one application.",
+          message: "Please select multiple applications.",
         });
         return;
       }
+      
       if (fetchMultipleApplication.length === 1) {
       setSelectedInsuranceDetails(fetchMultipleApplication[0]);
       setFormValuesForFarmerInfo({
@@ -905,7 +956,10 @@ function KrphAllActivitiesNDN() {
   };
 
   const OnClickBtnChange = () => {
-   toggleInsuranceCompanyModalGreivence(true);
+    if(multipleApplication && multipleApplication.length > 0) {
+      toggleInsuranceCompanyModalGreivence(true);
+    }
+   
   };
 
   const [openCustomeWindow, setopenCustomeWindow] = useState("S");
@@ -936,6 +990,44 @@ function KrphAllActivitiesNDN() {
   const [openClaimStatusModal, setOpenClaimStatusModal] = useState(false);
   const toggleClaimStatusModal = () => {
     setOpenClaimStatusModal(!openClaimStatusModal);
+  };
+
+    const onChangeClamStatusFarmerSeasonYear = (val) => {
+    gridApiClaimStatusFarmerSeasonYear.setQuickFilter(val);
+  };
+
+  const [gridApiClaimStatusFarmerSeasonYear, setGridApiClaimStatusFarmerSeasonYear] = useState();
+  const onGridReadyClaimStatusFarmerSeasonYear = (params) => {
+    setGridApiClaimStatusFarmerSeasonYear(params.api);
+  };
+
+  const [filterValuesClaimStatusFarmerSeasonYear, setFilterValuesClaimStatusFarmerSeasonYear] = useState({
+    txtPolicyNumber: null,
+  });
+
+  const updateFilterStateClaimStatusFarmerSeasonYear = (name, value) => {
+    setFilterValuesClaimStatusFarmerSeasonYear({ ...filterValuesClaimStatusFarmerSeasonYear, [name]: value });
+  };
+
+  const [claimStatusFarmerSeasonYearData, setClaimStatusFarmerSeasonYearData] = useState([]);
+  const [isLoadingClaimStatusFarmerSeasonYearData, setIsLoadingClaimStatusFarmerSeasonYearData] = useState(false);
+  const [openClaimStatusFarmerSeasonYearModal, setOpenClaimStatusFarmerSeasonYearModal] = useState(false);
+  const toggleClaimStatusFarmerSeasonYearModal = () => {
+    setOpenClaimStatusFarmerSeasonYearModal(!openClaimStatusFarmerSeasonYearModal);
+  };
+
+  const getClaimStatusFarmerSeasonYearOnClick= () => {
+    if (selectedFarmer.length === 0 && selectedFarmer.length !== undefined) {
+        setAlertMessage({
+          type: "error",
+          message: "Farmer Authentication is required!",
+        });
+        return;
+      }
+    if (!handleFarmersInfoValidation()) {
+      return;
+    }
+   getPolicyOfFarmerSeasonAndYearOnClick(); 
   };
 
   const [selectedData, setSelectedData] = useState();
@@ -1090,6 +1182,12 @@ function KrphAllActivitiesNDN() {
     { CropSeasonID: 1, CropSeasonName: "Kharif" },
     { CropSeasonID: 2, CropSeasonName: "Rabi" },
   ]);
+
+  const [ticketcreationTypeDataList] = useState([
+    { Value: "S", label: "Single" },
+    { Value: "M", label: "Multiple" },
+  ]);
+
   const [stateForPolicyNumberDropdownDataList, setStateForPolicyNumberDropdownDataList] = useState([]);
   const [yearList, setYearList] = useState([]);
   const [seasonPolicyNumber, setSeasonPolicyNumber] = useState("");
@@ -2145,6 +2243,8 @@ function KrphAllActivitiesNDN() {
     txtSeasonForFarmerInfo: null,
     txtYearForFarmerInfo: null,
     txtSchemeForFarmerInfo: null,
+    txtTicketCreationType: null,
+    txtCropForMultipleApplication: null,
   });
 
   const updateStateForFarmerInfo = (name, value) => {
@@ -2180,6 +2280,13 @@ function KrphAllActivitiesNDN() {
     // A}
 
     if (name === "txtYearForFarmerInfo") {
+      setFormValuesForFarmerInfo({
+            ...formValuesForFarmerInfo,
+            txtYearForFarmerInfo: value,
+            txtTicketCreationType: null,
+            txtCropForMultipleApplication: null,
+        });
+      setfarmerSeasonYearCropData([]);  
       if (value) {
         if (Number(value.Value) <= 2024) {
           setSelectedOption("1");
@@ -2204,6 +2311,38 @@ function KrphAllActivitiesNDN() {
             txtCropName: "",
           });
         }
+      }
+    }
+    if (name === "txtSeasonForFarmerInfo") {
+      setFormValuesForFarmerInfo({
+            ...formValuesForFarmerInfo,
+            txtSeasonForFarmerInfo: value,
+            txtTicketCreationType: null,
+            txtCropForMultipleApplication: null,
+        });
+      setfarmerSeasonYearCropData([]); 
+    }
+    if (name === "txtTicketCreationType") {
+      setFormValuesForFarmerInfo({
+            ...formValuesForFarmerInfo,
+            txtTicketCreationType: value,
+            txtCropForMultipleApplication: null,
+        });
+      setmultipleApplication([]);
+      if (value && value.Value=== "M") {
+        if (selectedFarmer.length === 0 && selectedFarmer.length !== undefined) {
+        setAlertMessage({
+          type: "error",
+          message: "Farmer Authentication is required!",
+        });
+        setFormValuesForFarmerInfo({
+            ...formValuesForFarmerInfo,
+            txtTicketCreationType: null,
+        });
+        return;
+      }
+        getPolicyOfFarmerGreivenceForCropData();
+      } else {
       }
     }
   };
@@ -2769,6 +2908,7 @@ function KrphAllActivitiesNDN() {
       txtSeasonForFarmerInfo: null,
       txtYearForFarmerInfo: null,
       txtSchemeForFarmerInfo: null,
+      txtTicketCreationType: null,
     });
     setSelectedInsuranceDetails([]);
     setfetchfarmersummary("");
@@ -2793,6 +2933,17 @@ function KrphAllActivitiesNDN() {
       }
     }
 
+    if (name === "txtTicketCreationType") {
+      if (!value || typeof value === "undefined") {
+        errorsMsg = "Creation Type is required!";
+      }
+    }
+     if (name === "txtCropForMultipleApplication") {
+      if (!value || typeof value === "undefined") {
+        errorsMsg = "Crop is required!";
+      }
+    }
+
     return errorsMsg;
   };
 
@@ -2802,7 +2953,13 @@ function KrphAllActivitiesNDN() {
       let formIsValid = true;
       errors["txtSeasonForFarmerInfo"] = validateFarmersInfoField("txtSeasonForFarmerInfo", formValuesForFarmerInfo.txtSeasonForFarmerInfo);
       errors["txtYearForFarmerInfo"] = validateFarmersInfoField("txtYearForFarmerInfo", formValuesForFarmerInfo.txtYearForFarmerInfo);
-
+      if(formValuesGI && formValuesGI.txtCallPurpose && formValuesGI.txtCallPurpose.ID && formValuesGI.txtCallPurpose.ID === 1) {
+         errors["txtTicketCreationType"] = validateFarmersInfoField("txtTicketCreationType", formValuesForFarmerInfo.txtTicketCreationType);
+         if(formValuesForFarmerInfo && formValuesForFarmerInfo.txtTicketCreationType && formValuesForFarmerInfo.txtTicketCreationType.Value && formValuesForFarmerInfo.txtTicketCreationType.Value === "M") {
+         errors["txtCropForMultipleApplication"] = validateFarmersInfoField("txtCropForMultipleApplication", formValuesForFarmerInfo.txtCropForMultipleApplication);
+         }
+      }
+     
       if (Object.values(errors).join("").toString()) {
         formIsValid = false;
       }
@@ -2817,10 +2974,12 @@ function KrphAllActivitiesNDN() {
     }
   };
 
+ 
   const [insuranceCompanyDataGreivence, setInsuranceCompanyDataGreivence] = useState([]);
   const [btnLoaderFarmerGreivenceInfoActive, setBtnLoaderFarmerGreivenceInfoActive] = useState(false);
   const [isLoadingApplicationNoDataGreivence, setIsLoadingApplicationNodatGreivence] = useState(false);
   const getPolicyOfFarmerGreivenceOnClick = async () => {
+    debugger;
     if (!handleFarmersInfoValidation()) {
       return;
     }
@@ -2908,7 +3067,15 @@ function KrphAllActivitiesNDN() {
                   });
                 });
               });
-              setInsuranceCompanyDataGreivence(farmerAndApplicationData);
+              if(formValuesForFarmerInfo && formValuesForFarmerInfo.txtTicketCreationType && formValuesForFarmerInfo.txtTicketCreationType.Value && formValuesForFarmerInfo.txtTicketCreationType.Value === "M" ) {
+                const filteredData = farmerAndApplicationData.filter(
+                     data => data.cropName === formValuesForFarmerInfo.txtCropForMultipleApplication?.cropName
+                  );
+                setInsuranceCompanyDataGreivence(filteredData);
+              } else {
+                 setInsuranceCompanyDataGreivence(farmerAndApplicationData);
+              }
+             
               if (getCallingMasterID === 0) {
                 const callingformData = {
                   CallingMasterID: getCallingMasterID,
@@ -2964,6 +3131,152 @@ function KrphAllActivitiesNDN() {
       });
     }
   };
+
+  const [farmerSeasonYearCropData, setfarmerSeasonYearCropData] = useState([]);
+  const [isLoadingFarmerGreivenceForCrop, setIsLoadingFarmerGreivenceForCrop] = useState(false);
+  const getPolicyOfFarmerGreivenceForCropData = async () => {
+    debugger;
+   try {
+
+      let result = "";
+      let formData = "";
+
+      formData = {
+        mobilenumber: "7776543289",
+        seasonID: formValuesForFarmerInfo.txtSeasonForFarmerInfo ? formValuesForFarmerInfo.txtSeasonForFarmerInfo.CropSeasonID.toString() : "",
+        year: formValuesForFarmerInfo.txtYearForFarmerInfo ? formValuesForFarmerInfo.txtYearForFarmerInfo.Value.toString() : "",
+        farmerID: selectedFarmer ? selectedFarmer.farmerID : "",
+      };
+      setIsLoadingFarmerGreivenceForCrop(true);
+      result = await getFarmerPolicyDetail(formData);
+      setIsLoadingFarmerGreivenceForCrop(false);
+
+      if (result.response.responseCode === 1) {
+        if (result.response.responseData) {
+          if (Object.keys(result.response.responseData.data).length > 0) {
+            const farmersData = Object.values(result.response.responseData.data);
+            if (farmersData && farmersData.length > 0) {
+              const farmerAndApplicationData = [];
+              farmersData.forEach((v) => {
+                v.applicationList.forEach((x) => {
+                  farmerAndApplicationData.push({
+                    cropName: x.cropName,
+                  });
+                });
+              });
+             setInsuranceCompanyDataGreivence(farmerAndApplicationData);
+            const uniqueData = [...new Map(farmerAndApplicationData.map(item => [item.cropName, item])).values()];
+             setfarmerSeasonYearCropData(uniqueData);
+            } else {
+              setfarmerSeasonYearCropData([]);
+              setAlertMessage({
+                type: "warning",
+                message: "Crop Data not found.",
+              });
+            }
+          } else {
+            setfarmerSeasonYearCropData([]);
+            setAlertMessage({
+              type: "warning",
+              message: "Crop Data not found.",
+            });
+          }
+        } else {
+          setfarmerSeasonYearCropData([]);
+          setAlertMessage({
+            type: "warning",
+            message: "Crop Data not found.",
+          });
+        }
+      } else {
+        setAlertMessage({
+          type: "warning",
+          message: result.response.responseMessage,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      setAlertMessage({
+        type: "error",
+        message: error,
+      });
+    }
+  };
+
+    const [farmerSeasonYearClaimData, setfarmerSeasonYearClaimData] = useState([]);
+  const [farmerSeasonYearPolicyData, setfarmerSeasonYearPolicyData] = useState([]);
+  const getPolicyOfFarmerSeasonAndYearOnClick = async () => {
+    debugger;
+    try {
+
+      let result = "";
+      let formData = "";
+
+      formData = {
+        mobilenumber: "7776543289",
+        seasonID: formValuesForFarmerInfo.txtSeasonForFarmerInfo ? formValuesForFarmerInfo.txtSeasonForFarmerInfo.CropSeasonID.toString() : "",
+        year: formValuesForFarmerInfo.txtYearForFarmerInfo ? formValuesForFarmerInfo.txtYearForFarmerInfo.Value.toString() : "",
+        farmerID: selectedFarmer ? selectedFarmer.farmerID : "",
+      };
+     // A  result = await getFarmerSeasonYearClaimData(formData);
+      setBtnLoaderClaimStatusActive(true);
+      result = await getFarmerPolicyDetail(formData);
+      setBtnLoaderClaimStatusActive(false);
+      
+      if (result.response.responseCode === 1) {
+        if (result.response.responseData) {
+          if (Object.keys(result.response.responseData.data).length > 0) {
+            const farmersData = Object.values(result.response.responseData.data);
+            if (farmersData && farmersData.length > 0) {
+              const farmerAndApplicationData = [];
+              farmersData.forEach((v) => {
+                v.applicationList.forEach((x) => {
+                  farmerAndApplicationData.push({
+                    policyID: x.policyID,
+                  });
+                });
+              });
+             const uniqueData = [...new Map(farmerAndApplicationData.map(item => [item.policyID, item])).values()];
+             setfarmerSeasonYearPolicyData(uniqueData);
+             toggleClaimStatusFarmerSeasonYearModal();
+            } else {
+              setfarmerSeasonYearClaimData([]);
+              setAlertMessage({
+                type: "warning",
+                message: "Policy Data not found.",
+              });
+            }
+          } else {
+            setfarmerSeasonYearClaimData([]);
+            setAlertMessage({
+              type: "warning",
+
+              
+              message: "Policy Data not found.",
+            });
+          }
+        } else {
+          setInsuranceCompanyDataGreivence([]);
+          setAlertMessage({
+            type: "warning",
+            message: "Policy Data not found.",
+          });
+        }
+      } else {
+        setAlertMessage({
+          type: "warning",
+          message: result.response.responseMessage,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      setAlertMessage({
+        type: "error",
+        message: error,
+      });
+    }
+  };
+
   const [formValidationFarmersError, setFormValidationFarmersError] = useState({});
 
   const [btnLoaderClaimStatusActive, setBtnLoaderClaimStatusActive] = useState(false);
@@ -3358,6 +3671,20 @@ function KrphAllActivitiesNDN() {
     // A setTicketCategoryOtherList([]);
   };
 
+  const [open, setOpen] = useState(false);
+  const handleopen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [isBtndisabledMultipleYes, setisBtndisabledMultipleYes] = useState(0);
+  const [btnLoaderSupportTicketActiveMultipleYes, setBtnLoaderSupportTicketActiveMultipleYes] = useState(false);
+  const handleSupportTicketMultipleYes = () => {
+    CreateTicketBAuthOptionsForMultipleApplication();
+  };
+
   const [isBtndisabled, setisBtndisabled] = useState(0);
   const [btnLoaderSupportTicketActive, setBtnLoaderSupportTicketActive] = useState(false);
   const supportTicketOnClick = async () => {
@@ -3389,7 +3716,7 @@ function KrphAllActivitiesNDN() {
         if(multipleApplication?.length === 1) {
           CreateTicketBAuthOptions();
         } else {
-            CreateTicketBAuthOptionsForMultipleApplication();
+          handleopen();
         }
         
         
@@ -3875,11 +4202,11 @@ function KrphAllActivitiesNDN() {
       });
 
       const formData = {Tickets : multipleticketsformData };
-      setisBtndisabled(1);
-      setBtnLoaderSupportTicketActive(true);
+      setisBtndisabledMultipleYes(1);
+      setBtnLoaderSupportTicketActiveMultipleYes(true);
       const result = await addTempKRPHSupportTicketdata(formData);
-      setBtnLoaderSupportTicketActive(false);
-      setisBtndisabled(0);
+      setBtnLoaderSupportTicketActiveMultipleYes(false);
+      setisBtndisabledMultipleYes(0);
       if (result.response.responseCode === 1) {
         if (result.response && result.response.responseData) {
           
@@ -3895,6 +4222,7 @@ function KrphAllActivitiesNDN() {
           setSessionStorage("servicesuccess", "TC");
           setServiceSuccessState("SUCCESS");
           setshowHideSos(true);
+          handleClose();
          
         }
       } else {
@@ -5315,13 +5643,13 @@ function KrphAllActivitiesNDN() {
   const [formValidationSupportTicketError, setFormValidationSupportTicketError] = useState({});
 
   useEffect(() => {
-    const currentYear = new Date().getFullYear();
-    // A setRunningCurrentYear(currentYear);
-    const yearArray = [];
-    for (let i = 2018; i <= currentYear; i += 1) {
-      yearArray.push({ Name: i.toString(), Value: i.toString() });
-    }
-    setYearList(yearArray.sort().reverse());
+    // A const currentYear = new Date().getFullYear();
+    // A // A setRunningCurrentYear(currentYear);
+    // A const yearArray = [];
+    // A for (let i = 2018; i <= currentYear; i += 1) {
+    // A  yearArray.push({ Name: i.toString(), Value: i.toString() });
+    // A }
+    // A setYearList(yearArray.sort().reverse());
     validateFarmerByMobileNumberKRPH();
     getticketDataBindingKrphAllActivitiesData();
     getStateKRPHListData();
@@ -5377,6 +5705,8 @@ function KrphAllActivitiesNDN() {
   };
   const InsuranceC = selectedInsuranceDetails && selectedInsuranceDetails.insuranceCompanyName ? selectedInsuranceDetails.insuranceCompanyName : "";
   const logoPath = getInsuranceLogo(InsuranceC);
+
+
 
   return (
     <>
@@ -5706,6 +6036,7 @@ function KrphAllActivitiesNDN() {
                               getOptionLabel={(option) => `${option.Value}`}
                               getOptionValue={(option) => `${option}`}
                               onChange={(e) => updateStateGI("txtCallPurpose", e)}
+                              isDisabled={formValuesGI.txtCallPurpose !== null}
                             />
                           </InputGroup>
                           <span className="login_ErrorTxt">{formValidationKRPHError["txtCallPurpose"]}</span>
@@ -5824,7 +6155,7 @@ function KrphAllActivitiesNDN() {
                           }}
                           layout
                         >
-                          {formValuesGI && formValuesGI.txtCallPurpose && formValuesGI.txtCallPurpose.ID === 7 ? (
+                          {formValuesGI && formValuesGI.txtCallPurpose && formValuesGI.txtCallPurpose.ID === 8 ? (
                             <div className="container my-3">
                               <div className="row">
                                 <div className="col-md-12">
@@ -5870,6 +6201,7 @@ function KrphAllActivitiesNDN() {
                       getClaimStatusOnClick={getClaimStatusOnClick}
                       handleSubmitMultipleApplication={handleSubmitMultipleApplication}
                       multipleApplication={multipleApplication}
+                      formValuesForFarmerInfo={formValuesForFarmerInfo}
                     />
                   )}
                   {openTicketHistoryModal && (
@@ -5894,6 +6226,19 @@ function KrphAllActivitiesNDN() {
                       OnClickCustomeWindow={OnClickCustomeWindow}
                       customeWindowWidth={customeWindowWidth}
                       customeWindowHeight={customeWindowHeight}
+                    />
+                  )}
+                   {openClaimStatusFarmerSeasonYearModal && (
+                    <ClaimStatusFarmerSeasonYearModal
+                      toggleClaimStatusFarmerSeasonYearModal={toggleClaimStatusFarmerSeasonYearModal}
+                      onGridReadyClaimStatusFarmerSeasonYear={onGridReadyClaimStatusFarmerSeasonYear}
+                      claimStatusFarmerSeasonYearData={claimStatusFarmerSeasonYearData}
+                      onChangeClamStatusFarmerSeasonYear={onChangeClamStatusFarmerSeasonYear}
+                      isLoadingClaimStatusFarmerSeasonYearData={isLoadingClaimStatusFarmerSeasonYearData}
+                      farmerSeasonYearClaimData={farmerSeasonYearClaimData}
+                      farmerSeasonYearPolicyData={farmerSeasonYearPolicyData}
+                      filterValuesClaimStatusFarmerSeasonYear={filterValuesClaimStatusFarmerSeasonYear}
+                      updateFilterStateClaimStatusFarmerSeasonYear={updateFilterStateClaimStatusFarmerSeasonYear}
                     />
                   )}
                   {openMyTicketModal && <MyTicketPage showfunc={openMyTicketPage} selectedData={selectedData} />}
@@ -6699,13 +7044,14 @@ function KrphAllActivitiesNDN() {
                               sx={{
                                 display: "flex",
                                 flexWrap: "wrap",
-                                gap: "24px",
+                                gap: "20px",
                                 padding: "5px 0 0 0",
                                 alignItems: "center",
                                 justifyContent: "flex-start",
                               }}
                             >
-                              <div style={{ display: "flex", flexDirection: "column" }}>
+                              
+                              <div style={{ display: "flex", flexDirection: "column", width:"150px" }}>
                                 <label
                                   style={{
                                     display: "block",
@@ -6733,7 +7079,7 @@ function KrphAllActivitiesNDN() {
                                 </InputGroup>
                                 <span className="login_ErrorTxt">{formValidationFarmersInfoError["txtYearForFarmerInfo"]}</span>
                               </div>
-                              <div style={{ display: "flex", flexDirection: "column" }}>
+                              <div style={{ display: "flex", flexDirection: "column", width:"150px" }}>
                                 <label
                                   style={{
                                     display: "block",
@@ -6761,8 +7107,9 @@ function KrphAllActivitiesNDN() {
                                 </InputGroup>
                                 <span className="login_ErrorTxt">{formValidationFarmersInfoError["txtSeasonForFarmerInfo"]}</span>
                               </div>
-                              <div style={{ display: "flex", flexDirection: "column" }}>
-                                {multipleApplication?.length <= 1 ? <>
+                              <div style={{ display: "flex", flexDirection: "column"}}>
+                              {formValuesForFarmerInfo?.txtTicketCreationType?.Value === "S" ||
+                                 formValuesForFarmerInfo?.txtTicketCreationType === null ? <>
                                 <label
                                   style={{
                                     display: "block",
@@ -6788,9 +7135,69 @@ function KrphAllActivitiesNDN() {
                                     isDisabled={true}
                                   />
                                 </InputGroup> </> : null}
-                                <span className="login_ErrorTxt">{formValidationFarmersInfoError["txtYearForFarmerInfo"]}</span>
+                                <span className="login_ErrorTxt">{formValidationFarmersInfoError["txtSchemeForFarmerInfo"]}</span>
                               </div>
-
+                               {formValuesGI && formValuesGI.txtCallPurpose && formValuesGI.txtCallPurpose.ID === 1 ?
+                              <>
+                              <div style={{ display: "flex", flexDirection: "column",  width:"200px" }}>
+                                
+                                <label
+                                  style={{
+                                    display: "block",
+                                    fontSize: "14px",
+                                    marginBottom: "5px",
+                                    fontWeight: "400",
+                                    color: "#6B7280",
+                                    fontFamily: "Quicksand, sans-serif",
+                                  }}
+                                >
+                                  {/* <span style={{ color: "red" }}>*</span> */}
+                                </label>
+                                <InputGroup>
+                                  <InputControl
+                                    Input_type="select"
+                                    name="txtTicketCreationType"
+                                    getOptionLabel={(option) => `${option.label}`}
+                                    value={formValuesForFarmerInfo.txtTicketCreationType}
+                                    getOptionValue={(option) => `${option}`}
+                                    options={ticketcreationTypeDataList}
+                                    ControlTxt="Creation Type"
+                                    onChange={(e) => updateStateForFarmerInfo("txtTicketCreationType", e)}
+                                  />
+                                </InputGroup> 
+                                <span className="login_ErrorTxt">{formValidationFarmersInfoError["txtTicketCreationType"]}</span>
+                              </div> </> : null }
+                              {formValuesForFarmerInfo && formValuesForFarmerInfo.txtTicketCreationType && formValuesForFarmerInfo.txtTicketCreationType.Value === "M" ?
+                              <>
+                              <div style={{ display: "flex", flexDirection: "column",  width:"200px" }}>
+                                
+                                <label
+                                  style={{
+                                    display: "block",
+                                    fontSize: "14px",
+                                    marginBottom: "5px",
+                                    fontWeight: "400",
+                                    color: "#6B7280",
+                                    fontFamily: "Quicksand, sans-serif",
+                                  }}
+                                >
+                                  {/* <span style={{ color: "red" }}>*</span> */}
+                                </label>
+                                <InputGroup>
+                                  <InputControl
+                                    Input_type="select"
+                                    name="txtCropForMultipleApplication"
+                                    getOptionLabel={(option) => `${option.cropName}`}
+                                    value={formValuesForFarmerInfo.txtCropForMultipleApplication}
+                                    loader={isLoadingFarmerGreivenceForCrop ? <Loader /> : null}
+                                    getOptionValue={(option) => `${option}`}
+                                    options={farmerSeasonYearCropData}
+                                    ControlTxt="Crop"
+                                    onChange={(e) => updateStateForFarmerInfo("txtCropForMultipleApplication", e)}
+                                  />
+                                </InputGroup> 
+                                <span className="login_ErrorTxt">{formValidationFarmersInfoError["txtCropForMultipleApplication"]}</span>
+                              </div> </> : null }
                               <KrphButton
                                 type="button"
                                 varient="secondary"
@@ -6803,7 +7210,8 @@ function KrphAllActivitiesNDN() {
                                 type="button"
                                 varient="secondary"
                                 trigger={btnLoaderClaimStatusActive && "true"}
-                                onClick={() => getClaimStatusOnClick()}
+                                // A onClick={() => getClaimStatusOnClick()}
+                                onClick={() => getClaimStatusFarmerSeasonYearOnClick()}
                               >
                                 Claim Status
                               </KrphButton>
@@ -7001,7 +7409,7 @@ function KrphAllActivitiesNDN() {
                                           </tr>
                                         </thead>
                                         <tbody>
-                                          {multipleApplication.map((v, i) => (
+                                          {multipleApplication && multipleApplication.length > 0 ? multipleApplication.map((v, i) => (
                                             <tr>
                                               <td><img
                                   src={getInsuranceLogo(v.insuranceCompanyName)}
@@ -7031,7 +7439,7 @@ function KrphAllActivitiesNDN() {
                                                {v.cropName}
                                               </td>
                                             </tr>
-                                          ))}
+                                          )) : <tr><td colSpan={7}>No rows exist</td></tr>}
                                         </tbody>
                                       </table></div> }
                               
@@ -8003,6 +8411,102 @@ function KrphAllActivitiesNDN() {
           </Box>
         )}
       </Box>
+       <div>
+            <Dialog
+            open={open}
+            onClose={handleClose}
+            maxWidth="sm"
+            fullWidth
+            sx={{
+              "& .MuiPaper-root": {
+                transition: "opacity 0.3s ease-in-out",
+              },
+            }}
+          >
+            <DialogTitle
+              sx={{
+                padding: "0px 24px",
+                bgcolor: "#075307",
+                color: "white",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                fontWeight: "bold",
+                fontFamily: "Quicksand, sans-serif",
+                fontSize: "17px",
+              }}
+            >
+              Confirmation
+              <IconButton onClick={handleClose} sx={{ color: "white" }}>
+                <CloseIcon />
+              </IconButton>
+            </DialogTitle>
+
+            <DialogContent sx={{ textAlign: "center", padding: "40px !important" }}>
+              <Typography variant="body1" sx={{ mb: 2, textAlign: "left", textDecoration:"underline", fontWeight: "bold", fontFamily: "Quicksand, sans-serif" }}>
+                Application Number Details For Ticket Creation
+              </Typography>
+              <Typography variant="body1" sx={{ mb: 2, fontWeight: "bold", fontFamily: "Quicksand, sans-serif" }}>
+                 <div className="table-wrapper-multiple-application">
+                                <table className="table_bordered table_Height_module_wise_training">
+                                        <thead>
+                                          <tr>
+                                            <th>Policy Number</th>
+                                            <th>Application Number</th>
+                                            <th>Crop Name</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          {multipleApplication && multipleApplication.length > 0 ? multipleApplication.map((v, i) => (
+                                            <tr>
+                                               <td>
+                                               {v.policyID}
+                                              </td>
+                                              <td>
+                                               {v.applicationNo}
+                                              </td>
+                                               <td>
+                                               {v.cropName}
+                                              </td>
+                                            </tr>
+                                          )) : <tr><td colSpan={3}>No rows exist</td></tr>}
+                                        </tbody>
+                                      </table>
+                 </div>  
+                Support tickets will be created for the above application numbers.                    
+                Do you want to continue?
+              </Typography>
+              <div style={{
+  display: "flex",
+  justifyContent: "center",
+  gap: "16px" 
+}}>
+  <Tooltip title="Start the process" arrow>
+    <KrphButton
+      type="button"
+      varient="secondary"
+      disabled={isBtndisabledMultipleYes}
+      trigger={btnLoaderSupportTicketActiveMultipleYes && "true"}
+      onClick={() => handleSupportTicketMultipleYes()}
+    >
+      Yes
+    </KrphButton>
+  </Tooltip>
+
+  <Tooltip title="Cancel the process" arrow>
+    <KrphButton
+      type="button"
+      varient="danger"
+      onClick={() => handleClose()}
+    >
+      No
+    </KrphButton>
+  </Tooltip>
+</div>
+             
+            </DialogContent>
+          </Dialog>
+                              </div>
     </>
   );
 }
@@ -8108,6 +8612,7 @@ function InsuranceCompanyModalGreivence({
   getClaimStatusOnClick,
   handleSubmitMultipleApplication,
   multipleApplication,
+  formValuesForFarmerInfo,
 }) {
   const toggleClaimStatusModal = (data) => {
     getClaimStatusOnClick(data.applicationNo);
@@ -8135,13 +8640,14 @@ function InsuranceCompanyModalGreivence({
             tooltipMouseTrack={true}
             tooltipInteraction={true}
           >
-            <DataGrid.Column
+            {formValuesForFarmerInfo?.txtTicketCreationType?.Value === "M" ? <DataGrid.Column
                           headerName=""
                           lockPosition="1"
                           pinned="left"
                           width={50}
                           checkboxSelection={true}
-                        />
+                        /> : null}
+            
             <DataGrid.Column
               headerName="Claim Status"
               lockPosition="1"
@@ -8264,13 +8770,14 @@ function InsuranceCompanyModalGreivence({
         </div>
       </Modal.Body>
       <Modal.Footer>
+         {formValuesForFarmerInfo && formValuesForFarmerInfo.txtTicketCreationType && formValuesForFarmerInfo.txtTicketCreationType.Value === "M" ?
          <KrphButton
                   type="button"
                   varient="secondary"
                   onClick={() => handleSubmitMultipleApplication()}
                 >
                   Submit
-                </KrphButton>
+                </KrphButton> : null }
       </Modal.Footer>
     </Modal>
   );
@@ -8335,6 +8842,70 @@ function ClaimStatusModal({
             <DataGrid.Column field="ClaimStatus" headerName="Claim Status" width="220px" />
             <DataGrid.Column field="paymentMode" headerName="Payment Mode" width="140px" />
             <DataGrid.Column field="Status" headerName="Status" width="155px" />
+          </DataGrid>
+        </div>
+      </Modal.Body>
+      <Modal.Footer />
+    </Modal>
+  );
+}
+
+function ClaimStatusFarmerSeasonYearModal({
+  toggleClaimStatusFarmerSeasonYearModal,
+  onGridReadyClaimStatusFarmerSeasonYear,
+  claimStatusFarmerSeasonYearData,
+  onChangeClamStatusFarmerSeasonYear,
+  isLoadingClaimStatusFarmerSeasonYearData,
+  farmerSeasonYearClaimData,
+  farmerSeasonYearPolicyData,
+  filterValuesClaimStatusFarmerSeasonYear,
+  updateFilterStateClaimStatusFarmerSeasonYear,
+}) {
+  return (
+    <Modal title="Claim Status" varient="half"  show={toggleClaimStatusFarmerSeasonYearModal} right="0" width="95.5vw">
+      <Modal.Body>
+        <div className={BizClass.ModalBox}>
+          <PageBar>
+             <PageBar.Select
+                            ControlTxt="Policy Number"
+                            name="txtPolicyNumber"
+                            label="Policy Number"
+                            value={filterValuesClaimStatusFarmerSeasonYear.txtPolicyNumber}
+                            options={farmerSeasonYearPolicyData}
+                            getOptionLabel={(option) => `${option.policyID}`}
+                            getOptionValue={(option) => `${option.policyID}`}
+                            onChange={(e) => updateFilterStateClaimStatusFarmerSeasonYear("txtPolicyNumber", e)}
+                          />
+            <PageBar.Search onChange={(e) => onChangeClamStatusFarmerSeasonYear(e.target.value)} />
+          </PageBar>
+          <DataGrid
+            rowData={claimStatusFarmerSeasonYearData}
+            loader={isLoadingClaimStatusFarmerSeasonYearData ? <Loader /> : null}
+            rowSelection="single"
+            suppressRowClickSelection="true"
+            onGridReady={onGridReadyClaimStatusFarmerSeasonYear}
+          >
+            <DataGrid.Column field="applicationNo" headerName="Application Number" width="175px" />
+             <DataGrid.Column field="actualAmount" headerName="Actual Amount" width="135px" cellStyle={{ "text-align": "right" }} />
+            <DataGrid.Column field="UtrNumber" headerName="UTR Number" width="140px" />
+            <DataGrid.Column
+              field="utrDate"
+              headerName="UTR Date"
+              width="115px"
+            />
+             <DataGrid.Column
+              field="claimDate"
+              headerName="Claim Date"
+              width="115px"
+            />
+            <DataGrid.Column field="claimStatus" headerName="Claim Status" width="150px" />
+            <DataGrid.Column field="paymentMode" headerName="Payment Mode" width="150px" />
+            <DataGrid.Column field="paymentStatus" headerName="Payment Status" width="150px" />
+            
+            <DataGrid.Column field="ifsc" headerName="IFSC" width="140px" />
+            <DataGrid.Column field="pfmsBankName" headerName="Bank Name" width="150px" />
+            <DataGrid.Column field="bankAcountNumber" headerName="Bank Account Number" width="190px" />
+            
           </DataGrid>
         </div>
       </Modal.Body>

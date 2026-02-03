@@ -34,6 +34,7 @@ const APIEndpoints = {
     KRPHFarmerSelect: "FGMS/KRPHFarmerSelect",
     AddKRPHFarmerSupportTicket: "FGMS/AddKRPHFarmerSupportTicket",
     AddTempKRPHSupportTicket:"FGMS/AddTempKRPHSupportTicket",
+    GetFarmerSeasonYearClaim: "FGMS/GetFarmerSeasonYearClaim",
   },
 };
 
