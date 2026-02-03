@@ -930,10 +930,10 @@ function KrphAllActivitiesNDN() {
   debugger;
     const fetchMultipleApplication = getSelectedRowDataMultipleApplication();
 
-      if (fetchMultipleApplication.length === 0 || fetchMultipleApplication.length === 1) {
+      if (fetchMultipleApplication.length === 0) {
         setAlertMessage({
           type: "error",
-          message: "Please select multiple applications.",
+          message: "Please select atleast one application.",
         });
         return;
       }
@@ -2287,31 +2287,31 @@ function KrphAllActivitiesNDN() {
             txtCropForMultipleApplication: null,
         });
       setfarmerSeasonYearCropData([]);  
-      if (value) {
-        if (Number(value.Value) <= 2024) {
-          setSelectedOption("1");
-          setSelectedOptionCropStage("1");
-          setTicketCategoryTypeList([]);
-          setTicketCategoryList([]);
-          setLossAtList([]);
-          setCropStageList([]);
-          getTicketCategoryTypeListData("1", 0, "TCKTYP");
-          setFormValuesTicketCreation({
-            ...formValuesTicketCreation,
-            txtTicketCategoryType: null,
-            txtTicketCategory: null,
-            txtCropLossDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
-            txtCropLossIntimation: "On-time",
-            txtCropLossTime: "",
-            txtTicketDescription: "",
-            txtLossAt: null,
-            txtOtherSubCategory: null,
-            txtCropStage: null,
-            txtCropHarvestDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
-            txtCropName: "",
-          });
-        }
-      }
+      // A if (value) {
+      // A  if (Number(value.Value) <= 2024) {
+      // A    setSelectedOption("1");
+      // A    setSelectedOptionCropStage("1");
+      // A    setTicketCategoryTypeList([]);
+      // A    setTicketCategoryList([]);
+      // A    setLossAtList([]);
+      // A    setCropStageList([]);
+      // A    getTicketCategoryTypeListData("1", 0, "TCKTYP");
+      // A    setFormValuesTicketCreation({
+      // A      ...formValuesTicketCreation,
+      // A      txtTicketCategoryType: null,
+      // A      txtTicketCategory: null,
+      // A      txtCropLossDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
+      // A      txtCropLossIntimation: "On-time",
+      // A      txtCropLossTime: "",
+      // A      txtTicketDescription: "",
+      // A      txtLossAt: null,
+      // A      txtOtherSubCategory: null,
+      // A      txtCropStage: null,
+      // A      txtCropHarvestDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
+      // A      txtCropName: "",
+      // A    });
+      // A  }
+      // A }
     }
     if (name === "txtSeasonForFarmerInfo") {
       setFormValuesForFarmerInfo({
@@ -3638,6 +3638,7 @@ function KrphAllActivitiesNDN() {
 
   const clearInsuranceFieldsAndTicketCreation = () => {
     setSelectedInsuranceDetails([]);
+    setmultipleApplication([]);
     setFormValuesForFarmerInfo({
       ...formValuesForFarmerInfo,
       // A txtSeasonForFarmerInfo: null,
@@ -3656,7 +3657,7 @@ function KrphAllActivitiesNDN() {
       // A txtOtherSubCategory: null,
       // A txtCropStage: null,
       // A txtCropHarvestDate: dateToSpecificFormat(moment(), "YYYY-MM-DD"),
-      // A txtCropName: "",
+      txtCropName: "",
       txtSosDescription: "",
     });
     setShowMessage(false);
@@ -4024,14 +4025,6 @@ function KrphAllActivitiesNDN() {
   const CreateTicketBAuthOptionsForMultipleApplication = async () => {
     debugger;
     try {
-
-      if(selectedOption !== "4") {
-        setAlertMessage({
-          type: "warning",
-          message: "Multiple tickets with multiple applications are allowed only for Crop Loss Intimation.",
-        });
-        return;
-      }
       
       const user = getSessionStorage("user");
       const pcreationMode =
@@ -8045,29 +8038,29 @@ function KrphAllActivitiesNDN() {
                             <Box className="ticket-button-group_agent">
                               <Button
                                 variant={selectedOption === "1" ? "contained" : "outlined"}
-                                onClick={() => selectedOptionOnClick("GR")}
+                                // A onClick={() => selectedOptionOnClick("GR")}
                                 className={selectedOption === "1" ? "buttons_agent_active" : "buttons_agent"}
                               >
                                 Grievance
                               </Button>
                               <Button
                                 variant={selectedOption === "2" ? "contained" : "outlined"}
-                                onClick={() => selectedOptionOnClick("IN")}
+                                // A onClick={() => selectedOptionOnClick("IN")}
                                 className={selectedOption === "2" ? "buttons_agent_active" : "buttons_agent"}
                               >
                                 Information
                               </Button>
-                              {formValuesForFarmerInfo.txtYearForFarmerInfo &&
+                              {/* {formValuesForFarmerInfo.txtYearForFarmerInfo &&
                               formValuesForFarmerInfo.txtYearForFarmerInfo.Value &&
-                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null : (
+                              formValuesForFarmerInfo.txtYearForFarmerInfo.Value <= 2024 ? null : ( */}
                                 <Button
                                   variant={selectedOption === "4" ? "contained" : "outlined"}
-                                  onClick={() => selectedOptionOnClick("LO")}
+                                  // A onClick={() => selectedOptionOnClick("LO")}
                                   className={selectedOption === "4" ? "buttons_agent_active" : "buttons_agent"}
                                 >
                                   Crop Loss Intimation
                                 </Button>
-                              )}
+                              {/* )} */}
                             </Box>
                             {selectedOption === "4" ? (
                               <>
