@@ -1002,11 +1002,19 @@ function KrphAllActivitiesNDN() {
   };
 
   const [filterValuesClaimStatusFarmerSeasonYear, setFilterValuesClaimStatusFarmerSeasonYear] = useState({
-    txtPolicyNumber: null,
+    txtPolicyNumberClaimStatusFarmerSeasonYear: null,
   });
 
   const updateFilterStateClaimStatusFarmerSeasonYear = (name, value) => {
     setFilterValuesClaimStatusFarmerSeasonYear({ ...filterValuesClaimStatusFarmerSeasonYear, [name]: value });
+    if(name === "txtPolicyNumberClaimStatusFarmerSeasonYear") {
+      setFilterValuesClaimStatusFarmerSeasonYear({
+            ...filterValuesClaimStatusFarmerSeasonYear,
+            txtPolicyNumberClaimStatusFarmerSeasonYear: value,
+      });
+      setClaimStatusFarmerSeasonYearData([]);
+
+    }
   };
 
   const [claimStatusFarmerSeasonYearData, setClaimStatusFarmerSeasonYearData] = useState([]);
@@ -3183,6 +3191,11 @@ function KrphAllActivitiesNDN() {
           }
         } else {
           setfarmerSeasonYearCropData([]);
+          setFormValuesForFarmerInfo({
+            ...formValuesForFarmerInfo,
+            txtTicketCreationType: null,
+            txtCropForMultipleApplication: null,
+        });
           setAlertMessage({
             type: "warning",
             message: "Crop Data not found.",
@@ -3191,7 +3204,13 @@ function KrphAllActivitiesNDN() {
       } else {
         setAlertMessage({
           type: "warning",
-          message: result.response.responseMessage,
+          message: "Crop Data not found.",
+        });
+        setfarmerSeasonYearCropData([]);
+        setFormValuesForFarmerInfo({
+            ...formValuesForFarmerInfo,
+            txtTicketCreationType: null,
+            txtCropForMultipleApplication: null,
         });
       }
     } catch (error) {
@@ -3958,7 +3977,6 @@ function KrphAllActivitiesNDN() {
         isSos: showMessage ? 1 : 0,
         sos: showMessage === true && formValuesTicketCreation.txtSosDescription ? formValuesTicketCreation.txtSosDescription : "",
         sumInsured : selectedInsuranceDetails ? selectedInsuranceDetails.sumInsured : "",
-        ticketCategoryDescriptionID: 1,
       };
       setisBtndisabled(1);
       setBtnLoaderSupportTicketActive(true);
@@ -6231,6 +6249,7 @@ function KrphAllActivitiesNDN() {
                       farmerSeasonYearClaimData={farmerSeasonYearClaimData}
                       farmerSeasonYearPolicyData={farmerSeasonYearPolicyData}
                       filterValuesClaimStatusFarmerSeasonYear={filterValuesClaimStatusFarmerSeasonYear}
+                      setFilterValuesClaimStatusFarmerSeasonYear={setFilterValuesClaimStatusFarmerSeasonYear}
                       updateFilterStateClaimStatusFarmerSeasonYear={updateFilterStateClaimStatusFarmerSeasonYear}
                     />
                   )}
@@ -8015,7 +8034,7 @@ function KrphAllActivitiesNDN() {
                       </motion.div>
                     </AnimatePresence>
                   ) : null}
-                  <AnimatePresence mode="wait">
+                  {formValuesGI && formValuesGI.txtCallStatus && (formValuesGI.txtCallPurpose.ID === 1) || (formValuesGI.txtCallPurpose.ID === 2) || (formValuesGI.txtCallPurpose.ID === 3)  ? <AnimatePresence mode="wait">
                     <motion.div key="farmer" initial="hidden" animate="visible" exit="exit" variants={transitionVariants}>
                       <Box
                         sx={{
@@ -8348,7 +8367,8 @@ function KrphAllActivitiesNDN() {
                         </Box>
                       </Box>
                     </motion.div>
-                  </AnimatePresence>
+                  </AnimatePresence> : null}
+                  
                 </>
               ) : (
                 ""
@@ -8604,7 +8624,6 @@ function InsuranceCompanyModalGreivence({
   isLoadingApplicationNoDataGreivence,
   getClaimStatusOnClick,
   handleSubmitMultipleApplication,
-  multipleApplication,
   formValuesForFarmerInfo,
 }) {
   const toggleClaimStatusModal = (data) => {
@@ -8852,8 +8871,17 @@ function ClaimStatusFarmerSeasonYearModal({
   farmerSeasonYearClaimData,
   farmerSeasonYearPolicyData,
   filterValuesClaimStatusFarmerSeasonYear,
+  setFilterValuesClaimStatusFarmerSeasonYear,
   updateFilterStateClaimStatusFarmerSeasonYear,
 }) {
+
+    useEffect(() => {
+       setFilterValuesClaimStatusFarmerSeasonYear({
+            ...filterValuesClaimStatusFarmerSeasonYear,
+            txtPolicyNumberClaimStatusFarmerSeasonYear: null,
+      });
+    }, []);
+  
   return (
     <Modal title="Claim Status" varient="half"  show={toggleClaimStatusFarmerSeasonYearModal} right="0" width="95.5vw">
       <Modal.Body>
@@ -8863,11 +8891,11 @@ function ClaimStatusFarmerSeasonYearModal({
                             ControlTxt="Policy Number"
                             name="txtPolicyNumber"
                             label="Policy Number"
-                            value={filterValuesClaimStatusFarmerSeasonYear.txtPolicyNumber}
+                            value={filterValuesClaimStatusFarmerSeasonYear.txtPolicyNumberClaimStatusFarmerSeasonYear}
                             options={farmerSeasonYearPolicyData}
                             getOptionLabel={(option) => `${option.policyID}`}
                             getOptionValue={(option) => `${option.policyID}`}
-                            onChange={(e) => updateFilterStateClaimStatusFarmerSeasonYear("txtPolicyNumber", e)}
+                            onChange={(e) => updateFilterStateClaimStatusFarmerSeasonYear("txtPolicyNumberClaimStatusFarmerSeasonYear", e)}
                           />
             <PageBar.Search onChange={(e) => onChangeClamStatusFarmerSeasonYear(e.target.value)} />
           </PageBar>
