@@ -82,6 +82,7 @@ import ICWiseAudit from "Components/Modules/Reports/ICWiseAudit/ICWiseAudit";
 import UserWiseAudit from "Components/Modules/Reports/UserWiseAudit/UserWiseAudit";
 import ICWiseAuditGFOS from "Components/Modules/Reports/ICWiseAuditGFOS/ICWiseAuditGFOS";
 import UserWiseAuditGFOS from "Components/Modules/Reports/UserWiseAuditGFOS/UserWiseAuditGFOS";
+import AuditorsLoginDetails from "Components/Modules/Reports/AuditorLoginDetails/AuditorsLoginDetails";
 
 const PageRouter = () => {
   return (
@@ -177,6 +178,7 @@ const PageRouter = () => {
         <Route exact path="/UserWiseAudit" element={<Page component={<UserWiseAudit />} title="User Wise Audit" />} />
         <Route exact path="/ICWiseAuditGFOS" element={<Page component={<ICWiseAuditGFOS />} title="IC Wise Audit(GFOS)" />} />
         <Route exact path="/UserWiseAuditGFOS" element={<Page component={<UserWiseAuditGFOS />} title="User Wise Audit(GFOS)" />} />
+        <Route exact path="/AuditorsLoginDetails" element={<Page component={<AuditorsLoginDetails />} title="Auditors Login Details" />} />
       </Routes>
     </Router>
     // </BrowserRouter>
